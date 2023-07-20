@@ -41,7 +41,7 @@ export default function Footer() {
       </div>
       <hr className="my-8 border-blue-gray-50" />
       <p className="font-normal transition-colors text-gray-500 hover:text-white dark:hover:text-white focus:text-gray-600 w-fit">
-        &copy; 2023 The Boys
+        &copy; 2023 The Fellas
       </p>
     </footer>
   );
