@@ -11,23 +11,24 @@ export default function Navbar(){
     return (
       <>
         {/* This example requires Tailwind CSS v2.0+ */}
-        <div className="relative bg-white">
+        <div className="relative dark:bg-neutral-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
-            <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
-              <div className="flex justify-start lg:w-0 lg:flex-1">
+            <div className="flex justify-between items-center border-b-2 dark:border-neutral-800 py-6 md:justify-start md:space-x-10">
+              <div className="flex justify-start items-center space-x-6 lg:w-0 lg:flex-1">
                 <a href="#">
                   <span className="sr-only">Workflow</span>
                   <img
-                    className="h-8 w-auto sm:h-10"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                    className="h-10 w-auto sm:h-16"
+                    src="/logo.svg"
                     alt=""
                   />
                 </a>
+                <h2 className="font-lg dark:text-gray-500 transition duration-300 text-3xl font-mono dark:hover:text-white">Title</h2>
               </div>
               <div className="-mr-2 -my-2 md:hidden">
                 <button
                   type="button"
-                  className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                  className="dark:bg-neutral-900 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
                   onClick={() => setOpen(!open)}
                 >
                   <span className="sr-only">Open menu</span>
@@ -55,7 +56,7 @@ export default function Navbar(){
                   <button
                     type="button"
                     className="
-                     group bg-white rounded-md text-gray-500 inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 pb-8'
+                     group dark:bg-neutral-900 rounded-md text-gray-500 inline-flex items-center text-base font-medium transition duration-300 hover:text-gray-900 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 pb-8'
                     "
                     onClick={() => (setFlyer(!flyer), setFlyerTwo(false))}
                   >
@@ -103,7 +104,7 @@ export default function Navbar(){
                     }
                   >
                     <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
-                      <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+                      <div className="relative grid gap-6 dark:bg-neutral-900 px-5 py-6 sm:gap-8 sm:p-8">
                         <a
                           href="#"
                           className="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50"
@@ -316,13 +317,13 @@ export default function Navbar(){
   
                 <a
                   href="#"
-                  className="text-base font-medium text-gray-500 hover:text-gray-900"
+                  className="text-base font-medium text-gray-500 transition duration-300 hover:text-gray-900 dark:hover:text-white"
                 >
                   Pricing
                 </a>
                 <a
                   href="#"
-                  className="text-base font-medium text-gray-500 hover:text-gray-900"
+                  className="text-base font-medium text-gray-500 transition duration-300 hover:text-gray-900 dark:hover:text-white"
                 >
                   Docs
                 </a>
@@ -330,7 +331,7 @@ export default function Navbar(){
                   {/* Item active: "text-gray-900", Item inactive: "text-gray-500" */}
                   <button
                     type="button"
-                    className="group bg-white rounded-md text-gray-500 inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="group dark:bg-neutral-900 rounded-md text-gray-500 inline-flex items-center text-base font-medium transition duration-300 hover:text-gray-900 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     onClick={() => (setFlyerTwo(!flyerTwo), setFlyer(false))}
                   >
                     <span>More</span>
@@ -376,7 +377,7 @@ export default function Navbar(){
                     }
                   >
                     <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
-                      <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+                      <div className="relative grid gap-6 dark:bg-neutral-900 px-5 py-6 sm:gap-8 sm:p-8">
                         <a
                           href="#"
                           className="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50"
@@ -547,7 +548,7 @@ export default function Navbar(){
               <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
                 <a
                   href="#"
-                  className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
+                  className="whitespace-nowrap text-base font-medium text-gray-500 transition duration-300 hover:text-gray-900 dark:hover:text-white"
                 >
                   Sign in
                 </a>
@@ -578,7 +579,7 @@ export default function Navbar(){
                 : "opacity-0 scale-95 absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
             }
           >
-            <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
+            <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-neutral-900 divide-y-2 divide-gray-50">
               <div className="pt-5 pb-6 px-5">
                 <div className="flex items-center justify-between">
                   <div>
@@ -591,7 +592,7 @@ export default function Navbar(){
                   <div className="-mr-2">
                     <button
                       type="button"
-                      className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                      className="dark:bg-neutral-900 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
                       onClick={() => setOpen(!open)}
                     >
                       <span className="sr-only">Close menu</span>
