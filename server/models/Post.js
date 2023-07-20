@@ -5,7 +5,7 @@ const hashtagSchema = new Schema({
     type: String,
     required: true,
   },
-  catagory: { //for if we want to do "view similar hashtags" or something
+  category: { //for if we want to do "view similar hashtags" or something
     type: String,
   },
 });
