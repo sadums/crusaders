@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 export default function Navbar() {
-  // https://codepen.io/Vinny92/pen/XWNdxvj
+  // Navbar inspired from https://codepen.io/Vinny92/pen/XWNdxvj
 
   const [open, setOpen] = useState(false);
   const [flyer, setFlyer] = useState(false);
@@ -60,9 +60,7 @@ export default function Navbar() {
                 {/* Item active: "text-gray-900", Item inactive: "text-gray-500" */}
                 <button
                   type="button"
-                  className="
-                     group dark:bg-neutral-900 rounded-md text-gray-500 inline-flex items-center text-base font-medium transition hover:scale-105 duration-500 hover:text-gray-900 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 pb-8'
-                    "
+                  className="group dark:bg-neutral-900 rounded-md text-gray-500 inline-flex items-center text-base font-medium transition hover:scale-105 duration-500 hover:text-gray-900 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   onClick={() => (setFlyer(!flyer), setFlyerTwo(false))}
                 >
                   <span>Solutions</span>
@@ -336,7 +334,7 @@ export default function Navbar() {
                 {/* Item active: "text-gray-900", Item inactive: "text-gray-500" */}
                 <button
                   type="button"
-                  className="group dark:bg-neutral-900 rounded-md text-gray-500 inline-flex items-center text-base font-medium transition hover:scale-105 duration-500 hover:text-gray-900 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="group dark:bg-neutral-900 rounded-md text-gray-500 inline-flex items-center text-base font-medium transition hover:scale-105 duration-500 hover:text-gray-900 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   onClick={() => (setFlyerTwo(!flyerTwo), setFlyer(false))}
                 >
                   <span>More</span>

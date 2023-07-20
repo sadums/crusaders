@@ -1,5 +1,5 @@
 export default function Footer() {
-  // https://www.material-tailwind.com/docs/react/footer
+  // Footer inspired from https://www.material-tailwind.com/docs/react/footer
   return (
     <footer className="w-full dark:bg-neutral-900 p-8">
       <div className="flex flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 dark:bg-neutral-900 text-center md:justify-between">
@@ -8,7 +8,7 @@ export default function Footer() {
           <li>
             <a
               href="#"
-              className="font-normal transition-colors text-gray-500 hover:text-white dark:hover:text-white focus:text-gray-600"
+              className="font-normal transition duration-300 text-gray-500 hover:text-gray-600 dark:hover:text-white focus:text-gray-700 dark:focus:text-gray-100"
             >
               About Us
             </a>
@@ -16,7 +16,7 @@ export default function Footer() {
           <li>
             <a
               href="#"
-              className="font-normal transition-colors text-gray-500 hover:text-white dark:hover:text-white focus:text-gray-600"
+              className="font-normal transition duration-300 text-gray-500 hover:text-gray-600 dark:hover:text-white focus:text-gray-700 dark:focus:text-gray-100"
             >
               License
             </a>
@@ -24,7 +24,7 @@ export default function Footer() {
           <li>
             <a
               href="#"
-              className="font-normal transition-colors text-gray-500 hover:text-white dark:hover:text-white focus:text-gray-600"
+              className="font-normal transition duration-300 text-gray-500 hover:text-gray-600 dark:hover:text-white focus:text-gray-700 dark:focus:text-gray-100"
             >
               Contribute
             </a>
@@ -32,7 +32,7 @@ export default function Footer() {
           <li>
             <a
               href="#"
-              className="font-normal transition-colors text-gray-500 hover:text-white dark:hover:text-white focus:text-gray-600"
+              className="font-normal transition duration-300 text-gray-500 hover:text-gray-600 dark:hover:text-white focus:text-gray-700 dark:focus:text-gray-100"
             >
               Contact Us
             </a>
