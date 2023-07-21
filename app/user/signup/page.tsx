@@ -1,11 +1,17 @@
 import { sign } from "crypto";
 import React, { useState } from "react";
+import { CREATE_USER_MUTATION } from "../../GraphQL/mutations";
+import { useMutation } from "@apollo/client";
+import Auth from "../../utils/auth";
 
 interface SignInModalProps {
   setIsSignUpModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SignUpModal: React.FC<SignInModalProps> = ({ setIsSignUpModalOpen }) => {
+  const [createUserMutation, { loading, error, data }] =
+    useMutation(CREATE_USER_MUTATION);
+
   const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
     const target = event.target as HTMLFormElement;
@@ -24,8 +30,20 @@ const SignUpModal: React.FC<SignInModalProps> = ({ setIsSignUpModalOpen }) => {
         console.log(usernameValue);
         console.log(emailValue);
         if (passwordValue === confirmPasswordValue) {
-          console.log(passwordValue);
-          console.log(confirmPasswordValue);
+          const response = await createUserMutation({
+            variables: {
+              input: {
+                username: usernameValue,
+                email: emailValue,
+                password: passwordValue,
+              },
+            },
+          });
+          const { token, user } = response.data.createUser;
+          console.log(user);
+          console.log(token);
+          Auth.login(token);
+
         } else {
           alert("Passwords don't match");
         }

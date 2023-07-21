@@ -3,6 +3,8 @@ const app = express();
 const { ApolloServer } = require("apollo-server-express");
 const { typeDefs, resolvers } = require("./schemas");
 const db = require("./config/connection");
+const { authMiddleware } = require("./utils/auth");
+
 
 const PORT = process.env.PORT || 5500;
 
@@ -19,9 +21,13 @@ const server = new ApolloServer({
   },
 });
 //This context is temporary, and you will have to change the _id
-
+app.use(authMiddleware);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/build")));
+}
 
 const startApolloServer = async () => {
   await server.start();
