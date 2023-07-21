@@ -25,6 +25,11 @@ type Hashtag {
     category: String
 }
 
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
 type Query {
     getAllUsers: [User]
     getUserById(input: ID) : User
@@ -33,9 +38,11 @@ type Query {
   }
 
 type Mutation {
-    createUser(input: CreateUserInput!) : User
+    createUser(input: CreateUserInput!) : AuthPayload
     addPost(input: newPostInput!): User
+    login(email: String!, password: String!): AuthPayload
     #Delete post
+    #login
     #Edit user
     #Edit post
     #Add post to user

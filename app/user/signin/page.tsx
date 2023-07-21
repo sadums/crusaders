@@ -1,11 +1,17 @@
 import { sign } from "crypto";
 import React, { useState } from "react";
+import { useMutation } from "@apollo/client"; //useMutation is the react hook that sends a query to the apollo server
+import { LOGIN_MUTATION } from "../../GraphQL/mutations"; //This is the string that I will be passing to send the data
+import Auth from "../../utils/auth"; //These auth files give me a way to get the user and send context to the backend
 
 interface SignInModalProps {
   setIsSignInModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SignInModal: React.FC<SignInModalProps> = ({ setIsSignInModalOpen }) => {
+  const [loginUserMutation, { loading, error, data }] =
+    useMutation(LOGIN_MUTATION);
+
   const handleSignIn = async (event: React.FormEvent) => {
     event.preventDefault();
     const target = event.target as HTMLFormElement;
@@ -16,6 +22,16 @@ const SignInModal: React.FC<SignInModalProps> = ({ setIsSignInModalOpen }) => {
       if (usernameValue && passwordValue) {
         console.log(usernameValue);
         console.log(passwordValue);
+        const response = await loginUserMutation({
+          variables: {
+            email: usernameValue,
+            password: passwordValue,
+          },
+        });
+        const { token, user } = response.data.login;
+        console.log(user);
+        console.log(token);
+        Auth.login(token);
       } else {
         alert("Please fill out both fields");
       }
@@ -30,10 +46,10 @@ const SignInModal: React.FC<SignInModalProps> = ({ setIsSignInModalOpen }) => {
         <h2 className="text-2xl font-bold mb-4">Sign In</h2>
         <div className="mb-4">
           <label htmlFor="username" className="block font-medium mb-1">
-            Username
+            Email
           </label>
           <input
-            type="text"
+            type="email"
             id="username"
             className="w-full border border-gray-300 rounded px-3 py-2 focus:ring-indigo-500 focus:border-indigo-500"
           />
