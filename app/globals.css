@@ -25,3 +25,15 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+
+
+/* MODAL */
+
+.sign-in-modal{
+  z-index: 100;
+}
+
+.sign-up-modal{
+  z-index: 100;
+}
