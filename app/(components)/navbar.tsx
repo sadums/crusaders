@@ -2,12 +2,30 @@
 
 import { useState } from "react";
 
-export default function Navbar() {
+interface NavbarProps {
+  setIsSignInModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSignUpModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Navbar: React.FC<NavbarProps> = ({
+  setIsSignInModalOpen,
+  setIsSignUpModalOpen,
+}) => {
   // Navbar inspired from https://codepen.io/Vinny92/pen/XWNdxvj
 
   const [open, setOpen] = useState(false);
   const [flyer, setFlyer] = useState(false);
   const [flyerTwo, setFlyerTwo] = useState(false);
+
+  const signUpButtonHandler = () => {
+    console.log("SIGN UP");
+    setIsSignUpModalOpen(true);
+  };
+
+  const signInButtonHandler = () => {
+    console.log("SIGN IN");
+    setIsSignInModalOpen(true);
+  };
   return (
     <>
       {/* This example requires Tailwind CSS v2.0+ */}
@@ -549,18 +567,18 @@ export default function Navbar() {
               </div>
             </nav>
             <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-              <a
-                href="#"
+              <button
                 className="whitespace-nowrap text-base font-medium text-gray-500 transition hover:scale-105 duration-500 hover:text-gray-900 dark:hover:text-white"
+                onClick={signInButtonHandler}
               >
                 Sign in
-              </a>
-              <a
-                href="#"
+              </button>
+              <button
                 className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 hover:scale-105"
+                onClick={signUpButtonHandler}
               >
                 Sign up
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -794,20 +812,14 @@ export default function Navbar() {
                 </a>
               </div>
               <div>
-                <a
-                  href="#"
-                  className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 transition duration-300 hover:bg-indigo-700"
-                >
+                <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 transition duration-300 hover:bg-indigo-700">
                   Sign up
-                </a>
+                </button>
                 <p className="mt-6 text-center text-base font-medium text-gray-500">
                   Existing customer?&nbsp;
-                  <a
-                    href="#"
-                    className="text-indigo-600 hover:text-indigo-500 transition duration-300"
-                  >
+                  <button className="text-indigo-600 hover:text-indigo-500 transition duration-300">
                     Sign in
-                  </a>
+                  </button>
                 </p>
               </div>
             </div>
@@ -816,4 +828,6 @@ export default function Navbar() {
       </div>
     </>
   );
-}
+};
+
+export default Navbar;
