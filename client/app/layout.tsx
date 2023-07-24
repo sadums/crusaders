@@ -18,7 +18,7 @@ import Footer from "./(components)/footer";
 import SignInModal from "./user/signin/page";
 import SignUpModal from "./user/signup/page";
 import Sidebar from "./(components)/sidebar";
-import './styles/global.css'
+import './(styles)/global.css'
 
 const authLink = setContext((_, { headers }) => {
   //This authLink is middleware that inercepts the out going GraphQL requests and attaches an Authorization header to it

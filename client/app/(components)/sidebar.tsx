@@ -1,6 +1,6 @@
 "use client";
 
-import "../styles/navbar.css";
+import "../(styles)/navbar.css";
 import { useState } from "react";
 
 interface NavbarProps {
