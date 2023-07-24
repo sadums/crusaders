@@ -1,8 +1,8 @@
 import { sign } from "crypto";
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client"; //useMutation is the react hook that sends a query to the apollo server
-import { LOGIN_MUTATION } from "../../GraphQL/mutations"; //This is the string that I will be passing to send the data
-import Auth from "../../utils/auth"; //These auth files give me a way to get the user and send context to the backend
+import { LOGIN_MUTATION } from "../../(GraphQL)/mutations"; //This is the string that I will be passing to send the data
+import Auth from "../../(utils)/auth"; //These auth files give me a way to get the user and send context to the backend
 
 interface SignInModalProps {
   setIsSignInModalOpen: React.Dispatch<React.SetStateAction<boolean>>;

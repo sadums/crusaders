@@ -11,7 +11,7 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import Auth from "./utils/auth";
+import Auth from "./(utils)/auth";
 import Navbar from "./(components)/navbar";
 import NewNavbar from "./(components)/newNavbar";
 import Footer from "./(components)/footer";
@@ -72,18 +72,24 @@ export default function RootLayout({
             setIsSignInModalOpen={setIsSignInModalOpen}
             setIsSignUpModalOpen={setIsSignUpModalOpen}
           />
-          
+
           {/* TEMPORARY */}
           {Auth.loggedIn() ? (
             <div>
               <h1 className="text-5xl">USER IS LOGGED IN</h1>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={()=> Auth.logout()}>
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={() => Auth.logout()}
+              >
                 Log out
               </button>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={()=> {
-                console.log(Auth.getToken())
-                console.log(Auth.getProfile())
-              }}>
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={() => {
+                  console.log(Auth.getToken());
+                  console.log(Auth.getProfile());
+                }}
+              >
                 Console.log user and token
               </button>
             </div>

@@ -1,8 +1,8 @@
 import { sign } from "crypto";
 import React, { useState } from "react";
-import { CREATE_USER_MUTATION } from "../../GraphQL/mutations";
+import { CREATE_USER_MUTATION } from "../../(GraphQL)/mutations";
 import { useMutation } from "@apollo/client";
-import Auth from "../../utils/auth";
+import Auth from "../../(utils)/auth";
 
 interface SignInModalProps {
   setIsSignUpModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -43,7 +43,6 @@ const SignUpModal: React.FC<SignInModalProps> = ({ setIsSignUpModalOpen }) => {
           console.log(user);
           console.log(token);
           Auth.login(token);
-
         } else {
           alert("Passwords don't match");
         }
