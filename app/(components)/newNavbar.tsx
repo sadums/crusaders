@@ -12,63 +12,21 @@ const NewNavbar: React.FC<NavbarProps> = ({
   setIsSignInModalOpen,
   setIsSignUpModalOpen,
 }) => {
+  const signUpButtonHandler = () => {
+    console.log("SIGN UP");
+    setIsSignUpModalOpen(true);
+  };
 
-    const signUpButtonHandler = () => {
-        console.log("SIGN UP");
-        setIsSignUpModalOpen(true);
-      };
-    
-      const signInButtonHandler = () => {
-        console.log("SIGN IN");
-        setIsSignInModalOpen(true);
-      };
+  const signInButtonHandler = () => {
+    console.log("SIGN IN");
+    setIsSignInModalOpen(true);
+  };
 
   return (
     <>
-      <nav className="bg-gray-800">
-        <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+      <nav className="bg-gray-800 mainNavbarDiv">
+        <div className="mx-auto max-w-8xl px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-20 items-center justify-between">
-            <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-              <button
-                type="button"
-                className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                aria-controls="mobile-menu"
-                aria-expanded="false"
-              >
-                <span className="sr-only">Open main menu</span>
-
-                <svg
-                  className="block h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                  />
-                </svg>
-
-                <svg
-                  className="hidden h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-
             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
               <div className="flex flex-shrink-0 items-center">
                 <img
@@ -81,51 +39,55 @@ const NewNavbar: React.FC<NavbarProps> = ({
                 <div className="flex space-x-4">
                   <a
                     href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium hover:bg-indigo-700 transition duration-300 hover:scale-105"
                     aria-current="page"
                   >
-                    Dashboard
+                    Home
                   </a>
                   <a
                     href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium hover:bg-indigo-700 transition duration-300 hover:scale-105"
                   >
-                    Team
+                    Messages
                   </a>
                   <a
                     href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium hover:bg-indigo-700 transition duration-300 hover:scale-105"
                   >
-                    Projects
+                    Saved
                   </a>
-                  <a
+                  {/* <a
                     href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium hover:bg-indigo-700 transition duration-300 hover:scale-105"
                   >
                     Calendar
-                  </a>
+                  </a> */}
                 </div>
               </div>
             </div>
 
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
+                <input
+                  type="text"
+                  placeholder="Search Crusaders..."
+                  className="px-4 py-2 w-60 h-8 rounded-lg focus:outline-none navBarSearchBar"
+                />
 
-            <button
-                className="whitespace-nowrap text-base font-medium text-gray-500 transition hover:scale-105 duration-500 hover:text-gray-900 dark:hover:text-white"
+              <button
+                className="ml-8 whitespace-nowrap text-sm font-medium text-gray-500 transition hover:scale-105 duration-500 hover:text-gray-900 dark:hover:text-white"
                 onClick={signInButtonHandler}
               >
                 Sign in
               </button>
               <button
-                className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 hover:scale-105"
+                className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 hover:scale-105"
                 onClick={signUpButtonHandler}
               >
                 Sign up
               </button>
 
-
-{/* Commented out is profile pic + two icon buttons */}
+              {/* Commented out is profile pic + two icon buttons */}
 
               {/* <button
                 type="button"

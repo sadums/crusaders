@@ -94,7 +94,7 @@ export default function RootLayout({
             </div>
           )}
           {children}
-          <Footer></Footer>
+          {/* <Footer></Footer> */}
           {isSignUpModalOpen && (
             <SignUpModal setIsSignUpModalOpen={setIsSignUpModalOpen} />
           )}
