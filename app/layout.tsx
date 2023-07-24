@@ -13,6 +13,7 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import Auth from "./utils/auth";
 import Navbar from "./(components)/navbar";
+import NewNavbar from "./(components)/newNavbar";
 import Footer from "./(components)/footer";
 import SignInModal from "./user/signin/page";
 import SignUpModal from "./user/signup/page";
@@ -67,7 +68,7 @@ export default function RootLayout({
     <ApolloProvider client={client}>
       <html lang="en">
         <body className={inter.className}>
-          <Navbar
+          <NewNavbar
             setIsSignInModalOpen={setIsSignInModalOpen}
             setIsSignUpModalOpen={setIsSignUpModalOpen}
           />
