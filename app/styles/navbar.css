@@ -1,0 +1,11 @@
+.mainNavbarDiv {
+    position: fixed;
+    width: 100%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.navBarSearchBar {
+    background-color: transparent;
+    border: solid 1px rgb(79,70,229);
+}

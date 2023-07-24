@@ -1,9 +1,13 @@
-import Image from 'next/image'
+import Image from "next/image";
+import Head from "next/head";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      
-    </main>
-  )
+    <>
+    <Head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></link>
+    </Head>
+      <main className="flex min-h-screen flex-col items-center justify-between p-24"></main>
+    </>
+  );
 }
