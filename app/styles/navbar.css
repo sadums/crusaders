@@ -9,3 +9,27 @@
     background-color: transparent;
     border: solid 1px rgb(79,70,229);
 }
+
+/* For Sidebar */
+
+.sidebarMainDiv {
+    width: 10vw;
+    height: 100vh;
+    /* background-color: rgb(31,41,55); */
+    background-color: rgb(19, 25, 34);
+    left: 0;
+    top: 0;
+    position: fixed;
+    z-index: 10;
+    padding: .9%;
+}
+
+.sidebarLogo {
+    padding-top: 25%;
+    padding-bottom: 12%;
+}
+
+.sidebarLinkList {
+    border: solid rgb(79,70,229);
+    border-width: 2px 0px 2px 0px;
+}
