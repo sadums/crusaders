@@ -34,7 +34,7 @@ function HomeController() {
       postDesc:
         "Tried out a new restaurant today. The food was absolutely delicious!",
       postImg:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.lC4QOn5swOTATe7AMT8MuwHaEK%26pid%3DApi&f=1&ipt=18e743111ad03a8dcd8ce3ad48b5d82a4de285501a11628e7f7ec50c6f111d54&ipo=images",
+        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.u0Pk-feV2uAMLCfcbXUVDwHaE8%26pid%3DApi&f=1&ipt=e178c5a0a4b20f6d9306c6359032083910827cb2bf8937709ca0b9991dd79404&ipo=images",
       date: "07/26/2023",
     },
     {
@@ -61,7 +61,65 @@ function HomeController() {
         </div>
 
         <div className="col-span-1">
-          things to control feed, go premium, who to follow, search bar, etc
+          <div className="homepageInfoMainDiv">
+            <input
+              type="text"
+              placeholder="Search Crusaders..."
+              className="px-4 py-2 h-8 rounded-lg focus:outline-none navBarSearchBar"
+            />
+            <div className="homepageInfoDivs">
+              <h3>Go Pro!</h3>
+              <p>Get a one month free trial idk</p>
+              <button
+                className=" px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 hover:scale-105"
+              >
+                Sign up
+              </button>
+            </div>
+            <div className="homepageInfoDivs">
+              <h3>Who To Follow</h3>
+              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                  <div className="flex flex-shrink-0 items-center">
+                    <img
+                      className="h-7 w-auto rounded-full object-cover"
+                      src='https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.kjCUP06WDUMR88i5wo2SqwAAAA%26pid%3DApi&f=1&ipt=f48cf9d9981fe4a656c956f9fb581cad8c3919212d8b2805255465420fcda332&ipo=images'
+                      alt="Your Company"
+                    ></img>
+                  </div>
+                  <div className="hidden sm:ml-0 sm:flex sm:items-center sm:justify-center">
+                    <div className="flex space-x-4">
+                      <a
+                        href="#"
+                        className="text-black-800 px-3 py-2"
+                        aria-current="page"
+                      >
+                        Carreejoh
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                  <div className="flex flex-shrink-0 items-center">
+                    <img
+                      className="h-7 w-auto rounded-full object-cover"
+                      src='https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.kjCUP06WDUMR88i5wo2SqwAAAA%26pid%3DApi&f=1&ipt=f48cf9d9981fe4a656c956f9fb581cad8c3919212d8b2805255465420fcda332&ipo=images'
+                      alt="Your Company"
+                    ></img>
+                  </div>
+                  <div className="hidden sm:ml-0 sm:flex sm:items-center sm:justify-center">
+                    <div className="flex space-x-4">
+                      <a
+                        href="#"
+                        className="text-black-800 px-3 py-2"
+                        aria-current="page"
+                      >
+                        EmilySmith
+                      </a>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
