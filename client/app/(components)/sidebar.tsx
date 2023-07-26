@@ -1,6 +1,6 @@
 "use client";
 
-import "../styles/navbar.css";
+import "../(styles)/navbar.css";
 import { useState } from "react";
 
 interface NavbarProps {
@@ -20,6 +20,12 @@ const Sidebar: React.FC<NavbarProps> = ({
   const signInButtonHandler = () => {
     console.log("SIGN IN");
     setIsSignInModalOpen(true);
+  };
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const handleToggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   return (
