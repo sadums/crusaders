@@ -1,0 +1,64 @@
+.homePageMainDiv {
+    height: 100%;
+}
+
+.homePageFeedMainDiv {
+    overflow: scroll;
+    top: 0;
+    bottom: 0;
+    height: 98vh;
+    width: 90%;
+    margin-left: 10%;
+    /* padding: 3%; */
+    /* background-color: rgb(19, 25, 34); */
+    border: solid rgb(79, 70, 229);
+    border-width: 0px 2px 0px 2px;
+}
+
+.homePageFeedMainDiv::-webkit-scrollbar {
+    display: none;
+}
+
+.feedPosts {
+    border: solid 2px rgb(79,70,229);
+    border-width: 2px 0px 2px 0px;
+    /* border-radius: 15px; */
+    margin-top: 4%;
+}
+
+/* For side info */
+
+.homepageInfoMainDiv {
+    padding: 2%;
+    margin-top: 8%;
+}
+
+.navBarSearchBar {
+    width: 100%;
+    border-radius: 15px;
+    border-width: 2px;
+    color: white;
+    background-color: rgb(19, 25, 34);
+}
+
+.homepageInfoDivs {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(19, 25, 34);
+    border: solid 2px rgb(79, 70, 229);
+    border-radius: 15px;
+    padding: 3%;
+    margin-top: 5%;
+}
+
+.homepageInfoDivs a {
+    font-size: .8em;
+}
+
+.postButtonDiv {
+    text-align: center;
+}
+
+.infoInterestsDiv {
+    flex-wrap: wrap;
+}
