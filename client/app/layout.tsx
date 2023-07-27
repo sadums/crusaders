@@ -71,8 +71,8 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <Sidebar
-            setIsSignInModalOpen={setIsSignInModalOpen}
-            setIsSignUpModalOpen={setIsSignUpModalOpen}
+            // setIsSignInModalOpen={setIsSignInModalOpen}
+            // setIsSignUpModalOpen={setIsSignUpModalOpen}
           />
 
           {/* TEMPORARY */}
@@ -97,7 +97,7 @@ export default function RootLayout({
             </div>
           ) : (
             <div>
-              <HomeController/>
+              <HomeController />
             </div>
           )}
           {children}

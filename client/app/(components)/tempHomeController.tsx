@@ -2,6 +2,8 @@
 
 import "../(styles)/homepage.css";
 import FeedPosts from "./feedPosts";
+import ToggleSidebar from "./toggleSidebar";
+import Sidebar from "./sidebar";
 
 function HomeController() {
   // For fake posts
@@ -187,6 +189,7 @@ function HomeController() {
           </div>
         </div>
       </div>
+      {/* <ToggleSidebar/> */}
     </div>
   );
 }
