@@ -2,36 +2,84 @@
 
 import "../(styles)/navbar.css";
 import { useState } from "react";
+import ToggleSidebar from "./toggleSidebar";
+import { render } from "react-dom";
 
-interface NavbarProps {
-  setIsSignInModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsSignUpModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+// interface NavbarProps {
+//   setIsSignInModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+//   setIsSignUpModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+// }
 
-const Sidebar: React.FC<NavbarProps> = ({
-  setIsSignInModalOpen,
-  setIsSignUpModalOpen,
-}) => {
-  const signUpButtonHandler = () => {
-    console.log("SIGN UP");
-    setIsSignUpModalOpen(true);
+// const Sidebar: React.FC<NavbarProps> = ({
+//   setIsSignInModalOpen,
+//   setIsSignUpModalOpen,
+// }) => {
+const signUpButtonHandler = () => {
+  console.log("SIGN UP");
+  setIsSignUpModalOpen(true);
+};
+
+const signInButtonHandler = () => {
+  console.log("SIGN IN");
+  setIsSignInModalOpen(true);
+};
+
+// const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+// const handleToggleSidebar = () => {
+//   setIsSidebarOpen(!isSidebarOpen);
+// };
+
+function Sidebar() {
+  
+  const sidebarData = [
+    {
+      username: "Carreejoh",
+      title: "Messages",
+      content: [
+        {
+          username: "carreejoh",
+          pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
+          message: "super sexy messages thing you got there, massive dubs, huge REACT win, tsx can suck my balls"
+        },
+        {
+          username: "JohnDoe",
+          pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
+          message: "Huge GPT dubs, massive typescript L"
+        }
+      ]
+    },
+    {
+      title: "Likes",
+      content: "Your Likes",
+    },
+  ];
+
+  const [showSidebar, setShowSidebar] = useState("None");
+  const [sidebarOpacity, setSidebarOpacity] = useState(true);
+
+  const renderSidebar = () => {
+    if (showSidebar === "None") {
+      return (
+        <>
+          <ToggleSidebar props={"None"} />
+        </>
+      );
+    }
+    if (showSidebar === "Messages") {
+      return <ToggleSidebar type="Messages" props={sidebarData[0]} sidebarOpacity={sidebarOpacity}/>;
+    }
+    if (showSidebar === "Likes") {
+      return <ToggleSidebar type="Likes" props={sidebarData[1]} sidebarOpacity={sidebarOpacity}/>;
+    }
   };
 
-  const signInButtonHandler = () => {
-    console.log("SIGN IN");
-    setIsSignInModalOpen(true);
-  };
-
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  const handleToggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
+  const handleSidebarChange = (page) => setShowSidebar(page);
 
   return (
     <>
       <div className="sidebarMainDiv">
-        <div className="container mx-auto">
+        <div className="container mx-auto z-50">
           <div className="grid grid-cols-1 gap-4">
             <div className="sidebarLogo">
               <img className="h-20" src="/logo.svg" alt="Your Company"></img>
@@ -101,6 +149,10 @@ const Sidebar: React.FC<NavbarProps> = ({
                 <a
                   href="#"
                   className="text-gray-300rounded-md py-2 text-md font-medium hover:text-indigo-700 transition duration-300 hover:scale-105"
+                  onClick={() => {
+                    handleSidebarChange('Messages');
+                    setSidebarOpacity(!sidebarOpacity);
+                  }}
                 >
                   Messages
                 </a>
@@ -124,8 +176,35 @@ const Sidebar: React.FC<NavbarProps> = ({
                 <a
                   href="#"
                   className="text-gray-300rounded-md py-2 text-md font-medium hover:text-indigo-700 transition duration-300 hover:scale-105"
+                  onClick={() => {
+                    handleSidebarChange('Likes');
+                    setSidebarOpacity(!sidebarOpacity);
+                  }}
                 >
                   Likes
+                </a>
+              </li>
+              <li className="flex items-center space-x-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
+                  />
+                </svg>
+
+                <a
+                  href="#"
+                  className="text-gray-300rounded-md py-2 text-md font-medium hover:text-indigo-700 transition duration-300 hover:scale-105"
+                >
+                  Saved
                 </a>
               </li>
               <li className="flex items-center space-x-2">
@@ -198,6 +277,7 @@ const Sidebar: React.FC<NavbarProps> = ({
                 <a
                   href="#"
                   className="text-gray-300rounded-md py-2 text-md font-medium hover:text-indigo-700 transition duration-300 hover:scale-105"
+                  // onClick={() => setShowSidebar(!showSidebar)}
                 >
                   Profile
                 </a>
@@ -206,8 +286,22 @@ const Sidebar: React.FC<NavbarProps> = ({
           </div>
         </div>
       </div>
+
+      {/* For toggleSidebar */}
+
+      {/* <div className={`top-0 left-0 w-[10vw] bg-blue-600  text-white fixed h-full z-10 ease-in-out duration-300 toggleSidebarMainDiv ${
+      showSidebar ? "w-0 opacity-0 translate-x-0 " : "w-[18vw] opacity-1 translate-x-[10vw]"
+    }`}>
+        <h2 className="mt-20 text-4xl font-semibold text-white">
+          I am a sidebar
+        </h2>
+      </div> */}
+
+      {/* <ToggleSidebar setShowSidebar={setShowSidebar}/> */}
+
+      {renderSidebar()}
     </>
   );
-};
+}
 
 export default Sidebar;
