@@ -13,7 +13,7 @@
 /* For Sidebar */
 
 .sidebarMainDiv {
-    width: 10vw;
+    width: 8vw;
     height: 100vh;
     /* background-color: rgb(31,41,55); */
     background-color: rgb(19, 25, 34);
@@ -38,7 +38,7 @@
 
 .toggleSidebarMainDiv {
     z-index: 5;
-    background-color: rgb(19, 25, 34);
+    /* background-color: rgb(19, 25, 34); */
     border: solid rgb(79,70,229);
     border-width: 0px 0px 0px 2px;
 }
@@ -62,6 +62,7 @@
     border-radius: 15px;
     margin-top: 4%;
     padding: 1%;
+    background-color: rgb(19, 25, 34);
 }
 
 .individualMessages h3 {
@@ -71,6 +72,7 @@
 
 .individualMessages p {
     font-size: .8em;
+    padding: 1%;
 }
 
 .messagesUserPFP {
