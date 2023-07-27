@@ -42,3 +42,41 @@
     border: solid rgb(79,70,229);
     border-width: 0px 0px 0px 2px;
 }
+
+/* For Messages Sidebar */
+
+.messagesSidebarMainDiv {
+    margin-top: 30px;
+    padding: 4%;
+    padding-top: 5%;
+}
+
+/* .messagesContentDiv {
+
+} */
+
+.individualMessages {
+    width: 100%;
+    border: solid rgb(79,70,229);
+    border-width: 2px 2px 2px 2px;
+    border-radius: 15px;
+    margin-top: 4%;
+    padding: 1%;
+}
+
+.individualMessages h3 {
+    text-align: right;
+    margin-right: 2%;
+}
+
+.individualMessages p {
+    font-size: .8em;
+}
+
+.messagesUserPFP {
+    margin-top: 2%;
+}
+
+.messagesUserPFP img {
+    border: solid 2px rgb(79,70,229);
+}
