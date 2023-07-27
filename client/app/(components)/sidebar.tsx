@@ -22,6 +22,12 @@ const Sidebar: React.FC<NavbarProps> = ({
     setIsSignInModalOpen(true);
   };
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const handleToggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <>
       <div className="sidebarMainDiv">

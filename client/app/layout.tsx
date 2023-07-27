@@ -18,7 +18,7 @@ import Footer from "./(components)/footer";
 import SignInModal from "./user/signin/page";
 import SignUpModal from "./user/signup/page";
 import Sidebar from "./(components)/sidebar";
-import './(styles)/global.css'
+import HomeController from "./(components)/tempHomeController";
 
 const authLink = setContext((_, { headers }) => {
   //This authLink is middleware that inercepts the out going GraphQL requests and attaches an Authorization header to it
@@ -97,8 +97,7 @@ export default function RootLayout({
             </div>
           ) : (
             <div>
-              <h1 className="text-5xl">USER IS NOT LOGGED IN</h1>
-              <p>Click sign up or sign in at the top</p>
+              <HomeController/>
             </div>
           )}
           {children}
