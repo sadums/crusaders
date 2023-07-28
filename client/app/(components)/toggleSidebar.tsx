@@ -13,10 +13,10 @@ const ToggleSidebar = (props:any) => {
           className={`top-0 left-0 w-[10vw]  text-white fixed h-full z-10 ease-in-out duration-300 toggleSidebarMainDiv ${
             props.sidebarOpacity
               ? "w-0 opacity-0 translate-x-0 "
-              : "w-[18vw] opacity-1 translate-x-[10vw]"
+              : "w-[18vw] opacity-1 translate-x-[8vw]"
           }`}
         >
-          <MessagesSidebar props={props}/>
+          <MessagesSidebar props={props.props}/>
         </div>
       );
     }
@@ -27,7 +27,7 @@ const ToggleSidebar = (props:any) => {
             className={`top-0 left-0 w-[10vw]  text-white fixed h-full z-10 ease-in-out duration-300 toggleSidebarMainDiv ${
               props.sidebarOpacity
                 ? "w-0 opacity-0 translate-x-0 "
-                : "w-[18vw] opacity-1 translate-x-[10vw]"
+                : "w-[18vw] opacity-1 translate-x-[8vw]"
             }`}
           >
             <h2 className="mt-20 text-4xl font-semibold text-white">
