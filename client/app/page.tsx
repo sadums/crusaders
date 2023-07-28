@@ -2,6 +2,7 @@ import Image from "next/image";
 import Head from "next/head";
 import "./globals.css";
 
+
 export default function Home() {
   return (
     <>
