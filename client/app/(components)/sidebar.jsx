@@ -31,7 +31,6 @@ const signInButtonHandler = () => {
 // };
 
 function Sidebar() {
-  
   const sidebarData = [
     {
       username: "Carreejoh",
@@ -40,14 +39,33 @@ function Sidebar() {
         {
           username: "carreejoh",
           pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
-          message: "super sexy messages thing you got there, massive dubs, huge REACT win, tsx can suck my balls"
+          message:
+            "super messages thing you got there, massive dubs, huge REACT win, tsx can suck my balls",
         },
         {
           username: "JohnDoe",
           pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
-          message: "Huge GPT dubs, massive typescript L"
-        }
-      ]
+          message: "Huge GPT dubs, massive typescript L",
+        },
+        {
+          username: "SarahConnor",
+          pfp:
+            "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
+          message: "I'll be back!",
+        },
+        {
+          username: "MichaelScott",
+          pfp:
+            "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
+          message: "That's what she said!",
+        },
+        {
+          username: "ElonMusk",
+          pfp:
+            "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
+          message: "Mars, here we come!",
+        },
+      ],
     },
     {
       title: "Likes",
@@ -67,10 +85,22 @@ function Sidebar() {
       );
     }
     if (showSidebar === "Messages") {
-      return <ToggleSidebar type="Messages" props={sidebarData[0]} sidebarOpacity={sidebarOpacity}/>;
+      return (
+        <ToggleSidebar
+          type="Messages"
+          props={sidebarData[0]}
+          sidebarOpacity={sidebarOpacity}
+        />
+      );
     }
     if (showSidebar === "Likes") {
-      return <ToggleSidebar type="Likes" props={sidebarData[1]} sidebarOpacity={sidebarOpacity}/>;
+      return (
+        <ToggleSidebar
+          type="Likes"
+          props={sidebarData[1]}
+          sidebarOpacity={sidebarOpacity}
+        />
+      );
     }
   };
 
@@ -135,14 +165,14 @@ function Sidebar() {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  strokeWidth={1.5}
                   stroke="currentColor"
                   className="w-5 h-5"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H6.911a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661z"
                   />
                 </svg>
 
@@ -150,11 +180,11 @@ function Sidebar() {
                   href="#"
                   className="text-gray-300rounded-md py-2 text-md font-medium hover:text-indigo-700 transition duration-300 hover:scale-105"
                   onClick={() => {
-                    handleSidebarChange('Messages');
+                    handleSidebarChange("Messages");
                     setSidebarOpacity(!sidebarOpacity);
                   }}
                 >
-                  Messages
+                  Inbox
                 </a>
               </li>
               <li className="flex items-center space-x-2">
@@ -177,7 +207,7 @@ function Sidebar() {
                   href="#"
                   className="text-gray-300rounded-md py-2 text-md font-medium hover:text-indigo-700 transition duration-300 hover:scale-105"
                   onClick={() => {
-                    handleSidebarChange('Likes');
+                    handleSidebarChange("Likes");
                     setSidebarOpacity(!sidebarOpacity);
                   }}
                 >

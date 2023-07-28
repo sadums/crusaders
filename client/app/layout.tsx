@@ -19,6 +19,7 @@ import SignInModal from "./user/signin/page";
 import SignUpModal from "./user/signup/page";
 import Sidebar from "./(components)/sidebar";
 import HomeController from "./(components)/tempHomeController";
+import Profile from "./(pages)/Profile";
 
 const authLink = setContext((_, { headers }) => {
   //This authLink is middleware that inercepts the out going GraphQL requests and attaches an Authorization header to it
@@ -66,6 +67,7 @@ export default function RootLayout({
   // const handleCloseSignInModal = () => {
   //   setIsSignInModalOpen(false);
   // };
+
   return (
     <ApolloProvider client={client}>
       <html lang="en">
