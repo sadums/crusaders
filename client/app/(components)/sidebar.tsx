@@ -14,15 +14,15 @@ import { render } from "react-dom";
 //   setIsSignInModalOpen,
 //   setIsSignUpModalOpen,
 // }) => {
-const signUpButtonHandler = () => {
-  console.log("SIGN UP");
-  setIsSignUpModalOpen(true);
-};
+// const signUpButtonHandler = () => {
+//   console.log("SIGN UP");
+//   setIsSignUpModalOpen(true);
+// };
 
-const signInButtonHandler = () => {
-  console.log("SIGN IN");
-  setIsSignInModalOpen(true);
-};
+// const signInButtonHandler = () => {
+//   console.log("SIGN IN");
+//   setIsSignInModalOpen(true);
+// };
 
 // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -31,7 +31,6 @@ const signInButtonHandler = () => {
 // };
 
 function Sidebar() {
-  
   const sidebarData = [
     {
       username: "Carreejoh",
@@ -40,14 +39,15 @@ function Sidebar() {
         {
           username: "carreejoh",
           pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
-          message: "super sexy messages thing you got there, massive dubs, huge REACT win, tsx can suck my balls"
+          message:
+            "super sexy messages thing you got there, massive dubs, huge REACT win, tsx can suck my balls",
         },
         {
           username: "JohnDoe",
           pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
-          message: "Huge GPT dubs, massive typescript L"
-        }
-      ]
+          message: "Huge GPT dubs, massive typescript L",
+        },
+      ],
     },
     {
       title: "Likes",
@@ -65,16 +65,26 @@ function Sidebar() {
           <ToggleSidebar props={"None"} />
         </>
       );
-    }
-    if (showSidebar === "Messages") {
-      return <ToggleSidebar type="Messages" props={sidebarData[0]} sidebarOpacity={sidebarOpacity}/>;
-    }
-    if (showSidebar === "Likes") {
-      return <ToggleSidebar type="Likes" props={sidebarData[1]} sidebarOpacity={sidebarOpacity}/>;
+    } else if (showSidebar === "Messages") {
+      return (
+        <ToggleSidebar
+          type="Messages"
+          props={sidebarData[0]}
+          sidebarOpacity={sidebarOpacity}
+        />
+      );
+    } else if (showSidebar === "Likes") {
+      return (
+        <ToggleSidebar
+          type="Likes"
+          props={sidebarData[1]}
+          sidebarOpacity={sidebarOpacity}
+        />
+      );
     }
   };
 
-  const handleSidebarChange = (page) => setShowSidebar(page);
+  const handleSidebarChange = (page: string) => setShowSidebar(page);
 
   return (
     <>
@@ -150,7 +160,7 @@ function Sidebar() {
                   href="#"
                   className="text-gray-300rounded-md py-2 text-md font-medium hover:text-indigo-700 transition duration-300 hover:scale-105"
                   onClick={() => {
-                    handleSidebarChange('Messages');
+                    handleSidebarChange("Messages");
                     setSidebarOpacity(!sidebarOpacity);
                   }}
                 >
@@ -177,7 +187,7 @@ function Sidebar() {
                   href="#"
                   className="text-gray-300rounded-md py-2 text-md font-medium hover:text-indigo-700 transition duration-300 hover:scale-105"
                   onClick={() => {
-                    handleSidebarChange('Likes');
+                    handleSidebarChange("Likes");
                     setSidebarOpacity(!sidebarOpacity);
                   }}
                 >

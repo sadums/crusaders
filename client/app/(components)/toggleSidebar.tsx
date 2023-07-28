@@ -2,16 +2,16 @@ import "../(styles)/navbar.css";
 import { useState, useEffect } from "react";
 import MessagesSidebar from "./messagesSidebar";
 
-const ToggleSidebar = ({ props, type, sidebarOpacity }) => {
+const ToggleSidebar = (props:any) => {
   const sidebarSelector = () => {
-    if (type === "None") {
+    if (props.type === "None") {
       return <></>;
     }
-    if (type === "Messages") {
+    if (props.type === "Messages") {
       return (
         <div
           className={`top-0 left-0 w-[10vw]  text-white fixed h-full z-10 ease-in-out duration-300 toggleSidebarMainDiv ${
-            sidebarOpacity
+            props.sidebarOpacity
               ? "w-0 opacity-0 translate-x-0 "
               : "w-[18vw] opacity-1 translate-x-[10vw]"
           }`}
@@ -20,12 +20,12 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }) => {
         </div>
       );
     }
-    if (type === "Likes") {
+    if (props.type === "Likes") {
       return (
         <>
           <div
             className={`top-0 left-0 w-[10vw]  text-white fixed h-full z-10 ease-in-out duration-300 toggleSidebarMainDiv ${
-              sidebarOpacity
+              props.sidebarOpacity
                 ? "w-0 opacity-0 translate-x-0 "
                 : "w-[18vw] opacity-1 translate-x-[10vw]"
             }`}
