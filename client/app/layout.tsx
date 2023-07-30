@@ -12,11 +12,11 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import Auth from "./(utils)/auth";
-import Navbar from "./(components)/navbar";
-import NewNavbar from "./(components)/newNavbar";
+// import Navbar from "./(components)/NIU-navbar";
+// import NewNavbar from "./(components)/NIU-newNavbar";
 import Footer from "./(components)/footer";
-import SignInModal from "./user/signin/page";
-import SignUpModal from "./user/signup/page";
+import SignInModal from "./(components)/signin";
+import SignUpModal from "./(components)/signup";
 import Sidebar from "./(components)/sidebar";
 import Profile from "./(pages)/Profile";
 
@@ -72,8 +72,8 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <Sidebar
-          // setIsSignInModalOpen={setIsSignInModalOpen}
-          // setIsSignUpModalOpen={setIsSignUpModalOpen}
+            setIsSignInModalOpen={setIsSignInModalOpen}
+            setIsSignUpModalOpen={setIsSignUpModalOpen}
           />
           {children}
           {/* <Footer></Footer> */}
