@@ -73,35 +73,12 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <Sidebar
-            // setIsSignInModalOpen={setIsSignInModalOpen}
-            // setIsSignUpModalOpen={setIsSignUpModalOpen}
+          // setIsSignInModalOpen={setIsSignInModalOpen}
+          // setIsSignUpModalOpen={setIsSignUpModalOpen}
           />
-
-          {/* TEMPORARY */}
-          {Auth.loggedIn() ? (
-            <div>
-              <h1 className="text-5xl">USER IS LOGGED IN</h1>
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => Auth.logout()}
-              >
-                Log out
-              </button>
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => {
-                  console.log(Auth.getToken());
-                  console.log(Auth.getProfile());
-                }}
-              >
-                Console.log user and token
-              </button>
-            </div>
-          ) : (
-            <div>
-              <HomeController />
-            </div>
-          )}
+          <div>
+            <HomeController />
+          </div>
           {children}
           {/* <Footer></Footer> */}
           {isSignUpModalOpen && (
