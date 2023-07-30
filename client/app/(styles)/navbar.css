@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .mainNavbarDiv {
     position: fixed;
     width: 100%;
@@ -13,26 +17,43 @@
 /* For Sidebar */
 
 .sidebarMainDiv {
-    width: 8vw;
     height: 100vh;
-    /* background-color: rgb(31,41,55); */
     background-color: rgb(19, 25, 34);
-    left: 0;
+   /* left: 0;
     top: 0;
     position: fixed;
     z-index: 50;
-    padding: .9%;
+    padding: .9%; */
+}
+
+@layer components {
+    .sidebarIcon {
+        @apply relative flex items-center justify-center
+        h-12 w-12 mx-auto shadow-md bg-gray-800 mt-3
+        hover:bg-indigo-700 
+        rounded-3xl hover:rounded-xl transition-all duration-200
+        z-50
+    }
+
+    .sidebarIconInfo {
+        @apply absolute w-auto left-16 scale-0 transition-all
+         duration-100 z-50 bg-gray-800 p-1 
+    }
+}
+
+.sidebarIconInfo {
+    border-radius: 10px;
 }
 
 .sidebarLogo {
-    padding-top: 25%;
+    padding-top: 40%;
     padding-bottom: 12%;
 }
 
-.sidebarLinkList {
+/* .sidebarLinkList {
     border: solid rgb(79,70,229);
     border-width: 2px 0px 2px 0px;
-}
+} */
 
 /* For toggle sidebar */
 
