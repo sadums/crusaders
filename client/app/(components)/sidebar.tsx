@@ -115,7 +115,7 @@ const signInButtonHandler = () => {
             <ul className="list-outside ... sidebarLinkList">
               <li className="flex items-center space-x-2 sidebarIcon group">
                 <a
-                  href="#"
+                  href="/"
                   className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
                 >
                   <svg
@@ -290,7 +290,7 @@ const signInButtonHandler = () => {
               </li>
               <li className="flex items-center space-x-2 sidebarIcon group">
                 <a
-                  href="#"
+                  href="/Profile"
                   className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 group-hover:scale-100"
                   // onClick={() => setShowSidebar(!showSidebar)}
                 >
@@ -396,7 +396,7 @@ const signInButtonHandler = () => {
       </div> */}
 
       {/* <ToggleSidebar setShowSidebar={setShowSidebar}/> */}
-      {showSidebar === "None" && <ToggleSidebar props={undefined} type={undefined} sidebarOpacity={undefined} />}
+      {showSidebar === "None" && <ToggleSidebar props={undefined} type={''} sidebarOpacity={undefined} />}
       {showSidebar === "Messages" && (
         <ToggleSidebar
           type="Messages"
