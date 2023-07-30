@@ -41,9 +41,9 @@ type Mutation {
     createUser(input: CreateUserInput!) : AuthPayload
     addPost(input: newPostInput!): User
     login(email: String!, password: String!): AuthPayload
-    deleteUser
+    deleteUser: User
+    editUser(input: CreateUserInput!) : AuthPayload
     #Delete post
-    #Edit user
     #Edit post
     #Add post to user
     

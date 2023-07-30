@@ -63,7 +63,17 @@ const resolvers = {
     },
     deleteUser: async (parent, {input}, context) => {
       try{
-        console.log(context)
+        const { user } = context;
+        console.log(user)
+      }catch(err){
+        console.error(err)
+      }
+    },
+    editUser: async (parent, {input}, context) => {
+      try{
+        const { user } = context;
+        console.log(input)
+        console.log(user)
       }catch(err){
         console.error(err)
       }
