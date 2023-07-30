@@ -2,7 +2,16 @@ import "../(styles)/navbar.css";
 import { useState, useEffect } from "react";
 import MessagesSidebar from "./messagesSidebar";
 
-const ToggleSidebar = ({ props, type, sidebarOpacity }) => {
+interface toggle {
+    props: any
+    type: string;
+    sidebarOpacity: boolean | undefined;
+}
+
+const ToggleSidebar = ({ props, type, sidebarOpacity }:toggle) => {
+  console.log(sidebarOpacity);
+  console.log(type);
+  console.log(props);
   const sidebarSelector = () => {
     if (type === "None") {
       return <></>;
