@@ -114,7 +114,7 @@ function Sidebar() {
             <ul className="list-outside ... sidebarLinkList">
               <li className="flex items-center space-x-2 sidebarIcon group">
                 <a
-                  href="#"
+                  href="/"
                   className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
                 >
                   <svg
@@ -289,7 +289,7 @@ function Sidebar() {
               </li>
               <li className="flex items-center space-x-2 sidebarIcon group">
                 <a
-                  href="#"
+                  href="/Profile"
                   className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 group-hover:scale-100"
                   // onClick={() => setShowSidebar(!showSidebar)}
                 >
@@ -314,19 +314,6 @@ function Sidebar() {
           </div>
         </div>
       </div>
-
-      {/* For toggleSidebar */}
-
-      {/* <div className={`top-0 left-0 w-[10vw] bg-blue-600  text-white fixed h-full z-10 ease-in-out duration-300 toggleSidebarMainDiv ${
-      showSidebar ? "w-0 opacity-0 translate-x-0 " : "w-[18vw] opacity-1 translate-x-[10vw]"
-    }`}>
-        <h2 className="mt-20 text-4xl font-semibold text-white">
-          I am a sidebar
-        </h2>
-      </div> */}
-
-      {/* <ToggleSidebar setShowSidebar={setShowSidebar}/> */}
-
       {renderSidebar()}
     </>
   );

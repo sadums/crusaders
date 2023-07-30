@@ -18,7 +18,6 @@ import Footer from "./(components)/footer";
 import SignInModal from "./user/signin/page";
 import SignUpModal from "./user/signup/page";
 import Sidebar from "./(components)/sidebar";
-import HomeController from "./(components)/tempHomeController";
 import Profile from "./(pages)/Profile";
 
 const authLink = setContext((_, { headers }) => {
@@ -76,9 +75,6 @@ export default function RootLayout({
           // setIsSignInModalOpen={setIsSignInModalOpen}
           // setIsSignUpModalOpen={setIsSignUpModalOpen}
           />
-          <div>
-            <HomeController />
-          </div>
           {children}
           {/* <Footer></Footer> */}
           {isSignUpModalOpen && (
