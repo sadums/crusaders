@@ -61,6 +61,13 @@ const resolvers = {
         console.error(err);
       }
     },
+    deleteUser: async (parent, {input}, context) => {
+      try{
+        console.log(context)
+      }catch(err){
+        console.error(err)
+      }
+    }
   },
 };
 
