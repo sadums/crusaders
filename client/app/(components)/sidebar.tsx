@@ -4,16 +4,17 @@ import "../(styles)/navbar.css";
 import { useState } from "react";
 import ToggleSidebar from "./toggleSidebar";
 import { render } from "react-dom";
+import Auth from '../(utils)/auth'
 
-// interface NavbarProps {
-//   setIsSignInModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-//   setIsSignUpModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-// }
+interface NavbarProps {
+  setIsSignInModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSignUpModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-// const Sidebar: React.FC<NavbarProps> = ({
-//   setIsSignInModalOpen,
-//   setIsSignUpModalOpen,
-// }) => {
+const Sidebar: React.FC<NavbarProps> = ({
+  setIsSignInModalOpen,
+  setIsSignUpModalOpen,
+}) => {
 const signUpButtonHandler = () => {
   console.log("SIGN UP");
   setIsSignUpModalOpen(true);
@@ -30,7 +31,6 @@ const signInButtonHandler = () => {
 //   setIsSidebarOpen(!isSidebarOpen);
 // };
 
-function Sidebar() {
   const sidebarData = [
     {
       username: "Carreejoh",
@@ -72,36 +72,37 @@ function Sidebar() {
 
   const [showSidebar, setShowSidebar] = useState("None");
   const [sidebarOpacity, setSidebarOpacity] = useState(true);
+  
+  // const renderSidebar = () => {
+  //   if (showSidebar === "None") {
+  //     return (
+  //       <>
+  //         <ToggleSidebar />
+  //       </>
+  //     );
+  //   }
+  //   if (showSidebar === "Messages") {
+  //     return (
+  //       <ToggleSidebar
+  //         type="Messages"
+  //         props={sidebarData[0]}
+  //         sidebarOpacity={sidebarOpacity}
+  //       />
+  //     );
+  //   }
+  //   if (showSidebar === "Likes") {
+  //     return (
+  //       <ToggleSidebar
+  //         type="Likes"
+  //         props={sidebarData[1]}
+  //         sidebarOpacity={sidebarOpacity}
+  //       />
+  //     );
+  //   }
+  // };
 
-  const renderSidebar = () => {
-    if (showSidebar === "None") {
-      return (
-        <>
-          <ToggleSidebar props={"None"} />
-        </>
-      );
-    }
-    if (showSidebar === "Messages") {
-      return (
-        <ToggleSidebar
-          type="Messages"
-          props={sidebarData[0]}
-          sidebarOpacity={sidebarOpacity}
-        />
-      );
-    }
-    if (showSidebar === "Likes") {
-      return (
-        <ToggleSidebar
-          type="Likes"
-          props={sidebarData[1]}
-          sidebarOpacity={sidebarOpacity}
-        />
-      );
-    }
-  };
-
-  const handleSidebarChange = (page) => setShowSidebar(page);
+  //This error is typescript I will change
+  const handleSidebarChange = (page: any) => setShowSidebar(page);
 
   return (
     <>
@@ -310,11 +311,106 @@ function Sidebar() {
                 </a>
                 <span className="sidebarIconInfo group-hover:scale-100">Profile</span>
               </li>
+              <li className="flex items-center space-x-2 sidebarIcon group" onClick={signUpButtonHandler}>
+                <a
+                  href="#"
+                  className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 group-hover:scale-100"
+                  // onClick={() => setShowSidebar(!showSidebar)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-7 h-7"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                    />
+                  </svg>
+                </a>
+                <span className="sidebarIconInfo group-hover:scale-100">Sign Up</span>
+              </li>
+              <li className="flex items-center space-x-2 sidebarIcon group" onClick={signInButtonHandler}>
+                <a
+                  href="#"
+                  className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 group-hover:scale-100"
+                  // onClick={() => setShowSidebar(!showSidebar)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-7 h-7"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                    />
+                  </svg>
+                </a>
+                <span className="sidebarIconInfo group-hover:scale-100">Sign in</span>
+              </li>
+              <li className="flex items-center space-x-2 sidebarIcon group" onClick={()=> Auth.logout()}>
+                <a
+                  href="#"
+                  className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 group-hover:scale-100"
+                  // onClick={() => setShowSidebar(!showSidebar)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-7 h-7"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                    />
+                  </svg>
+                </a>
+                <span className="sidebarIconInfo group-hover:scale-100">Log out</span>
+              </li>
             </ul>
           </div>
         </div>
       </div>
-      {renderSidebar()}
+
+      {/* For toggleSidebar */}
+
+      {/* <div className={`top-0 left-0 w-[10vw] bg-blue-600  text-white fixed h-full z-10 ease-in-out duration-300 toggleSidebarMainDiv ${
+      showSidebar ? "w-0 opacity-0 translate-x-0 " : "w-[18vw] opacity-1 translate-x-[10vw]"
+    }`}>
+        <h2 className="mt-20 text-4xl font-semibold text-white">
+          I am a sidebar
+        </h2>
+      </div> */}
+
+      {/* <ToggleSidebar setShowSidebar={setShowSidebar}/> */}
+      {showSidebar === "None" && <ToggleSidebar props={undefined} type={''} sidebarOpacity={undefined} />}
+      {showSidebar === "Messages" && (
+        <ToggleSidebar
+          type="Messages"
+          props={sidebarData[0]}
+          sidebarOpacity={sidebarOpacity}
+        />
+      )}
+      {showSidebar === "Likes" && (
+        <ToggleSidebar
+          type="Likes"
+          props={sidebarData[1]}
+          sidebarOpacity={sidebarOpacity}
+        />
+      )}
     </>
   );
 }
