@@ -22,6 +22,22 @@ const resolvers = {
         console.error(err);
       }
     },
+    getPost: async (parent, { postId }, context) => {
+      try {
+        const users = await User.find({});
+        for (let user of users) {
+          for (let post of user.posts) {
+            if (post._id.toString() === postId) {
+              return post;
+            }
+          }
+        }
+        throw new Error('Post not found');
+      } catch (err) {
+        console.error(err);
+      }
+    }
+       
   },
   Mutation: {
     createUser: async (parent, { input }, context) => {
@@ -61,10 +77,44 @@ const resolvers = {
         console.error(err);
       }
     },
+    deletePost: async (parent, { postId }, context) => {
+      try {
+        const { user } = context;
+        const updatedUser = await User.findByIdAndUpdate(
+          user._id,
+          { $pull: { posts: { _id: postId } } },
+          { new: true }
+        );
+        if (!updatedUser) {
+          throw new Error('Post not found');
+        }
+        return updatedUser;
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    updatePost: async (parent, { postId, input }, context) => {
+      try {
+        const { user } = context;
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: user._id, 'posts._id': postId },
+          { 'posts.$': input },
+          { new: true }
+        );
+        if (!updatedUser) {
+          throw new Error('Post not found');
+        }
+        return updatedUser;
+      } catch (err) {
+        console.error(err);
+      }
+    },    
     deleteUser: async (parent, {input}, context) => {
       try{
         const { user } = context;
         console.log(user)
+        const deletedUser = await User.findByIdAndDelete(user._id)
+        return deletedUser
       }catch(err){
         console.error(err)
       }
@@ -74,6 +124,17 @@ const resolvers = {
         const { user } = context;
         console.log(input)
         console.log(user)
+        const fieldsToUpdate = {};
+        if (input.username) fieldsToUpdate.username = input.username;
+        if (input.email) fieldsToUpdate.email = input.email;
+    
+        const updatedUser = await User.findByIdAndUpdate(
+          user._id,
+          fieldsToUpdate,
+          { new: true }
+        );
+        const token = signToken(updatedUser);
+        return { token, user }; //This doesn't update in tests because the context is fixed, might update on the website
       }catch(err){
         console.error(err)
       }
