@@ -5,7 +5,8 @@ import FeedPosts from "./feedPosts";
 import ToggleSidebar from "./toggleSidebar";
 import MessagesSidebar from "./messagesSidebar";
 import Sidebar from "./sidebar";
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, MouseEventHandler } from "react";
+import PictureUploader from "./pictureUploader";
 
 function HomeController() {
   // For fake posts
@@ -66,12 +67,36 @@ function HomeController() {
 
   const [createPostDiv, showCreatePostDiv] = useState(false);
   const [hashtags, addHashtags] = useState<string[]>([]);
+  const [pictureState, setPictureState] = useState<string>("");
 
-  const handleHashtagAddition = (event: ChangeEvent<HTMLInputElement>) => {
-    let newHashtag = event.target.value;
-    addHashtags([...hashtags, newHashtag]);
-    event.target.value = '';
-  }
+  const handleHashtagAddition = (
+    event: React.MouseEvent<HTMLInputElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    const target = event.target as HTMLFormElement;
+    // console.log([target.form])
+    const newHashtag = target.form[0].value;
+    addHashtags((prev) => [...prev, newHashtag]);
+    target.form[0].value = "";
+  };
+
+  const createPostHandler = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const target = event.target as HTMLFormElement;
+    const postInput = {
+      image: pictureState, //We need something to dif the pics from the videos
+      video: pictureState,
+      title: target.form[1].value,
+      body: target.form[2].value,
+      hashtags: hashtags
+    }
+    console.log(postInput)
+    //Fill this out later
+  };
+
+  const handleSetPictureState = (url: string): void => {
+    setPictureState(url);
+  };
 
   return (
     <div className="homePageMainDiv bg-darkestCoolGray ml-20">
@@ -106,88 +131,98 @@ function HomeController() {
               >
                 Create A Post
               </button>
-            
+
               <div
                 className={`relative ml-0 ${
                   createPostDiv ? "block" : "hidden"
                 }`}
               >
                 <form>
-                <div className="">
-                  <button
-                    className={`absolute top-0 right-0 z-50 ${
-                      createPostDiv ? "scale-100" : "scale-0"
-                    }`}
-                    onClick={() => {
-                      showCreatePostDiv(!createPostDiv);
-                    }}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
+                  <div className="">
+                    <button
+                      className={`absolute top-0 right-0 z-50 ${
+                        createPostDiv ? "scale-100" : "scale-0"
+                      }`}
+                      onClick={() => {
+                        showCreatePostDiv(!createPostDiv);
+                      }}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
-                  <h3>Create Your Own Post</h3>
-                </div>
-                <div className="mt-6">
-                  <h2 className="text-sm text-neonBlue">Post Title:</h2>
-                  <input
-                    type="text"
-                    id=""
-                    placeholder="Title"
-                    className="text-white bg-transparent border-solid border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[100%]"
-                  ></input>
-                </div>
-                <div className="mt-4">
-                  <h2 className="text-sm text-neonBlue">Description:</h2>
-                  <textarea
-                    placeholder="Description, 400 max chars"
-                    className="bg-transparent border-solid border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[100%] h-20"
-                  ></textarea>
-                </div>
-                <div className="mt-4">
-                  <h2 className="text-sm text-neonBlue">Media:</h2>
-                  <button className="border-black border-r-3">
-                    Upload.io Temp Filler Btn
-                  </button>
-                </div>
-                <div className="mt-4">
-                  <h2 className="text-sm text-neonBlue">Hashtags:</h2>
-                  <div className="flex">
-                    {hashtags.map((tag) => (
-                      <div>
-                        <h4>{tag}</h4>
-                      </div>
-                    ))}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                    <h3>Create Your Own Post</h3>
                   </div>
-                  <input
-                    type="text"
-                    id=""
-                    placeholder="Hashtag"
-                    className="text-white mt-2 bg-transparent border-solid border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[20%]"
-                    // onChange={handleHashtagAddition}
-                 ></input>
-                  <button 
-                  className="pl-2 border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 hover:text-neonBlue ease-in-out transition duration-100"
-                  // onClick={handleHashtagAddition}
+                  <div className="mt-6">
+                    <h2 className="text-sm text-neonBlue">Post Title:</h2>
+                    <input
+                      type="text"
+                      id=""
+                      placeholder="Title"
+                      className="text-white bg-transparent border-solid border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[100%]"
+                    ></input>
+                  </div>
+                  <div className="mt-4">
+                    <h2 className="text-sm text-neonBlue">Description:</h2>
+                    <textarea
+                      placeholder="Description, 400 max chars"
+                      className="bg-transparent border-solid border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[100%] h-20"
+                    ></textarea>
+                  </div>
+                  <div className="mt-4">
+                    <h2 className="text-sm text-neonBlue">Media:</h2>
+                    <PictureUploader
+                      pictureState={pictureState}
+                      setPictureState={handleSetPictureState}
+                      uploadText={"Select your media"}
+                    />
+                  </div>
+                  <div className="mt-4">
+                    <h2 className="text-sm text-neonBlue">Hashtags:</h2>
+                    <div className="flex">
+                      {hashtags.map((tag, index) => (
+                        <div key={index}>
+                          <h4>#{tag}</h4>
+                        </div>
+                      ))}
+                    </div>
+                    <form>
+                      <input
+                        type="text"
+                        id=""
+                        placeholder="Hashtag"
+                        className="text-white mt-2 bg-transparent border-solid border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[20%]"
+                      ></input>
+                      <button
+                        type="button"
+                        className="pl-2 border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 hover:text-neonBlue ease-in-out transition duration-100"
+                        // This error is annoying but doesn't change functionality
+                        onClick={handleHashtagAddition}
+                      >
+                        Add
+                      </button>
+                    </form>
+                  </div>
+                  <button
+                    onClick={createPostHandler}
+                    className="pl-2 border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 hover:text-neonBlue ease-in-out transition duration-100"
+                    type="submit"
                   >
-                    Add
+                    Create
                   </button>
-                </div>
                 </form>
               </div>
-             
-      
             </div>
             <div className={`homepageInfoDivs w-[50%]`}>
               <h3>Go Pro!</h3>
