@@ -109,6 +109,7 @@ function HomeController() {
           <div className="homePageFeedMainDiv">
           <div className="feedPostsTop"></div>
           <FeedPosts users={tempUsers} />
+          </div>
         </div>
 
         <div className="col-span-2">
