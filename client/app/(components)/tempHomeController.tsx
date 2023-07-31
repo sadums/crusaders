@@ -28,7 +28,7 @@ function HomeController() {
       postTitle: "Exciting Adventure",
       postDesc: "Just had an amazing adventure with friends. It was thrilling!",
       postImg:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.D4p3jqDLUQWHKb9SH_2hxgHaEo%26pid%3DApi&f=1&ipt=0a15bcb5be344e2ca48b6b45e6887040dcb1c10268844223f92cfd7a62f2e3f2&ipo=images",
+        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.MtVUkuoD2DQf6eJYWLDnYwHaDq%26pid%3DApi&f=1&ipt=9a7334483977c2c85bf5bf1492a5fd3de01bb8f8e8ac17e1bd8241db9c1b376b&ipo=images",
       date: "07/25/2023",
     },
     {
@@ -100,13 +100,17 @@ function HomeController() {
 
   return (
     <div className="homePageMainDiv bg-darkestCoolGray ml-20">
-      <div className="grid grid-cols-7 gap-4 w-100 ">
-        <div className="col-span-2 w-60 bg-[#131922]">
-          <div className="bg-darkCoolGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
+      <div className="grid grid-cols-7 gap-4">
+        <div className="col-span-2 bg-[#131922]">
+          <div className="bg-darkCoolGray h-[100%] p-2 pt-20 secondaryMenuMainDiv">
+
+          </div>
         </div>
-        <div className="col-span-2 homePageFeedMainDiv">
+        <div className="col-span-2 pl-20">
+          <div className="homePageFeedMainDiv">
           <div className="feedPostsTop"></div>
           <FeedPosts users={tempUsers} />
+          </div>
         </div>
 
         <div className="col-span-2">
@@ -224,14 +228,14 @@ function HomeController() {
                 </form>
               </div>
             </div>
-            <div className={`homepageInfoDivs w-[50%]`}>
+            <div className={`mt-4 homepageInfoDivs w-[50%]`}>
               <h3>Go Pro!</h3>
               <p>Get a one month free trial idk</p>
               <button className=" px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 hover:scale-105">
                 Sign up
               </button>
             </div>
-            <div className="homepageInfoDivs w-[50%]">
+            <div className="mt-4 homepageInfoDivs w-[50%]">
               <h3>Who To Follow</h3>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
@@ -276,7 +280,7 @@ function HomeController() {
             </div>
             {/* <div className="homepageInfoDivs">
               <h3>Your Interests</h3> */}
-            <form className="max-w-sm mt-8 p-4 bg-gray-100 rounded-lg shadow homepageInfoDivs w-[50%]">
+            <form className="mt-4 max-w-sm p-4 rounded-lg shadow homepageInfoDivs w-[50%]">
               <div className="mb-2">
                 <h3>Your Interests</h3>
                 <div className="flex items-center flex-wrap infoInterestsDiv">

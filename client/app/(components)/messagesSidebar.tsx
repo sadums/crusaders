@@ -40,7 +40,7 @@ const MessagesSidebar = ({ props }:messages) => {
   return (
     <div className="messagesSidebarMainDiv z-12">
       {/* <h2>{props.username}'s {props.title}</h2> */}
-      <div className="messagesHeader">
+      <div>
         <h3>{props.username}'s Inbox:</h3>
       </div>
       <div className="messagesContentDiv">
