@@ -140,7 +140,7 @@ const signInButtonHandler = () => {
               
 
                 <a
-                  href="#"
+                  href="/explore"
                   className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
                 >
                   <svg
