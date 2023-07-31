@@ -99,11 +99,14 @@ function HomeController() {
 
   return (
     <div className="homePageMainDiv bg-darkestCoolGray ml-20">
-      <div className="grid grid-cols-7 gap-4 w-100 ">
-        <div className="col-span-2 w-60 bg-[#131922]">
-          <div className="bg-darkCoolGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
+      <div className="grid grid-cols-6 gap-4">
+        <div className="col-span-1 bg-[#131922]">
+          <div className="bg-darkCoolGray h-[100%] p-2 pt-20 secondaryMenuMainDiv">
+
+          </div>
         </div>
-        <div className="col-span-2 homePageFeedMainDiv">
+        <div className="col-span-3 pl-48">
+          <div className="homePageFeedMainDiv">
           <div className="feedPostsTop"></div>
           <FeedPosts users={tempUsers} />
         </div>
@@ -117,7 +120,7 @@ function HomeController() {
             /> */}
             <div
               className={`homepageInfoDivs ease-in-out duration-300 ${
-                createPostDiv ? "w-[100%]" : "w-[50%]"
+                createPostDiv ? "w-[90%]" : "w-[50%]"
               }`}
             >
               <button
