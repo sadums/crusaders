@@ -4,7 +4,7 @@ import "../(styles)/navbar.css";
 import { useState } from "react";
 import ToggleSidebar from "./toggleSidebar";
 import { render } from "react-dom";
-import Auth from '../(utils)/auth'
+import Auth from "../(utils)/auth";
 
 interface NavbarProps {
   setIsSignInModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,21 +15,21 @@ const Sidebar: React.FC<NavbarProps> = ({
   setIsSignInModalOpen,
   setIsSignUpModalOpen,
 }) => {
-const signUpButtonHandler = () => {
-  console.log("SIGN UP");
-  setIsSignUpModalOpen(true);
-};
+  const signUpButtonHandler = () => {
+    console.log("SIGN UP");
+    setIsSignUpModalOpen(true);
+  };
 
-const signInButtonHandler = () => {
-  console.log("SIGN IN");
-  setIsSignInModalOpen(true);
-};
+  const signInButtonHandler = () => {
+    console.log("SIGN IN");
+    setIsSignInModalOpen(true);
+  };
 
-// const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-// const handleToggleSidebar = () => {
-//   setIsSidebarOpen(!isSidebarOpen);
-// };
+  // const handleToggleSidebar = () => {
+  //   setIsSidebarOpen(!isSidebarOpen);
+  // };
 
   const sidebarData = [
     {
@@ -72,7 +72,7 @@ const signInButtonHandler = () => {
 
   const [showSidebar, setShowSidebar] = useState("Search");
   const [sidebarOpacity, setSidebarOpacity] = useState(true);
-  
+
   // const renderSidebar = () => {
   //   if (showSidebar === "None") {
   //     return (
@@ -111,7 +111,11 @@ const signInButtonHandler = () => {
           <div className="grid grid-cols-1 gap-4">
             <h5 className="text-sm text-center mt-2">Crusaders</h5>
             <div className="sidebarLogo ">
-              <img className="h-16 mx-auto " src="/horseOnlyLogo.png" alt="Your Company"></img>
+              <img
+                className="h-16 mx-auto "
+                src="/horseOnlyLogo.png"
+                alt="Your Company"
+              ></img>
             </div>
             <ul className="list-outside ... sidebarLinkList">
               <li className=" flex items-center space-x-2 sidebarIcon group">
@@ -123,145 +127,266 @@ const signInButtonHandler = () => {
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke-width="1.5"
+                    strokeWidth="1.5"
                     stroke="currentColor"
                     className="w-7 h-7"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
                     />
                   </svg>
-                  
                 </a>
-                <span className="sidebarIconInfo group-hover:scale-100">Home</span>
+                <span className="sidebarIconInfo group-hover:scale-100">
+                  Home
+                </span>
               </li>
               <li className="flex items-center space-x-2 sidebarIcon group">
-              
-
                 <a
                   href="/explore"
                   className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
                 >
                   <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  className="w-7 h-7"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                  />
-                </svg>
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-7 h-7"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                    />
+                  </svg>
                 </a>
-                <span className="sidebarIconInfo group-hover:scale-100">Search</span>
+                <span className="sidebarIconInfo group-hover:scale-100">
+                  Search
+                </span>
               </li>
               <li className="flex items-center space-x-2 sidebarIcon group">
-                
-
                 <a
                   href="#"
                   className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
-                  onClick={() => {
-                    handleSidebarChange("Messages");
-                    setSidebarOpacity(!sidebarOpacity);
-                  }}
                 >
                   <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-7 h-7"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H6.911a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661z"
-                  />
-                </svg>
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-7 h-7"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
+                    />
+                  </svg>
                 </a>
-                <span className="sidebarIconInfo group-hover:scale-100">Inbox</span>
+                <span className="sidebarIconInfo group-hover:scale-100">
+                  Upgrade
+                </span>
               </li>
-              <li className="flex items-center space-x-2 sidebarIcon group">
+              {Auth.loggedIn() ? (
+                <>
+                  <li className="flex items-center space-x-2 sidebarIcon group">
+                    <a
+                      href="#"
+                      className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
+                      onClick={() => {
+                        handleSidebarChange("Messages");
+                        setSidebarOpacity(!sidebarOpacity);
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-7 h-7"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H6.911a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661z"
+                        />
+                      </svg>
+                    </a>
+                    <span className="sidebarIconInfo group-hover:scale-100">
+                      Inbox
+                    </span>
+                  </li>
+                  <li className="flex items-center space-x-2 sidebarIcon group">
+                    <a
+                      href="#"
+                      className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
+                      onClick={() => {
+                        handleSidebarChange("Likes");
+                        setSidebarOpacity(!sidebarOpacity);
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-7 h-7"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                        />
+                      </svg>
+                    </a>
+                    <span className="sidebarIconInfo group-hover:scale-100">
+                      Liked
+                    </span>
+                  </li>
+                  <li className="flex items-center space-x-2 sidebarIcon group">
+                    <a
+                      href="#"
+                      className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-7 h-7"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
+                        />
+                      </svg>
+                    </a>
+                    <span className="sidebarIconInfo group-hover:scale-100">
+                      Bookmarked
+                    </span>
+                  </li>
+                  <li className="flex items-center space-x-2 sidebarIcon group">
+                    <a
+                      href="/Profile"
+                      className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 group-hover:scale-100"
+                      // onClick={() => setShowSidebar(!showSidebar)}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-7 h-7"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                        />
+                      </svg>
+                    </a>
+                    <span className="sidebarIconInfo group-hover:scale-100">
+                      Profile
+                    </span>
+                  </li>
+                  <li
+                    className="flex items-center space-x-2 sidebarIcon group"
+                    onClick={() => Auth.logout()}
+                  >
+                    <a
+                      href="#"
+                      className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 group-hover:scale-100"
+                      // onClick={() => setShowSidebar(!showSidebar)}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-7 h-7"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                        />
+                      </svg>
+                    </a>
+                    <span className="sidebarIconInfo group-hover:scale-100">
+                      Log out
+                    </span>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li
+                    className="flex items-center space-x-2 sidebarIcon group"
+                    onClick={signUpButtonHandler}
+                  >
+                    <a
+                      href="#"
+                      className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 group-hover:scale-100"
+                      // onClick={() => setShowSidebar(!showSidebar)}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-7 h-7"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                        />
+                      </svg>
+                    </a>
+                    <span className="sidebarIconInfo group-hover:scale-100">
+                      Sign Up
+                    </span>
+                  </li>
+                  <li
+                    className="flex items-center space-x-2 sidebarIcon group"
+                    onClick={signInButtonHandler}
+                  >
+                    <a
+                      href="#"
+                      className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 group-hover:scale-100"
+                      // onClick={() => setShowSidebar(!showSidebar)}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-7 h-7"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                        />
+                      </svg>
+                    </a>
+                    <span className="sidebarIconInfo group-hover:scale-100">
+                      Sign in
+                    </span>
+                  </li>
+                </>
+              )}
 
-                <a
-                  href="#"
-                  className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
-                  onClick={() => {
-                    handleSidebarChange("Likes");
-                    setSidebarOpacity(!sidebarOpacity);
-                  }}
-                >
-                  <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-7 h-7"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                  />
-                </svg>
-                </a>
-                <span className="sidebarIconInfo group-hover:scale-100">Liked</span>
-              </li>
-              <li className="flex items-center space-x-2 sidebarIcon group">
-
-              <a
-                  href="#"
-                  className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
-                >
-                  <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-7 h-7"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
-                  />
-                </svg>
-                </a>
-                <span className="sidebarIconInfo group-hover:scale-100">Bookmarked</span>
-              </li>
-              <li className="flex items-center space-x-2 sidebarIcon group">
-                
-              <a
-                  href="#"
-                  className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
-                >
-                  <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  className="w-7 h-7"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
-                  />
-                </svg>
-                </a>
-                <span className="sidebarIconInfo group-hover:scale-100">Upgrade</span>
-              </li>
               <li className="flex items-center space-x-2 sidebarIcon group">
                 <a
                   href="#"
@@ -287,99 +412,9 @@ const signInButtonHandler = () => {
                     />
                   </svg>
                 </a>
-                <span className="sidebarIconInfo group-hover:scale-100">Settings</span>
-              </li>
-              <li className="flex items-center space-x-2 sidebarIcon group">
-                <a
-                  href="/Profile"
-                  className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 group-hover:scale-100"
-                  // onClick={() => setShowSidebar(!showSidebar)}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-7 h-7"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                    />
-                  </svg>
-                </a>
-                <span className="sidebarIconInfo group-hover:scale-100">Profile</span>
-              </li>
-              <li className="flex items-center space-x-2 sidebarIcon group" onClick={signUpButtonHandler}>
-                <a
-                  href="#"
-                  className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 group-hover:scale-100"
-                  // onClick={() => setShowSidebar(!showSidebar)}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-7 h-7"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                    />
-                  </svg>
-                </a>
-                <span className="sidebarIconInfo group-hover:scale-100">Sign Up</span>
-              </li>
-              <li className="flex items-center space-x-2 sidebarIcon group" onClick={signInButtonHandler}>
-                <a
-                  href="#"
-                  className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 group-hover:scale-100"
-                  // onClick={() => setShowSidebar(!showSidebar)}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-7 h-7"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                    />
-                  </svg>
-                </a>
-                <span className="sidebarIconInfo group-hover:scale-100">Sign in</span>
-              </li>
-              <li className="flex items-center space-x-2 sidebarIcon group" onClick={()=> Auth.logout()}>
-                <a
-                  href="#"
-                  className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 group-hover:scale-100"
-                  // onClick={() => setShowSidebar(!showSidebar)}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-7 h-7"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                    />
-                  </svg>
-                </a>
-                <span className="sidebarIconInfo group-hover:scale-100">Log out</span>
+                <span className="sidebarIconInfo group-hover:scale-100">
+                  Settings
+                </span>
               </li>
             </ul>
           </div>
@@ -397,7 +432,9 @@ const signInButtonHandler = () => {
       </div> */}
 
       {/* <ToggleSidebar setShowSidebar={setShowSidebar}/> */}
-      {showSidebar === "None" && <ToggleSidebar props={undefined} type={''} sidebarOpacity={undefined} />}
+      {showSidebar === "None" && (
+        <ToggleSidebar props={undefined} type={""} sidebarOpacity={undefined} />
+      )}
       {showSidebar === "Search" && (
         <ToggleSidebar
           type="Search"
@@ -421,6 +458,6 @@ const signInButtonHandler = () => {
       )}
     </>
   );
-}
+};
 
 export default Sidebar;
