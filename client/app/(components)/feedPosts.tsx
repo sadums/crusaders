@@ -15,7 +15,7 @@ function FeedPosts({ users }: { users: User[] }) {
   return (
     <>
       {users.map((user) => (
-        <div className="feedPosts">
+        <div className="feedPosts bg-darkCoolGray">
           <nav className="feedPostsTopNav">
             <div className="mx-auto max-w-9xl px-2 sm:px-6 lg:px-1">
               <div className="relative flex h-20 items-center justify-between">

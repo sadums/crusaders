@@ -45,7 +45,7 @@ const MessagesSidebar = ({ props }:messages) => {
       </div>
       <div className="messagesContentDiv">
         {props.content.map((message:any, index) => (
-          <div className="individualMessages" key={index}>
+          <div className="individualMessages shadow-xl" key={index}>
             <p>{message.message}</p>
   
             <div className="flex flex-shrink-0 items-center justify-end messagesUserPFP">

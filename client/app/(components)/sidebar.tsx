@@ -70,7 +70,7 @@ const signInButtonHandler = () => {
     },
   ];
 
-  const [showSidebar, setShowSidebar] = useState("None");
+  const [showSidebar, setShowSidebar] = useState("Search");
   const [sidebarOpacity, setSidebarOpacity] = useState(true);
   
   // const renderSidebar = () => {
@@ -109,14 +109,15 @@ const signInButtonHandler = () => {
       <div className="sidebarMainDiv fixed top-0 left-0 w-20 shadow-lg z-50">
         <div className="container mx-auto z-50">
           <div className="grid grid-cols-1 gap-4">
-            <div className="sidebarLogo">
-              <img className="h-16 mx-auto" src="/horseOnlyLogo.png" alt="Your Company"></img>
+            <h5 className="text-sm text-center mt-2">Crusaders</h5>
+            <div className="sidebarLogo ">
+              <img className="h-16 mx-auto " src="/horseOnlyLogo.png" alt="Your Company"></img>
             </div>
             <ul className="list-outside ... sidebarLinkList">
-              <li className="flex items-center space-x-2 sidebarIcon group">
+              <li className=" flex items-center space-x-2 sidebarIcon group">
                 <a
                   href="/"
-                  className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
+                  className="text-gray-300 rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -397,6 +398,13 @@ const signInButtonHandler = () => {
 
       {/* <ToggleSidebar setShowSidebar={setShowSidebar}/> */}
       {showSidebar === "None" && <ToggleSidebar props={undefined} type={''} sidebarOpacity={undefined} />}
+      {showSidebar === "Search" && (
+        <ToggleSidebar
+          type="Search"
+          props={sidebarData[0]}
+          sidebarOpacity={sidebarOpacity}
+        />
+      )}
       {showSidebar === "Messages" && (
         <ToggleSidebar
           type="Messages"
