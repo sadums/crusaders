@@ -89,7 +89,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
     if (type === "Messages") {
       return (
         <div
-          className={`bottom-0 top-20 left-20 w-[26.7vw] text-white fixed z-10 ease-in-out duration-500 ${
+          className={`bottom-0 top-20 left-20 w-72 text-white fixed z-10 ease-in-out duration-500 ${
             sidebarOpacity
               ? "translate-y-full opacity-0"
               : "translate-y-0 opacity-1"
@@ -102,7 +102,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
     if (type === "Likes") {
       return (
         <div
-          className={`bottom-0 p-5 top-32 left-20 w-[26.7vw] text-white fixed z-10 ease-in-out duration-500 ${
+          className={`bottom-0 p-5 top-32 left-20 w-72 text-white fixed z-10 ease-in-out duration-500 ${
             sidebarOpacity
               ? "translate-y-full opacity-0"
               : "translate-y-0 opacity-1"
@@ -110,7 +110,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
         >
           <h1 className="pb-4">Your Liked Posts:</h1>
           <div
-            className="grid grid-cols-2 gap-3 scroll homepageLikedPosts"
+            className="grid grid-cols-1 gap-3 scroll homepageLikedPosts"
             style={{
               maxHeight: "100%",
               overflowY: "scroll",
