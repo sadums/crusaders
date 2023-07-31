@@ -34,7 +34,7 @@ type Query {
     getAllUsers: [User]
     getUserById(input: ID) : User
     getLoggedInUser: User
-    #get a single post
+    getPost(postId: ID!): Post
   }
 
 type Mutation {
@@ -42,14 +42,18 @@ type Mutation {
     addPost(input: newPostInput!): User
     login(email: String!, password: String!): AuthPayload
     deleteUser: User
-<<<<<<< HEAD
-    editUser(input: CreateUserInput!) : AuthPayload
-=======
->>>>>>> 03771d3357376cc4d7fcaa58ffcc9b99ce5d5532
-    #Delete post
-    #Edit post
-    #Add post to user
-    
+    editUser(input: UpdateUserInput!) : AuthPayload
+    deletePost(postId: ID!): User
+    updatePost(postId: ID!, input: updatePostInput!): User
+}
+
+input updatePostInput {
+  image: String
+  video: String
+  title: String
+  body: String
+  createdAt: String
+  hashtags: [hashtagInput]
 }
 
 input CreateUserInput {
@@ -58,6 +62,10 @@ input CreateUserInput {
     password: String!
   }
 
+  input UpdateUserInput {
+    username: String
+    email: String
+  }
 
   input newPostInput {
     image: String
