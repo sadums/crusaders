@@ -144,8 +144,12 @@ const Sidebar: React.FC<NavbarProps> = ({
               </li>
               <li className="flex items-center space-x-2 sidebarIcon group">
                 <a
-                  href="/explore"
+                  href="#"
                   className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
+                  onClick={() => {
+                    handleSidebarChange("Search");
+                    setSidebarOpacity(!sidebarOpacity);
+                  }}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -164,6 +168,20 @@ const Sidebar: React.FC<NavbarProps> = ({
                 </a>
                 <span className="sidebarIconInfo group-hover:scale-100">
                   Search
+                </span>
+              </li>
+              <li className="flex items-center space-x-2 sidebarIcon group">
+                <a
+                  href="/Explore"
+                  className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5l-3.9 19.5m-2.1-19.5l-3.9 19.5" />
+</svg>
+
+                </a>
+                <span className="sidebarIconInfo group-hover:scale-100">
+                  Explore
                 </span>
               </li>
               <li className="flex items-center space-x-2 sidebarIcon group">
