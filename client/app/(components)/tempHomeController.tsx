@@ -74,10 +74,9 @@ function HomeController() {
   ) => {
     event.preventDefault();
     const target = event.target as HTMLFormElement;
-    // console.log([target.form])
-    const newHashtag = target.form[0].value;
+    const newHashtag = target.form[4].value;
     addHashtags((prev) => [...prev, newHashtag]);
-    target.form[0].value = "";
+    target.form[4].value = "";
   };
 
   const createPostHandler = async (event: React.FormEvent) => {
@@ -91,7 +90,7 @@ function HomeController() {
       hashtags: hashtags
     }
     console.log(postInput)
-    //Fill this out later
+    //Connect to backend
   };
 
   const handleSetPictureState = (url: string): void => {
@@ -110,7 +109,6 @@ function HomeController() {
           <div className="homePageFeedMainDiv">
           <div className="feedPostsTop"></div>
           <FeedPosts users={tempUsers} />
-          </div>
         </div>
 
         <div className="col-span-2">
@@ -201,7 +199,6 @@ function HomeController() {
                         </div>
                       ))}
                     </div>
-                    <form>
                       <input
                         type="text"
                         id=""
@@ -216,7 +213,6 @@ function HomeController() {
                       >
                         Add
                       </button>
-                    </form>
                   </div>
                   <button
                     onClick={createPostHandler}
@@ -228,14 +224,14 @@ function HomeController() {
                 </form>
               </div>
             </div>
-            <div className={`mt-4 homepageInfoDivs w-[50%]`}>
+            <div className={`homepageInfoDivs w-[50%]`}>
               <h3>Go Pro!</h3>
               <p>Get a one month free trial idk</p>
               <button className=" px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 hover:scale-105">
                 Sign up
               </button>
             </div>
-            <div className="mt-4 homepageInfoDivs w-[50%]">
+            <div className="homepageInfoDivs w-[50%]">
               <h3>Who To Follow</h3>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
@@ -280,7 +276,7 @@ function HomeController() {
             </div>
             {/* <div className="homepageInfoDivs">
               <h3>Your Interests</h3> */}
-            <form className="mt-4 max-w-sm p-4 rounded-lg shadow homepageInfoDivs w-[50%]">
+            <form className="max-w-sm mt-8 p-4 bg-gray-100 rounded-lg shadow homepageInfoDivs w-[50%]">
               <div className="mb-2">
                 <h3>Your Interests</h3>
                 <div className="flex items-center flex-wrap infoInterestsDiv">
