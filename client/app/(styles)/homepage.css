@@ -1,5 +1,7 @@
 .homePageMainDiv {
     height: 100%;
+    border: solid 0px black;
+    border-radius: 15px 0px 0px 0px;
 }
 
 .homePageFeedMainDiv {
@@ -7,12 +9,18 @@
     top: 0;
     bottom: 0;
     height: 98vh;
-    width: 90%;
-    margin-left: 10%;
+    
+    margin-left: 0%;
     /* padding: 3%; */
     /* background-color: rgb(19, 25, 34); */
-    border: solid rgb(79, 70, 229);
+    border: solid #1ADECD;
     border-width: 0px 2px 0px 2px;
+    /* background-color: #0b0f14; */
+}
+
+.homePageGrid {
+    border: solid 1px black;
+    border-radius: 15px 0px 0px 0px;
 }
 
 .homePageFeedMainDiv::-webkit-scrollbar {
@@ -29,7 +37,7 @@
 /* For side info */
 
 .homepageInfoMainDiv {
-    padding: 2%;
+    /* padding: 2%; */
     margin-top: 8%;
 }
 
@@ -43,8 +51,8 @@
 
 .homepageInfoDivs {
     height: 100%;
-    width: 100%;
-    background-color: rgb(19, 25, 34);
+    /* background-color: rgb(19, 25, 34); */
+    background-color: #131922;
     border: solid 2px rgb(79, 70, 229);
     border-radius: 15px;
     padding: 3%;
@@ -61,4 +69,11 @@
 
 .infoInterestsDiv {
     flex-wrap: wrap;
+}
+
+/* For Secondary Menu */
+
+.secondaryMenuMainDiv {
+    border: solid 0px black;
+    border-radius: 15px 0px 0px 0px;
 }
