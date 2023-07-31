@@ -101,3 +101,9 @@
 .messagesUserPFP img {
     border: solid 2px rgb(79,70,229);
 }
+
+/* For Likes Scroll */
+
+.homepageLikedPosts::-webkit-scrollbar {
+    display: none;
+}
