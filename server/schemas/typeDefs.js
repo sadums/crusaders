@@ -68,6 +68,8 @@ input CreateUserInput {
   input UpdateUserInput {
     username: String
     email: String
+    bio: String
+    pfp: String
   }
 
   input newPostInput {

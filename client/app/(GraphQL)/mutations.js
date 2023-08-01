@@ -25,3 +25,23 @@ export const LOGIN_MUTATION = gql`
     }
   }
 `;
+
+export const UPDATE_USER_MUTATION = gql`
+  mutation UpdateUser($input: UpdateUserInput!) {
+    editUser(input: $input) {
+      token
+      user {
+        username
+        email
+        bio
+        pfp
+        followers {
+          _id
+        }
+        following {
+          _id
+        }
+      }
+    }
+  }
+`;
