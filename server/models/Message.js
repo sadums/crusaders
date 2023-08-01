@@ -1,14 +1,8 @@
-const { Schema } = require("mongoose");
+const { Schema, model } = require("mongoose");
 
 const messageSchema = new Schema({
-  // user one sent the message
-  userOne: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  // user two received the message
-  userTwo: {
+  // user who sent the message
+  author: {
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
@@ -20,6 +14,13 @@ const messageSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-});
+},
+  {
+    toJSON: {
+      virtuals: true,
+    },
+  });
 
-module.exports = messageSchema
+
+
+module.exports = messageSchema;

@@ -13,6 +13,11 @@ type User {
     following: [User]
   }
 
+type Message {
+  _id: ID
+  
+}
+
 type Post {
     _id: ID
     image: String
