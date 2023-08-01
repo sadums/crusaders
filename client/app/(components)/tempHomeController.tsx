@@ -5,10 +5,11 @@ import FeedPosts from "./feedPosts";
 import ToggleSidebar from "./toggleSidebar";
 import MessagesSidebar from "./messagesSidebar";
 import Sidebar from "./sidebar";
-import { useState, ChangeEvent, MouseEventHandler } from "react";
+import { useState, useRef, ChangeEvent, MouseEventHandler } from "react";
 import PictureUploader from "./pictureUploader";
 import { ADD_POST } from "../(GraphQL)/mutations";
 import { useMutation } from "@apollo/client";
+import Auth from "../(utils)/auth";
 
 function HomeController() {
   // For fake posts
@@ -67,46 +68,56 @@ function HomeController() {
     },
   ];
 
-  const [addPostMutation, { data: addPostData }] = useMutation(ADD_POST);
+  const [addPostMutation, { loading, error, data }] = useMutation(ADD_POST);
 
   const [createPostDiv, showCreatePostDiv] = useState(false);
   const [hashtags, addHashtags] = useState<string[]>([]);
   const [pictureState, setPictureState] = useState<string>("");
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const handleHashtagAddition = (
-    event: React.MouseEvent<HTMLInputElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
-    const target = event.target as HTMLFormElement;
-    const newHashtag = target.form[4].value;
-    addHashtags((prev) => [...prev, newHashtag]);
-    target.form[4].value = "";
+
+    // Ensure the inputRef is current and has a value property
+    if (inputRef.current && inputRef.current.value) {
+      const newHashtag = inputRef.current.value;
+      addHashtags((prev) => [...prev, newHashtag]);
+      inputRef.current.value = "";
+    }
   };
 
   const createPostHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
       const target = event.target as HTMLFormElement;
+      type HashtagInput = {
+        hashtagText: string;
+      };
+      
+      const inputHashtags: HashtagInput[] = [];
+      //const hashtags: string[] = ["newpost", "graphql"]; // Example hashtags
+      
+      hashtags.forEach((tag) => {
+        inputHashtags.push({ hashtagText: tag });
+      });
+      
+      console.log(inputHashtags);
       const postInput = {
         image: pictureState, //We need something to dif the pics from the videos
-        video: pictureState,
+        video: '',
         title: target.form[1].value,
         body: target.form[2].value,
-        hashtags: hashtags,
+        hashtags: inputHashtags,
       };
       console.log(postInput);
 
-      const newPostData = {
-        image: "image_link",
-        video: "video_link",
-        title: "New post title",
-        body: "Post body",
-        createdAt: new Date().toISOString(),
-        hashtags: [{ hashtagText: "newpost" }, { hashtagText: "graphql" }]
-      };
-
-      const response = await addPostMutation({ variables: { input: newPostData } })
-      console.log(response)
+      const response = await addPostMutation({
+        variables: { input: postInput },
+      });
+      console.log(response);
       //Connect to backend
     } catch (err) {
       console.error(err);
@@ -120,7 +131,6 @@ function HomeController() {
   return (
     <div className="homePageMainDiv bg-darkestCoolGray ml-20">
       <div className="grid grid-cols-6 gap-4">
-
         <div className="col-span-1 bg-[#131922]">
           <div className="bg-darkCoolGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
         </div>
@@ -221,6 +231,7 @@ function HomeController() {
                     </div>
                     <input
                       type="text"
+                      ref={inputRef}
                       id=""
                       placeholder="Hashtag"
                       className="text-white mt-2 bg-transparent border-solid border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[20%]"

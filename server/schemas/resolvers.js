@@ -68,14 +68,16 @@ const resolvers = {
     addPost: async (parent, { input }, context) => {
       console.log(input)
       try {
-        console.log(input);
-        console.log(context);
+        // console.log(input);
         const { user } = context;
+        console.log(user)
         const updatedUser = await User.findByIdAndUpdate(
           user._id,
           { $addToSet: { posts: input } },
           { new: true }
         );
+        
+        console.log(updatedUser)
         return updatedUser;
       } catch (err) {
         console.error(err);
