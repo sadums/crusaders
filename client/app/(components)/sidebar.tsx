@@ -67,15 +67,10 @@ const Sidebar: React.FC<NavbarProps> = ({
   const [showSidebar, setShowSidebar] = useState("Search");
   const [sidebarOpacity, setSidebarOpacity] = useState(true);
 
-  // useEffect(() => {
-  //   if(showSidebar === "Search") {
-  //     <ToggleSidebar
-  //         type="Search"
-  //         props={sidebarData[0]}
-  //         sidebarOpacity={!sidebarOpacity}
-  //       />
-  //   }
-  // },[])
+  useEffect(() => {
+    handleSidebarChange("Notifications");
+    setSidebarOpacity(!sidebarOpacity);
+  }, []);
 
   //This error is typescript I will change
   const handleSidebarChange = (page: any) => setShowSidebar(page);
@@ -151,10 +146,20 @@ const Sidebar: React.FC<NavbarProps> = ({
                   href="/Explore"
                   className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5l-3.9 19.5m-2.1-19.5l-3.9 19.5" />
-</svg>
-
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5l-3.9 19.5m-2.1-19.5l-3.9 19.5"
+                    />
+                  </svg>
                 </a>
                 <span className="sidebarIconInfo group-hover:scale-100">
                   Explore
@@ -186,6 +191,34 @@ const Sidebar: React.FC<NavbarProps> = ({
               </li>
               {Auth.loggedIn() ? (
                 <>
+                  <li className=" flex items-center space-x-2 sidebarIcon group">
+                    <a
+                      href="#"
+                      className="text-gray-300 rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
+                      onClick={() => {
+                        handleSidebarChange("Notifications");
+                        setSidebarOpacity(!sidebarOpacity);
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-7 h-7"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
+                        />
+                      </svg>
+                    </a>
+                    <span className="sidebarIconInfo group-hover:scale-100">
+                      Notifications
+                    </span>
+                  </li>
                   <li className="flex items-center space-x-2 sidebarIcon group">
                     <a
                       href="/Messages"
@@ -440,6 +473,13 @@ const Sidebar: React.FC<NavbarProps> = ({
         <ToggleSidebar
           type="Messages"
           props={sidebarData[0]}
+          sidebarOpacity={sidebarOpacity}
+        />
+      )}
+      {showSidebar === "Notifications" && (
+        <ToggleSidebar
+          type="Notifications"
+          props={sidebarData[1]}
           sidebarOpacity={sidebarOpacity}
         />
       )}
