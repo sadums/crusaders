@@ -19,8 +19,21 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    pfp: {
+      type: String,
+      default: 'https://cdn.discordapp.com/attachments/1110381245063503936/1135348931778322453/image.png'
+    },
+    bio: {
+      type: String,
+    },
     posts: [postSchema],
-    friends: [
+    followers: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    following: [
       {
         type: Schema.Types.ObjectId,
         ref: "User",

@@ -109,6 +109,7 @@ function HomeController() {
           <div className="homePageFeedMainDiv">
           <div className="feedPostsTop"></div>
           <FeedPosts users={tempUsers} />
+          </div>
         </div>
         </div>
 
@@ -325,8 +326,6 @@ function HomeController() {
           </div>
         </div>
       </div>
-      {/* <ToggleSidebar/> */}
-    </div>
   );
 }
 
