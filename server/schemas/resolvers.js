@@ -123,20 +123,22 @@ const resolvers = {
     },
     editUser: async (parent, {input}, context) => {
       try{
-        const { user } = context;
+        const selectedUser  = context.user;
         console.log(input)
-        console.log(user)
+        console.log(selectedUser)
         const fieldsToUpdate = {};
         if (input.username) fieldsToUpdate.username = input.username;
         if (input.email) fieldsToUpdate.email = input.email;
+        if (input.pfp) fieldsToUpdate.pfp = input.pfp;
+        if (input.bio) fieldsToUpdate.bio = input.bio;
     
-        const updatedUser = await User.findByIdAndUpdate(
-          user._id,
+        const user = await User.findByIdAndUpdate(
+          selectedUser._id,
           fieldsToUpdate,
           { new: true }
         );
-        const token = signToken(updatedUser);
-        return { token, user }; //This doesn't update in tests because the context is fixed, might update on the website
+        const token = signToken(user);
+        return { token: token, user: user }; //This doesn't update in tests because the context is fixed, might update on the website
       }catch(err){
         console.error(err)
       }

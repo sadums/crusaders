@@ -326,8 +326,6 @@ function HomeController() {
           </div>
         </div>
       </div>
-      {/* <ToggleSidebar/> */}
-    </div>
   );
 }
 
