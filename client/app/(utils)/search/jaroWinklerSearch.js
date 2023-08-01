@@ -52,5 +52,5 @@ export default function jaroWinkler(s1, s2) {
   
       jaroDist += 0.1 * prefix * (1 - jaroDist);
     }
-    return jaroDist.toFixed(6);
+    return +jaroDist.toFixed(6);
   }
