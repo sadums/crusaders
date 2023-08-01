@@ -69,6 +69,65 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
     },
   ];
 
+  const tempNotificationData = [
+    {
+      type: "friendRequest",
+      data: {
+        senderName: "Sadums",
+        pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.4diJwgKVPmNeaSOImvSHggHaE8%26pid%3DApi&f=1&ipt=f9cd121a49cfa9f697da84d17b5502471593277070c3e1da0f67641522f9ee46&ipo=images",
+      },
+    },
+    {
+      type: "messageResponse",
+      data: {
+        senderName: "Carreejoh",
+        message: "Random response",
+        pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.4diJwgKVPmNeaSOImvSHggHaE8%26pid%3DApi&f=1&ipt=f9cd121a49cfa9f697da84d17b5502471593277070c3e1da0f67641522f9ee46&ipo=images",
+      },
+    },
+    {
+      type: "friendRequest",
+      data: {
+        senderName: "Xtra",
+        pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.4diJwgKVPmNeaSOImvSHggHaE8%26pid%3DApi&f=1&ipt=f9cd121a49cfa9f697da84d17b5502471593277070c3e1da0f67641522f9ee46&ipo=images",
+      },
+    },
+    {
+      type: "friendRequest",
+      data: {
+        senderName: "RandomGuy",
+        pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.4diJwgKVPmNeaSOImvSHggHaE8%26pid%3DApi&f=1&ipt=f9cd121a49cfa9f697da84d17b5502471593277070c3e1da0f67641522f9ee46&ipo=images",
+      },
+    },
+    {
+      type: "messageResponse",
+      data: {
+        senderName: "TitanicYoshi",
+        message: "Whats up my guy",
+        pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.4diJwgKVPmNeaSOImvSHggHaE8%26pid%3DApi&f=1&ipt=f9cd121a49cfa9f697da84d17b5502471593277070c3e1da0f67641522f9ee46&ipo=images",
+      },
+    },
+  ];
+
+  interface FriendRequestNotificationData {
+    senderName: string;
+    pfp: string;
+  }
+
+  interface MessageNotificationData {
+    senderName: string;
+    message: string;
+    pfp: string;
+  }
+
+  // const FriendRequestNotification = (data: FriendRequestNotificationData) => {
+  //   return (
+  //     <div className="flex">
+  //       <img className="h-14 w-14 rounded-full" src={data.pfp}></img>
+  //     </div>
+  //   );
+  // };
+
   const sidebarSelector = () => {
     if (type === "Search") {
       const [search, setSearch] = useState("");
@@ -79,10 +138,16 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
       const [result4, setResult4] = useState("");
       const [result5, setResult5] = useState("");
 
-      const setResults = (e:React.ChangeEvent<HTMLInputElement>) => {
+      const setResults = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
         const start = Date.now();
-        const topFive:[[any | null, number],[any | null, number],[any | null, number],[any | null, number],[any | null, number]] = [
+        const topFive: [
+          [any | null, number],
+          [any | null, number],
+          [any | null, number],
+          [any | null, number],
+          [any | null, number]
+        ] = [
           [null, 0.85],
           [null, 0.85],
           [null, 0.85],
@@ -102,11 +167,11 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
             }
           }
         }
-        setResult1(topFive[0][0])
-        setResult2(topFive[1][0])
-        setResult3(topFive[2][0])
-        setResult4(topFive[3][0])
-        setResult5(topFive[4][0])
+        setResult1(topFive[0][0]);
+        setResult2(topFive[1][0]);
+        setResult3(topFive[2][0]);
+        setResult4(topFive[3][0]);
+        setResult5(topFive[4][0]);
 
         const end = Date.now();
         console.log(`Time spent: ${end - start}ms`);
@@ -217,6 +282,131 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
             {tempLikedPostData.map((post) => (
               <ProfilePosts key={post.picture} postInfo={post} />
             ))}
+          </div>
+        </div>
+      );
+    }
+    if (type === "Notifications") {
+      return (
+        <div
+          className={`bottom-0 p-3 top-32 left-20 w-72 text-white fixed z-10 ease-in-out duration-500 ${
+            sidebarOpacity
+              ? "translate-y-full opacity-0"
+              : "translate-y-0 opacity-1"
+          }`}
+        >
+          <h4>Notifications</h4>
+          <div>
+            {tempNotificationData.map((notif) => {
+              if (notif.type === "friendRequest") {
+                return (
+                  <div className="border-coolGray border-2 rounded-xl bg-coolGray p-1 mt-3">
+                    <div className="flex justify-between">
+                      {" "}
+                      <div className="flex">
+                        <img
+                          className="h-10 w-10 rounded-full mt-1"
+                          src={notif.data.pfp}
+                        ></img>
+                        <div className="left-0">
+                          <a className="ml-2 text-lg cursor-pointer">
+                            {notif.data.senderName}
+                          </a>
+                          <h4 className="ml-2 text-[.8rem] text-gray-400">
+                            Has sent you a friend request
+                          </h4>
+                        </div>
+                      </div>
+                      <a className="mt-1 cursor-pointer hover:rotate-3 duration-150 ease-in-out">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-5 h-5"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                      </a>{" "}
+                    </div>
+                    <div className="flex justify-evenly mt-2">
+                      <button className="text-green-400 text-sm border-green-400 border-[1px] pl-1 pr-1 p-[.5%] rounded-md hover:bg-green-400 hover:text-black duration-150 ease-in-out">
+                        Accept
+                      </button>
+                      <button className="text-red-400 text-sm border-red-400 border-[1px] pl-1 pr-1 p-[.5%] rounded-md hover:bg-red-400 hover:text-black duration-150 ease-in-out">
+                        Decline
+                      </button>
+                    </div>
+                  </div>
+                );
+              }
+              if (notif.type === "messageResponse") {
+                return (
+                  <div className="border-coolGray border-2 rounded-xl bg-coolGray p-1 mt-3">
+                    <div className="flex justify-between">
+                      {" "}
+                      <div className="flex">
+                        <img
+                          className="h-10 w-10 rounded-full mt-1"
+                          src={notif.data.pfp}
+                        ></img>
+                        <div>
+                          <a className="ml-2 text-lg cursor-pointer">
+                            {notif.data.senderName}
+                          </a>
+                          <h4 className="ml-2 text-[.8rem] text-gray-400">
+                            Has sent you a message
+                          </h4>
+                        </div>
+                      </div>
+                      <a className="mt-1 cursor-pointer hover:rotate-3 duration-150 ease-in-out">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-5 h-5"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                      </a>{" "}
+                    </div>
+                    <div className="flex mt-2">
+                      <button className="ml-11 text-customPurple text-sm border-customPurple border-[1px] pl-1 pr-1 p-[.5%] rounded-md hover:bg-customPurple hover:text-white duration-150 ease-in-out">
+                        <div className="flex">
+                        Respond
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-5 h-5"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                          />
+                        </svg>
+                        </div>
+                        
+                      </button>
+                    </div>
+                  </div>
+                );
+              }
+            })}
           </div>
         </div>
       );
