@@ -16,7 +16,9 @@ const resolvers = {
     getLoggedInUser: async (parent, { input }, context) => {
       try {
         const { user } = context;
+        console.log("user")
         const selectedUser = await User.findById(user._id);
+        console.log(selectedUser)
         return selectedUser;
       } catch (err) {
         console.error(err);

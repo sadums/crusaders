@@ -4,10 +4,13 @@ const typeDefs = gql`
 type User {
     _id: ID
     username: String!
+    bio: String
+    pfp: String
     email: String!
     password: String!
     posts: [Post]
-    friends: [User]
+    followers: [User]
+    following: [User]
   }
 
 type Post {

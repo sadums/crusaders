@@ -59,14 +59,6 @@ export default function RootLayout({
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState<boolean>(false);
   const [isLoggedin, setIsLoggedIn] = useState(false);
 
-  // const handleOpenSignInModal = () => {
-  //   setIsSignInModalOpen(true);
-  // };
-
-  // const handleCloseSignInModal = () => {
-  //   setIsSignInModalOpen(false);
-  // };
-
   return (
     <ApolloProvider client={client}>
       <html lang="en">
