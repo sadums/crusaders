@@ -66,7 +66,7 @@ console.log(userInfo)
       <div className="profileSideInfoMainDiv mb-0">
         <img
           src={userData.pfp}
-          className="h-40 w-auto rounded-full object-cover"
+          className="h-40 w-40 rounded-full object-cover"
         ></img>
         <h1 className="text text-2xl mt-4">
           @{userData ? userData.username : ""}
