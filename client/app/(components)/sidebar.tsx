@@ -1,7 +1,7 @@
 "use client";
 
 import "../(styles)/navbar.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ToggleSidebar from "./toggleSidebar";
 import { render } from "react-dom";
 import Auth from "../(utils)/auth";
@@ -24,12 +24,6 @@ const Sidebar: React.FC<NavbarProps> = ({
     console.log("SIGN IN");
     setIsSignInModalOpen(true);
   };
-
-  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  // const handleToggleSidebar = () => {
-  //   setIsSidebarOpen(!isSidebarOpen);
-  // };
 
   const sidebarData = [
     {
@@ -73,33 +67,15 @@ const Sidebar: React.FC<NavbarProps> = ({
   const [showSidebar, setShowSidebar] = useState("Search");
   const [sidebarOpacity, setSidebarOpacity] = useState(true);
 
-  // const renderSidebar = () => {
-  //   if (showSidebar === "None") {
-  //     return (
-  //       <>
-  //         <ToggleSidebar />
-  //       </>
-  //     );
-  //   }
-  //   if (showSidebar === "Messages") {
-  //     return (
-  //       <ToggleSidebar
-  //         type="Messages"
+  // useEffect(() => {
+  //   if(showSidebar === "Search") {
+  //     <ToggleSidebar
+  //         type="Search"
   //         props={sidebarData[0]}
-  //         sidebarOpacity={sidebarOpacity}
+  //         sidebarOpacity={!sidebarOpacity}
   //       />
-  //     );
   //   }
-  //   if (showSidebar === "Likes") {
-  //     return (
-  //       <ToggleSidebar
-  //         type="Likes"
-  //         props={sidebarData[1]}
-  //         sidebarOpacity={sidebarOpacity}
-  //       />
-  //     );
-  //   }
-  // };
+  // },[])
 
   //This error is typescript I will change
   const handleSidebarChange = (page: any) => setShowSidebar(page);
@@ -212,12 +188,12 @@ const Sidebar: React.FC<NavbarProps> = ({
                 <>
                   <li className="flex items-center space-x-2 sidebarIcon group">
                     <a
-                      href="#"
+                      href="/Messages"
                       className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
-                      onClick={() => {
-                        handleSidebarChange("Messages");
-                        setSidebarOpacity(!sidebarOpacity);
-                      }}
+                      // onClick={() => {
+                      //   handleSidebarChange("Messages");
+                      //   setSidebarOpacity(!sidebarOpacity);
+                      // }}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

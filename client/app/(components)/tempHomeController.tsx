@@ -100,7 +100,7 @@ function HomeController() {
   return (
     <div className="homePageMainDiv bg-darkestCoolGray ml-20">
       <div className="grid grid-cols-6 gap-4">
-        <div className="col-span-1 bg-[#131922]">
+        <div className="col-span-1 bg-[#131922] border-coolGray border-r-4">
           <div className="bg-darkCoolGray h-[100%] p-2 pt-20 secondaryMenuMainDiv">
 
           </div>
