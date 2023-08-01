@@ -53,14 +53,17 @@ export const ADD_POST = gql`
       username
       posts {
         _id
-        title
-        body
         image
         video
+        title
+        body
         createdAt
-        hashtags {
+        comments {
           _id
-          tag
+          body
+        }
+        hashtags {
+          hashtagText
         }
       }
     }
