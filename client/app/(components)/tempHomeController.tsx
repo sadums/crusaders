@@ -111,7 +111,6 @@ function HomeController() {
           <FeedPosts users={tempUsers} />
           </div>
         </div>
-        </div>
 
         <div className="col-span-2">
           <div className="homepageInfoMainDiv">
@@ -278,7 +277,7 @@ function HomeController() {
             </div>
             {/* <div className="homepageInfoDivs">
               <h3>Your Interests</h3> */}
-            <form className="max-w-sm mt-4 p-4 bg-gray-100 rounded-lg shadow homepageInfoDivs w-[50%]">
+            <form className="max-w-sm mt-4 p-4 bg-coolGray rounded-lg shadow homepageInfoDivs w-[50%]">
               <div className="mb-2">
                 <h3>Your Interests</h3>
                 <div className="flex items-center flex-wrap infoInterestsDiv">
@@ -325,6 +324,7 @@ function HomeController() {
             </form>
           </div>
         </div>
+      </div>
       </div>
   );
 }
