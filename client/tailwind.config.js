@@ -25,7 +25,7 @@ module.exports = {
 
       },
       fontFamily: {
-        crusadersFont: ''
+        crusadersFont: 'Wallpoet'
       }
     },
   },

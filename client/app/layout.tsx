@@ -70,6 +70,18 @@ export default function RootLayout({
   return (
     <ApolloProvider client={client}>
       <html lang="en">
+        <head>
+          <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+          <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossOrigin="anonymous"
+          ></link>
+          <link
+            href="https://fonts.googleapis.com/css2?family=Manrope&family=Wallpoet&display=swap"
+            rel="stylesheet"
+          ></link>
+        </head>
         <body className={inter.className}>
           <Sidebar
             setIsSignInModalOpen={setIsSignInModalOpen}
