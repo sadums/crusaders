@@ -7,20 +7,22 @@ const { authMiddleware } = require("./utils/auth");
 
 
 const PORT = process.env.PORT || 5500;
+//Test context
+// const mockUserContext = {
+//   _id: "64b86fccf4d25ea89637ce4b",
+//   username: "johnDoe",
+//   email: "johnDoe@example.com",
+// };
 
-const mockUserContext = {
-  _id: "64b86fccf4d25ea89637ce4b",
-  username: "johnDoe",
-  email: "johnDoe@example.com",
-};
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: () => {
-    return { user: mockUserContext }; 
-  },
+  context: ({ req }) => ({ req, user: req.user }),
+  //Test context
+  // context: () => {
+  //   return { user: mockUserContext }; 
+  // },
 });
-//This context is temporary, and you will have to change the _id
 app.use(authMiddleware);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

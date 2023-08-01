@@ -1,6 +1,11 @@
+"use client"
 import "../(styles)/profile.css";
 import ProfileSideInfo from "../(components)/profileSideInfo";
 import ProfilePosts from "../(components)/profilePosts";
+import { useEffect } from "react";
+
+import { useQuery } from '@apollo/client';
+import { GET_LOGGED_IN_USER } from "../(GraphQL)/queries"
 
 export default function Profile() {
   const sidebarInfo = {
@@ -77,17 +82,22 @@ export default function Profile() {
     }
   ];
 
+  const { loading, error, data } = useQuery(GET_LOGGED_IN_USER);
+  console.log(data)
+  useEffect(()=> {
+    console.log('PROFILE PAGE LOADED')
+  }, [])
   return (
     <div className="profileMainDiv">
       <div className="grid grid-cols-10 gap-4">
         <div className="col-span-2">{/* For Spacing */}</div>
         <div className="col-span-2 w-[100%]">
-          <ProfileSideInfo userInfo={sidebarInfo} />
+          {data && <ProfileSideInfo userData={data.getLoggedInUser} />}
         </div>
         <div className="col-span-5 bg-slate-400 w-[100%] h-5 profilePostsMainDiv">
           <div className="grid grid-cols-3 gap-3">
-            {profilePostData.map((post) => (
-              <ProfilePosts postInfo={post} />
+            {profilePostData.map((post, index) => (
+              <ProfilePosts postInfo={post} key={index}/>
             ))}
           </div>
         </div>
