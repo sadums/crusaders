@@ -10,6 +10,17 @@ const hashtagSchema = new Schema({
   },
 });
 
+const commentSchema = new Schema({
+  body: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+})
+
 const postSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
@@ -28,6 +39,9 @@ const postSchema = new Schema({
   },
   body: {
     type: String,
+  },
+  comments: {
+    type: [commentSchema]
   },
   createdAt: {
     type: Date,

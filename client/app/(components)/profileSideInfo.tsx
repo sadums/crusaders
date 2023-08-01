@@ -47,7 +47,8 @@ console.log(userInfo)
         const response = await updateUserMutation({
           variables: {input: updateUserData}
         })
-        console.log(response)
+        //Add in error handling for if there is another user with the same name
+        console.log(response.data)
         setUserData(response.data.editUser.user)
         
       } else {
