@@ -13,6 +13,12 @@ type User {
     following: [User]
   }
 
+type Comment {
+  _id: ID
+  body: String!
+  createdAt: String
+}
+
 type Post {
     _id: ID
     image: String
@@ -20,6 +26,7 @@ type Post {
     title: String!
     body: String
     createdAt: String
+    comments: [Comment]
     hashtags: [Hashtag]
 }
 

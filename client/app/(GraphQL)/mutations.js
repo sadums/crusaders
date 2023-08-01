@@ -45,3 +45,24 @@ export const UPDATE_USER_MUTATION = gql`
     }
   }
 `;
+
+export const ADD_POST = gql`
+  mutation AddPost($input: newPostInput!) {
+    addPost(input: $input) {
+      _id
+      username
+      posts {
+        _id
+        title
+        body
+        image
+        video
+        createdAt
+        hashtags {
+          _id
+          tag
+        }
+      }
+    }
+  }
+`;

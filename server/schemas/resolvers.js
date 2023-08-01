@@ -66,8 +66,10 @@ const resolvers = {
       return { token, user };
     },
     addPost: async (parent, { input }, context) => {
+      console.log(input)
       try {
         console.log(input);
+        console.log(context);
         const { user } = context;
         const updatedUser = await User.findByIdAndUpdate(
           user._id,
@@ -141,6 +143,7 @@ const resolvers = {
         return { token: token, user: user }; //This doesn't update in tests because the context is fixed, might update on the website
       }catch(err){
         console.error(err)
+        return(err)
       }
     }
   },
