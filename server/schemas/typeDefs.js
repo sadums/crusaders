@@ -13,6 +13,12 @@ type User {
     following: [User]
   }
 
+type Comment {
+  _id: ID
+  body: String!
+  createdAt: String
+}
+
 type Chat {
   members: [User]
   messages: [Message]
@@ -32,6 +38,7 @@ type Post {
     title: String!
     body: String
     createdAt: String
+    comments: [Comment]
     hashtags: [Hashtag]
 }
 
@@ -87,14 +94,14 @@ input CreateUserInput {
   input newPostInput {
     image: String
     video: String
-    title: String!
+    title: String
     body: String
     createdAt: String
     hashtags: [hashtagInput]
 }
 
 input hashtagInput {
-    hashtagText: String!
+    hashtagText: String
     category: String
 }
 

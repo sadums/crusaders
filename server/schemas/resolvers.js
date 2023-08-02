@@ -66,14 +66,18 @@ const resolvers = {
       return { token, user };
     },
     addPost: async (parent, { input }, context) => {
+      console.log(input)
       try {
-        console.log(input);
+        // console.log(input);
         const { user } = context;
+        console.log(user)
         const updatedUser = await User.findByIdAndUpdate(
           user._id,
           { $addToSet: { posts: input } },
           { new: true }
         );
+        
+        console.log(updatedUser)
         return updatedUser;
       } catch (err) {
         console.error(err);
@@ -141,6 +145,7 @@ const resolvers = {
         return { token: token, user: user }; //This doesn't update in tests because the context is fixed, might update on the website
       }catch(err){
         console.error(err)
+        return(err)
       }
     }
   },
