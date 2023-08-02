@@ -74,6 +74,10 @@ type Mutation {
     createMessage(userId: ID!, body: String!): Chat
 }
 
+type Subscription {
+  hello: String
+}
+
 input updatePostInput {
   image: String
   video: String

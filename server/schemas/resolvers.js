@@ -16,9 +16,9 @@ const resolvers = {
     getLoggedInUser: async (parent, { input }, context) => {
       try {
         const { user } = context;
-        console.log("user")
+        console.log("user");
         const selectedUser = await User.findById(user._id);
-        console.log(selectedUser)
+        console.log(selectedUser);
         return selectedUser;
       } catch (err) {
         console.error(err);
@@ -41,12 +41,11 @@ const resolvers = {
             }
           }
         }
-        throw new Error('Post not found');
+        throw new Error("Post not found");
       } catch (err) {
         console.error(err);
       }
-    }
-       
+    },
   },
   Mutation: {
     createUser: async (parent, { input }, context) => {
@@ -73,18 +72,18 @@ const resolvers = {
       return { token, user };
     },
     addPost: async (parent, { input }, context) => {
-      console.log(input)
+      console.log(input);
       try {
         // console.log(input);
         const { user } = context;
-        console.log(user)
+        console.log(user);
         const updatedUser = await User.findByIdAndUpdate(
           user._id,
           { $addToSet: { posts: input } },
           { new: true }
         );
-        
-        console.log(updatedUser)
+
+        console.log(updatedUser);
         return updatedUser;
       } catch (err) {
         console.error(err);
@@ -99,7 +98,7 @@ const resolvers = {
           { new: true }
         );
         if (!updatedUser) {
-          throw new Error('Post not found');
+          throw new Error("Post not found");
         }
         return updatedUser;
       } catch (err) {
@@ -110,39 +109,39 @@ const resolvers = {
       try {
         const { user } = context;
         const updatedUser = await User.findOneAndUpdate(
-          { _id: user._id, 'posts._id': postId },
-          { 'posts.$': input },
+          { _id: user._id, "posts._id": postId },
+          { "posts.$": input },
           { new: true }
         );
         if (!updatedUser) {
-          throw new Error('Post not found');
+          throw new Error("Post not found");
         }
         return updatedUser;
       } catch (err) {
         console.error(err);
       }
-    },    
-    deleteUser: async (parent, {input}, context) => {
-      try{
+    },
+    deleteUser: async (parent, { input }, context) => {
+      try {
         const { user } = context;
-        console.log(user)
-        const deletedUser = await User.findByIdAndDelete(user._id)
-        return deletedUser
-      }catch(err){
-        console.error(err)
+        console.log(user);
+        const deletedUser = await User.findByIdAndDelete(user._id);
+        return deletedUser;
+      } catch (err) {
+        console.error(err);
       }
     },
-    editUser: async (parent, {input}, context) => {
-      try{
-        const selectedUser  = context.user;
-        console.log(input)
-        console.log(selectedUser)
+    editUser: async (parent, { input }, context) => {
+      try {
+        const selectedUser = context.user;
+        console.log(input);
+        console.log(selectedUser);
         const fieldsToUpdate = {};
         if (input.username) fieldsToUpdate.username = input.username;
         if (input.email) fieldsToUpdate.email = input.email;
         if (input.pfp) fieldsToUpdate.pfp = input.pfp;
         if (input.bio) fieldsToUpdate.bio = input.bio;
-    
+
         const user = await User.findByIdAndUpdate(
           selectedUser._id,
           fieldsToUpdate,
@@ -150,9 +149,9 @@ const resolvers = {
         );
         const token = signToken(user);
         return { token: token, user: user }; //This doesn't update in tests because the context is fixed, might update on the website
-      }catch(err){
-        console.error(err)
-        return(err)
+      } catch (err) {
+        console.error(err);
+        return err;
       }
     },
     createChat: async (parent, { input }, context) => {
@@ -162,8 +161,8 @@ const resolvers = {
       }
       return chat;
     },
-    createMessage: async(parent, {input}, context) => {
-      try{
+    createMessage: async (parent, { input }, context) => {
+      try {
         const chat = context.chat;
         console.log(chat);
         const updatedChat = await Chat.findByIdAndUpdate(
@@ -172,11 +171,21 @@ const resolvers = {
           { new: true }
         );
         return updatedChat;
-      }catch(e){
+      } catch (e) {
         console.error(e);
         return e;
       }
-    }
+    },
+  },
+  Subscription: {
+    hello: {
+      // Example using an async generator
+      subscribe: async function* () {
+        for await (const word of ["Hello", "Bonjour", "Ciao"]) {
+          yield { hello: word };
+        }
+      },
+    },
   },
 };
 
