@@ -13,9 +13,16 @@ type User {
     following: [User]
   }
 
+type Chat {
+  members: [User]
+  messages: [Message]
+}
+
 type Message {
   _id: ID
-  
+  author: String!
+  body: String!
+  createdAt: String
 }
 
 type Post {
