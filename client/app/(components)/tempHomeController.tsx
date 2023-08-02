@@ -96,27 +96,31 @@ function HomeController() {
       type HashtagInput = {
         hashtagText: string;
       };
-      
+
       const inputHashtags: HashtagInput[] = [];
       //const hashtags: string[] = ["newpost", "graphql"]; // Example hashtags
-      
+
       hashtags.forEach((tag) => {
         inputHashtags.push({ hashtagText: tag });
       });
-      
+
       console.log(inputHashtags);
       const postInput = {
         image: pictureState, //We need something to dif the pics from the videos
-        video: '',
+        video: "",
         title: target.form[1].value,
         body: target.form[2].value,
         hashtags: inputHashtags,
       };
       console.log(postInput);
-
+      const id = Auth.getProfile().data._id
       const response = await addPostMutation({
-        variables: { input: postInput },
+        variables: {
+          input: postInput,
+          userId: id,
+        },
       });
+      console.log(response);
       console.log(response);
       //Connect to backend
     } catch (err) {

@@ -45,3 +45,26 @@ export const GET_LOGGED_IN_USER = gql`
   }
 `;
 
+export const GET_USER_BY_ID = gql`
+  query GetUserById($id: ID!) {
+    getUserById(input: $id) {
+      _id
+      username
+      bio
+      pfp
+      email
+      posts {
+        _id
+        title
+        image
+      }
+      followers {
+        _id
+      }
+      following {
+        _id
+      }
+    }
+  }
+`;
+
