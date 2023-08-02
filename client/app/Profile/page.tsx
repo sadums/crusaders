@@ -4,9 +4,9 @@ import ProfileSideInfo from "../(components)/profileSideInfo";
 import ProfilePosts from "../(components)/profilePosts";
 import { useEffect, useState } from "react";
 import PostModal from "../(components)/postModal";
-
+import Auth from '../(utils)/auth'
 import { useQuery, useLazyQuery } from "@apollo/client";
-import { GET_LOGGED_IN_USER, GET_POST } from "../(GraphQL)/queries";
+import { GET_LOGGED_IN_USER, GET_POST, GET_USER_BY_ID } from "../(GraphQL)/queries";
 
 type PostData = {
   title: string;
@@ -95,17 +95,18 @@ export default function Profile() {
         "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.4diJwgKVPmNeaSOImvSHggHaE8%26pid%3DApi&f=1&ipt=f9cd121a49cfa9f697da84d17b5502471593277070c3e1da0f67641522f9ee46&ipo=images",
     },
   ];
-
-  const { loading, error, data } = useQuery(GET_LOGGED_IN_USER);
+  const id = Auth.getProfile().data._id
+  console.log(id)
+  const { loading, error, data } = useQuery(GET_USER_BY_ID, {
+    variables: { id: id },
+  });
   const [getPost, { loading: postLoading, data: postData }] =
     useLazyQuery(GET_POST);
 
   const [showModalState, setShowModalState] = useState(false);
   const [activePostData, setActivePostData] = useState<PostData | null>(null);
-  console.log(data);
-  // useEffect(() => {
-  //   console.log("PROFILE PAGE LOADED");
-  // }, []);
+  // console.log(Auth.getProfile())
+
   const postClickHandler = async (postInfo: any) => {
     console.log(postInfo);
     const response = await getPost({ variables: { postId: postInfo._id } });
@@ -114,19 +115,23 @@ export default function Profile() {
     setActivePostData(post);
     setShowModalState(true);
   };
-  
+
+  // useEffect(() => {
+  //   getUserById();
+  // }, []);
+
   return (
     <div className="profileMainDiv">
       <div className="grid grid-cols-10 gap-4">
         <div className="col-span-2">{/* For Spacing */}</div>
         <div className="col-span-2 w-[100%]">
-          {data && <ProfileSideInfo userInfo={data.getLoggedInUser} />}
+          {data && <ProfileSideInfo userInfo={data.getUserById} />}
         </div>
         <div className="col-span-5 bg-slate-400 w-[100%] h-5 profilePostsMainDiv">
           <div className="grid grid-cols-3 gap-3">
-            {data && (
+            {data && data.getUserById && (
               <>
-                {data.getLoggedInUser.posts.map(
+                {data.getUserById.posts.map(
                   (post: { title: string; image: string }, index: number) => (
                     <ProfilePosts
                       postInfo={post}
@@ -142,17 +147,15 @@ export default function Profile() {
       </div>
       {showModalState && (
         <PostModal
-        //The error is that this data is possibly null which is fine
-        title={activePostData.title}
-          image={
-            activePostData.image
-          }
+          //The error is that this data is possibly null which is fine
+          title={activePostData.title}
+          image={activePostData.image}
           body={activePostData.body}
           //Format the date in the backend
           date={activePostData.createdAt}
           comments={activePostData.comments}
           hashtags={activePostData.comments}
-          username={data.getLoggedInUser.username}
+          username={data.getUserById.username}
           handleClose={function (): void {
             setShowModalState(false);
           }}

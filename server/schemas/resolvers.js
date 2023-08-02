@@ -65,22 +65,18 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    addPost: async (parent, { input }, context) => {
-      console.log(input)
+    addPost: async (parent, { input, userId }) => {
       try {
-        // console.log(input);
-        const { user } = context;
-        console.log(user)
         const updatedUser = await User.findByIdAndUpdate(
-          user._id,
+          userId,
           { $addToSet: { posts: input } },
           { new: true }
         );
-        
-        console.log(updatedUser)
+
         return updatedUser;
       } catch (err) {
         console.error(err);
+        throw new Error('Failed to add post to user.');
       }
     },
     deletePost: async (parent, { postId }, context) => {
