@@ -9,23 +9,6 @@
     padding-right: 10%;
 }
 
-/* .navBarSearchBar {
-    background-color: transparent;
-    border: solid 1px rgb(79,70,229);
-} */
-
-/* For Sidebar */
-
-.sidebarMainDiv {
-    height: 100vh;
-    background-color: rgb(19, 25, 34);
-   /* left: 0;
-    top: 0;
-    position: fixed;
-    z-index: 50;
-    padding: .9%; */
-}
-
 @layer components {
     .sidebarIcon {
         @apply relative flex items-center justify-center
@@ -44,16 +27,6 @@
 .sidebarIconInfo {
     border-radius: 10px;
 }
-
-/* .sidebarLogo {
-    border: solid 0px black;
-    border-radius: 50px;
-} */
-
-/* .sidebarLinkList {
-    border: solid rgb(79,70,229);
-    border-width: 2px 0px 2px 0px;
-} */
 
 /* For toggle sidebar */
 

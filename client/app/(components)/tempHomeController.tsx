@@ -42,7 +42,7 @@ function HomeController() {
       postDesc:
         "Tried out a new restaurant today. The food was absolutely delicious!",
       postImg:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.a5kABNZb-PgRfhxtJfT9swAAAA%26pid%3DApi&f=1&ipt=d9a20e9a00ae0fdb3666da5e63b7988ae6ca1d9ece71a74b0503b437718f32cb&ipo=images",
+        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.R_s3pH6bLBzCRLQWtFgy8gHaEr%26pid%3DApi&f=1&ipt=0760a9256a1e41d30d118b516efb1e41e60f4cf667589341f2b24a8c685536df&ipo=images",
       date: "07/26/2023",
     },
     {
@@ -51,7 +51,7 @@ function HomeController() {
         "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
       postTitle: "Wanderlust",
       postDesc:
-        "In love with this beautiful scenic view. Can't get enough of traveling!",
+        "In love with this beautiful scenic view. Can't get enough of traveling! I love Mexico, Salt Lake, Snwoboaridng, skiing, riding bikes, eating stuff, doing other things, writing code",
       postImg:
         "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.R_s3pH6bLBzCRLQWtFgy8gHaEr%26pid%3DApi&f=1&ipt=0760a9256a1e41d30d118b516efb1e41e60f4cf667589341f2b24a8c685536df&ipo=images",
       date: "07/27/2023",
@@ -138,8 +138,8 @@ function HomeController() {
         <div className="col-span-1 bg-[#131922]">
           <div className="bg-darkCoolGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
         </div>
-        <div className="col-span-3 pl-48">
-          <div className="homePageFeedMainDiv">
+        <div className="col-span-3 pl-64">
+          <div className="homePageFeedMainDiv border-customPurple border-r-[1px] border-l-[1px]">
             <div className="feedPostsTop"></div>
             <FeedPosts users={tempUsers} />
           </div>
@@ -153,7 +153,7 @@ function HomeController() {
               className="px-4 py-2 h-8 rounded-lg focus:outline-none navBarSearchBar"
             /> */}
             <div
-              className={`homepageInfoDivs ease-in-out duration-300 ${
+              className={` ease-in-out duration-300 ${
                 createPostDiv ? "w-[90%]" : "w-[50%]"
               }`}
             >

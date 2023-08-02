@@ -77,7 +77,7 @@ const Sidebar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <div className="sidebarMainDiv fixed top-0 left-0 w-20 shadow-lg z-50">
+      <div className="bg-coolGray h-[100vh] fixed top-0 left-0 w-20 shadow-lg z-50">
         <div className="container mx-auto z-50">
           <div className="grid grid-cols-1 gap-4">
             <h5 className="text-sm text-center mt-2">Crusaders</h5>

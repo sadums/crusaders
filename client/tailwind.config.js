@@ -15,17 +15,21 @@ module.exports = {
       },
       colors: {
         neonBlue: '#1ADECD',
-        lightPink: '#C595FC',
-        darkPurple: '#241F2C',
+        lightPink: '#837dec',
+        darkPurple: '#2f2a89',
         customPurple: '#4F46E5',
 
-        darkestCoolGray: '#030506',
-        darkCoolGray: '#0b0f14',
+        darkestCoolGray: '#070a0d',
+        darkCoolGray: '#0f141b',
         coolGray: '#131922',
 
       },
       fontFamily: {
         crusadersFont: 'Wallpoet'
+      },
+      boxShadow: {
+        notificationShadowBlue: '0 10px 10px -12px rgba(26, 222, 205, 0.6)',
+        notificationShadowPink: '0 10px 10px -10px rgba(131, 125, 236, 0.5)'
       }
     },
   },
