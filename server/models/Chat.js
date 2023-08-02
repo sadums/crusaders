@@ -5,10 +5,10 @@ const chatSchema = new Schema(
   {
     // user who sent the message
     members: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "User"
-        },
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
     ],
     messages: [Message],
     createdAt: {

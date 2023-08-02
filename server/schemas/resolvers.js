@@ -24,6 +24,13 @@ const resolvers = {
         console.error(err);
       }
     },
+    getChatById: async (parent, { input }, context) => {
+      const chat = await Chat.findById(input);
+      if (!chat) {
+        throw new Error("Could not find chat!");
+      }
+      return chat;
+    },
     getPost: async (parent, { postId }, context) => {
       try {
         const users = await User.find({});
@@ -146,6 +153,28 @@ const resolvers = {
       }catch(err){
         console.error(err)
         return(err)
+      }
+    },
+    createChat: async (parent, { input }, context) => {
+      const chat = await Chat.create(input);
+      if (!chat) {
+        throw new Error("Error with making a chat");
+      }
+      return chat;
+    },
+    createMessage: async(parent, {input}, context) => {
+      try{
+        const chat = context.chat;
+        console.log(chat);
+        const updatedChat = await Chat.findByIdAndUpdate(
+          chat._id,
+          { $addToSet: { messages: input } },
+          { new: true }
+        );
+        return updatedChat;
+      }catch(e){
+        console.error(e);
+        return e;
       }
     }
   },

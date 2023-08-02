@@ -23,6 +23,7 @@ const server = new ApolloServer({
     return { user: mockUserContext }; 
   },
 });
+
 app.use(authMiddleware);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

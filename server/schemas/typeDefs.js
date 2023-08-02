@@ -20,13 +20,15 @@ type Comment {
 }
 
 type Chat {
+  _id: ID
   members: [User]
   messages: [Message]
+  createdAt: String
 }
 
 type Message {
   _id: ID
-  author: String!
+  userId: ID!
   body: String!
   createdAt: String
 }
@@ -57,6 +59,7 @@ type Query {
     getUserById(input: ID) : User
     getLoggedInUser: User
     getPost(postId: ID!): Post
+    getChatById(input: ID!): Chat
   }
 
 type Mutation {
@@ -67,6 +70,8 @@ type Mutation {
     editUser(input: UpdateUserInput!) : AuthPayload
     deletePost(postId: ID!): User
     updatePost(postId: ID!, input: updatePostInput!): User
+    createChat(members: [ID]): Chat
+    createMessage(userId: ID!, body: String!): Chat
 }
 
 input updatePostInput {
