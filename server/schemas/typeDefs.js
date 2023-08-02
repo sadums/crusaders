@@ -75,7 +75,7 @@ type Mutation {
 }
 
 type Subscription {
-  hello: String
+  chat: Chat!
 }
 
 input updatePostInput {

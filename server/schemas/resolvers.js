@@ -1,5 +1,8 @@
 const { User, Chat } = require("../models");
 const { signToken } = require("../utils/auth");
+const { PubSub } = require('apollo-server');
+
+const pubsub = new PubSub();
 
 const resolvers = {
   Query: {
@@ -170,6 +173,7 @@ const resolvers = {
           { $addToSet: { messages: input } },
           { new: true }
         );
+        pubsub.publish(`NEW_MESSAGE`, { message: input });
         return updatedChat;
       } catch (e) {
         console.error(e);
@@ -178,14 +182,16 @@ const resolvers = {
     },
   },
   Subscription: {
-    hello: {
-      // Example using an async generator
-      subscribe: async function* () {
-        for await (const word of ["Hello", "Bonjour", "Ciao"]) {
-          yield { hello: word };
-        }
-      },
-    },
+    chat: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator('NEW_MESSAGE'),
+        (payload, variables) => {
+          console.log("HERE")
+          console.log(payload, variables);
+          return (1===1);
+        },
+      ),
+    }
   },
 };
 
