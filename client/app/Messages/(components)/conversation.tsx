@@ -19,21 +19,31 @@ function Conversations({ user, convo }: { user: String; convo: Convo[] }) {
               if (text.speaker === true) {
                 return (
                   <div key={index} className="flex justify-end mt-2">
-                    <div className="border-2 border-blue-600 rounded-2xl p-1 max-w-[60%] bg-blue-300">
-                      <h1 className="text-black text-sm font-semibold">
+                    <div className="max-w-[60%]">
+                      <h1 className="border-2 border-blue-600 rounded-2xl p-1 bg-blue-300 text-black text-sm font-semibold">
                         {text.message}
                       </h1>
+                      <div className="flex justify-end mt-1">
+                        <h1 className="text-xs text-gray-500">
+                          8:01 PM, 08/01/2023
+                        </h1>
+                      </div>
                     </div>
                   </div>
                 );
               }
               if (text.speaker === false) {
                 return (
-                  <div key={index} className="flex justify-start mt-2">
-                    <div className="border-2 border-green-600 rounded-2xl p-1 max-w-[60%] bg-green-300">
-                      <h1 className="text-black font-semibold text-sm">
+                    <div key={index} className="flex justify-start mt-2">
+                    <div className="max-w-[60%]">
+                      <h1 className="border-2 border-green-600 rounded-2xl p-1 bg-green-300 text-black text-sm font-semibold">
                         {text.message}
                       </h1>
+                      <div className="flex justify-start mt-1">
+                        <h1 className="text-xs text-gray-500">
+                          8:01 PM, 08/01/2023
+                        </h1>
+                      </div>
                     </div>
                   </div>
                 );
