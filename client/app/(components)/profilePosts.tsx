@@ -1,24 +1,31 @@
-import '../(styles)/profile.css'
+"use client"
+import "../(styles)/profile.css";
+import { useState } from "react";
 
 interface PostInfo {
-  postInfo: {
-    title: string;
-    picture: string;
-  };
+  title: string;
+  image: string;
 }
 
-function ProfilePosts({ postInfo }: PostInfo) {
+interface ProfilePostsProps {
+  postInfo: PostInfo;
+  postClickHandler: (postInfo: PostInfo) => void;
+}
+
+function ProfilePosts({ postInfo, postClickHandler }: ProfilePostsProps) {
   return (
-    <div className="relative profilePostMainDiv" key={postInfo.picture}>
-      <img
-        className="w-full h-64 object-cover z-10 profilePostImg "
-        src={postInfo.picture}
-        alt="Post"
-      />
-      {/* <div className="absolute inset-0 flex items-center justify-center profilePostTitle">
-        {" "}
-        <h3 className="text-white bg-black p-2 z-10 scale-0">{postInfo.title}</h3>
-      </div> */}
+    <div className="relative profilePostMainDiv" onClick={()=> postClickHandler(postInfo)}>
+      {postInfo.image ? (
+        <img
+          className="w-full h-64 object-cover z-10 profilePostImg "
+          src={postInfo.image}
+          alt="Post"
+        />
+      ) : (
+        <div>
+          <h1>{postInfo.title}</h1>
+        </div>
+      )}
     </div>
   );
 }
