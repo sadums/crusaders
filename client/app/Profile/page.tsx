@@ -1,11 +1,23 @@
-"use client"
+"use client";
 import "../(styles)/profile.css";
 import ProfileSideInfo from "../(components)/profileSideInfo";
 import ProfilePosts from "../(components)/profilePosts";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import PostModal from "../(components)/postModal";
 
-import { useQuery } from '@apollo/client';
-import { GET_LOGGED_IN_USER } from "../(GraphQL)/queries"
+import { useQuery, useLazyQuery } from "@apollo/client";
+import { GET_LOGGED_IN_USER, GET_POST } from "../(GraphQL)/queries";
+
+type PostData = {
+  title: string;
+  body: string;
+  comments: any[]; // Adjust this type as needed
+  createdAt: string;
+  hashtags: any[]; // Adjust this type as needed
+  image: string;
+  video: string;
+  _id: string;
+};
 
 export default function Profile() {
   const sidebarInfo = {
@@ -74,19 +86,35 @@ export default function Profile() {
     },
     {
       title: "Went Snowboarding",
-      picture: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.UNY2Aohxm8cYxJ7JbELKBgHaE7%26pid%3DApi&f=1&ipt=5e53029b6947625da5c8b94c9a3eb790041f1784372b1f23d0bb902508dcadfc&ipo=images"
+      picture:
+        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.UNY2Aohxm8cYxJ7JbELKBgHaE7%26pid%3DApi&f=1&ipt=5e53029b6947625da5c8b94c9a3eb790041f1784372b1f23d0bb902508dcadfc&ipo=images",
     },
     {
       title: "Scuba Diving",
-      picture: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.4diJwgKVPmNeaSOImvSHggHaE8%26pid%3DApi&f=1&ipt=f9cd121a49cfa9f697da84d17b5502471593277070c3e1da0f67641522f9ee46&ipo=images"
-    }
+      picture:
+        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.4diJwgKVPmNeaSOImvSHggHaE8%26pid%3DApi&f=1&ipt=f9cd121a49cfa9f697da84d17b5502471593277070c3e1da0f67641522f9ee46&ipo=images",
+    },
   ];
 
   const { loading, error, data } = useQuery(GET_LOGGED_IN_USER);
-  console.log(data)
-  useEffect(()=> {
-    console.log('PROFILE PAGE LOADED')
-  }, [])
+  const [getPost, { loading: postLoading, data: postData }] =
+    useLazyQuery(GET_POST);
+
+  const [showModalState, setShowModalState] = useState(false);
+  const [activePostData, setActivePostData] = useState<PostData | null>(null);
+  console.log(data);
+  // useEffect(() => {
+  //   console.log("PROFILE PAGE LOADED");
+  // }, []);
+  const postClickHandler = async (postInfo: any) => {
+    console.log(postInfo);
+    const response = await getPost({ variables: { postId: postInfo._id } });
+    console.log(response.data.getPost);
+    const post: PostData = response.data.getPost; // Using the PostData type here
+    setActivePostData(post);
+    setShowModalState(true);
+  };
+  
   return (
     <div className="profileMainDiv">
       <div className="grid grid-cols-10 gap-4">
@@ -96,12 +124,40 @@ export default function Profile() {
         </div>
         <div className="col-span-5 bg-slate-400 w-[100%] h-5 profilePostsMainDiv">
           <div className="grid grid-cols-3 gap-3">
-            {profilePostData.map((post, index) => (
-              <ProfilePosts postInfo={post} key={index}/>
-            ))}
+            {data && (
+              <>
+                {data.getLoggedInUser.posts.map(
+                  (post: { title: string; image: string }, index: number) => (
+                    <ProfilePosts
+                      postInfo={post}
+                      key={index}
+                      postClickHandler={postClickHandler}
+                    />
+                  )
+                )}
+              </>
+            )}
           </div>
         </div>
       </div>
+      {showModalState && (
+        <PostModal
+        //The error is that this data is possibly null which is fine
+        title={activePostData.title}
+          image={
+            activePostData.image
+          }
+          body={activePostData.body}
+          //Format the date in the backend
+          date={activePostData.createdAt}
+          comments={activePostData.comments}
+          hashtags={activePostData.comments}
+          username={data.getLoggedInUser.username}
+          handleClose={function (): void {
+            setShowModalState(false);
+          }}
+        />
+      )}
     </div>
   );
 }
