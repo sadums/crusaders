@@ -23,7 +23,14 @@ function ProfileSideInfo({ userInfo }: UserInfo) {
 console.log(userInfo)
   const [userData, setUserData] = useState(userInfo)
 
-  const [pictureState, setPictureState] = useState<string>("");
+  const [pictureState, setPictureState] = useState<{
+    cropped: string;
+    original: string;
+  }>({
+    cropped: "",
+    original: "",
+  });
+
   const validateEmail = (email: string) => {
     var re = /^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/;
     return re.test(email);
@@ -38,7 +45,7 @@ console.log(userInfo)
           username: target.form[0].value,
           email: target.form[1].value,
           bio: target.form[2].value,
-          pfp: pictureState,
+          pfp: pictureState.cropped,
           // followers: [],
           // following: []
         };
@@ -59,7 +66,7 @@ console.log(userInfo)
     }
   };
 
-  const handleSetPictureState = (url: string): void => {
+  const handleSetPictureState = (url: { cropped: string; original: string }): void => {
     setPictureState(url);
   };
   return (

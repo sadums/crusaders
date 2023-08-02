@@ -3,13 +3,18 @@ import { UploadButton } from "react-uploader";
 import { useState } from "react";
 
 interface PictureUploaderProps {
-  pictureState: string;
-  setPictureState: (url: string) => void;
+  pictureState: { cropped: string; original: string };
+  setPictureState: (url: { cropped: string; original: string }) => void;
   uploadText: string;
 }
+
 interface FileObject {
+  originalFile: {
     fileUrl: string;
-  }
+  };
+  fileUrl: string;
+}
+
 
 function PictureUploader({
   pictureState,
@@ -31,15 +36,16 @@ function PictureUploader({
         editor: {
           images: {
             crop: true,
-            cropRatio: 1.5,
+            cropRatio: 1.2,
             cropShape: "rect",
             preview: true,
           },
         },
       }}
       onComplete={(files: FileObject[]) => {
+        console.log(files[0].originalFile.fileUrl);
         console.log(files);
-        setPictureState(files[0].fileUrl);
+        setPictureState({cropped: files[0].fileUrl, original: files[0].originalFile.fileUrl});
         setIsUploaded(true);
       }}
     >
