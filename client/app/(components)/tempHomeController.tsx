@@ -72,7 +72,13 @@ function HomeController() {
 
   const [createPostDiv, showCreatePostDiv] = useState(false);
   const [hashtags, addHashtags] = useState<string[]>([]);
-  const [pictureState, setPictureState] = useState<string>("");
+  const [pictureState, setPictureState] = useState<{
+    cropped: string;
+    original: string;
+  }>({
+    cropped: "",
+    original: "",
+  });
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -105,15 +111,16 @@ function HomeController() {
       });
 
       console.log(inputHashtags);
+      console.log(pictureState)
       const postInput = {
-        image: pictureState, //We need something to dif the pics from the videos
+        image: pictureState.cropped, //We need something to dif the pics from the videos
         video: "",
         title: target.form[1].value,
         body: target.form[2].value,
         hashtags: inputHashtags,
       };
-      console.log(postInput);
-      const id = Auth.getProfile().data._id
+      // console.log(postInput);
+      const id = Auth.getProfile().data._id;
       const response = await addPostMutation({
         variables: {
           input: postInput,
@@ -121,16 +128,15 @@ function HomeController() {
         },
       });
       console.log(response);
-      console.log(response);
-      //Connect to backend
     } catch (err) {
       console.error(err);
     }
   };
 
-  const handleSetPictureState = (url: string): void => {
+  const handleSetPictureState = (url: { cropped: string; original: string }): void => {
     setPictureState(url);
   };
+  
 
   return (
     <div className="homePageMainDiv bg-darkestCoolGray ml-20">
