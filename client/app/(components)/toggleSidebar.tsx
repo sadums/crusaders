@@ -72,6 +72,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
   const tempNotificationData = [
     {
       type: "friendRequest",
+      id: 1,
       data: {
         senderName: "Sadums",
         pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.4diJwgKVPmNeaSOImvSHggHaE8%26pid%3DApi&f=1&ipt=f9cd121a49cfa9f697da84d17b5502471593277070c3e1da0f67641522f9ee46&ipo=images",
@@ -79,6 +80,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
     },
     {
       type: "messageResponse",
+      id: 2,
       data: {
         senderName: "Carreejoh",
         message: "Random response",
@@ -87,6 +89,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
     },
     {
       type: "friendRequest",
+      id: 3,
       data: {
         senderName: "Xtra",
         pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.4diJwgKVPmNeaSOImvSHggHaE8%26pid%3DApi&f=1&ipt=f9cd121a49cfa9f697da84d17b5502471593277070c3e1da0f67641522f9ee46&ipo=images",
@@ -94,6 +97,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
     },
     {
       type: "friendRequest",
+      id: 4,
       data: {
         senderName: "RandomGuy",
         pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.4diJwgKVPmNeaSOImvSHggHaE8%26pid%3DApi&f=1&ipt=f9cd121a49cfa9f697da84d17b5502471593277070c3e1da0f67641522f9ee46&ipo=images",
@@ -101,6 +105,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
     },
     {
       type: "messageResponse",
+      id: 5,
       data: {
         senderName: "TitanicYoshi",
         message: "Whats up my guy",
@@ -300,7 +305,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
             {tempNotificationData.map((notif) => {
               if (notif.type === "friendRequest") {
                 return (
-                  <div className="border-coolGray border-2 rounded-xl bg-coolGray p-1 mt-3">
+                  <div key={notif.id} className="border-coolGray border-2 rounded-xl bg-coolGray p-1 mt-3">
                     <div className="flex justify-between">
                       {" "}
                       <div className="flex">
