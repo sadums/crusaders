@@ -2,7 +2,7 @@
 
 import "./globals.css";
 import type { Metadata } from "next";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Inter } from "next/font/google";
 import {
   ApolloClient,
@@ -43,7 +43,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache(), //This allows me to read and write to the client side cache, this is for speed
 });
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Social Media",
@@ -57,7 +57,6 @@ export default function RootLayout({
 }) {
   const [isSignInModalOpen, setIsSignInModalOpen] = useState<boolean>(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState<boolean>(false);
-  const [isLoggedin, setIsLoggedIn] = useState(false);
 
   return (
     <ApolloProvider client={client}>
@@ -74,12 +73,14 @@ export default function RootLayout({
             rel="stylesheet"
           ></link>
         </head>
-        <body className={inter.className}>
+        <body>
           <Sidebar
             setIsSignInModalOpen={setIsSignInModalOpen}
             setIsSignUpModalOpen={setIsSignUpModalOpen}
           />
+          <div>
           {children}
+          </div>
           {/* <Footer></Footer> */}
           {isSignUpModalOpen && (
             <SignUpModal setIsSignUpModalOpen={setIsSignUpModalOpen} />

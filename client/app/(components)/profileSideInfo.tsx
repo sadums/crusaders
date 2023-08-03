@@ -74,12 +74,16 @@ console.log(userInfo)
       <div className="profileSideInfoMainDiv mb-0">
         <img
           src={userData.pfp}
-          className="h-40 w-40 rounded-full object-cover"
+          className="h-40 w-40 rounded-full border-[1px] border-customPurple object-cover"
         ></img>
-        <h1 className="text text-2xl mt-4">
+        <h1 className="text text-xl mt-4">
+          Carter Johnson
+        </h1>
+        <h1 className="text-gray-500 text-xl mt-0">
           @{userData ? userData.username : ""}
         </h1>
-        <div className="relative flex items-start space-x-4 mt-4">
+        <p className="text-sm mt-2">{userData.bio}</p>
+        <div className="relative flex items-start space-x-4 mt-3">
           <button
             type="button"
             className="rounded-[5px] p-2 text-white text-sm font-semibold bg-blue-800"
@@ -99,7 +103,6 @@ console.log(userInfo)
             <span className="">Bookmarked</span>
           </button>
         </div>
-        <p className="text-sm mt-10">{userData.bio}</p>
         <span className="flex mt-8">
           <h2 className="mr-1">{userData.followers.length}</h2>
           <a>Followers</a>

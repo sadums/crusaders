@@ -133,7 +133,7 @@ function HomeController() {
   };
 
   return (
-    <div className="homePageMainDiv bg-darkestCoolGray ml-20">
+    <div className="homePageMainDiv dark:bg-white bg-darkestCoolGray ml-20">
       <div className="grid grid-cols-6 gap-4">
         <div className="col-span-1 bg-[#131922]">
           <div className="bg-darkCoolGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
@@ -259,14 +259,14 @@ function HomeController() {
                 </form>
               </div>
             </div>
-            <div className={`border-[1px] border-customPurple bg-coolGray rounded-xl p-2 mt-4 w-[50%]`}>
+            <div className={`border-[1px] shadow-notificationShadowPink border-customPurple bg-coolGray rounded-xl p-2 mt-3 w-[50%]`}>
               <h3>Go Pro!</h3>
               <p>Get a one month free trial idk</p>
               <button className=" px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 hover:scale-105">
                 Sign up
               </button>
             </div>
-            <div className="border-[1px] border-customPurple bg-coolGray rounded-xl p-2 mt-4 w-[50%]">
+            <div className="border-[1px] border-customPurple shadow-notificationShadowPink bg-coolGray rounded-xl p-2 mt-3 w-[50%]">
               <h3>Who To Follow</h3>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
@@ -311,7 +311,7 @@ function HomeController() {
             </div>
             {/* <div className="homepageInfoDivs">
               <h3>Your Interests</h3> */}
-            <form className="max-w-sm mt-4 border-[1px] bg-coolGray border-customPurple rounded-xl p-2 shadow w-[50%]">
+            <form className="max-w-sm mt-3 border-[1px] shadow-notificationShadowPink bg-coolGray border-customPurple rounded-xl p-2 w-[50%]">
               <div className="mb-2">
                 <h3>Follow Hashtags</h3>
                 <div className="flex items-center flex-wrap infoInterestsDiv">

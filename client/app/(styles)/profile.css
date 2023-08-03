@@ -9,14 +9,6 @@
     padding: 3%;
 }
 
-.profileSideInfoMainDiv {
-    padding: 1%;
-}
-
-.profileSideInfoMainDiv img {
-    border: solid 2px rgb(93, 25, 114);
-}
-
 @layer components {
     .profilePostImg {
         @apply rounded-xl transition-all duration-200
