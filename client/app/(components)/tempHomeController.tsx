@@ -72,13 +72,7 @@ function HomeController() {
 
   const [createPostDiv, showCreatePostDiv] = useState(false);
   const [hashtags, addHashtags] = useState<string[]>([]);
-  const [pictureState, setPictureState] = useState<{
-    cropped: string;
-    original: string;
-  }>({
-    cropped: "",
-    original: "",
-  });
+  const [pictureState, setPictureState] = useState<string>("");
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -111,16 +105,15 @@ function HomeController() {
       });
 
       console.log(inputHashtags);
-      console.log(pictureState)
       const postInput = {
-        image: pictureState.cropped, //We need something to dif the pics from the videos
+        image: pictureState, //We need something to dif the pics from the videos
         video: "",
         title: target.form[1].value,
         body: target.form[2].value,
         hashtags: inputHashtags,
       };
-      // console.log(postInput);
-      const id = Auth.getProfile().data._id;
+      console.log(postInput);
+      const id = Auth.getProfile().data._id
       const response = await addPostMutation({
         variables: {
           input: postInput,
@@ -128,15 +121,16 @@ function HomeController() {
         },
       });
       console.log(response);
+      console.log(response);
+      //Connect to backend
     } catch (err) {
       console.error(err);
     }
   };
 
-  const handleSetPictureState = (url: { cropped: string; original: string }): void => {
+  const handleSetPictureState = (url: string): void => {
     setPictureState(url);
   };
-  
 
   return (
     <div className="homePageMainDiv bg-darkestCoolGray ml-20">
@@ -160,7 +154,7 @@ function HomeController() {
             /> */}
             <div
               className={` ease-in-out duration-300 ${
-                createPostDiv ? "w-[90%]" : "w-[50%]"
+                createPostDiv ? "w-[90%] border-[1px] border-customPurple rounded-xl p-2" : "w-[50%]"
               }`}
             >
               <button
@@ -265,14 +259,14 @@ function HomeController() {
                 </form>
               </div>
             </div>
-            <div className={`homepageInfoDivs mt-4 w-[50%]`}>
+            <div className={`border-[1px] border-customPurple bg-coolGray rounded-xl p-2 mt-4 w-[50%]`}>
               <h3>Go Pro!</h3>
               <p>Get a one month free trial idk</p>
               <button className=" px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 hover:scale-105">
                 Sign up
               </button>
             </div>
-            <div className="homepageInfoDivs mt-4 w-[50%]">
+            <div className="border-[1px] border-customPurple bg-coolGray rounded-xl p-2 mt-4 w-[50%]">
               <h3>Who To Follow</h3>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
@@ -317,11 +311,11 @@ function HomeController() {
             </div>
             {/* <div className="homepageInfoDivs">
               <h3>Your Interests</h3> */}
-            <form className="max-w-sm mt-4 p-4 bg-coolGray rounded-lg shadow homepageInfoDivs w-[50%]">
+            <form className="max-w-sm mt-4 border-[1px] bg-coolGray border-customPurple rounded-xl p-2 shadow w-[50%]">
               <div className="mb-2">
-                <h3>Your Interests</h3>
+                <h3>Follow Hashtags</h3>
                 <div className="flex items-center flex-wrap infoInterestsDiv">
-                  <label id="interest1" className="ml-2 text-indigo-700">
+                  <label id="interest1" className="ml-2 text-neonBlue">
                     Travel
                   </label>
                   <input
@@ -330,7 +324,7 @@ function HomeController() {
                     name="interest1"
                     className="form-checkbox ml-2 h-4 w-4 text-blue-500"
                   ></input>
-                  <label id="interest1" className="ml-2 text-indigo-700">
+                  <label id="interest1" className="ml-2 text-neonBlue">
                     News
                   </label>
                   <input
@@ -341,7 +335,7 @@ function HomeController() {
                   ></input>
                 </div>
                 <div className="flex items-center flex-wrap infoInterestsDiv">
-                  <label id="interest1" className="ml-2 text-indigo-700">
+                  <label id="interest1" className="ml-2 text-neonBlue">
                     Coding
                   </label>
                   <input
@@ -350,7 +344,7 @@ function HomeController() {
                     name="interest1"
                     className="form-checkbox ml-2 h-4 w-4 text-blue-500"
                   ></input>
-                  <label id="interest1" className="ml-2 text-indigo-700">
+                  <label id="interest1" className="ml-2 text-neonBlue">
                     Sports
                   </label>
                   <input
