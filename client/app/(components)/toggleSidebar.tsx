@@ -343,7 +343,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
                       <button className="text-green-400 text-sm pl-1 pr-1 p-[.5%] rounded-md hover:bg-green-400 hover:text-black duration-150 ease-in-out">
                         Accept
                       </button>
-                      <button className="text-red-400 text-sm  pl-1 pr-1 p-[.5%] rounded-md hover:bg-red-400 hover:text-black duration-150 ease-in-out">
+                      <button className="text-red-400 text-sm pl-1 pr-1 p-[.5%] rounded-md hover:bg-red-400 hover:text-black duration-150 ease-in-out">
                         Decline
                       </button>
                     </div>

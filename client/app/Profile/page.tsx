@@ -1,5 +1,6 @@
 "use client";
 import "../(styles)/profile.css";
+import "../(styles)/homepage.css";
 import ProfileSideInfo from "../(components)/profileSideInfo";
 import ProfilePosts from "../(components)/profilePosts";
 import { useEffect, useState } from "react";
@@ -121,23 +122,27 @@ export default function Profile() {
   // }, []);
 
   return (
-    <div className="profileMainDiv">
-      <div className="grid grid-cols-10 gap-4">
-        <div className="col-span-2">{/* For Spacing */}</div>
-        <div className="col-span-2 w-[100%]">
+    <div className="ml-20 bg-darkestCoolGray">
+      <div className="grid grid-cols-6 gap-4">
+        <div className="col-span-1 bg-coolGray">
+        <div className="bg-darkCoolGray p-2 pt-20 h-[100vh] secondaryMenuMainDiv"></div>
+        </div>
+        <div className="col-span-1 w-[100%] mt-10">
           {data && <ProfileSideInfo userInfo={data.getUserById} />}
         </div>
-        <div className="col-span-5 bg-slate-400 w-[100%] h-5 profilePostsMainDiv">
+        <div className="col-span-4 w-[100%] mt-10">
           <div className="grid grid-cols-3 gap-3">
             {data && data.getUserById && (
               <>
                 {data.getUserById.posts.map(
                   (post: { title: string; image: string }, index: number) => (
-                    <ProfilePosts
+                    <div className="border-2 border-green-400 rounded-2xl">
+                      <ProfilePosts
                       postInfo={post}
                       key={index}
                       postClickHandler={postClickHandler}
                     />
+                    </div>
                   )
                 )}
               </>
