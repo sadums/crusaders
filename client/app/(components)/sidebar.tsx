@@ -15,16 +15,6 @@ const Sidebar: React.FC<NavbarProps> = ({
   setIsSignInModalOpen,
   setIsSignUpModalOpen,
 }) => {
-  const signUpButtonHandler = () => {
-    console.log("SIGN UP");
-    setIsSignUpModalOpen(true);
-  };
-
-  const signInButtonHandler = () => {
-    console.log("SIGN IN");
-    setIsSignInModalOpen(true);
-  };
-
   const sidebarData = [
     {
       username: "Carreejoh",
@@ -64,6 +54,43 @@ const Sidebar: React.FC<NavbarProps> = ({
     },
   ];
 
+  const signUpButtonHandler = () => {
+    console.log("SIGN UP");
+    setIsSignUpModalOpen(true);
+  };
+
+  const signInButtonHandler = () => {
+    console.log("SIGN IN");
+    setIsSignInModalOpen(true);
+  };
+
+  const [currentColorMode, setColorMode] = useState(false);
+
+  useEffect(() => {
+    let choice = localStorage.getItem("darkMode");
+    let application = window.document.body.classList;
+    if (choice === "dark") {
+      application.add("dark");
+    } else {
+      console.log("light mode");
+    }
+  }, [enableDarkMode, enableLightMode]);
+
+  useEffect(() => {
+    let choice = localStorage.getItem("darkMode");
+    if (choice === "dark") {
+      setColorMode(true);
+    }
+  }, []);
+
+  function enableDarkMode() {
+    localStorage.setItem("darkMode", "dark");
+  }
+
+  function enableLightMode() {
+    localStorage.setItem("darkMode", "light");
+  }
+
   const [showSidebar, setShowSidebar] = useState("Search");
   const [sidebarOpacity, setSidebarOpacity] = useState(true);
 
@@ -77,7 +104,7 @@ const Sidebar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <div className="sidebarMainDiv fixed top-0 left-0 w-20 shadow-lg z-50">
+      <div className="bg-coolGray h-[100vh] fixed top-0 left-0 w-20 shadow-lg z-50">
         <div className="container mx-auto z-50">
           <div className="grid grid-cols-1 gap-4">
             <h5 className="text-sm text-center mt-2">Crusaders</h5>
@@ -89,6 +116,65 @@ const Sidebar: React.FC<NavbarProps> = ({
               ></img>
             </div>
             <ul className="list-outside ... sidebarLinkList">
+              <li
+                className={`flex items-center space-x-2 sidebarIcon group ${
+                  currentColorMode ? "hidden" : "block"
+                }`}
+              >
+                <a
+                  href="/"
+                  className="text-gray-300 rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
+                  onClick={() => enableDarkMode()}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-7 h-7"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
+                    />
+                  </svg>
+                </a>
+                <span className="sidebarIconInfo group-hover:scale-100">
+                  Dark Mode
+                </span>
+              </li>
+              <li
+                className={`flex items-center space-x-2 sidebarIcon group ${
+                  currentColorMode ? "block" : "hidden"
+                }`}
+              >
+                <a
+                  href="/"
+                  className="text-gray-300 rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
+                  onClick={() => enableLightMode()}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-7 h-7"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
+                    />
+                  </svg>
+                </a>
+                <span className="sidebarIconInfo group-hover:scale-100">
+                  Light Mode
+                </span>
+              </li>
+
               <li className=" flex items-center space-x-2 sidebarIcon group">
                 <a
                   href="/"

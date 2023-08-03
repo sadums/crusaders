@@ -42,7 +42,7 @@ function HomeController() {
       postDesc:
         "Tried out a new restaurant today. The food was absolutely delicious!",
       postImg:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.a5kABNZb-PgRfhxtJfT9swAAAA%26pid%3DApi&f=1&ipt=d9a20e9a00ae0fdb3666da5e63b7988ae6ca1d9ece71a74b0503b437718f32cb&ipo=images",
+        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.R_s3pH6bLBzCRLQWtFgy8gHaEr%26pid%3DApi&f=1&ipt=0760a9256a1e41d30d118b516efb1e41e60f4cf667589341f2b24a8c685536df&ipo=images",
       date: "07/26/2023",
     },
     {
@@ -51,7 +51,7 @@ function HomeController() {
         "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
       postTitle: "Wanderlust",
       postDesc:
-        "In love with this beautiful scenic view. Can't get enough of traveling!",
+        "In love with this beautiful scenic view. Can't get enough of traveling! I love Mexico, Salt Lake, Snwoboaridng, skiing, riding bikes, eating stuff, doing other things, writing code",
       postImg:
         "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.R_s3pH6bLBzCRLQWtFgy8gHaEr%26pid%3DApi&f=1&ipt=0760a9256a1e41d30d118b516efb1e41e60f4cf667589341f2b24a8c685536df&ipo=images",
       date: "07/27/2023",
@@ -96,27 +96,31 @@ function HomeController() {
       type HashtagInput = {
         hashtagText: string;
       };
-      
+
       const inputHashtags: HashtagInput[] = [];
       //const hashtags: string[] = ["newpost", "graphql"]; // Example hashtags
-      
+
       hashtags.forEach((tag) => {
         inputHashtags.push({ hashtagText: tag });
       });
-      
+
       console.log(inputHashtags);
       const postInput = {
         image: pictureState, //We need something to dif the pics from the videos
-        video: '',
+        video: "",
         title: target.form[1].value,
         body: target.form[2].value,
         hashtags: inputHashtags,
       };
       console.log(postInput);
-
+      const id = Auth.getProfile().data._id
       const response = await addPostMutation({
-        variables: { input: postInput },
+        variables: {
+          input: postInput,
+          userId: id,
+        },
       });
+      console.log(response);
       console.log(response);
       //Connect to backend
     } catch (err) {
@@ -129,13 +133,13 @@ function HomeController() {
   };
 
   return (
-    <div className="homePageMainDiv bg-darkestCoolGray ml-20">
+    <div className="homePageMainDiv dark:bg-white bg-darkestCoolGray ml-20">
       <div className="grid grid-cols-6 gap-4">
         <div className="col-span-1 bg-[#131922]">
           <div className="bg-darkCoolGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
         </div>
-        <div className="col-span-3 pl-48">
-          <div className="homePageFeedMainDiv">
+        <div className="col-span-3 pl-64">
+          <div className="homePageFeedMainDiv border-customPurple border-r-[1px] border-l-[1px]">
             <div className="feedPostsTop"></div>
             <FeedPosts users={tempUsers} />
           </div>
@@ -149,8 +153,8 @@ function HomeController() {
               className="px-4 py-2 h-8 rounded-lg focus:outline-none navBarSearchBar"
             /> */}
             <div
-              className={`homepageInfoDivs ease-in-out duration-300 ${
-                createPostDiv ? "w-[90%]" : "w-[50%]"
+              className={` ease-in-out duration-300 ${
+                createPostDiv ? "w-[90%] border-[1px] border-customPurple rounded-xl p-2" : "w-[50%]"
               }`}
             >
               <button
@@ -255,14 +259,14 @@ function HomeController() {
                 </form>
               </div>
             </div>
-            <div className={`homepageInfoDivs mt-4 w-[50%]`}>
+            <div className={`border-[1px] shadow-notificationShadowPink border-customPurple bg-coolGray rounded-xl p-2 mt-3 w-[50%]`}>
               <h3>Go Pro!</h3>
               <p>Get a one month free trial idk</p>
               <button className=" px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 hover:scale-105">
                 Sign up
               </button>
             </div>
-            <div className="homepageInfoDivs mt-4 w-[50%]">
+            <div className="border-[1px] border-customPurple shadow-notificationShadowPink bg-coolGray rounded-xl p-2 mt-3 w-[50%]">
               <h3>Who To Follow</h3>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
@@ -307,11 +311,11 @@ function HomeController() {
             </div>
             {/* <div className="homepageInfoDivs">
               <h3>Your Interests</h3> */}
-            <form className="max-w-sm mt-4 p-4 bg-coolGray rounded-lg shadow homepageInfoDivs w-[50%]">
+            <form className="max-w-sm mt-3 border-[1px] shadow-notificationShadowPink bg-coolGray border-customPurple rounded-xl p-2 w-[50%]">
               <div className="mb-2">
-                <h3>Your Interests</h3>
+                <h3>Follow Hashtags</h3>
                 <div className="flex items-center flex-wrap infoInterestsDiv">
-                  <label id="interest1" className="ml-2 text-indigo-700">
+                  <label id="interest1" className="ml-2 text-neonBlue">
                     Travel
                   </label>
                   <input
@@ -320,7 +324,7 @@ function HomeController() {
                     name="interest1"
                     className="form-checkbox ml-2 h-4 w-4 text-blue-500"
                   ></input>
-                  <label id="interest1" className="ml-2 text-indigo-700">
+                  <label id="interest1" className="ml-2 text-neonBlue">
                     News
                   </label>
                   <input
@@ -331,7 +335,7 @@ function HomeController() {
                   ></input>
                 </div>
                 <div className="flex items-center flex-wrap infoInterestsDiv">
-                  <label id="interest1" className="ml-2 text-indigo-700">
+                  <label id="interest1" className="ml-2 text-neonBlue">
                     Coding
                   </label>
                   <input
@@ -340,7 +344,7 @@ function HomeController() {
                     name="interest1"
                     className="form-checkbox ml-2 h-4 w-4 text-blue-500"
                   ></input>
-                  <label id="interest1" className="ml-2 text-indigo-700">
+                  <label id="interest1" className="ml-2 text-neonBlue">
                     Sports
                   </label>
                   <input

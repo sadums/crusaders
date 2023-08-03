@@ -305,7 +305,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
             {tempNotificationData.map((notif) => {
               if (notif.type === "friendRequest") {
                 return (
-                  <div key={notif.id} className="border-coolGray border-2 rounded-xl bg-coolGray p-1 mt-3">
+                  <div key={notif.id} className="border-customPurple border-[1px] rounded-xl bg-coolGray shadow-notificationShadowPink ring-blue-700 p-1 mt-3">
                     <div className="flex justify-between">
                       {" "}
                       <div className="flex">
@@ -340,10 +340,10 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
                       </a>{" "}
                     </div>
                     <div className="flex justify-evenly mt-2">
-                      <button className="text-green-400 text-sm border-green-400 border-[1px] pl-1 pr-1 p-[.5%] rounded-md hover:bg-green-400 hover:text-black duration-150 ease-in-out">
+                      <button className="text-green-400 text-sm pl-1 pr-1 p-[.5%] rounded-md hover:bg-green-400 hover:text-black duration-150 ease-in-out">
                         Accept
                       </button>
-                      <button className="text-red-400 text-sm border-red-400 border-[1px] pl-1 pr-1 p-[.5%] rounded-md hover:bg-red-400 hover:text-black duration-150 ease-in-out">
+                      <button className="text-red-400 text-sm pl-1 pr-1 p-[.5%] rounded-md hover:bg-red-400 hover:text-black duration-150 ease-in-out">
                         Decline
                       </button>
                     </div>
@@ -352,7 +352,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
               }
               if (notif.type === "messageResponse") {
                 return (
-                  <div className="border-coolGray border-2 rounded-xl bg-coolGray p-1 mt-3">
+                  <div className="border-customPurple border-[1px] rounded-xl shadow-notificationShadowPink bg-coolGray p-1 mt-3">
                     <div className="flex justify-between">
                       {" "}
                       <div className="flex">
@@ -387,7 +387,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
                       </a>{" "}
                     </div>
                     <div className="flex mt-2">
-                      <button className="ml-11 text-customPurple text-sm border-customPurple border-[1px] pl-1 pr-1 p-[.5%] rounded-md hover:bg-customPurple hover:text-white duration-150 ease-in-out">
+                      <button className="ml-11 text-blue-500 text-sm  pl-1 pr-1 p-[.5%] rounded-md hover:bg-customPurple hover:text-white duration-150 ease-in-out">
                         <div className="flex">
                         Respond
                         <svg

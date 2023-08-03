@@ -47,8 +47,8 @@ export const UPDATE_USER_MUTATION = gql`
 `;
 
 export const ADD_POST = gql`
-  mutation AddPost($input: newPostInput!) {
-    addPost(input: $input) {
+  mutation AddPost($input: newPostInput!, $userId: ID!) {
+    addPost(input: $input, userId: $userId) {
       _id
       username
       posts {

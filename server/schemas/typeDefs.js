@@ -56,7 +56,7 @@ type AuthPayload {
 
 type Query {
     getAllUsers: [User]
-    getUserById(input: ID) : User
+    getUserById(input: ID!) : User
     getLoggedInUser: User
     getPost(postId: ID!): Post
     getChatById(input: ID!): Chat
@@ -64,7 +64,7 @@ type Query {
 
 type Mutation {
     createUser(input: CreateUserInput!) : AuthPayload
-    addPost(input: newPostInput!): User
+    addPost(input: newPostInput!, userId: ID!): User
     login(email: String!, password: String!): AuthPayload
     deleteUser: User
     editUser(input: UpdateUserInput!) : AuthPayload
