@@ -3,7 +3,6 @@ const Message = require("./Message");
 
 const chatSchema = new Schema(
   {
-    // user who sent the message
     members: [
       {
         type: Schema.Types.ObjectId,
@@ -26,3 +25,8 @@ const chatSchema = new Schema(
 const Chat = model("Chat", chatSchema);
 
 module.exports = Chat;
+
+
+
+
+

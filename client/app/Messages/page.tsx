@@ -3,8 +3,17 @@ import "../(styles)/messages.css";
 import "../(styles)/homepage.css";
 import { useEffect, useState } from "react";
 import Conversations from "./(components)/conversation";
+import { CHAT_SUBSCRIPTION } from "../(GraphQL)/subscriptions"
+import { useSubscription } from "@apollo/client";
 
 export default function Messages() {
+  function chatSubscription(){
+    const { data, loading, error } = useSubscription(
+      CHAT_SUBSCRIPTION,
+    );
+    console.log(data, loading, error)
+  }
+  chatSubscription();
   const tempFriendLinks = [
     {
       username: "Sadums",

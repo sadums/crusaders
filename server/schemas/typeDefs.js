@@ -71,11 +71,11 @@ type Mutation {
     deletePost(postId: ID!): User
     updatePost(postId: ID!, input: updatePostInput!): User
     createChat(members: [ID]): Chat
-    createMessage(userId: ID!, body: String!): Chat
+    createMessage(userId: ID!, chatId: ID!, body: String!): Chat
 }
 
 type Subscription {
-  chat: Chat!
+  messages: Message
 }
 
 input updatePostInput {

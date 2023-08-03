@@ -24,9 +24,6 @@ import { createClient } from 'graphql-ws';
 
 const httpLink = new HttpLink({
   uri: 'http://localhost:5500/graphql',
-  connectionParams: {
-    authToken: user.authToken,
-  },
 });
 
 const wsLink = new GraphQLWsLink(createClient({

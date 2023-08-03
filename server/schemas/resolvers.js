@@ -1,6 +1,6 @@
 const { User, Chat } = require("../models");
 const { signToken } = require("../utils/auth");
-const { PubSub } = require('apollo-server');
+const { PubSub, withFilter } = require("graphql-subscriptions");
 
 const pubsub = new PubSub();
 
@@ -157,23 +157,35 @@ const resolvers = {
         return err;
       }
     },
-    createChat: async (parent, { input }, context) => {
-      const chat = await Chat.create(input);
+    createChat: async (parent, { members }, context) => {
+      const chat = await Chat.create({
+        members: members,
+      });
       if (!chat) {
         throw new Error("Error with making a chat");
       }
       return chat;
     },
-    createMessage: async (parent, { input }, context) => {
+    createMessage: async (parent, { chatId, userId, body }, context) => {
       try {
-        const chat = context.chat;
-        console.log(chat);
         const updatedChat = await Chat.findByIdAndUpdate(
-          chat._id,
-          { $addToSet: { messages: input } },
+          chatId,
+          {
+            $addToSet: {
+              messages: {
+                body: body,
+                userId: userId,
+              },
+            },
+          },
           { new: true }
         );
-        pubsub.publish(`NEW_MESSAGE`, { message: input });
+        pubsub.publish(`NEW_MESSAGE`, {
+          messages: {
+            body: body,
+            userId: userId,
+          },
+        });
         return updatedChat;
       } catch (e) {
         console.error(e);
@@ -182,16 +194,9 @@ const resolvers = {
     },
   },
   Subscription: {
-    chat: {
-      subscribe: withFilter(
-        () => pubsub.asyncIterator('NEW_MESSAGE'),
-        (payload, variables) => {
-          console.log("HERE")
-          console.log(payload, variables);
-          return (1===1);
-        },
-      ),
-    }
+    messages: {
+      subscribe: () => pubsub.asyncIterator(['NEW_MESSAGE']),
+    },
   },
 };
 
