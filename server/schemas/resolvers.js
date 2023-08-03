@@ -1,5 +1,8 @@
-const { User } = require("../models");
+const { User, Chat } = require("../models");
 const { signToken } = require("../utils/auth");
+const { PubSub, withFilter } = require("graphql-subscriptions");
+
+const pubsub = new PubSub();
 
 const resolvers = {
   Query: {
@@ -16,13 +19,20 @@ const resolvers = {
     getLoggedInUser: async (parent, { input }, context) => {
       try {
         const { user } = context;
-        console.log("user")
+        console.log("user");
         const selectedUser = await User.findById(user._id);
-        console.log(selectedUser)
+        console.log(selectedUser);
         return selectedUser;
       } catch (err) {
         console.error(err);
       }
+    },
+    getChatById: async (parent, { input }, context) => {
+      const chat = await Chat.findById(input);
+      if (!chat) {
+        throw new Error("Could not find chat!");
+      }
+      return chat;
     },
     getPost: async (parent, { postId }, context) => {
       try {
@@ -34,12 +44,11 @@ const resolvers = {
             }
           }
         }
-        throw new Error('Post not found');
+        throw new Error("Post not found");
       } catch (err) {
         console.error(err);
       }
-    }
-       
+    },
   },
   Mutation: {
     createUser: async (parent, { input }, context) => {
@@ -72,7 +81,8 @@ const resolvers = {
           { $addToSet: { posts: input } },
           { new: true }
         );
-
+        
+        console.log(updatedUser)
         return updatedUser;
       } catch (err) {
         console.error(err);
@@ -88,7 +98,7 @@ const resolvers = {
           { new: true }
         );
         if (!updatedUser) {
-          throw new Error('Post not found');
+          throw new Error("Post not found");
         }
         return updatedUser;
       } catch (err) {
@@ -99,39 +109,39 @@ const resolvers = {
       try {
         const { user } = context;
         const updatedUser = await User.findOneAndUpdate(
-          { _id: user._id, 'posts._id': postId },
-          { 'posts.$': input },
+          { _id: user._id, "posts._id": postId },
+          { "posts.$": input },
           { new: true }
         );
         if (!updatedUser) {
-          throw new Error('Post not found');
+          throw new Error("Post not found");
         }
         return updatedUser;
       } catch (err) {
         console.error(err);
       }
-    },    
-    deleteUser: async (parent, {input}, context) => {
-      try{
+    },
+    deleteUser: async (parent, { input }, context) => {
+      try {
         const { user } = context;
-        console.log(user)
-        const deletedUser = await User.findByIdAndDelete(user._id)
-        return deletedUser
-      }catch(err){
-        console.error(err)
+        console.log(user);
+        const deletedUser = await User.findByIdAndDelete(user._id);
+        return deletedUser;
+      } catch (err) {
+        console.error(err);
       }
     },
-    editUser: async (parent, {input}, context) => {
-      try{
-        const selectedUser  = context.user;
-        console.log(input)
-        console.log(selectedUser)
+    editUser: async (parent, { input }, context) => {
+      try {
+        const selectedUser = context.user;
+        console.log(input);
+        console.log(selectedUser);
         const fieldsToUpdate = {};
         if (input.username) fieldsToUpdate.username = input.username;
         if (input.email) fieldsToUpdate.email = input.email;
         if (input.pfp) fieldsToUpdate.pfp = input.pfp;
         if (input.bio) fieldsToUpdate.bio = input.bio;
-    
+
         const user = await User.findByIdAndUpdate(
           selectedUser._id,
           fieldsToUpdate,
@@ -139,11 +149,51 @@ const resolvers = {
         );
         const token = signToken(user);
         return { token: token, user: user }; //This doesn't update in tests because the context is fixed, might update on the website
-      }catch(err){
-        console.error(err)
-        return(err)
+      } catch (err) {
+        console.error(err);
+        return err;
       }
-    }
+    },
+    createChat: async (parent, { members }, context) => {
+      const chat = await Chat.create({
+        members: members,
+      });
+      if (!chat) {
+        throw new Error("Error with making a chat");
+      }
+      return chat;
+    },
+    createMessage: async (parent, { chatId, userId, body }, context) => {
+      try {
+        const updatedChat = await Chat.findByIdAndUpdate(
+          chatId,
+          {
+            $addToSet: {
+              messages: {
+                body: body,
+                userId: userId,
+              },
+            },
+          },
+          { new: true }
+        );
+        pubsub.publish(`NEW_MESSAGE`, {
+          messages: {
+            body: body,
+            userId: userId,
+          },
+        });
+        return updatedChat;
+      } catch (e) {
+        console.error(e);
+        return e;
+      }
+    },
+  },
+  Subscription: {
+    messages: {
+      subscribe: () => pubsub.asyncIterator(['NEW_MESSAGE']),
+    },
   },
 };
 

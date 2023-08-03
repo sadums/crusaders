@@ -19,6 +19,20 @@ type Comment {
   createdAt: String
 }
 
+type Chat {
+  _id: ID
+  members: [User]
+  messages: [Message]
+  createdAt: String
+}
+
+type Message {
+  _id: ID
+  userId: ID!
+  body: String!
+  createdAt: String
+}
+
 type Post {
     _id: ID
     image: String
@@ -45,6 +59,7 @@ type Query {
     getUserById(input: ID!) : User
     getLoggedInUser: User
     getPost(postId: ID!): Post
+    getChatById(input: ID!): Chat
   }
 
 type Mutation {
@@ -55,6 +70,12 @@ type Mutation {
     editUser(input: UpdateUserInput!) : AuthPayload
     deletePost(postId: ID!): User
     updatePost(postId: ID!, input: updatePostInput!): User
+    createChat(members: [ID]): Chat
+    createMessage(userId: ID!, chatId: ID!, body: String!): Chat
+}
+
+type Subscription {
+  messages: Message
 }
 
 input updatePostInput {
