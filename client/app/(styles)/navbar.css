@@ -12,15 +12,22 @@
 @layer components {
     .sidebarIcon {
         @apply relative flex items-center justify-center
-        h-12 w-12 mx-auto shadow-md bg-gray-800 mt-3
+        h-12 w-12 mx-auto shadow-md bg-gray-300 mt-3
         hover:bg-indigo-700 
         rounded-3xl hover:rounded-xl transition-all duration-200
-        z-50 dark:bg-green-500
+        z-50 dark:bg-gray-800
     }
 
     .sidebarIconInfo {
         @apply absolute w-auto left-16 scale-0 transition-all
          duration-100 z-50 bg-gray-800 p-1 
+    }
+
+    .sidebarIconDarkMode {
+        @apply relative flex items-center justify-center
+        h-12 w-12 mx-auto shadow-md  mt-3
+        rounded-3xl hover:rounded-xl transition-all duration-200
+        z-50 
     }
 }
 
