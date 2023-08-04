@@ -148,13 +148,13 @@ function HomeController() {
   };
 
   return (
-    <div className="homePageMainDiv dark:bg-white bg-darkestCoolGray ml-20">
+    <div className="homePageMainDiv bg-lightestWhite dark:bg-darkestCoolGray ml-20">
       <div className="grid grid-cols-6 gap-4">
-        <div className="col-span-1 bg-[#131922]">
-          <div className="bg-darkCoolGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
+        <div className="col-span-1 bg-darkestWhite dark:bg-[#131922]">
+          <div className="bg-mediumWhite dark:bg-darkCoolGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
         </div>
         <div className="col-span-3 pl-64">
-          <div className="homePageFeedMainDiv border-customPurple border-r-[1px] border-l-[1px]">
+          <div className="homePageFeedMainDiv pl-2 pr-2 border-black dark:border-customPurple border-r-[1px] border-l-[1px]">
             <div className="feedPostsTop"></div>
             <FeedPosts users={tempUsers} />
           </div>

@@ -19,6 +19,10 @@ module.exports = {
         darkPurple: '#2f2a89',
         customPurple: '#4F46E5',
 
+        lightestWhite: '#F4FDFF',
+        mediumWhite: '#c3cacc',
+        darkestWhite: '#6c7173',
+
         darkestCoolGray: '#070a0d',
         darkCoolGray: '#0f141b',
         coolGray: '#131922',
