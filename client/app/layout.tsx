@@ -19,6 +19,7 @@ import SignInModal from "./(components)/signin";
 import SignUpModal from "./(components)/signup";
 import Sidebar from "./(components)/sidebar";
 import Profile from "./(pages)/Profile";
+import client from "./apollo-client";
 
 const authLink = setContext((_, { headers }) => {
   //This authLink is middleware that inercepts the out going GraphQL requests and attaches an Authorization header to it
@@ -30,17 +31,6 @@ const authLink = setContext((_, { headers }) => {
       authorization: token ? `Bearer ${token}` : "", //This sends the token with the Bearer prefix
     },
   };
-});
-
-const httpLink = createHttpLink({
-  //This is what connects my client to the GraphQL server
-  uri: "http://localhost:5500/graphql",
-});
-
-const client = new ApolloClient({
-  //This creates the new instance of the ApolloClient so that I can wrap my app with it and then send request
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache(), //This allows me to read and write to the client side cache, this is for speed
 });
 
 // const inter = Inter({ subsets: ["latin"] });
