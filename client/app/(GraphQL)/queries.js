@@ -4,8 +4,8 @@ export const GET_POST = gql`
   query GetPost($postId: ID!) {
     getPost(postId: $postId) {
       _id
-      image
-      video
+      preview
+      media
       title
       body
       createdAt
@@ -33,7 +33,7 @@ export const GET_LOGGED_IN_USER = gql`
       posts {
         _id
         title
-        image
+        preview
       }
       followers {
         _id
@@ -56,7 +56,7 @@ export const GET_USER_BY_ID = gql`
       posts {
         _id
         title
-        image
+        preview
       }
       followers {
         _id

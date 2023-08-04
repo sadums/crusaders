@@ -1,4 +1,4 @@
-import { Uploader } from "uploader"; // Do I even need 
+import { Uploader } from "uploader"; 
 import { UploadButton } from "react-uploader";
 import { useState } from "react";
 

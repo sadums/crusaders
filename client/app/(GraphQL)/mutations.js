@@ -53,8 +53,8 @@ export const ADD_POST = gql`
       username
       posts {
         _id
-        image
-        video
+        preview
+        media
         title
         body
         createdAt

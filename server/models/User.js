@@ -9,6 +9,12 @@ const userSchema = new Schema(
       required: true,
       unique: true,
     },
+    firstName:{
+      type: String,
+    },
+    lastName:{
+      type: String,
+    },
     email: {
       type: String,
       required: true,
@@ -39,6 +45,12 @@ const userSchema = new Schema(
         ref: "User",
       },
     ],
+    chats: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Chat"
+      }
+    ]
   },
   {
     toJSON: {

@@ -35,7 +35,7 @@ const wsLink = new GraphQLWsLink(createClient({
 // * A function that's called for each operation to execute
 // * The Link to use for an operation if the function returns a "truthy" value
 // * The Link to use for an operation if the function returns a "falsy" value
-export default splitLink = split(
+const splitLink = split(
   ({ query }) => {
     const definition = getMainDefinition(query);
     return (
@@ -46,8 +46,8 @@ export default splitLink = split(
   wsLink,
   httpLink,
 );
-
 const client = new ApolloClient({
   link: splitLink,
   cache: new InMemoryCache()
 });
+export default client
