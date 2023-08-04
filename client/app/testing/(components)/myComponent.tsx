@@ -16,6 +16,8 @@ export default function MyComponent() {
   // Data is available here, and you can access the new chat messages
   // using `data.chat.messages` array.
   console.log(data);
+
+  
   return (
     <p>DATA:{data.messages}</p>
   );
