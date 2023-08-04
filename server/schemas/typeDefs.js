@@ -70,7 +70,7 @@ const typeDefs = gql`
     addPost(input: newPostInput!, userId: ID!): User
     login(email: String!, password: String!): AuthPayload
     deleteUser: User
-    editUser(input: UpdateUserInput!): AuthPayload
+    editUser(input: UpdateUserInput!, _id: ID!): AuthPayload
     deletePost(postId: ID!): User
     updatePost(postId: ID!, input: updatePostInput!): User
     createChat(members: [ID]): Chat
@@ -100,6 +100,8 @@ input updatePostInput {
   input CreateUserInput {
     username: String!
     email: String!
+    firstName: String
+    lastName: String
     password: String!
   }
 
@@ -108,6 +110,8 @@ input updatePostInput {
     email: String
     bio: String
     pfp: String
+    firstName: String
+    lastName: String
   }
 
 input newPostInput {

@@ -55,7 +55,6 @@ export default function Profile() {
         <div className="bg-darkCoolGray p-2 pt-20 h-[100vh] secondaryMenuMainDiv"></div>
         </div>
         <div className="col-span-1 w-[100%] mt-10">
-          <button onClick={()=> console.log(data)}>Click me</button>
           {data && <ProfileSideInfo userInfo={data.getUserById} />}
         </div>
         <div className="col-span-4 w-[100%] mt-10">

@@ -4,9 +4,12 @@ import PictureUploader from "./pictureUploader";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { UPDATE_USER_MUTATION } from "../(GraphQL)/mutations";
+import Auth from '../(utils)/auth'
 
 interface UserInfo {
   userInfo: {
+    lastName: any;
+    firstName: any;
     username: string;
     bio: string;
     pfp: string;
@@ -20,8 +23,8 @@ interface UserInfo {
 function ProfileSideInfo({ userInfo }: UserInfo) {
   const [updateUserMutation, { loading, error, data }] =
     useMutation(UPDATE_USER_MUTATION);
-console.log(userInfo)
-  const [userData, setUserData] = useState(userInfo)
+  console.log(userInfo);
+  const [userData, setUserData] = useState(userInfo);
 
   const [pictureState, setPictureState] = useState<{
     cropped: string;
@@ -31,44 +34,49 @@ console.log(userInfo)
     original: "",
   });
 
-  const validateEmail = (email: string) => {
-    var re = /^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/;
-    return re.test(email);
-  };
+  // const validateEmail = (email: string) => {
+  //   var re = /^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/;
+  //   return re.test(email);
+  // };
 
   const updateUserHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
       const target = event.target as HTMLFormElement;
-      if (validateEmail(target.form[1].value)) {
-        const updateUserData = {
-          username: target.form[0].value,
-          email: target.form[1].value,
-          bio: target.form[2].value,
-          pfp: pictureState.cropped,
-          // followers: [],
-          // following: []
-        };
-        console.log(updateUserData);
+      console.log([target.form])
+      const updateUserData = {
+        username: target.form[0].value,
+        firstName: target.form[1].value,
+        lastName: target.form[2].value,
+        bio: target.form[3].value,
+        pfp: pictureState.cropped,
+        // followers: [],
+        // following: []
+      };
+      console.log(updateUserData);
 
-        const response = await updateUserMutation({
-          variables: {input: updateUserData}
-        })
-        //Add in error handling for if there is another user with the same name
-        console.log(response.data)
-        setUserData(response.data.editUser.user)
-        
-      } else {
-        alert("Please enter a valid email");
-      }
+      const id = Auth.getProfile().data._id
+      console.log(id)
+
+      const response = await updateUserMutation({
+        variables: { input: updateUserData, _id: id },
+      });
+      
+      //Add in error handling for if there is another user with the same name
+      console.log(response.data);
+      setUserData(response.data.editUser.user);
     } catch (err) {
       console.error(err);
     }
   };
 
-  const handleSetPictureState = (url: { cropped: string; original: string }): void => {
+  const handleSetPictureState = (url: {
+    cropped: string;
+    original: string;
+  }): void => {
     setPictureState(url);
   };
+  console.log(userInfo)
   return (
     <>
       <div className="profileSideInfoMainDiv mb-0">
@@ -77,7 +85,7 @@ console.log(userInfo)
           className="h-40 w-40 rounded-full border-[1px] border-customPurple object-cover"
         ></img>
         <h1 className="text text-xl mt-4">
-          Carter Johnson
+          {`${userData.firstName} ${userData.lastName}`}
         </h1>
         <h1 className="text-gray-500 text-xl mt-0">
           @{userData ? userData.username : ""}
@@ -126,20 +134,24 @@ console.log(userInfo)
               id="username"
               name="username"
               className="mt-1 p-2 w-full border rounded-md text-black"
+              placeholder="Username"
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Change Email
+            <label className="block text-sm font-medium text-gray-700">
+              Change Name
             </label>
             <input
-              type="email"
-              id="email"
-              name="email"
+              type="text"
+              name="first-name"
               className="mt-1 p-2 w-full border rounded-md text-black"
+              placeholder="Last Name"
+            />
+            <input
+              type="text"
+              name="last-name"
+              className="mt-1 p-2 w-full border rounded-md text-black"
+              placeholder="First Name"
             />
           </div>
           <div className="mb-4">
@@ -147,13 +159,14 @@ console.log(userInfo)
               htmlFor="bio"
               className="block text-sm font-medium text-gray-700"
             >
-              Change bio
+              Change Bio
             </label>
             <input
               type="text"
               id="bio"
               name="bio"
               className="mt-1 p-2 w-full border rounded-md text-black"
+              placeholder="Bio"
             />
           </div>
           <PictureUploader

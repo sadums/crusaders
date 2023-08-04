@@ -27,6 +27,8 @@ export const GET_LOGGED_IN_USER = gql`
     getLoggedInUser {
       _id
       username
+      firstName
+      lastName
       bio
       pfp
       email
@@ -50,6 +52,8 @@ export const GET_USER_BY_ID = gql`
     getUserById(input: $id) {
       _id
       username
+      firstName
+      lastName
       bio
       pfp
       email
