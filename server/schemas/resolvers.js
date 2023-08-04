@@ -131,29 +131,36 @@ const resolvers = {
         console.error(err);
       }
     },
-    editUser: async (parent, { input }, context) => {
+    editUser: async (parent, { input, _id }, context) => {
       try {
-        const selectedUser = context.user;
         console.log(input);
-        console.log(selectedUser);
+    
         const fieldsToUpdate = {};
         if (input.username) fieldsToUpdate.username = input.username;
         if (input.email) fieldsToUpdate.email = input.email;
         if (input.pfp) fieldsToUpdate.pfp = input.pfp;
         if (input.bio) fieldsToUpdate.bio = input.bio;
-
+        if (input.firstName) fieldsToUpdate.firstName = input.firstName;
+        if (input.lastName) fieldsToUpdate.lastName = input.lastName;
+    
         const user = await User.findByIdAndUpdate(
-          selectedUser._id,
+          _id, // Using the provided ID
           fieldsToUpdate,
           { new: true }
         );
+    
+        if (!user) {
+          throw new Error('User not found');
+        }
+    
         const token = signToken(user);
-        return { token: token, user: user }; //This doesn't update in tests because the context is fixed, might update on the website
+        return { token: token, user: user };
       } catch (err) {
         console.error(err);
         return err;
       }
     },
+    
     createChat: async (parent, { members }, context) => {
       const chat = await Chat.create({
         members: members,

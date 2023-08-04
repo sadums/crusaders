@@ -27,12 +27,14 @@ export const LOGIN_MUTATION = gql`
 `;
 
 export const UPDATE_USER_MUTATION = gql`
-  mutation UpdateUser($input: UpdateUserInput!) {
-    editUser(input: $input) {
+  mutation UpdateUser($input: UpdateUserInput!, $_id: ID!) {
+    editUser(input: $input, _id: $_id) {
       token
       user {
         username
         email
+        firstName
+        lastName
         bio
         pfp
         followers {
@@ -45,6 +47,7 @@ export const UPDATE_USER_MUTATION = gql`
     }
   }
 `;
+
 
 export const ADD_POST = gql`
   mutation AddPost($input: newPostInput!, $userId: ID!) {
