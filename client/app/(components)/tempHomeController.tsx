@@ -120,30 +120,48 @@ function HomeController() {
       });
 
       console.log(inputHashtags);
+      console.log(videoState)
+
+      //I don't know what would happen if the video state has a picture
+      //I dont know what would happen if the picture state has a video
+
+      //PICTURE
       const postInput = {
-        preview: pictureState.cropped, //We need something to dif the pics from the videos
+        preview: pictureState.cropped,
         media: pictureState.original,
         title: target.form[1].value,
         body: target.form[2].value,
         hashtags: inputHashtags,
       };
+
+      //VIDEO
+      // const postInput = {
+      //   preview: videoState.thumbnail,
+      //   media: videoState.video,
+      //   title: target.form[1].value,
+      //   body: target.form[2].value,
+      //   hashtags: inputHashtags,
+      // };
       console.log(postInput);
       const id = Auth.getProfile().data._id;
-      const response = await addPostMutation({
-        variables: {
-          input: postInput,
-          userId: id,
-        },
-      });
-      console.log(response);
-      console.log(response);
+      // const response = await addPostMutation({
+      //   variables: {
+      //     input: postInput,
+      //     userId: id,
+      //   },
+      // });
+      // console.log(response);
+      // console.log(response);
       //Connect to backend
     } catch (err) {
       console.error(err);
     }
   };
 
-  const handleSetPictureState = (url: { cropped: string; original: string }): void => {
+  const handleSetPictureState = (url: {
+    cropped: string;
+    original: string;
+  }): void => {
     setPictureState(url);
   };
 
