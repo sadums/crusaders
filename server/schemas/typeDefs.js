@@ -35,8 +35,8 @@ type Message {
 
 type Post {
     _id: ID
-    image: String
-    video: String
+    preview: String
+    media: String
     title: String!
     body: String
     createdAt: String
@@ -79,8 +79,8 @@ type Subscription {
 }
 
 input updatePostInput {
-  image: String
-  video: String
+  preview: String
+  media: String
   title: String
   body: String
   createdAt: String
@@ -100,14 +100,15 @@ input CreateUserInput {
     pfp: String
   }
 
-  input newPostInput {
-    image: String
-    video: String
+input newPostInput {
+    preview: String
+    media: String
     title: String
     body: String
     createdAt: String
     hashtags: [hashtagInput]
 }
+
 
 input hashtagInput {
     hashtagText: String

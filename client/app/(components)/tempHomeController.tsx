@@ -10,6 +10,7 @@ import PictureUploader from "./pictureUploader";
 import { ADD_POST } from "../(GraphQL)/mutations";
 import { useMutation } from "@apollo/client";
 import Auth from "../(utils)/auth";
+import VideoUploader from "./videoUploader";
 
 function HomeController() {
   // For fake posts
@@ -72,7 +73,21 @@ function HomeController() {
 
   const [createPostDiv, showCreatePostDiv] = useState(false);
   const [hashtags, addHashtags] = useState<string[]>([]);
-  const [pictureState, setPictureState] = useState<string>("");
+  const [pictureState, setPictureState] = useState<{
+    cropped: string;
+    original: string;
+  }>({
+    cropped: "",
+    original: "",
+  });
+
+  const [videoState, setVideoState] = useState<{
+    thumbnail: string;
+    video: string;
+  }>({
+    thumbnail: "",
+    video: "",
+  });
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -106,14 +121,14 @@ function HomeController() {
 
       console.log(inputHashtags);
       const postInput = {
-        image: pictureState, //We need something to dif the pics from the videos
-        video: "",
+        preview: pictureState.cropped, //We need something to dif the pics from the videos
+        media: pictureState.original,
         title: target.form[1].value,
         body: target.form[2].value,
         hashtags: inputHashtags,
       };
       console.log(postInput);
-      const id = Auth.getProfile().data._id
+      const id = Auth.getProfile().data._id;
       const response = await addPostMutation({
         variables: {
           input: postInput,
@@ -128,7 +143,7 @@ function HomeController() {
     }
   };
 
-  const handleSetPictureState = (url: string): void => {
+  const handleSetPictureState = (url: { cropped: string; original: string }): void => {
     setPictureState(url);
   };
 
@@ -154,7 +169,9 @@ function HomeController() {
             /> */}
             <div
               className={` ease-in-out duration-300 ${
-                createPostDiv ? "w-[90%] border-[1px] border-customPurple rounded-xl p-2" : "w-[50%]"
+                createPostDiv
+                  ? "w-[90%] border-[1px] border-customPurple rounded-xl p-2"
+                  : "w-[50%]"
               }`}
             >
               <button
@@ -223,6 +240,11 @@ function HomeController() {
                       setPictureState={handleSetPictureState}
                       uploadText={"Select your media"}
                     />
+                    <VideoUploader
+                      uploadText={"Upload a video"}
+                      videoState={videoState}
+                      setVideoState={setVideoState}
+                    />
                   </div>
                   <div className="mt-4">
                     <h2 className="text-sm text-neonBlue">Hashtags:</h2>
@@ -259,7 +281,9 @@ function HomeController() {
                 </form>
               </div>
             </div>
-            <div className={`border-[1px] shadow-notificationShadowPink border-customPurple bg-coolGray rounded-xl p-2 mt-3 w-[50%]`}>
+            <div
+              className={`border-[1px] shadow-notificationShadowPink border-customPurple bg-coolGray rounded-xl p-2 mt-3 w-[50%]`}
+            >
               <h3>Go Pro!</h3>
               <p>Get a one month free trial idk</p>
               <button className=" px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 hover:scale-105">
