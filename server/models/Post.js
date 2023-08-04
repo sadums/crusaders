@@ -21,16 +21,26 @@ const commentSchema = new Schema({
   },
 })
 
+const Image = new Schema({
+  cropped: String,
+  original: String,
+});
+
+const Video = new Schema({
+  thumbnail: String,
+  video: String,
+});
+
 const postSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: "User",
     //required: true,
   },
-  image: {
+  preview: {
     type: String,
   },
-  video: {
+  media: {
     type: String,
   },
   title: {

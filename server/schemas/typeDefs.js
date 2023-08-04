@@ -38,8 +38,8 @@ const typeDefs = gql`
 
   type Post {
     _id: ID
-    image: String
-    video: String
+    preview: String
+    media: String
     title: String!
     body: String
     createdAt: String
@@ -75,20 +75,27 @@ const typeDefs = gql`
     updatePost(postId: ID!, input: updatePostInput!): User
     createChat(members: [ID]): Chat
     createMessage(userId: ID!, chatId: ID!, body: String!): Chat
-  }
+}
+
+type Subscription {
+  messages: Message
+}
+
+input updatePostInput {
+  preview: String
+  media: String
+  title: String
+  body: String
+  createdAt: String
+  hashtags: [hashtagInput]
+}
+
+
 
   type Subscription {
     messages(chatId: ID, userId: ID): Message
   }
 
-  input updatePostInput {
-    image: String
-    video: String
-    title: String
-    body: String
-    createdAt: String
-    hashtags: [hashtagInput]
-  }
 
   input CreateUserInput {
     username: String!
@@ -103,14 +110,15 @@ const typeDefs = gql`
     pfp: String
   }
 
-  input newPostInput {
-    image: String
-    video: String
+input newPostInput {
+    preview: String
+    media: String
     title: String
     body: String
     createdAt: String
     hashtags: [hashtagInput]
   }
+
 
   input hashtagInput {
     hashtagText: String

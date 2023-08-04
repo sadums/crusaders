@@ -4,7 +4,7 @@ import { useState } from "react";
 
 interface PostInfo {
   title: string;
-  image: string;
+  preview: string;
 }
 
 interface ProfilePostsProps {
@@ -15,10 +15,10 @@ interface ProfilePostsProps {
 function ProfilePosts({ postInfo, postClickHandler }: ProfilePostsProps) {
   return (
     <div className="relative profilePostMainDiv" onClick={()=> postClickHandler(postInfo)}>
-      {postInfo.image ? (
+      {postInfo.preview ? (
         <img
           className="w-full h-64 object-cover z-10 profilePostImg "
-          src={postInfo.image}
+          src={postInfo.preview}
           alt="Post"
         />
       ) : (
