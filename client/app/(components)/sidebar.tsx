@@ -114,7 +114,7 @@ const Sidebar: React.FC<NavbarProps> = ({
             <h5 className="text-sm text-center mt-2">Crusaders</h5>
             <div className="sidebarLogo ">
               <img
-                className="h-16 mx-auto w-16 bg-black dark:bg-transparent rounded-full p-1"
+                className="h-16 mx-auto w-16  rounded-full p-1"
                 src="/horseOnlyLogo.png"
                 alt="Your Company"
               ></img>
