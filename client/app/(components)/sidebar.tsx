@@ -103,6 +103,12 @@ const Sidebar: React.FC<NavbarProps> = ({
     setSidebarOpacity(!sidebarOpacity);
   }, []);
 
+  // useEffect(() => {
+  //   if(sidebarOpacity === true) {
+
+  //   }
+  // },[sidebarOpacity])
+
   //This error is typescript I will change
   const handleSidebarChange = (page: any) => setShowSidebar(page);
 
@@ -206,7 +212,7 @@ const Sidebar: React.FC<NavbarProps> = ({
               </li>
               <li className="flex items-center space-x-2 sidebarIcon group">
                 <a
-                  href="#"
+                  href="#search"
                   className="text-gray-300rounded-md  py-2 text-md font-medium transition duration-300 hover:scale-100"
                   onClick={() => {
                     handleSidebarChange("Search");
