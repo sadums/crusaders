@@ -72,6 +72,7 @@ function HomeController() {
   const [addPostMutation, { loading, error, data }] = useMutation(ADD_POST);
 
   const [createPostDiv, showCreatePostDiv] = useState(false);
+  const [uploadTypeState, setUploadTypeState] = useState("");
   const [hashtags, addHashtags] = useState<string[]>([]);
   const [pictureState, setPictureState] = useState<{
     cropped: string;
@@ -120,38 +121,48 @@ function HomeController() {
       });
 
       console.log(inputHashtags);
-      console.log(videoState)
+      console.log(videoState);
 
       //I don't know what would happen if the video state has a picture
       //I dont know what would happen if the picture state has a video
 
       //PICTURE
+      // const postInput = {
+      //   // preview: pictureState.cropped,
+      //   // media: pictureState.original,
+      //   title: target.form[1].value,
+      //   body: target.form[2].value,
+      //   hashtags: inputHashtags,
+      // };
+
+      //VIDEO
       const postInput = {
-        preview: pictureState.cropped,
-        media: pictureState.original,
+        preview: '',
+        media: '',
         title: target.form[1].value,
         body: target.form[2].value,
         hashtags: inputHashtags,
       };
 
-      //VIDEO
-      // const postInput = {
-      //   preview: videoState.thumbnail,
-      //   media: videoState.video,
-      //   title: target.form[1].value,
-      //   body: target.form[2].value,
-      //   hashtags: inputHashtags,
-      // };
+      if(uploadTypeState === 'picture'){
+        postInput.preview = pictureState.cropped
+        postInput.media = pictureState.original
+      }
+
+      if(uploadTypeState === 'video'){
+        postInput.preview = videoState.thumbnail
+        postInput.media = videoState.video
+      }
       console.log(postInput);
       const id = Auth.getProfile().data._id;
-      // const response = await addPostMutation({
-      //   variables: {
-      //     input: postInput,
-      //     userId: id,
-      //   },
-      // });
-      // console.log(response);
-      // console.log(response);
+      const response = await addPostMutation({
+        variables: {
+          input: postInput,
+          userId: id,
+        },
+      });
+      console.log(response);
+      console.log(response);
       //Connect to backend
     } catch (err) {
       console.error(err);
@@ -163,6 +174,14 @@ function HomeController() {
     original: string;
   }): void => {
     setPictureState(url);
+  };
+
+  const pictureButtonHandler = () => {
+    setUploadTypeState("picture");
+  };
+
+  const videoButtonHandler = () => {
+    setUploadTypeState("video");
   };
 
   return (
@@ -252,16 +271,24 @@ function HomeController() {
                   </div>
                   <div className="mt-4">
                     <h2 className="text-sm text-neonBlue">Media:</h2>
-                    <PictureUploader
-                      pictureState={pictureState}
-                      setPictureState={handleSetPictureState}
-                      uploadText={"Select your media"}
-                    />
-                    <VideoUploader
-                      uploadText={"Upload a video"}
-                      videoState={videoState}
-                      setVideoState={setVideoState}
-                    />
+                    <div onClick={pictureButtonHandler}>
+                      {uploadTypeState !== "video" && (
+                        <PictureUploader
+                          pictureState={pictureState}
+                          setPictureState={handleSetPictureState}
+                          uploadText={"Select your media"}
+                        />
+                      )}
+                    </div>
+                    <div onClick={videoButtonHandler}>
+                      {uploadTypeState !== "picture" && (
+                        <VideoUploader
+                          uploadText={"Upload a video"}
+                          videoState={videoState}
+                          setVideoState={setVideoState}
+                        />
+                      )}
+                    </div>
                   </div>
                   <div className="mt-4">
                     <h2 className="text-sm text-neonBlue">Hashtags:</h2>
@@ -383,7 +410,7 @@ function HomeController() {
                       </h3>
                       <div className="flex justify-around items-center mt-0">
                         <h2 className="text-black text-[30px] mr-1">19</h2>
-                      <svg
+                        <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
                           viewBox="0 0 24 24"
@@ -391,7 +418,6 @@ function HomeController() {
                           stroke="currentColor"
                           className="w-10 h-10 text-green-600"
                         >
-                      
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -405,8 +431,8 @@ function HomeController() {
                         Sent
                       </h3>
                       <div className="flex justify-around items-center mt-0">
-                      <h2 className="text-black text-[30px] mr-1">219</h2>
-                      <svg
+                        <h2 className="text-black text-[30px] mr-1">219</h2>
+                        <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
                           viewBox="0 0 24 24"
@@ -415,14 +441,12 @@ function HomeController() {
                           className="w-10 h-10 text-blue-700"
                           transform="scale(1,1) scale(-1,1)"
                         >
-                    
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
                           />
                         </svg>
-                       
                       </div>
                     </div>
                   </div>

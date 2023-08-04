@@ -29,7 +29,8 @@ const PostModal: React.FC<ModalProps> = ({
   const tempName = "John Doe";
 
   const [showComments, setShowComments] = useState(false);
-  console.log(media)
+  console.log(media);
+  const isVideo = media.endsWith(".mp4");
   return (
     <>
       <div className="fixed z-10 inset-0 overflow-y-auto duration-200 ease-in-out flex items-center justify-center">
@@ -90,10 +91,20 @@ const PostModal: React.FC<ModalProps> = ({
                   </span>
                 ))}
               </div>
-              <img
-                src={media}
-                className="w-[100%] h-auto mt-2 border-[1px] border-gray-600 rounded-xl"
-              ></img>
+              {isVideo ? (
+                <video
+                  className="w-[100%] h-auto mt-2 border-[1px] border-gray-600 rounded-xl"
+                  controls
+                >
+                  <source src={media} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <img
+                  src={media}
+                  className="w-[100%] h-auto mt-2 border-[1px] border-gray-600 rounded-xl"
+                />
+              )}
             </div>
             {/* {showComments && (
                 <div className="mt-2">
