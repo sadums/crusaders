@@ -63,7 +63,7 @@ export default function RootLayout({
             rel="stylesheet"
           ></link>
         </head>
-        <body>
+        <body className="dark:border-coolGray border-darkestWhite">
           <Sidebar
             setIsSignInModalOpen={setIsSignInModalOpen}
             setIsSignUpModalOpen={setIsSignUpModalOpen}

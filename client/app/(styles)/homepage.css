@@ -27,12 +27,6 @@
     display: none;
 }
 
-.feedPosts {
-    border: solid 2px rgb(79,70,229);
-    border-width: 2px 0px 2px 0px;
-    /* border-radius: 15px; */
-    margin-top: 4%;
-}
 
 /* For side info */
 

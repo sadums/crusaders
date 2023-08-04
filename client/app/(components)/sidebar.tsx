@@ -104,13 +104,13 @@ const Sidebar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <div className="bg-coolGray h-[100vh] fixed top-0 left-0 w-20 shadow-lg z-50">
+      <div className="bg-darkestWhite dark:bg-coolGray h-[100vh] fixed top-0 left-0 w-20 shadow-lg z-50">
         <div className="container mx-auto z-50">
           <div className="grid grid-cols-1 gap-4">
             <h5 className="text-sm text-center mt-2">Crusaders</h5>
             <div className="sidebarLogo ">
               <img
-                className="h-16 mx-auto "
+                className="h-16 mx-auto w-16 bg-black dark:bg-transparent rounded-full p-1"
                 src="/horseOnlyLogo.png"
                 alt="Your Company"
               ></img>
@@ -179,7 +179,7 @@ const Sidebar: React.FC<NavbarProps> = ({
               <li className=" flex items-center space-x-2 sidebarIcon group">
                 <a
                   href="/"
-                  className="text-gray-300 rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
+                  className="dark:text-gray-300 text-blue-500 rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

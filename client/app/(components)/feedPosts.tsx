@@ -17,7 +17,7 @@ function FeedPosts({ users }: { users: User[] }) {
       {users.map((user, index) => (
         <div
           key={index}
-          className="mt-4 p-3 border-b-[1px] border-t-[1px] border-customPurple bg-darkCoolGray"
+          className="mt-4 p-3 border-[1px] rounded-lg border-black dark:border-0 bg-darkCoolGray"
         >
           <div className="flex justify-between border-gray-700 pb-2 border-b-[1px]">
             <div className="flex">

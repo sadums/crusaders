@@ -24,7 +24,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-    border: solid rgb(19, 25, 34);
+    /* border: solid rgb(19, 25, 34); */
     border-width: 30px 0px 0px 0px;
     /* padding-left: 12%; */
     height: 100vh;
