@@ -71,7 +71,11 @@ const Sidebar: React.FC<NavbarProps> = ({
     let application = window.document.body.classList;
     if (choice === "dark") {
       application.add("dark");
+      application.remove("border-customPurpleDark")
+      application.add("border-coolGray")
     } else {
+      application.remove("border-coolGray")
+      application.add("border-customPurpleDark")
       console.log("light mode");
     }
   }, [enableDarkMode, enableLightMode]);
@@ -104,7 +108,7 @@ const Sidebar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <div className="bg-darkestWhite dark:bg-coolGray h-[100vh] fixed top-0 left-0 w-20 shadow-lg z-50">
+      <div className="dark:bg-coolGray bg-gradient-to-t from-[#5b53ec] to-customPurpleDark h-[100vh] fixed top-0 left-0 w-20 shadow-lg z-50">
         <div className="container mx-auto z-50">
           <div className="grid grid-cols-1 gap-4">
             <h5 className="text-sm text-center mt-2">Crusaders</h5>
@@ -179,7 +183,7 @@ const Sidebar: React.FC<NavbarProps> = ({
               <li className=" flex items-center space-x-2 sidebarIcon group">
                 <a
                   href="/"
-                  className="dark:text-gray-300 text-blue-500 rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
+                  className="dark:text-gray-300 rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -203,7 +207,7 @@ const Sidebar: React.FC<NavbarProps> = ({
               <li className="flex items-center space-x-2 sidebarIcon group">
                 <a
                   href="#"
-                  className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
+                  className="text-gray-300rounded-md  py-2 text-md font-medium transition duration-300 hover:scale-100"
                   onClick={() => {
                     handleSidebarChange("Search");
                     setSidebarOpacity(!sidebarOpacity);
@@ -231,7 +235,7 @@ const Sidebar: React.FC<NavbarProps> = ({
               <li className="flex items-center space-x-2 sidebarIcon group">
                 <a
                   href="/Explore"
-                  className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
+                  className="text-gray-300 rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
