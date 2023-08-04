@@ -3,7 +3,8 @@ import React, { useState } from "react";
 
 interface ModalProps {
   title: string;
-  image: string;
+  preview: string;
+  media: string;
   body: string;
   date: string;
   comments: string[];
@@ -14,7 +15,8 @@ interface ModalProps {
 
 const PostModal: React.FC<ModalProps> = ({
   title,
-  image,
+  preview,
+  media,
   body,
   date,
   comments,
@@ -27,6 +29,7 @@ const PostModal: React.FC<ModalProps> = ({
   const tempName = "John Doe";
 
   const [showComments, setShowComments] = useState(false);
+  console.log(media)
   return (
     <>
       <div className="fixed z-10 inset-0 overflow-y-auto duration-200 ease-in-out flex items-center justify-center">
@@ -88,7 +91,7 @@ const PostModal: React.FC<ModalProps> = ({
                 ))}
               </div>
               <img
-                src={image}
+                src={media}
                 className="w-[100%] h-auto mt-2 border-[1px] border-gray-600 rounded-xl"
               ></img>
             </div>
