@@ -17,7 +17,7 @@ function FeedPosts({ users }: { users: User[] }) {
       {users.map((user, index) => (
         <div
           key={index}
-          className="mt-4 p-3 border-[1px] rounded-lg border-black dark:border-0 bg-darkCoolGray"
+          className="mt-4 p-3 border-[1px] rounded-lg border-black dark:border-0 shadow-2xl bg-white dark:bg-darkCoolGray"
         >
           <div className="flex justify-between border-gray-700 pb-2 border-b-[1px]">
             <div className="flex">
@@ -27,7 +27,7 @@ function FeedPosts({ users }: { users: User[] }) {
                 alt="Your Company"
               ></img>
               <div>
-                <h2 className="text-md ml-1">Carter Johnson</h2>
+                <h2 className="text-md text-black font-semibold dark:text-white ml-1">Carter Johnson</h2>
                 <div>
                   <a
                     href="#"
@@ -40,13 +40,13 @@ function FeedPosts({ users }: { users: User[] }) {
               </div>
             </div>
             <div className="my-auto">
-              <button className=" text-neonBlue p-1 pl-2 pr-2 rounded-xl">
+              <button className=" text-customPurple font-semibold dark:text-neonBlue p-1 pl-2 pr-2 rounded-xl">
                 Follow
               </button>
             </div>
           </div>
           <div className="mt-4">
-            <p>{user.postDesc}</p>
+            <p className="dark:text-white text-black">{user.postDesc}</p>
           </div>
           <div className="mt-0">
             <a className="mr-1 text-gray-500">#fun</a>
@@ -55,7 +55,7 @@ function FeedPosts({ users }: { users: User[] }) {
           </div>
           <div className="mt-4 border-gray-700 pb-2 border-b-[1px]">
             <img
-              className="postContentImg w-[90%] border-[1px] border-gray-500 rounded-xl"
+              className="postContentImg w-[90%] border-[2px] border-gray-500 rounded-xl"
               src={user.postImg}
               alt="Post"
             ></img>
@@ -64,7 +64,7 @@ function FeedPosts({ users }: { users: User[] }) {
             <div className="flex mt-2">
               <button
                 type="button"
-                className="rounded-full mr-3 p-1 text-black-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                className="rounded-full mr-3 p-1 text-customPurpleDark dark:text-white "
               >
                 <span className="sr-only">Like</span>
                 <svg
@@ -84,7 +84,7 @@ function FeedPosts({ users }: { users: User[] }) {
               </button>
               <button
                 type="button"
-                className="rounded-full mr-3 p-1 text-black-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                className="rounded-full mr-3 p-1 text-customPurpleDark dark:text-white"
               >
                 <span className="sr-only">Comment</span>
                 <svg
@@ -104,7 +104,7 @@ function FeedPosts({ users }: { users: User[] }) {
               </button>
               <button
                 type="button"
-                className="rounded-full mr-3 p-1 text-black-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                className="rounded-full mr-3 p-1 text-customPurpleDark dark:text-white"
               >
                 <span className="sr-only">Bookmark</span>
                 <svg
@@ -124,7 +124,7 @@ function FeedPosts({ users }: { users: User[] }) {
               </button>
               <button
                 type="button"
-                className="rounded-full mr-3 p-1 text-black-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                className="rounded-full mr-3 p-1 text-customPurpleDark dark:text-white"
               >
                 <span className="sr-only">Share</span>
                 <svg

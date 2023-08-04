@@ -18,10 +18,11 @@ module.exports = {
         lightPink: '#837dec',
         darkPurple: '#2f2a89',
         customPurple: '#4F46E5',
+        customPurpleDark: '#2c2883',
 
         lightestWhite: '#F4FDFF',
-        mediumWhite: '#c3cacc',
-        darkestWhite: '#6c7173',
+        mediumWhite: '#BFC6C8',
+        darkestWhite: '#abb2b4',
 
         darkestCoolGray: '#070a0d',
         darkCoolGray: '#0f141b',

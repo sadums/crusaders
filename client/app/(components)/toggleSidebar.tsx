@@ -300,24 +300,24 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
               : "translate-y-0 opacity-1"
           }`}
         >
-          <h4>Notifications</h4>
+          <h4 className="dark:text-white text-lg text-black font-semibold border-customPurpleDark border-b-2">Notifications</h4>
           <div>
             {tempNotificationData.map((notif) => {
               if (notif.type === "friendRequest") {
                 return (
-                  <div key={notif.id} className="border-customPurple border-[1px] rounded-xl bg-coolGray shadow-notificationShadowPink ring-blue-700 p-1 mt-3">
+                  <div key={notif.id} className="dark:border-customPurple shadow-xl bg-white border-[1px] rounded-xl dark:bg-coolGray dark:shadow-notificationShadowPink ring-blue-700 p-1 mt-3">
                     <div className="flex justify-between">
                       {" "}
                       <div className="flex">
                         <img
-                          className="h-10 w-10 rounded-full mt-1"
+                          className="h-10 w-10 rounded-full mt-1 border-[1px] border-black"
                           src={notif.data.pfp}
                         ></img>
                         <div className="left-0">
-                          <a className="ml-2 text-lg cursor-pointer">
+                          <a className="ml-2 text-lg text-black dark:text-white font-semibold cursor-pointer">
                             {notif.data.senderName}
                           </a>
-                          <h4 className="ml-2 text-[.8rem] text-gray-400">
+                          <h4 className="ml-2 text-[.8rem] text-gray-600 font-semibold dark:text-gray-400">
                             Has sent you a friend request
                           </h4>
                         </div>
@@ -340,10 +340,10 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
                       </a>{" "}
                     </div>
                     <div className="flex justify-evenly mt-2">
-                      <button className="text-green-400 text-sm pl-1 pr-1 p-[.5%] rounded-md hover:bg-green-400 hover:text-black duration-150 ease-in-out">
+                      <button className="dark:text-green-400 font-semibold text-green-600 text-sm pl-1 pr-1 p-[.5%] rounded-md hover:bg-green-400 hover:text-black duration-150 ease-in-out">
                         Accept
                       </button>
-                      <button className="text-red-400 text-sm pl-1 pr-1 p-[.5%] rounded-md hover:bg-red-400 hover:text-black duration-150 ease-in-out">
+                      <button className="dark:text-red-400 font-semibold text-red-600 text-sm pl-1 pr-1 p-[.5%] rounded-md hover:bg-red-400 hover:text-black duration-150 ease-in-out">
                         Decline
                       </button>
                     </div>
@@ -352,7 +352,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
               }
               if (notif.type === "messageResponse") {
                 return (
-                  <div className="border-customPurple border-[1px] rounded-xl shadow-notificationShadowPink bg-coolGray p-1 mt-3">
+                  <div className="dark:border-customPurple border-[1px] shadow-xl bg-white rounded-xl dark:shadow-notificationShadowPink dark:bg-coolGray p-1 mt-3">
                     <div className="flex justify-between">
                       {" "}
                       <div className="flex">
@@ -361,10 +361,10 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
                           src={notif.data.pfp}
                         ></img>
                         <div>
-                          <a className="ml-2 text-lg cursor-pointer">
+                          <a className="ml-2 text-lg text-black dark:text-white font-semibold cursor-pointer">
                             {notif.data.senderName}
                           </a>
-                          <h4 className="ml-2 text-[.8rem] text-gray-400">
+                          <h4 className="ml-2 text-[.8rem] text-gray-600 font-semibold dark:text-gray-400">
                             Has sent you a message
                           </h4>
                         </div>
@@ -387,7 +387,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
                       </a>{" "}
                     </div>
                     <div className="flex mt-2">
-                      <button className="ml-11 text-blue-500 text-sm  pl-1 pr-1 p-[.5%] rounded-md hover:bg-customPurple hover:text-white duration-150 ease-in-out">
+                      <button className="ml-11 text-blue-600 font-semibold dark:text-blue-500 text-sm  pl-1 pr-1 p-[.5%] rounded-md hover:bg-customPurple hover:text-white duration-150 ease-in-out">
                         <div className="flex">
                         Respond
                         <svg
