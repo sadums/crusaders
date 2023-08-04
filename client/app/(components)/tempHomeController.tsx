@@ -168,11 +168,11 @@ function HomeController() {
   return (
     <div className="homePageMainDiv bg-mediumWhite dark:bg-darkestCoolGray ml-20">
       <div className="grid grid-cols-6 gap-4">
-        <div className="col-span-1 bg-customPurpleDark border-customPurpleDark border-r-[1px] dark:border-0 dark:bg-[#131922]">
-          <div className="bg-darkestWhite dark:bg-darkCoolGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
+        <div className="col-span-1 bg-customPurpleDark border-customPurpleDark border-r-[2px] dark:border-0 dark:bg-[#131922]">
+          <div className="bg-gray-400  dark:bg-darkCoolGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
         </div>
         <div className="col-span-3 pl-64">
-          <div className="homePageFeedMainDiv pl-2 pr-2 border-customPurpleDark dark:border-customPurple border-r-[1px] border-l-[1px]">
+          <div className="homePageFeedMainDiv pl-2 pr-2 border-customPurpleDark dark:border-customPurple border-r-[2px] border-l-[2px]">
             <div className="feedPostsTop"></div>
             <FeedPosts users={tempUsers} />
           </div>
@@ -188,7 +188,7 @@ function HomeController() {
             <div
               className={` ease-in-out duration-300 ${
                 createPostDiv
-                  ? "w-[90%] border-[1px] border-customPurple rounded-xl p-2"
+                  ? "w-[90%] border-[1px] bg-white border-black dark:border-customPurple rounded-xl p-2"
                   : "w-[50%]"
               }`}
             >
@@ -300,16 +300,16 @@ function HomeController() {
               </div>
             </div>
             <div
-              className={`border-[1px] shadow-notificationShadowPink border-customPurple bg-coolGray rounded-xl p-2 mt-3 w-[50%]`}
+              className={`max-w-sm mt-3 border-0 dark:shadow-notificationShadowPink dark:bg-coolGray bg-white border-black shadow-xl dark:border-customPurple rounded-xl p-2 w-[50%]`}
             >
-              <h3>Go Pro!</h3>
-              <p>Get a one month free trial idk</p>
+              <h3 className="text-black font-semibold dark:text-white">Go Pro!</h3>
+              <p className="text-black font-semibold dark:text-white">Get a one month free trial idk</p>
               <button className=" px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 hover:scale-105">
                 Sign up
               </button>
             </div>
-            <div className="border-[1px] border-customPurple shadow-notificationShadowPink bg-coolGray rounded-xl p-2 mt-3 w-[50%]">
-              <h3>Who To Follow</h3>
+            <div className="max-w-sm mt-3 border-0 dark:shadow-notificationShadowPink dark:bg-coolGray bg-white border-black shadow-xl dark:border-customPurple rounded-xl p-2 w-[50%]">
+              <h3 className="text-black font-semibold dark:text-white">Who To Follow</h3>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
                   <img
@@ -322,7 +322,7 @@ function HomeController() {
                   <div className="flex space-x-4">
                     <a
                       href="#"
-                      className="text-black-800 px-3 py-2"
+                      className="text-black font-semibold dark:text-white px-3 py-2"
                       aria-current="page"
                     >
                       Carreejoh
@@ -342,7 +342,7 @@ function HomeController() {
                   <div className="flex space-x-4">
                     <a
                       href="#"
-                      className="text-black-800 px-3 py-2"
+                      className="text-black font-semibold dark:text-white px-3 py-2"
                       aria-current="page"
                     >
                       EmilySmith
@@ -353,11 +353,11 @@ function HomeController() {
             </div>
             {/* <div className="homepageInfoDivs">
               <h3>Your Interests</h3> */}
-            <form className="max-w-sm mt-3 border-[1px] shadow-notificationShadowPink bg-coolGray border-customPurple rounded-xl p-2 w-[50%]">
+            <form className="max-w-sm mt-3 border-0 dark:shadow-notificationShadowPink dark:bg-coolGray bg-white border-black shadow-xl dark:border-customPurple rounded-xl p-2 w-[50%]">
               <div className="mb-2">
-                <h3>Follow Hashtags</h3>
+                <h3 className="text-black font-semibold dark:text-white">Follow Hashtags</h3>
                 <div className="flex items-center flex-wrap infoInterestsDiv">
-                  <label id="interest1" className="ml-2 text-neonBlue">
+                  <label id="interest1" className="ml-2 text-black font-normal dark:text-white">
                     Travel
                   </label>
                   <input
@@ -366,7 +366,7 @@ function HomeController() {
                     name="interest1"
                     className="form-checkbox ml-2 h-4 w-4 text-blue-500"
                   ></input>
-                  <label id="interest1" className="ml-2 text-neonBlue">
+                  <label id="interest1" className="ml-2 text-black font-normal dark:text-white">
                     News
                   </label>
                   <input
@@ -377,7 +377,7 @@ function HomeController() {
                   ></input>
                 </div>
                 <div className="flex items-center flex-wrap infoInterestsDiv">
-                  <label id="interest1" className="ml-2 text-neonBlue">
+                  <label id="interest1" className="ml-2 text-black font-normal dark:text-white">
                     Coding
                   </label>
                   <input
@@ -386,7 +386,7 @@ function HomeController() {
                     name="interest1"
                     className="form-checkbox ml-2 h-4 w-4 text-blue-500"
                   ></input>
-                  <label id="interest1" className="ml-2 text-neonBlue">
+                  <label id="interest1" className="ml-2 text-black font-normal dark:text-white">
                     Sports
                   </label>
                   <input
