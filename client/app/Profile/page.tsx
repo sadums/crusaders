@@ -90,6 +90,9 @@ export default function Profile() {
           comments={activePostData.comments}
           hashtags={activePostData.comments}
           username={data.getUserById.username}
+          pfp={data.getUserById.pfp}
+          firstName={data.getUserById.firstName}
+          lastName={data.getUserById.lastName}
           handleClose={function (): void {
             setShowModalState(false);
           }}
