@@ -1,11 +1,15 @@
-"use client"
+"use client";
 import { useSubscription } from "@apollo/client";
 import { CHAT_SUBSCRIPTION } from "../../(GraphQL)/subscriptions";
 
 export default function MyComponent() {
-  const { data, loading, error } = useSubscription(
-    CHAT_SUBSCRIPTION,);
-  console.log(loading)
+  const { data, loading, error } = useSubscription(CHAT_SUBSCRIPTION, {
+    variables: {
+      chatId: "64cc0f97ded45e7f731940fb",
+      userId: "64c847e9ed40b6f2b1c10ebd",
+    },
+  });
+  console.log(loading);
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -17,8 +21,5 @@ export default function MyComponent() {
   // using `data.chat.messages` array.
   console.log(data);
 
-  
-  return (
-    <p>DATA:{data.messages}</p>
-  );
+  return <p>DATA:</p>;
 }

@@ -192,7 +192,15 @@ const resolvers = {
   },
   Subscription: {
     messages: {
-      subscribe: () => pubsub.asyncIterator(["NEW_MESSAGE"]),
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(["NEW_MESSAGE"]),
+        async (payload, variables) => {
+          const user = await User.findById(variables.userId);
+          console.log(user)
+          console.log(payload, variables);
+          return 1 === 1;
+        }
+      ),
     },
   },
 };
