@@ -284,8 +284,8 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
               scrollbarColor: "transparent transparent",
             }}
           >
-            {tempLikedPostData.map((post) => (
-              <ProfilePosts key={post.picture} postInfo={post} />
+            {tempLikedPostData.map((post, postIndex) => (
+              <ProfilePosts key={postIndex} postInfo={post} />
             ))}
           </div>
         </div>
@@ -302,10 +302,10 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
         >
           <h4 className="dark:text-white text-lg text-black font-semibold border-customPurpleDark border-b-2">Notifications</h4>
           <div>
-            {tempNotificationData.map((notif) => {
+            {tempNotificationData.map((notif, index) => {
               if (notif.type === "friendRequest") {
                 return (
-                  <div key={notif.id} className="dark:border-customPurple shadow-xl bg-white border-[1px] rounded-xl dark:bg-coolGray dark:shadow-notificationShadowPink ring-blue-700 p-1 mt-3">
+                  <div key={index} className="dark:border-customPurple shadow-xl bg-white border-[1px] rounded-xl dark:bg-coolGray dark:shadow-notificationShadowPink ring-blue-700 p-1 mt-3">
                     <div className="flex justify-between">
                       {" "}
                       <div className="flex">
@@ -352,7 +352,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
               }
               if (notif.type === "messageResponse") {
                 return (
-                  <div className="dark:border-customPurple border-[1px] shadow-xl bg-white rounded-xl dark:shadow-notificationShadowPink dark:bg-coolGray p-1 mt-3">
+                  <div className="dark:border-customPurple border-[1px] shadow-xl bg-white rounded-xl dark:shadow-notificationShadowPink dark:bg-coolGray p-1 mt-3" key={index}>
                     <div className="flex justify-between">
                       {" "}
                       <div className="flex">
