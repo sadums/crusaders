@@ -21,10 +21,10 @@ interface Post {
 // The component's props type
 interface FeedPostsProps {
   posts: Post[];
+  postClickHandler: (postInfo: Post) => void;
 }
 
-function FeedPosts({ posts }: FeedPostsProps) {
-  console.log(posts);
+function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
   return posts.map((post, index) => {
     return (
       <>
@@ -61,12 +61,6 @@ function FeedPosts({ posts }: FeedPostsProps) {
                 </button>
               </div>
             </div>
-
-            <div className="my-auto">
-              <button className=" text-blue-600 font-semibold p-1 pl-2 pr-2 rounded-xl">
-                Follow
-              </button>
-
             <div className="mt-4">
               <p className="dark:text-white text-black">{post.postBody}</p>
 
@@ -80,8 +74,9 @@ function FeedPosts({ posts }: FeedPostsProps) {
             </div>
             <div className="mt-4 border-gray-700 pb-2 border-b-[1px]">
               <img
+                onClick={() => postClickHandler(posts[index])}
                 className="postContentImg w-[90%] border-[2px] border-gray-500 rounded-xl"
-                src={post.postPreview}
+                src={post.postPreview || 'no preview'}
                 alt="Post"
               ></img>
             </div>
