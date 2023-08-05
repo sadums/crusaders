@@ -38,13 +38,7 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
 
     return `${month}/${day} ${hour}:${formattedMinute}`;
 }
-
-
-interface Index {
-  index: number;
-}
-
-function FeedPosts({ posts }: FeedPostsProps) {
+  
   const tempComments = [
     {
       id: 1,

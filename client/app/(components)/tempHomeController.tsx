@@ -295,7 +295,7 @@ function HomeController() {
     <div className="homePageMainDiv bg-gradient-to-tr from-lightestWhite via-slate-300 to-lightestWhite dark:from-darkestCoolGray dark:to-darkCoolGray ml-20">
       <div className="grid grid-cols-6 gap-4">
         <div className="col-span-1 bg-customPurpleDark border-customPurpleDark border-r-[2px] dark:border-0 dark:bg-contrastBlue">
-          <div className="bg-schemeWhite  dark:bg-darkCoolGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
+          <div className="bg-schemeWhite  dark:bg-semiDarkCoolGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
         </div>
         <div className="col-span-3 pl-40">
           <div className="homePageFeedMainDiv bg- pl-2 pr-2 border-customPurpleDark dark:border-customPurple">
