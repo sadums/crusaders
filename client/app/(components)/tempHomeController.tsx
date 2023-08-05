@@ -589,7 +589,7 @@ function HomeController() {
                   </h3>
                   {whoToFollowState.map((username: string, index: any) => {
                     return (
-                      <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                      <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start" key={index}>
                         <div className="flex flex-shrink-0 items-center">
                           <img
                             className="h-7 w-auto rounded-full object-cover"

@@ -38,7 +38,9 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
 
     return `${month}/${day} ${hour}:${formattedMinute}`;
 }
-  
+
+
+
   const tempComments = [
     {
       id: 1,
@@ -88,10 +90,9 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
 
   return posts.map((post, index) => {
     return (
-      <>
-        <div>
+        <div key={index}>
           <div
-            key={index}
+            
             className="mt-4 p-3 border-[1px] rounded-lg border-black dark:border-0 shadow-2xl bg-white dark:bg-darkCoolGray"
           >
             <div className="flex justify-between border-gray-700 pb-2 border-b-[1px]">
@@ -126,14 +127,6 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
 
             <div className="mt-4">
               <p className="dark:text-white text-black">{post.postBody}</p>
-            </div>
-            <div className="mt-0">
-              {post.postHashtags.map((hashtag, hashIndex) => {
-                return (
-                  <a className="mr-1 text-gray-500">{hashtag.hashtagText}</a>
-                );
-              })}
-
             </div>
             {post.postHashtags && (
               <div className="mt-0">
@@ -268,7 +261,6 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
             </div>
           </div>
         </div>
-      </>
     );
   });
 }
