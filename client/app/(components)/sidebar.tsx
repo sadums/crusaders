@@ -72,7 +72,7 @@ const Sidebar: React.FC<NavbarProps> = ({
     if (choice === "dark") {
       application.add("dark");
       application.remove("border-customPurpleDark")
-      application.add("border-[#2c2883]")
+      application.add("border-customPurpleDark")
     } else {
       application.remove("border-coolGray")
       application.add("border-customPurpleDark")

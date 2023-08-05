@@ -27,8 +27,9 @@
     display: none;
 }
 
-
-/* For side info */
+.feedPostCommentSection::-webkit-scrollbar {
+    display: none;
+}
 
 .navBarSearchBar {
     width: 100%;

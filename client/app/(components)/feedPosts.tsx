@@ -1,5 +1,5 @@
 "use client";
-
+import { useState, useRef } from "react";
 import "../(styles)/homepage.css";
 
 interface Post {
@@ -23,7 +23,58 @@ interface FeedPostsProps {
   posts: Post[];
 }
 
+interface Index {
+  index: number;
+}
+
 function FeedPosts({ posts }: FeedPostsProps) {
+  const tempComments = [
+    {
+      id: 1,
+      comment: "Nice post! This reminds me of so and so",
+      user: "carreejoh",
+      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
+    },
+    {
+      id: 2,
+      comment:
+        "Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text,",
+      user: "carreejoh",
+      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
+    },
+    {
+      id: 3,
+      comment:
+        "Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text,",
+      user: "carreejoh",
+      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
+    },
+    {
+      id: 4,
+      comment:
+        "Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text,",
+      user: "carreejoh",
+      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
+    },
+    {
+      id: 5,
+      comment: "Nice post!  long text, long text, long text,",
+      user: "carreejoh",
+      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
+    },
+  ];
+
+  const [expandedPosts, setExpandedPosts] = useState<{
+    [key: number]: boolean;
+  }>({});
+
+  const showCommentsFn = (index: number) => {
+    setExpandedPosts((prevExpandedPosts) => ({
+      ...prevExpandedPosts,
+      [index]: !prevExpandedPosts[index],
+    }));
+  };
+
   console.log(posts);
   return posts.map((post, index) => {
     return (
@@ -42,7 +93,7 @@ function FeedPosts({ posts }: FeedPostsProps) {
                 ></img>
                 <div>
                   <h2 className="text-md text-black font-semibold dark:text-white ml-1">
-                  {`${post.firstName} ${post.lastName}`}
+                    {`${post.firstName} ${post.lastName}`}
                   </h2>
                   <div>
                     <a
@@ -62,14 +113,8 @@ function FeedPosts({ posts }: FeedPostsProps) {
               </div>
             </div>
 
-            <div className="my-auto">
-              <button className=" text-blue-600 font-semibold p-1 pl-2 pr-2 rounded-xl">
-                Follow
-              </button>
-
             <div className="mt-4">
               <p className="dark:text-white text-black">{post.postBody}</p>
-
             </div>
             <div className="mt-0">
               {post.postHashtags.map((hashtag, hashIndex) => {
@@ -85,8 +130,50 @@ function FeedPosts({ posts }: FeedPostsProps) {
                 alt="Post"
               ></img>
             </div>
+            <div
+              className={`${
+                expandedPosts[index] ? "h-88" : " h-0"
+              } w-full mt-2 transition-all duration-400 ease-in-out border-[2px] rounded-xl p-2 border-black`}
+            >
+              <div
+                className={`${
+                  expandedPosts[index] ? "block" : " hidden"
+                }`}
+              >
+                <form className="border-black pb-2 border-b-[2px]">
+                  <div className="flex">
+                  <textarea
+                    placeholder="Leave a comment, (200 characters max)"
+                    className="bg-transparent border-solid border-customPurple text-black dark:text-white border-[1px] outline-none w-[75%] h-16 max-h-16"
+                  ></textarea>
+                  <button className="ml-2 mr-2 px-4 py-2 mt-2 border border-customPurple rounded-md h-10 self-end shadow-sm text-sm font-medium text-black dark:text-white bg-transparent hover:bg-indigo-700 transition duration-300 hover:scale-105">
+                    Comment
+                  </button>
+                  </div>
+                </form>
+                <div
+                  className={`max-h-64 overflow-y-scroll feedPostCommentSection`}
+                >
+                  {tempComments.map((comment, commentIndex) => (
+                    <div
+                      key={commentIndex}
+                      className="flex justify-between border-gray-700 pb-2 border-b-[1px]"
+                    >
+                      <p className="dark:text-white transition-all duration-500 ease-in-out text-black self-end max-w-[70%]">
+                        {comment.comment}
+                      </p>
+
+                      <a className="dark:text-white transition-all duration-500 ease-in-out text-black cursor-pointer self-end text-lg">
+                        -{comment.user}
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
             <div className="flex justify-between">
-              <div className="flex mt-2">
+              <div className="flex mt-1">
                 <button
                   type="button"
                   className="rounded-full mr-3 p-1 text-customPurpleDark dark:text-white "
@@ -110,6 +197,8 @@ function FeedPosts({ posts }: FeedPostsProps) {
                 <button
                   type="button"
                   className="rounded-full mr-3 p-1 text-customPurpleDark dark:text-white"
+                  id={`commentBtn${index}`}
+                  onClick={() => showCommentsFn(index)}
                 >
                   <span className="sr-only">Comment</span>
                   <svg
