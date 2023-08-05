@@ -88,7 +88,7 @@ export default function Profile() {
           //Format the date in the backend
           date={activePostData.createdAt}
           comments={activePostData.comments}
-          hashtags={activePostData.comments}
+          hashtags={activePostData.hashtags}
           username={data.getUserById.username}
           pfp={data.getUserById.pfp}
           firstName={data.getUserById.firstName}

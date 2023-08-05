@@ -21,7 +21,24 @@ interface Post {
 // The component's props type
 interface FeedPostsProps {
   posts: Post[];
+  postClickHandler: (postInfo: Post) => void;
 }
+
+function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
+
+  function formatDate(timestamp: string) {
+    let date = new Date(parseInt(timestamp));
+
+    let month = date.getMonth() + 1; // JavaScript counts months from 0 to 11, so we add 1 to get the correct month.
+    let day = date.getDate();
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+    // The minutes are less than 10, we add a '0' before it.
+    let formattedMinute = minute < 10 ? `0${minute}` : `${minute}`;
+
+    return `${month}/${day} ${hour}:${formattedMinute}`;
+}
+
 
 interface Index {
   index: number;
@@ -75,7 +92,6 @@ function FeedPosts({ posts }: FeedPostsProps) {
     }));
   };
 
-  console.log(posts);
   return posts.map((post, index) => {
     return (
       <>
@@ -113,6 +129,7 @@ function FeedPosts({ posts }: FeedPostsProps) {
               </div>
             </div>
 
+
             <div className="mt-4">
               <p className="dark:text-white text-black">{post.postBody}</p>
             </div>
@@ -122,11 +139,25 @@ function FeedPosts({ posts }: FeedPostsProps) {
                   <a className="mr-1 text-gray-500">{hashtag.hashtagText}</a>
                 );
               })}
+
             </div>
+            {post.postHashtags && (
+              <div className="mt-0">
+                {post.postHashtags.map((hashtag, hashIndex) => {
+                  return (
+                    <a className="mr-1 text-gray-500" key={hashIndex}>
+                      #{hashtag.hashtagText}
+                    </a>
+                  );
+                })}
+              </div>
+            )}
+
             <div className="mt-4 border-gray-700 pb-2 border-b-[1px]">
               <img
+                onClick={() => postClickHandler(posts[index])}
                 className="postContentImg w-[90%] border-[2px] border-gray-500 rounded-xl"
-                src={post.postPreview}
+                src={post.postPreview || "no preview"}
                 alt="Post"
               ></img>
             </div>
@@ -220,26 +251,6 @@ function FeedPosts({ posts }: FeedPostsProps) {
                   type="button"
                   className="rounded-full mr-3 p-1 text-customPurpleDark dark:text-white"
                 >
-                  <span className="sr-only">Bookmark</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
-                    />
-                  </svg>
-                </button>
-                <button
-                  type="button"
-                  className="rounded-full mr-3 p-1 text-customPurpleDark dark:text-white"
-                >
                   <span className="sr-only">Share</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -258,7 +269,7 @@ function FeedPosts({ posts }: FeedPostsProps) {
                 </button>
               </div>
               <h2 className="mt-4 text-sm text-gray-500">
-                Posted: {post.postDate}
+              <p>Posted: {formatDate(post.postDate)}</p>
               </h2>
             </div>
           </div>
