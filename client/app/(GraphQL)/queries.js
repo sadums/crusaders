@@ -22,6 +22,40 @@ export const GET_POST = gql`
   }
 `;
 
+export const GET_ALL_USERS = gql`
+  query GetAllUsers {
+    getAllUsers {
+      _id
+      username
+      firstName
+      lastName
+      pfp
+      posts {
+        _id
+        title
+        preview
+        body
+        hashtags {
+          hashtagText
+          category
+        }
+        comments {
+          _id
+          body
+          createdAt
+        }
+        createdAt
+      }
+      followers {
+        _id
+      }
+      following {
+        _id
+      }
+    }
+  }
+`;
+
 export const GET_LOGGED_IN_USER = gql`
   query GetLoggedInUser {
     getLoggedInUser {
@@ -71,4 +105,3 @@ export const GET_USER_BY_ID = gql`
     }
   }
 `;
-
