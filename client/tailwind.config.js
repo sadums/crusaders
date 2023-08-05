@@ -20,7 +20,12 @@ module.exports = {
         customPurple: '#4F46E5',
         customPurpleDark: '#2c2883',
 
-        lightestWhite: '#F4FDFF',
+        schemeVoid: '#0E0B16',
+        schemePurple: '#A239CA',
+        schemeIndigo: '#4717F6',
+        schemeWhite: '#F4FDFF',
+
+        lightestWhite: '#F3FDFF',
         mediumWhite: '#BFC6C8',
         darkestWhite: '#abb2b4',
 
