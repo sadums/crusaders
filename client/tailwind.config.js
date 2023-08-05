@@ -19,14 +19,28 @@ module.exports = {
         darkPurple: '#2f2a89',
         customPurple: '#4F46E5',
         customPurpleDark: '#2c2883',
+        darkestPurple: '#0d0c27',
 
-        lightestWhite: '#F4FDFF',
+        schemeVoid: '#0E0B16',
+        schemePurple: '#A239CA',
+        schemeIndigo: '#4717F6',
+        schemeWhite: '#F4FDFF',
+
+        lightestWhite: '#F3FDFF',
         mediumWhite: '#BFC6C8',
         darkestWhite: '#abb2b4',
 
-        darkestCoolGray: '#070a0d',
+        // Original Values
+        // darkestCoolGray: '#070a0d',
+        // semiDarkCoolGray: '#0a0e12',
+        // darkCoolGray: '#0f141b',
+        // coolGray: '#131922',
+
+        darkestCoolGray: '#010101',
+        semiDarkCoolGray: '#0a0e12',
         darkCoolGray: '#0f141b',
         coolGray: '#131922',
+        contrastBlue: '#2c2883'
 
       },
       fontFamily: {

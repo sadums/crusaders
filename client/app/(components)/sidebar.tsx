@@ -72,11 +72,10 @@ const Sidebar: React.FC<NavbarProps> = ({
     if (choice === "dark") {
       application.add("dark");
       application.remove("border-customPurpleDark")
-      application.add("border-coolGray")
+      application.add("border-[#2c2883]")
     } else {
       application.remove("border-coolGray")
       application.add("border-customPurpleDark")
-      console.log("light mode");
     }
   }, [enableDarkMode, enableLightMode]);
 
@@ -114,7 +113,7 @@ const Sidebar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <div className="dark:bg-coolGray bg-gradient-to-t from-[#5b53ec] to-customPurpleDark h-[100vh] fixed top-0 left-0 w-20 shadow-lg z-50">
+      <div className="bg-gradient-to-t from-[#5b53ec] to-customPurpleDark dark:from-[#111034] dark:to-contrastBlue h-[100vh] fixed top-0 left-0 w-20 shadow-lg z-50">
         <div className="container mx-auto z-50">
           <div className="grid grid-cols-1 gap-4">
             <h5 className="text-sm text-center mt-2">Crusaders</h5>
@@ -127,13 +126,13 @@ const Sidebar: React.FC<NavbarProps> = ({
             </div>
             <ul className="list-outside ... sidebarLinkList">
               <li
-                className={`flex items-center space-x-2 sidebarIconDarkMode group ${
+                className={`flex items-center space-x-2 bg-gradient-to-tr from-purple-900  to-[#0f0466] sidebarIconDarkMode group ${
                   currentColorMode ? "hidden" : "block"
                 }`}
               >
                 <a
                   href="/"
-                  className="text-gray-300 rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
+                  className="text-white rounded-md  py-2 text-md font-medium transition duration-300 hover:scale-100"
                   onClick={() => enableDarkMode()}
                 >
                   <svg
@@ -142,7 +141,7 @@ const Sidebar: React.FC<NavbarProps> = ({
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-9 h-9"
+                    className="w-8 h-8"
                   >
                     <path
                       strokeLinecap="round"
@@ -156,13 +155,13 @@ const Sidebar: React.FC<NavbarProps> = ({
                 </span>
               </li>
               <li
-                className={`flex items-center space-x-2 sidebarIconDarkMode group ${
+                className={`flex items-center space-x-2 sidebarIconDarkMode bg-gradient-to-tr from-yellow-500 to-red-500 group ${
                   currentColorMode ? "block" : "hidden"
                 }`}
               >
                 <a
                   href="/"
-                  className="text-gray-300 rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
+                  className="text-black rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
                   onClick={() => enableLightMode()}
                 >
                 
@@ -172,7 +171,7 @@ const Sidebar: React.FC<NavbarProps> = ({
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-9 h-9"
+                    className="w-8 h-8"
                   >
                     <path
                       strokeLinecap="round"

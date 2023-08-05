@@ -61,8 +61,15 @@ function FeedPosts({ posts }: FeedPostsProps) {
                 </button>
               </div>
             </div>
+
+            <div className="my-auto">
+              <button className=" text-blue-600 font-semibold p-1 pl-2 pr-2 rounded-xl">
+                Follow
+              </button>
+
             <div className="mt-4">
               <p className="dark:text-white text-black">{post.postBody}</p>
+
             </div>
             <div className="mt-0">
               {post.postHashtags.map((hashtag, hashIndex) => {
