@@ -5,10 +5,17 @@ import FeedPosts from "./feedPosts";
 import ToggleSidebar from "./toggleSidebar";
 import MessagesSidebar from "./messagesSidebar";
 import Sidebar from "./sidebar";
-import { useState, useRef, ChangeEvent, MouseEventHandler } from "react";
+import {
+  useState,
+  useRef,
+  ChangeEvent,
+  MouseEventHandler,
+  useEffect,
+} from "react";
 import PictureUploader from "./pictureUploader";
 import { ADD_POST } from "../(GraphQL)/mutations";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
+import { GET_ALL_USERS } from "../(GraphQL)/queries";
 import Auth from "../(utils)/auth";
 import VideoUploader from "./videoUploader";
 
@@ -69,9 +76,17 @@ function HomeController() {
     },
   ];
 
-  const [addPostMutation, { loading, error, data }] = useMutation(ADD_POST);
+  const [addPostMutation, { loading: loading, error: error, data: data }] =
+    useMutation(ADD_POST);
+  const {
+    loading: getUsersLoading,
+    error: getUsersError,
+    data: getUsersData,
+  } = useQuery(GET_ALL_USERS);
+  console.log(getUsersData);
 
   const [createPostDiv, showCreatePostDiv] = useState(false);
+  const [feedPostState, setFeedPostState] = useState({});
   const [uploadTypeState, setUploadTypeState] = useState("");
   const [hashtags, addHashtags] = useState<string[]>([]);
   const [pictureState, setPictureState] = useState<{
@@ -137,21 +152,21 @@ function HomeController() {
 
       //VIDEO
       const postInput = {
-        preview: '',
-        media: '',
+        preview: "",
+        media: "",
         title: target.form[1].value,
         body: target.form[2].value,
         hashtags: inputHashtags,
       };
 
-      if(uploadTypeState === 'picture'){
-        postInput.preview = pictureState.cropped
-        postInput.media = pictureState.original
+      if (uploadTypeState === "picture") {
+        postInput.preview = pictureState.cropped;
+        postInput.media = pictureState.original;
       }
 
-      if(uploadTypeState === 'video'){
-        postInput.preview = videoState.thumbnail
-        postInput.media = videoState.video
+      if (uploadTypeState === "video") {
+        postInput.preview = videoState.thumbnail;
+        postInput.media = videoState.video;
       }
       console.log(postInput);
       const id = Auth.getProfile().data._id;
@@ -184,6 +199,94 @@ function HomeController() {
     setUploadTypeState("video");
   };
 
+  useEffect(() => {
+    const formatPosts = async () => {
+      try {
+        const changedPostData: {
+          username: any;
+          firstName: any;
+          lastName: any;
+          pfp: any;
+          userId: any;
+          postBody: any;
+          postTitle: any;
+          postPreview: any;
+          postComments: any;
+          postDate: any;
+          postHashtags: any;
+          postId: any;
+        }[] = [];
+        console.log(getUsersData.getAllUsers);
+        await getUsersData.getAllUsers.forEach(
+          (
+            user: {
+              posts: any[];
+              username: any;
+              firstName: any;
+              lastName: any;
+              pfp: any;
+              _id: any;
+            },
+            parIndex: any
+          ) => {
+            user.posts.forEach(
+              (
+                post: {
+                  body: any;
+                  title: any;
+                  preview: any;
+                  comments: any;
+                  createdAt: any;
+                  hashtags: any;
+                  _id: any;
+                },
+                index: any
+              ) => {
+                const displayPostData = {
+                  username: user.username,
+                  firstName: user.firstName,
+                  lastName: user.lastName,
+                  pfp: user.pfp,
+                  userId: user._id,
+                  postBody: post.body,
+                  postTitle: post.title,
+                  postPreview: post.preview,
+                  postComments: post.comments,
+                  postDate: post.createdAt,
+                  postHashtags: post.hashtags,
+                  postId: post._id,
+                };
+
+                changedPostData.push(displayPostData);
+              }
+            );
+          }
+        );
+        changedPostData.sort((a, b) => Number(b.postDate) - Number(a.postDate));
+        return (changedPostData);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    if (getUsersData) {
+      const setPosts = async () => {
+        const newPostData = await formatPosts();
+        console.log(newPostData);
+    
+        if (newPostData === undefined) {
+            // If newPostData is undefined, set it to an empty array
+            setFeedPostState([]);
+            console.error('POST STATE IS UNDEFINED')
+        } else {
+            // If newPostData is not undefined, set the state with it
+            setFeedPostState(newPostData);
+        }
+    }
+      setPosts()
+    }
+  }, [getUsersData]);
+
   return (
     <div className="homePageMainDiv bg-gradient-to-tr from-lightestWhite via-slate-300 to-lightestWhite dark:bg-darkestCoolGray ml-20">
       <div className="grid grid-cols-6 gap-4">
@@ -193,7 +296,7 @@ function HomeController() {
         <div className="col-span-3 pl-40">
           <div className="homePageFeedMainDiv bg- pl-2 pr-2 border-customPurpleDark dark:border-customPurple">
             <div className="feedPostsTop"></div>
-            <FeedPosts users={tempUsers} />
+            {feedPostState && <FeedPosts posts={feedPostState} />}
           </div>
         </div>
 
