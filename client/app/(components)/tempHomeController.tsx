@@ -14,79 +14,21 @@ import {
 } from "react";
 import PictureUploader from "./pictureUploader";
 import { ADD_POST } from "../(GraphQL)/mutations";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { GET_ALL_USERS } from "../(GraphQL)/queries";
 import Auth from "../(utils)/auth";
 import VideoUploader from "./videoUploader";
 
 function HomeController() {
-  // For fake posts
-  const tempUsers = [
-    {
-      username: "Carreejoh",
-      profilePic:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
-      postTitle: "First post fuck yes",
-      postDesc: "This post is bs idk idk idk idk",
-      postImg:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.MwnKEzDKkbVbT-7aPzgwMQHaEK%26pid%3DApi&f=1&ipt=6f063d2735073ac485932a221f0f12dcb0537273747034db597b4a1436340a45&ipo=images",
-      date: "07/24/2023",
-    },
-    {
-      username: "JohnDoe",
-      profilePic:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
-      postTitle: "Exciting Adventure",
-      postDesc: "Just had an amazing adventure with friends. It was thrilling!",
-      postImg:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.MtVUkuoD2DQf6eJYWLDnYwHaDq%26pid%3DApi&f=1&ipt=9a7334483977c2c85bf5bf1492a5fd3de01bb8f8e8ac17e1bd8241db9c1b376b&ipo=images",
-      date: "07/25/2023",
-    },
-    {
-      username: "EmilySmith",
-      profilePic:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
-      postTitle: "Delicious Food",
-      postDesc:
-        "Tried out a new restaurant today. The food was absolutely delicious!",
-      postImg:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.R_s3pH6bLBzCRLQWtFgy8gHaEr%26pid%3DApi&f=1&ipt=0760a9256a1e41d30d118b516efb1e41e60f4cf667589341f2b24a8c685536df&ipo=images",
-      date: "07/26/2023",
-    },
-    {
-      username: "TravelBug",
-      profilePic:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
-      postTitle: "Wanderlust",
-      postDesc:
-        "In love with this beautiful scenic view. Can't get enough of traveling! I love Mexico, Salt Lake, Snwoboaridng, skiing, riding bikes, eating stuff, doing other things, writing code",
-      postImg:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.R_s3pH6bLBzCRLQWtFgy8gHaEr%26pid%3DApi&f=1&ipt=0760a9256a1e41d30d118b516efb1e41e60f4cf667589341f2b24a8c685536df&ipo=images",
-      date: "07/27/2023",
-    },
-    {
-      username: "Carreejoh",
-      profilePic:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
-      postTitle: "First post fuck yes",
-      postDesc: "This post is bs idk idk idk idk",
-      postImg:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.MwnKEzDKkbVbT-7aPzgwMQHaEK%26pid%3DApi&f=1&ipt=6f063d2735073ac485932a221f0f12dcb0537273747034db597b4a1436340a45&ipo=images",
-      date: "07/24/2023",
-    },
-  ];
-
   const [addPostMutation, { loading: loading, error: error, data: data }] =
     useMutation(ADD_POST);
-  const {
-    loading: getUsersLoading,
-    error: getUsersError,
-    data: getUsersData,
-  } = useQuery(GET_ALL_USERS);
-  console.log(getUsersData);
+  const [
+    getUsers,
+    { loading: getUsersLoading, error: getUsersError, data: getUsersData },
+  ] = useLazyQuery(GET_ALL_USERS);
 
   const [createPostDiv, showCreatePostDiv] = useState(false);
-  const [feedPostState, setFeedPostState] = useState({});
+  const [feedPostState, setFeedPostState] = useState([]);
   const [uploadTypeState, setUploadTypeState] = useState("");
   const [hashtags, addHashtags] = useState<string[]>([]);
   const [pictureState, setPictureState] = useState<{
@@ -200,7 +142,7 @@ function HomeController() {
   };
 
   useEffect(() => {
-    const formatPosts = async () => {
+    const formatPosts = async (usersArray: any) => {
       try {
         const changedPostData: {
           username: any;
@@ -216,8 +158,8 @@ function HomeController() {
           postHashtags: any;
           postId: any;
         }[] = [];
-        console.log(getUsersData.getAllUsers);
-        await getUsersData.getAllUsers.forEach(
+        console.log(usersArray);
+        await usersArray.forEach(
           (
             user: {
               posts: any[];
@@ -263,29 +205,29 @@ function HomeController() {
           }
         );
         changedPostData.sort((a, b) => Number(b.postDate) - Number(a.postDate));
-        return (changedPostData);
+        return changedPostData;
       } catch (err) {
         console.error(err);
       }
     };
 
-    if (getUsersData) {
-      const setPosts = async () => {
-        const newPostData = await formatPosts();
-        console.log(newPostData);
-    
-        if (newPostData === undefined) {
-            // If newPostData is undefined, set it to an empty array
-            setFeedPostState([]);
-            console.error('POST STATE IS UNDEFINED')
-        } else {
-            // If newPostData is not undefined, set the state with it
-            setFeedPostState(newPostData);
-        }
-    }
-      setPosts()
-    }
-  }, [getUsersData]);
+    const setPosts = async () => {
+      const response = await getUsers()
+      console.log(response.data.getAllUsers)
+      const newPostData = await formatPosts(response.data.getAllUsers);
+      console.log(newPostData);
+
+      if (newPostData === undefined) {
+        // If newPostData is undefined, set it to an empty array
+        setFeedPostState([]);
+        console.error("POST STATE IS UNDEFINED");
+      } else {
+        // If newPostData is not undefined, set the state with it
+        setFeedPostState(newPostData);
+      }
+    };
+    setPosts();
+  }, []);
 
   return (
     <div className="homePageMainDiv bg-gradient-to-tr from-lightestWhite via-slate-300 to-lightestWhite dark:bg-darkestCoolGray ml-20">
@@ -296,7 +238,7 @@ function HomeController() {
         <div className="col-span-3 pl-40">
           <div className="homePageFeedMainDiv bg- pl-2 pr-2 border-customPurpleDark dark:border-customPurple">
             <div className="feedPostsTop"></div>
-            {feedPostState && <FeedPosts posts={feedPostState} />}
+            {feedPostState ? <FeedPosts posts={feedPostState} /> : null}
           </div>
         </div>
 
