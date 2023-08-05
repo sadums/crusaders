@@ -15,19 +15,39 @@ import {
 import PictureUploader from "./pictureUploader";
 import { ADD_POST } from "../(GraphQL)/mutations";
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
-import { GET_ALL_USERS } from "../(GraphQL)/queries";
+import { GET_ALL_USERS, GET_POST } from "../(GraphQL)/queries";
 import Auth from "../(utils)/auth";
 import VideoUploader from "./videoUploader";
+import PostModal from "./postModal";
 
 function HomeController() {
+  type PostData = {
+    title: string;
+    body: string;
+    comments: any[]; // Adjust this type as needed
+    createdAt: string;
+    hashtags: any[]; // Adjust this type as needed
+    preview: string;
+    media: string;
+    username: string;
+    firstName: string;
+    lastName: string;
+    pfp: string;
+    _id: string;
+  };
+
   const [addPostMutation, { loading: loading, error: error, data: data }] =
     useMutation(ADD_POST);
   const [
     getUsers,
     { loading: getUsersLoading, error: getUsersError, data: getUsersData },
   ] = useLazyQuery(GET_ALL_USERS);
+  const [getPost, { loading: postLoading, data: postData }] =
+    useLazyQuery(GET_POST);
 
   const [createPostDiv, showCreatePostDiv] = useState(false);
+  const [showModalState, setShowModalState] = useState(false);
+  const [activePostData, setActivePostData] = useState<PostData | null>(null);
   const [feedPostState, setFeedPostState] = useState([]);
   const [uploadTypeState, setUploadTypeState] = useState("");
   const [hashtags, addHashtags] = useState<string[]>([]);
@@ -61,6 +81,31 @@ function HomeController() {
       inputRef.current.value = "";
     }
   };
+
+  //Change this to work
+  const postClickHandler = async (postInfo: any) => {
+    // console.log(data.getUserById)
+    console.log(postInfo);
+    const response = await getPost({ variables: { postId: postInfo.postId } });
+    console.log(response.data.getPost);
+    let post: PostData | null = response.data.getPost;
+
+    post = {
+      ...post,
+      username: postInfo.username,
+      firstName: postInfo.firstName,
+      lastName: postInfo.lastName,
+      pfp: postInfo.pfp,
+    };
+    console.log(post);
+    setActivePostData(post);
+    setShowModalState(true);
+  };
+
+  // username={data.getUserById.username}
+  // pfp={data.getUserById.pfp}
+  // firstName={data.getUserById.firstName}
+  // lastName={data.getUserById.lastName}
 
   const createPostHandler = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -212,8 +257,8 @@ function HomeController() {
     };
 
     const setPosts = async () => {
-      const response = await getUsers()
-      console.log(response.data.getAllUsers)
+      const response = await getUsers();
+      console.log(response.data.getAllUsers);
       const newPostData = await formatPosts(response.data.getAllUsers);
       console.log(newPostData);
 
@@ -239,7 +284,12 @@ function HomeController() {
         <div className="col-span-3 pl-40">
           <div className="homePageFeedMainDiv bg- pl-2 pr-2 border-customPurpleDark dark:border-customPurple">
             <div className="feedPostsTop"></div>
-            {feedPostState ? <FeedPosts posts={feedPostState} /> : null}
+            {feedPostState ? (
+              <FeedPosts
+                posts={feedPostState}
+                postClickHandler={postClickHandler}
+              />
+            ) : null}
           </div>
         </div>
 
@@ -623,6 +673,26 @@ function HomeController() {
           </div>
         </div>
       </div>
+      {showModalState && (
+        <PostModal
+          //The error is that this data is possibly null which is fine
+          title={activePostData.title}
+          media={activePostData.media}
+          preview={activePostData.preview}
+          body={activePostData.body}
+          //Format the date in the backend
+          date={activePostData.createdAt}
+          comments={activePostData.comments}
+          hashtags={activePostData.hashtags}
+          username={activePostData.username}
+          pfp={activePostData.pfp}
+          firstName={activePostData.firstName}
+          lastName={activePostData.lastName}
+          handleClose={function (): void {
+            setShowModalState(false);
+          }}
+        />
+      )}
     </div>
   );
 }
