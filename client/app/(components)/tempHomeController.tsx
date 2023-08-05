@@ -163,7 +163,7 @@ function HomeController() {
           </div>
         </div>
 
-        <div className="col-span-2">
+        <div className="col-span-2 mt-4">
           <div className="homepageInfoMainDiv">
             {/* <input
               type="text"

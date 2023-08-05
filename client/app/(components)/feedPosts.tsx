@@ -40,7 +40,7 @@ function FeedPosts({ users }: { users: User[] }) {
               </div>
             </div>
             <div className="my-auto">
-              <button className=" text-customPurple font-semibold dark:text-neonBlue p-1 pl-2 pr-2 rounded-xl">
+              <button className=" text-blue-600 font-semibold p-1 pl-2 pr-2 rounded-xl">
                 Follow
               </button>
             </div>

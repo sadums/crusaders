@@ -127,13 +127,13 @@ const Sidebar: React.FC<NavbarProps> = ({
             </div>
             <ul className="list-outside ... sidebarLinkList">
               <li
-                className={`flex items-center space-x-2 sidebarIconDarkMode group ${
+                className={`flex items-center space-x-2 bg-gradient-to-tr from-purple-900  to-[#0f0466] sidebarIconDarkMode group ${
                   currentColorMode ? "hidden" : "block"
                 }`}
               >
                 <a
                   href="/"
-                  className="text-gray-300 rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
+                  className="text-white rounded-md  py-2 text-md font-medium transition duration-300 hover:scale-100"
                   onClick={() => enableDarkMode()}
                 >
                   <svg
@@ -142,7 +142,7 @@ const Sidebar: React.FC<NavbarProps> = ({
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-9 h-9"
+                    className="w-8 h-8"
                   >
                     <path
                       strokeLinecap="round"
@@ -156,13 +156,13 @@ const Sidebar: React.FC<NavbarProps> = ({
                 </span>
               </li>
               <li
-                className={`flex items-center space-x-2 sidebarIconDarkMode group ${
+                className={`flex items-center space-x-2 sidebarIconDarkMode bg-gradient-to-tr from-yellow-500 to-red-500 group ${
                   currentColorMode ? "block" : "hidden"
                 }`}
               >
                 <a
                   href="/"
-                  className="text-gray-300 rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
+                  className="text-black rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
                   onClick={() => enableLightMode()}
                 >
                 
@@ -172,7 +172,7 @@ const Sidebar: React.FC<NavbarProps> = ({
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-9 h-9"
+                    className="w-8 h-8"
                   >
                     <path
                       strokeLinecap="round"
