@@ -373,30 +373,6 @@ const Sidebar: React.FC<NavbarProps> = ({
                   </li>
                   <li className="flex items-center space-x-2 sidebarIcon group">
                     <a
-                      href="#"
-                      className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-7 h-7"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
-                        />
-                      </svg>
-                    </a>
-                    <span className="sidebarIconInfo group-hover:scale-100">
-                      Bookmarked
-                    </span>
-                  </li>
-                  <li className="flex items-center space-x-2 sidebarIcon group">
-                    <a
                       href="/Profile"
                       className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 group-hover:scale-100"
                       // onClick={() => setShowSidebar(!showSidebar)}

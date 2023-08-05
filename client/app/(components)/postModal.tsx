@@ -1,6 +1,10 @@
 "use client";
 import React, { useState } from "react";
-
+interface Hashtag {
+  hashtagText: string;
+  catagory: string;
+  // add other properties here if they exist
+}
 interface ModalProps {
   title: string;
   preview: string;
@@ -8,7 +12,7 @@ interface ModalProps {
   body: string;
   date: string;
   comments: string[];
-  hashtags: string[];
+  hashtags: Hashtag[];
   username: string;
   pfp: string;
   firstName: string;
@@ -34,6 +38,21 @@ const PostModal: React.FC<ModalProps> = ({
   const [showComments, setShowComments] = useState(false);
   console.log(media);
   const isVideo = media.endsWith(".mp4");
+
+  function formatDate(timestamp: string) {
+    let date = new Date(parseInt(timestamp));
+
+    let month = date.getMonth() + 1; // JavaScript counts months from 0 to 11, so we add 1 to get the correct month.
+    let day = date.getDate();
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+    // The minutes are less than 10, we add a '0' before it.
+    let formattedMinute = minute < 10 ? `0${minute}` : `${minute}`;
+
+    return `${month}/${day} ${hour}:${formattedMinute}`;
+}
+
+
   return (
     <>
       <div className="fixed z-10 inset-0 overflow-y-auto duration-200 ease-in-out flex items-center justify-center">
@@ -91,7 +110,7 @@ const PostModal: React.FC<ModalProps> = ({
               <div className="">
                 {hashtags.map((tag, index) => (
                   <span key={index} className="text-gray-500">
-                    #{tag}
+                    #{tag.hashtagText}
                   </span>
                 ))}
               </div>
@@ -137,7 +156,7 @@ const PostModal: React.FC<ModalProps> = ({
                   ))}
                 </div>
               )}
-              <h2 className="mt-2">posted on: {date}</h2>
+              <h2 className="mt-2">Posted on: {formatDate(date)}</h2>
             </div>
           </div>
         </div>
