@@ -3,30 +3,37 @@ import React, { useState } from "react";
 
 interface ModalProps {
   title: string;
-  image: string;
+  preview: string;
+  media: string;
   body: string;
   date: string;
   comments: string[];
   hashtags: string[];
   username: string;
+  pfp: string;
+  firstName: string;
+  lastName: string;
   handleClose: () => void;
 }
 
 const PostModal: React.FC<ModalProps> = ({
   title,
-  image,
+  preview,
+  media,
   body,
   date,
   comments,
   hashtags,
   username,
   handleClose,
+  pfp,
+  firstName,
+  lastName
 }) => {
-  const tempPfp =
-    "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.QZDf3tvEep-oOqTmiFhK3gHaEK%26pid%3DApi&f=1&ipt=008d3ea413a71d830cfff028cd6d919426add73cb9057cc10927eedd6a0b2b0c&ipo=images";
-  const tempName = "John Doe";
 
   const [showComments, setShowComments] = useState(false);
+  console.log(media);
+  const isVideo = media.endsWith(".mp4");
   return (
     <>
       <div className="fixed z-10 inset-0 overflow-y-auto duration-200 ease-in-out flex items-center justify-center">
@@ -40,7 +47,7 @@ const PostModal: React.FC<ModalProps> = ({
               <div className="flex">
                 <img
                   className="h-8 w-8 rounded-full object-cover"
-                  src={tempPfp}
+                  src={pfp}
                   alt="Your Company"
                 ></img>
                 <div>
@@ -52,6 +59,7 @@ const PostModal: React.FC<ModalProps> = ({
                     @{username}
                   </a>
                 </div>
+                <h4>{`${firstName} ${lastName}`}</h4>
               </div>
 
               <button
@@ -87,10 +95,20 @@ const PostModal: React.FC<ModalProps> = ({
                   </span>
                 ))}
               </div>
-              <img
-                src={image}
-                className="w-[100%] h-auto mt-2 border-[1px] border-gray-600 rounded-xl"
-              ></img>
+              {isVideo ? (
+                <video
+                  className="w-[100%] h-auto mt-2 border-[1px] border-gray-600 rounded-xl"
+                  controls
+                >
+                  <source src={media} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <img
+                  src={media}
+                  className="w-[100%] h-auto mt-2 border-[1px] border-gray-600 rounded-xl"
+                />
+              )}
             </div>
             {/* {showComments && (
                 <div className="mt-2">

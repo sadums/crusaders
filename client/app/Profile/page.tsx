@@ -39,7 +39,8 @@ export default function Profile() {
     console.log(postInfo);
     const response = await getPost({ variables: { postId: postInfo._id } });
     console.log(response.data.getPost);
-    const post: PostData = response.data.getPost; // Using the PostData type here
+    const post: PostData | null = response.data.getPost;
+    console.log(post) // Using the PostData type here
     setActivePostData(post);
     setShowModalState(true);
   };
@@ -55,7 +56,6 @@ export default function Profile() {
         <div className="bg-darkCoolGray p-2 pt-20 h-[100vh] secondaryMenuMainDiv"></div>
         </div>
         <div className="col-span-1 w-[100%] mt-10">
-          <button onClick={()=> console.log(data)}>Click me</button>
           {data && <ProfileSideInfo userInfo={data.getUserById} />}
         </div>
         <div className="col-span-4 w-[100%] mt-10">
@@ -82,13 +82,17 @@ export default function Profile() {
         <PostModal
           //The error is that this data is possibly null which is fine
           title={activePostData.title}
-          image={activePostData.preview}
+          media={activePostData.media}
+          preview={activePostData.preview}
           body={activePostData.body}
           //Format the date in the backend
           date={activePostData.createdAt}
           comments={activePostData.comments}
           hashtags={activePostData.comments}
           username={data.getUserById.username}
+          pfp={data.getUserById.pfp}
+          firstName={data.getUserById.firstName}
+          lastName={data.getUserById.lastName}
           handleClose={function (): void {
             setShowModalState(false);
           }}
