@@ -86,3 +86,59 @@ export const ADD_COMMENT = gql`
     }
   }
 `;
+
+
+
+export const LIKE_POST = gql`
+  mutation LikePost($postId: String!, $userId: String!, $input: likePostInput!) {
+    likePost(postId: $postId, userId: $userId, input: $input) {
+      user {
+        _id
+        username
+        likes {
+          _id
+          userId
+          postId
+          username
+        }
+      }
+      post {
+        _id
+        title
+        likes {
+          _id
+          userId
+          postId
+          username
+        }
+      }
+    }
+  }
+`;
+
+export const UNLIKE_POST = gql`
+  mutation UnlikePost($postId: String!, $userId: String!) {
+    unlikePost(postId: $postId, userId: $userId) {
+      user {
+        _id
+        username
+        likes {
+          _id
+          userId
+          postId
+          username
+        }
+      }
+      post {
+        _id
+        title
+        likes {
+          _id
+          userId
+          postId
+          username
+        }
+      }
+    }
+  }
+`;

@@ -1,12 +1,14 @@
 "use client";
 import { useState, useRef, useEffect, Dispatch, SetStateAction } from "react";
 import "../(styles)/homepage.css";
-import { ADD_COMMENT } from "../(GraphQL)/mutations";
-import { useMutation } from "@apollo/client";
+import { ADD_COMMENT, LIKE_POST, UNLIKE_POST } from "../(GraphQL)/mutations";
+import { GET_USER_BY_ID } from "../(GraphQL)/queries";
+import { useMutation, useQuery } from "@apollo/client";
 import Auth from "../(utils)/auth";
 import { comment } from "postcss";
 
 interface Post {
+  postLikes: any;
   username: string;
   firstName: string | null;
   lastName: string | null;
@@ -32,20 +34,33 @@ interface Like {
 
 // The component's props type
 interface FeedPostsProps {
-  likes: Like[];
   posts: Post[];
   postClickHandler: (postInfo: Post) => void;
   likeClickHandler: (likeInfo: Like) => void;
   // setCreatePostCheck: Dispatch<SetStateAction<boolean>>;
 }
 
-function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPostsProps) {
-
+function FeedPosts({
+  posts,
+  postClickHandler,
+  likeClickHandler,
+}: FeedPostsProps) {
   const [expandedPosts, setExpandedPosts] = useState<{
     [key: number]: boolean;
   }>({});
 
+  const id = Auth.getProfile().data._id;
+  console.log(id);
+  const {
+    loading: userByIdLoading,
+    error: userByIdError,
+    data: userByIdData,
+  } = useQuery(GET_USER_BY_ID, {
+    variables: { id: id },
+  });
+
   const [commentState, setCommentState] = useState<any[][]>([]);
+  const [isLikedState, setIsLikedState] = useState<boolean[]>([]);
 
   const showCommentsFn = (index: number) => {
     setExpandedPosts((prevExpandedPosts) => ({
@@ -54,7 +69,9 @@ function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPos
     }));
   };
 
-  const [addComment, { data }] = useMutation(ADD_COMMENT);
+  const [addComment, { data: addCommentData }] = useMutation(ADD_COMMENT);
+  const [likePost, { data: likeData }] = useMutation(LIKE_POST);
+  const [unlikePost, { data: unlikeData }] = useMutation(UNLIKE_POST);
 
   function formatDate(timestamp: string) {
     let date = new Date(parseInt(timestamp));
@@ -68,6 +85,49 @@ function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPos
 
     return `${month}/${day} ${hour}:${formattedMinute}`;
   }
+
+  const likePostHandler = async (post: Post, index: number) => {
+    try {
+      if (Auth.loggedIn()) {
+        const { firstName, lastName, username, pfp, _id } =
+          userByIdData.getUserById;
+        const { postPreview, postId } = post;
+        if (isLikedState[index]) {
+          console.log("is liked");
+          const response = await unlikePost({
+            variables: {
+              postId: postId,
+              userId: _id,
+            },
+          });
+          console.log(response);
+        } else {
+          console.log("isnt liked");
+          const response = await likePost({
+            variables: {
+              postId: postId,
+              userId: _id,
+              input: {
+                username: username,
+                firstName: firstName,
+                lastName: lastName,
+                pfp: pfp,
+                preview: postPreview,
+              },
+            },
+          });
+          console.log(response);
+        }
+        let tempIsLikedState = [...isLikedState];
+        tempIsLikedState[index] = !tempIsLikedState[index];
+        setIsLikedState(tempIsLikedState);
+      } else {
+        alert("Sign into like a post");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const postCommentHandler = async (
     event: React.FormEvent,
@@ -101,8 +161,7 @@ function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPos
           newCommentState[index] = newComments; // assign the new array to the main array
           console.log(newCommentState[index]);
           setCommentState(newCommentState);
-          target.form[0].value =''
-          
+          target.form[0].value = "";
         } else {
           alert("The comment cant be blank");
         }
@@ -113,6 +172,31 @@ function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPos
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    const formatLikedState = () => {
+      let tempIsLikedState: boolean[] = [];
+      const likedPosts = Object.values<{ postId: any }>(
+        userByIdData.getUserById.likes
+      ).map((userLikes) => {
+        return userLikes.postId;
+      });
+      console.log(likedPosts);
+      posts.forEach((post) => {
+        if (likedPosts.some((likeId) => likeId === post.postId)) {
+          tempIsLikedState.push(true);
+        } else {
+          tempIsLikedState.push(false);
+        }
+      });
+      return tempIsLikedState;
+    };
+    if (userByIdData?.getUserById) {
+      const tempIsLikedState = formatLikedState();
+      console.log(tempIsLikedState);
+      setIsLikedState(tempIsLikedState);
+    }
+  }, [userByIdData, commentState]);
 
   useEffect(() => {
     const dataComments = posts.map((post) => post.postComments);
@@ -181,9 +265,15 @@ function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPos
             }transition-all duration-200 ease-linear `}
           >
             <div
-              className={`${expandedPosts[index] ? "h-88 scale-100" : " h-0 scale-0"} ease-in transition-all duration-200 mt-2 border-[2px] rounded-xl p-2 border-black`}
+              className={`${
+                expandedPosts[index] ? "h-88 scale-100" : " h-0 scale-0"
+              } ease-in transition-all duration-200 mt-2 border-[2px] rounded-xl p-2 border-black`}
             >
-              <form className={`${expandedPosts[index] ? "scale-100" : "scale-0"} ease-in transition-all duration-200 border-black pb-2 border-b-[2px]`}>
+              <form
+                className={`${
+                  expandedPosts[index] ? "scale-100" : "scale-0"
+                } ease-in transition-all duration-200 border-black pb-2 border-b-[2px]`}
+              >
                 <div className="flex">
                   <textarea
                     placeholder="Leave a comment, (200 characters max)"
@@ -195,30 +285,30 @@ function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPos
                   >
                     Comment
                   </button>
-
                 </div>
               </form>
 
-                <div
-                  className={`${expandedPosts[index] ? "scale-100 max-h-64" : "scale-0"} overflow-y-scroll feedPostCommentSection`}
-                >
-                  {commentState[index]?.map((comment, commentIndex) => (
-                    <div
-                      key={commentIndex}
-                      className="flex justify-between border-gray-700 pb-2 border-b-[1px]"
-                    >
-                      <p className="dark:text-white transition-all duration-500 ease-in-out text-black self-end max-w-[70%]">
-                        {comment.body}
-                      </p>
-                      <p>{formatDate(comment.createdAt)}</p>
+              <div
+                className={`${
+                  expandedPosts[index] ? "scale-100 max-h-64" : "scale-0"
+                } overflow-y-scroll feedPostCommentSection`}
+              >
+                {commentState[index]?.map((comment, commentIndex) => (
+                  <div
+                    key={commentIndex}
+                    className="flex justify-between border-gray-700 pb-2 border-b-[1px]"
+                  >
+                    <p className="dark:text-white transition-all duration-500 ease-in-out text-black self-end max-w-[70%]">
+                      {comment.body}
+                    </p>
+                    <p>{formatDate(comment.createdAt)}</p>
 
-                      <a className="dark:text-white transition-all duration-500 ease-in-out text-black cursor-pointer self-end text-lg">
-                        -{comment.username}
-                      </a>
-                    </div>
-                  ))}
-                </div>
-
+                    <a className="dark:text-white transition-all duration-500 ease-in-out text-black cursor-pointer self-end text-lg">
+                      -{comment.username}
+                    </a>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -230,8 +320,9 @@ function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPos
               >
                 <span className="sr-only">Like</span>
                 <svg
+                  onClick={() => likePostHandler(post, index)}
                   xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
+                  fill={isLikedState[index] ? "red" : "none"}
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
@@ -244,8 +335,12 @@ function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPos
                   />
                 </svg>
               </button>
-              <a className="text-gray-700 text-sm dark:text-gray-500 cursor-pointer mr-4"
-              onClick={() => likeClickHandler(likes)}>24 Likes</a>
+              <a
+                className="text-gray-700 text-sm dark:text-gray-500 cursor-pointer mr-4"
+                onClick={() => likeClickHandler(post.postLikes)}
+              >
+                {post.postLikes ? `${post.postLikes.length} Likes` : "0 Likes"}
+              </a>
               <button
                 type="button"
                 className="rounded-full p-1 text-customPurpleDark dark:text-white"
@@ -268,7 +363,14 @@ function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPos
                   />
                 </svg>
               </button>
-              <a onClick={() => showCommentsFn(index)} className="text-gray-700 text-sm dark:text-gray-500 cursor-pointer mr-4">{commentState.length} Comments</a>
+              <a
+                onClick={() => showCommentsFn(index)}
+                className="text-gray-700 text-sm dark:text-gray-500 cursor-pointer mr-4"
+              >
+                {commentState[index]
+                  ? `${commentState[index].length} Comments`
+                  : "0 Comments"}
+              </a>
               <button
                 type="button"
                 className="rounded-full mr-3 p-1 text-customPurpleDark dark:text-white"

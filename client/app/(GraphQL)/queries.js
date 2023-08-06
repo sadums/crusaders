@@ -42,6 +42,13 @@ export const GET_ALL_USERS = gql`
         }
         likes {
           _id
+          userId
+          postId
+          username
+          pfp
+          firstName
+          lastName
+          preview
         }
         comments {
           _id
@@ -99,6 +106,16 @@ export const GET_USER_BY_ID = gql`
       posts {
         _id
         title
+        preview
+      }
+      likes {
+        _id
+        userId
+        postId
+        username
+        pfp
+        firstName
+        lastName
         preview
       }
       followers {
