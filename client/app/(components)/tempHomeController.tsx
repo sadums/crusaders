@@ -281,6 +281,7 @@ function HomeController() {
   useEffect(() => {
     // console.log({getUsersLoading, getUsersError, getUsersData});
     const setPostsAndFollowers = async () => {
+
       if (getUsersData && getUsersData.getAllUsers) {
         console.log(getUsersData);
         const newPostData = await formatPosts(getUsersData.getAllUsers);
@@ -307,6 +308,7 @@ function HomeController() {
   }, [getUsersData]);  // This effect will run whenever getUsersData changes
 
   const [createPostCheck, setCreatePostCheck] = useState<boolean>(false);
+  
 
   const tempLikes = [
     {
@@ -757,7 +759,15 @@ function HomeController() {
           </div>
         )}
       </div>
-      {showLikeModalState && <LikeFollowerModal likes={tempLikes} />}
+
+      {showLikeModalState && (
+        <LikeFollowerModal
+        handleClose={function (): void {
+          setShowLikeModalState(false);
+        }}
+        />
+      )}
+
 
       {showModalState && (
         <PostModal
