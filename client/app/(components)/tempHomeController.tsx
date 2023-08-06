@@ -276,7 +276,7 @@ function HomeController() {
 
     const setPostsAndFollowers = async () => {
       const response = await getUsers();
-      console.log(response.data.getAllUsers);
+      console.log(response);
       const newPostData = await formatPosts(response.data.getAllUsers);
       console.log(newPostData);
       const usernameArray = await response.data.getAllUsers.map(
@@ -299,6 +299,7 @@ function HomeController() {
   }, []);
 
   const [createPostCheck, setCreatePostCheck] = useState<boolean>(false);
+  
 
   const tempLikes = [
     {
@@ -751,7 +752,9 @@ function HomeController() {
       </div>
       {showLikeModalState && (
         <LikeFollowerModal
-          likes={tempLikes}
+        handleClose={function (): void {
+          setShowLikeModalState(false);
+        }}
         />
       )}
 
