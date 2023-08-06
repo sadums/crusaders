@@ -6,6 +6,7 @@ import { GET_USER_BY_ID } from "../(GraphQL)/queries";
 import { useMutation, useQuery } from "@apollo/client";
 import Auth from "../(utils)/auth";
 import { comment } from "postcss";
+import LikeFollowerModal from "./likeFollowerFollowingModal";
 
 interface Post {
   postLikes: any;
