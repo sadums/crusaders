@@ -111,7 +111,7 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
   return posts.map((post, index) => {
     return (
       <div key={index}>
-        <div className="mt-4 p-3 border-[1px] rounded-lg border-black dark:border-0 shadow-2xl bg-white dark:bg-darkCoolGray">
+        <div className="mt-4 p-3 border-[1px] rounded-lg border-black dark:border-0 shadow-2xl bg-white dark:bg-coolGray">
           <div className="flex justify-between border-gray-700 pb-2 border-b-[1px]">
             <div className="flex">
               <img

@@ -26,9 +26,9 @@ module.exports = {
         schemeIndigo: '#4717F6',
         schemeWhite: '#eaeded',
 
-        lightestWhite: '#F3FDFF',
-        mediumWhite: '#BFC6C8',
-        darkestWhite: '#abb2b4',
+        // lightestWhite: '#F3FDFF',
+        // mediumWhite: '#BFC6C8',
+        // darkestWhite: '#abb2b4',
 
         // Original Values
         // darkestCoolGray: '#070a0d',
@@ -37,11 +37,29 @@ module.exports = {
         // coolGray: '#131922',
 
         darkestCoolGray: '#010101',
-        semiDarkCoolGray: '#0a0e12',
-        darkCoolGray: '#0f141b',
+        semiDarkCoolGray: '#07090c',
+        darkCoolGray: '#010101',
+        semiLightCoolGray: '#0d1116',
         coolGray: '#131922',
-        contrastBlue: '#2c2883'
+        contrastBlue: '#2c2883',
 
+        // Offical Color Scheme
+
+        //131922 as primary
+        darkModeDarkGray: '#131922',
+        darkModeMediumGray: '#1D2633',
+        darkModeLightGray: '#3D516E',
+
+        //4F46E5 as primary
+        mainPurple: '#4F46E5',
+        mainDarkPurple: '#232066',
+        mainBlue: '#3C8DE6',
+        mainDarkBlue: '#1B3F66',
+
+        //lightModeWhite
+        lightestWhite: '#fcfcfd',
+        mediumWhite: '#dbe2ea',
+        darkestWhite: '#abbbce'
       },
       fontFamily: {
         crusadersFont: 'Wallpoet'
