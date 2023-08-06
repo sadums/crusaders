@@ -136,7 +136,7 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
           <div className="mt-4 border-gray-700 pb-2 border-b-[1px]">
             <img
               onClick={() => postClickHandler(posts[index])}
-              className="postContentImg w-[90%] border-[2px] border-gray-500 rounded-xl"
+              className="postContentImg w-[90%] border-[2px] border-black rounded-xl"
               src={post.postPreview || "no preview"}
               alt="Post"
             ></img>
@@ -144,10 +144,10 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
           <div
             className={`${
               expandedPosts[index] ? "h-88 scale-100" : " h-0 scale-0"
-            }transition-all duration-200 ease-in-out `}
+            }transition-all duration-200 ease-linear `}
           >
             <div
-              className={`${expandedPosts[index] ? "h-88 scale-100" : " h-0 scale-0"} ease-in transition-all duration-300 mt-2 border-[2px] rounded-xl p-2 border-black`}
+              className={`${expandedPosts[index] ? "h-88 scale-100" : " h-0 scale-0"} ease-in transition-all duration-200 mt-2 border-[2px] rounded-xl p-2 border-black`}
             >
               <form className={`${expandedPosts[index] ? "scale-100" : "scale-0"} ease-in transition-all duration-200 border-black pb-2 border-b-[2px]`}>
                 <div className="flex">
