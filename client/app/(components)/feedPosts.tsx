@@ -1,9 +1,10 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Dispatch, SetStateAction } from "react";
 import "../(styles)/homepage.css";
 import { ADD_COMMENT } from "../(GraphQL)/mutations";
 import { useMutation } from "@apollo/client";
 import Auth from "../(utils)/auth";
+import { comment } from "postcss";
 
 interface Post {
   username: string;
@@ -21,13 +22,24 @@ interface Post {
   // If there are more fields in your actual data, add them here
 }
 
-// The component's props type
-interface FeedPostsProps {
-  posts: Post[];
-  postClickHandler: (postInfo: Post) => void;
+interface Like {
+  username: string;
+  firstName: string | null;
+  lastName: string | null;
+  pfp: string;
+  userId: string;
 }
 
-function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
+// The component's props type
+interface FeedPostsProps {
+  likes: Like[];
+  posts: Post[];
+  postClickHandler: (postInfo: Post) => void;
+  likeClickHandler: (likeInfo: Like) => void;
+  // setCreatePostCheck: Dispatch<SetStateAction<boolean>>;
+}
+
+function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPostsProps) {
 
   const [expandedPosts, setExpandedPosts] = useState<{
     [key: number]: boolean;
@@ -43,7 +55,6 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
   };
 
   const [addComment, { data }] = useMutation(ADD_COMMENT);
-
 
   function formatDate(timestamp: string) {
     let date = new Date(parseInt(timestamp));
@@ -212,10 +223,10 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
           </div>
 
           <div className="flex justify-between">
-            <div className="flex mt-1">
+            <div className="flex mt-1 items-center">
               <button
                 type="button"
-                className="rounded-full mr-3 p-1 text-customPurpleDark dark:text-white "
+                className="rounded-full p-1 text-customPurpleDark dark:text-white "
               >
                 <span className="sr-only">Like</span>
                 <svg
@@ -224,7 +235,7 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="w-7 h-7"
                 >
                   <path
                     strokeLinecap="round"
@@ -233,9 +244,11 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
                   />
                 </svg>
               </button>
+              <a className="text-gray-700 text-sm dark:text-gray-500 cursor-pointer mr-4"
+              onClick={() => likeClickHandler(likes)}>24 Likes</a>
               <button
                 type="button"
-                className="rounded-full mr-3 p-1 text-customPurpleDark dark:text-white"
+                className="rounded-full p-1 text-customPurpleDark dark:text-white"
                 id={`commentBtn${index}`}
                 onClick={() => showCommentsFn(index)}
               >
@@ -246,7 +259,7 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="w-7 h-7"
                 >
                   <path
                     strokeLinecap="round"
@@ -255,6 +268,7 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
                   />
                 </svg>
               </button>
+              <a onClick={() => showCommentsFn(index)} className="text-gray-700 text-sm dark:text-gray-500 cursor-pointer mr-4">{commentState.length} Comments</a>
               <button
                 type="button"
                 className="rounded-full mr-3 p-1 text-customPurpleDark dark:text-white"
@@ -266,7 +280,7 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="w-7 h-7"
                 >
                   <path
                     strokeLinecap="round"
