@@ -78,7 +78,7 @@ const resolvers = {
       console.log(username);
       console.log(body);
       console.log(postId);
-    
+
       const users = await User.find({});
       for (let user of users) {
         for (let post of user.posts) {
@@ -90,13 +90,15 @@ const resolvers = {
             };
             await User.updateOne(
               { "posts._id": post._id },
-              { $push: { "posts.$.comments": newComment } },
+              { $push: { "posts.$.comments": newComment } }
             );
-    
+
             // After updating the post, find the user that has the updated post
-            const updatedUser = await User.findOne({"posts._id": post._id});
+            const updatedUser = await User.findOne({ "posts._id": post._id });
             if (updatedUser) {
-              const updatedPost = updatedUser.posts.find(updatedPost => updatedPost._id.toString() === postId);
+              const updatedPost = updatedUser.posts.find(
+                (updatedPost) => updatedPost._id.toString() === postId
+              );
               if (updatedPost) {
                 console.log(updatedPost);
                 return updatedPost; // return the updated post
@@ -106,6 +108,87 @@ const resolvers = {
         }
       }
     },
+    likePost: async (parent, { input, postId, userId }, context, info) => {
+      try {
+        console.log(input);
+        console.log(postId);
+        console.log(userId);
+        const { username, pfp, firstName, lastName, preview } = input;
+
+        const userWithPost = await User.findOne({ "posts._id": postId });
+
+        if (!userWithPost) {
+          throw new Error("User with the post not found.");
+        }
+
+        const post = userWithPost.posts.id(postId);
+        if (!post) {
+          throw new Error("Post not found.");
+        }
+
+        post.likes.push({
+          userId,
+          postId,
+          username,
+          pfp,
+          firstName,
+          lastName,
+          preview,
+        });
+
+        await userWithPost.save();
+        const updatedUser = await User.findByIdAndUpdate(
+          userId,
+          { $push: { likes: { userId, postId, username, pfp, firstName, lastName, preview } } },
+          { new: true }
+        );
+
+        if (!updatedUser) {
+          throw new Error("User who liked the post not found.");
+        }
+
+        console.log(updatedUser);
+        return { user: updatedUser, post: post };
+      } catch (err) {
+        console.error(err);
+        throw err;
+      }
+    },
+    unlikePost: async (parent, { postId, userId }, context, info) => {
+      try {
+        const userWithPost = await User.findOne({ "posts._id": postId });
+    
+        if (!userWithPost) {
+          throw new Error("User with the post not found.");
+        }
+    
+        const post = userWithPost.posts.id(postId);
+        if (!post) {
+          throw new Error("Post not found.");
+        } else {
+          // remove the like from the post's likes array
+          post.likes = post.likes.filter(like => like.userId.toString() !== userId);
+          await userWithPost.save();
+        }
+    
+        // find the user who liked the post and remove the post from their likes array
+        const updatedUser = await User.findByIdAndUpdate(
+          userId,
+          { $pull: { likes: { postId: postId } } },
+          { new: true }
+        );
+    
+        if (!updatedUser) {
+          throw new Error("User who unliked the post not found.");
+        }
+    
+        console.log(updatedUser);
+        return { user: updatedUser, post: post };
+      } catch (err) {
+        console.error(err);
+        throw err;
+      }
+    },    
     addPost: async (parent, { input, userId }) => {
       try {
         const updatedUser = await User.findByIdAndUpdate(
@@ -192,7 +275,6 @@ const resolvers = {
         return err;
       }
     },
-
     createChat: async (parent, { members }, context) => {
       const chat = await Chat.create({
         members: members,

@@ -5,7 +5,8 @@ const hashtagSchema = new Schema({
     type: String,
     //required: true,
   },
-  category: { //for if we want to do "view similar hashtags" or something
+  category: {
+    //for if we want to do "view similar hashtags" or something
     type: String,
   },
 });
@@ -21,18 +22,32 @@ const commentSchema = new Schema({
   },
   username: {
     type: String,
-  }
-})
+  },
+});
 
-// const Image = new Schema({
-//   cropped: String,
-//   original: String,
-// });
-
-// const Video = new Schema({
-//   thumbnail: String,
-//   video: String,
-// });
+const likesSchema = new Schema({
+  username: {
+    type: String,
+  },
+  pfp: {
+    type: String,
+  },
+  userId: {
+    type: String,
+  },
+  postId: {
+    type: String,
+  },
+  firstName: {
+    type: String,
+  },
+  lastName: {
+    type: String,
+  },
+  preview: {
+    type: String,
+  },
+});
 
 const postSchema = new Schema({
   user: {
@@ -54,13 +69,14 @@ const postSchema = new Schema({
     type: String,
   },
   comments: {
-    type: [commentSchema]
+    type: [commentSchema],
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
   hashtags: [hashtagSchema],
+  likes: [likesSchema],
 });
 
-module.exports = postSchema
+module.exports = postSchema;
