@@ -281,16 +281,17 @@ function HomeController() {
   useEffect(() => {
     // console.log({getUsersLoading, getUsersError, getUsersData});
     const setPostsAndFollowers = async () => {
-
       if (getUsersData && getUsersData.getAllUsers) {
         console.log(getUsersData);
         const newPostData = await formatPosts(getUsersData.getAllUsers);
         console.log(newPostData);
-        const usernameArray = getUsersData.getAllUsers.map((user: { username: any }, index: any) => {
-          return user.username;
-        });
+        const usernameArray = getUsersData.getAllUsers.map(
+          (user: { username: any }, index: any) => {
+            return user.username;
+          }
+        );
         setWhoToFollow(usernameArray);
-  
+
         if (newPostData === undefined) {
           // If newPostData is undefined, set it to an empty array
           setFeedPostState([]);
@@ -301,14 +302,14 @@ function HomeController() {
         }
       }
     };
-  
-    if (getUsersData) {  // If getUsersData is defined, call setPostsAndFollowers
+
+    if (getUsersData) {
+      // If getUsersData is defined, call setPostsAndFollowers
       setPostsAndFollowers();
     }
-  }, [getUsersData]);  // This effect will run whenever getUsersData changes
+  }, [getUsersData]); // This effect will run whenever getUsersData changes
 
   const [createPostCheck, setCreatePostCheck] = useState<boolean>(false);
-  
 
   const tempLikes = [
     {
@@ -762,12 +763,11 @@ function HomeController() {
 
       {showLikeModalState && (
         <LikeFollowerModal
-        handleClose={function (): void {
-          setShowLikeModalState(false);
-        }}
+          handleClose={function (): void {
+            setShowLikeModalState(false);
+          }}
         />
       )}
-
 
       {showModalState && (
         <PostModal

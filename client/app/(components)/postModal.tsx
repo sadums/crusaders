@@ -1,10 +1,20 @@
 "use client";
+import LikeFollowerModal from "./likeFollowerFollowingModal";
 import React, { useState } from "react";
 interface Hashtag {
   hashtagText: string;
   catagory: string;
   // add other properties here if they exist
 }
+
+interface Like {
+  username: string;
+  firstName: string | null;
+  lastName: string | null;
+  pfp: string;
+  userId: string;
+}
+
 interface ModalProps {
   title: string;
   preview: string;
@@ -17,7 +27,9 @@ interface ModalProps {
   pfp: string;
   firstName: string;
   lastName: string;
+  likes: Like[];
   handleClose: () => void;
+  // likeClickHandlerFeedPosts: (likeInfo: Like) => void;
 }
 
 const PostModal: React.FC<ModalProps> = ({
@@ -30,11 +42,11 @@ const PostModal: React.FC<ModalProps> = ({
   hashtags,
   username,
   handleClose,
+  likes,
   pfp,
   firstName,
   lastName,
 }) => {
-
   const tempComments = [
     {
       id: 1,
@@ -72,6 +84,12 @@ const PostModal: React.FC<ModalProps> = ({
   ];
 
   const [showComments, setShowComments] = useState(false);
+  const [showLikeModalStateFeedPosts, setShowLikeModalStateFeedPosts] = useState(false);
+ 
+  const likeClickHandlerFeedPosts = () => {
+    setShowLikeModalStateFeedPosts(true);
+  };
+
   console.log(media);
   const isVideo = media.endsWith(".mp4");
 
@@ -140,7 +158,9 @@ const PostModal: React.FC<ModalProps> = ({
             </div>
 
             <div className="border-gray-700 pb-2 border-b-[1px]">
-              <h1 className="text-2xl mt-2 text-center text-black dark:text-white ">{title}</h1>
+              <h1 className="text-2xl mt-2 text-center text-black dark:text-white ">
+                {title}
+              </h1>
               <h2 className="mt-2 text-black dark:text-white">{body}</h2>
               <div className="">
                 {hashtags.map((tag, index) => (
@@ -165,8 +185,12 @@ const PostModal: React.FC<ModalProps> = ({
               )}
             </div>
 
-              <div className={`${showComments ? "h-36 scale-100" : " h-0 scale-0"} transition-all duration-400 ease-in-out`}>
-                <div className=" mt-2 border-[2px] h-36 max-w-[40vw] rounded-xl overflow-y-scroll p-2 border-black">
+            <div
+              className={`${
+                showComments ? "h-36 scale-100" : " h-0 scale-0"
+              } transition-all duration-400 ease-in-out`}
+            >
+              <div className=" mt-2 border-[2px] h-36 max-w-[40vw] rounded-xl overflow-y-scroll p-2 border-black">
                 {tempComments.map((comment, commentIndex) => (
                   <div
                     key={commentIndex}
@@ -181,20 +205,67 @@ const PostModal: React.FC<ModalProps> = ({
                     </a>
                   </div>
                 ))}
-                </div>
               </div>
+            </div>
 
             <div className="flex justify-between">
+              <div className="flex items-center">
               <button
-                onClick={() => setShowComments((prev) => !prev)}
-                className="mt-2 text-blue-500 hover:text-blue-700"
+                type="button"
+                className="rounded-full p-1 text-customPurpleDark dark:text-white "
               >
-                {showComments ? "Hide Comments" : "Show Comments"}
+                <span className="sr-only">Like</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-7 h-7"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                  />
+                </svg>
               </button>
-              <h2 className="mt-2">Posted on: {formatDate(date)}</h2>
+              <a className="text-gray-700 text-sm dark:text-gray-500 cursor-pointer mr-4"
+              onClick={() => likeClickHandlerFeedPosts(likes)}>24 Likes</a>
+                <button
+                  onClick={() => setShowComments((prev) => !prev)}
+                  className=" text-blue-500 hover:text-blue-700"
+                >
+                  <span className="sr-only">Comment</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-7 h-7"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <h2 className="mt-1 text-black dark:text-white">
+                Posted on: {formatDate(date)}
+              </h2>
             </div>
           </div>
         </div>
+        {showLikeModalStateFeedPosts && (
+          <LikeFollowerModal
+            handleClose={function (): void {
+              setShowLikeModalStateFeedPosts(false);
+            }}
+          />
+        )}
       </div>
     </>
   );
