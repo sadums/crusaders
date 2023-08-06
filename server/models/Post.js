@@ -19,17 +19,20 @@ const commentSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  username: {
+    type: String,
+  }
 })
 
-const Image = new Schema({
-  cropped: String,
-  original: String,
-});
+// const Image = new Schema({
+//   cropped: String,
+//   original: String,
+// });
 
-const Video = new Schema({
-  thumbnail: String,
-  video: String,
-});
+// const Video = new Schema({
+//   thumbnail: String,
+//   video: String,
+// });
 
 const postSchema = new Schema({
   user: {

@@ -19,6 +19,7 @@ const typeDefs = gql`
   type Comment {
     _id: ID
     body: String!
+    username: String
     createdAt: String
   }
 
@@ -66,6 +67,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    addComment(username: String!, body: String!, postId: String!): Post
     createUser(input: CreateUserInput!): AuthPayload
     addPost(input: newPostInput!, userId: ID!): User
     login(email: String!, password: String!): AuthPayload
