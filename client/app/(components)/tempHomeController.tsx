@@ -49,10 +49,16 @@ function HomeController() {
 
   const [addPostMutation, { loading: loading, error: error, data: data }] =
     useMutation(ADD_POST);
-  const [
-    getUsers,
-    { loading: getUsersLoading, error: getUsersError, data: getUsersData },
-  ] = useLazyQuery(GET_ALL_USERS);
+  // const [
+  //   getUsers,
+  //   { loading: getUsersLoading, error: getUsersError, data: getUsersData },
+  // ] = useLazyQuery(GET_ALL_USERS);
+
+  const {
+    loading: getUsersLoading,
+    error: getUsersError,
+    data: getUsersData,
+  } = useQuery(GET_ALL_USERS);
   const [getPost, { loading: postLoading, data: postData }] =
     useLazyQuery(GET_POST);
 
@@ -204,99 +210,102 @@ function HomeController() {
     setUploadTypeState("video");
   };
 
-  useEffect(() => {
-    const formatPosts = async (usersArray: any) => {
-      try {
-        const changedPostData: {
-          username: any;
-          firstName: any;
-          lastName: any;
-          pfp: any;
-          userId: any;
-          postBody: any;
-          postTitle: any;
-          postPreview: any;
-          postComments: any;
-          postDate: any;
-          postHashtags: any;
-          postId: any;
-        }[] = [];
-        console.log(usersArray);
-        await usersArray.forEach(
-          (
-            user: {
-              posts: any[];
-              username: any;
-              firstName: any;
-              lastName: any;
-              pfp: any;
-              _id: any;
-            },
-            parIndex: any
-          ) => {
-            user.posts.forEach(
-              (
-                post: {
-                  body: any;
-                  title: any;
-                  preview: any;
-                  comments: any;
-                  createdAt: any;
-                  hashtags: any;
-                  _id: any;
-                },
-                index: any
-              ) => {
-                const displayPostData = {
-                  username: user.username,
-                  firstName: user.firstName,
-                  lastName: user.lastName,
-                  pfp: user.pfp,
-                  userId: user._id,
-                  postBody: post.body,
-                  postTitle: post.title,
-                  postPreview: post.preview,
-                  postComments: post.comments,
-                  postDate: post.createdAt,
-                  postHashtags: post.hashtags,
-                  postId: post._id,
-                };
+  const formatPosts = async (usersArray: any) => {
+    try {
+      const changedPostData: {
+        username: any;
+        firstName: any;
+        lastName: any;
+        pfp: any;
+        userId: any;
+        postBody: any;
+        postTitle: any;
+        postPreview: any;
+        postComments: any;
+        postDate: any;
+        postHashtags: any;
+        postId: any;
+      }[] = [];
+      console.log(usersArray);
+      await usersArray.forEach(
+        (
+          user: {
+            posts: any[];
+            username: any;
+            firstName: any;
+            lastName: any;
+            pfp: any;
+            _id: any;
+          },
+          parIndex: any
+        ) => {
+          user.posts.forEach(
+            (
+              post: {
+                body: any;
+                title: any;
+                preview: any;
+                comments: any;
+                createdAt: any;
+                hashtags: any;
+                _id: any;
+              },
+              index: any
+            ) => {
+              const displayPostData = {
+                username: user.username,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                pfp: user.pfp,
+                userId: user._id,
+                postBody: post.body,
+                postTitle: post.title,
+                postPreview: post.preview,
+                postComments: post.comments,
+                postDate: post.createdAt,
+                postHashtags: post.hashtags,
+                postId: post._id,
+              };
 
-                changedPostData.push(displayPostData);
-              }
-            );
-          }
-        );
-        changedPostData.sort((a, b) => Number(b.postDate) - Number(a.postDate));
-        return changedPostData;
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    const setPostsAndFollowers = async () => {
-      const response = await getUsers();
-      console.log(response);
-      const newPostData = await formatPosts(response.data.getAllUsers);
-      console.log(newPostData);
-      const usernameArray = await response.data.getAllUsers.map(
-        (user: { username: any }, index: any) => {
-          return user.username;
+              changedPostData.push(displayPostData);
+            }
+          );
         }
       );
-      setWhoToFollow(usernameArray);
+      changedPostData.sort((a, b) => Number(b.postDate) - Number(a.postDate));
+      return changedPostData;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  useEffect(() => {
+    // console.log({getUsersLoading, getUsersError, getUsersData});
+    const setPostsAndFollowers = async () => {
 
-      if (newPostData === undefined) {
-        // If newPostData is undefined, set it to an empty array
-        setFeedPostState([]);
-        console.error("POST STATE IS UNDEFINED");
-      } else {
-        // If newPostData is not undefined, set the state with it
-        setFeedPostState(newPostData);
+      if (getUsersData && getUsersData.getAllUsers) {
+        console.log(getUsersData);
+        const newPostData = await formatPosts(getUsersData.getAllUsers);
+        console.log(newPostData);
+        const usernameArray = getUsersData.getAllUsers.map((user: { username: any }, index: any) => {
+          return user.username;
+        });
+        setWhoToFollow(usernameArray);
+  
+        if (newPostData === undefined) {
+          // If newPostData is undefined, set it to an empty array
+          setFeedPostState([]);
+          console.error("POST STATE IS UNDEFINED");
+        } else {
+          // If newPostData is not undefined, set the state with it
+          setFeedPostState(newPostData);
+        }
       }
     };
-    setPostsAndFollowers();
-  }, []);
+  
+    if (getUsersData) {  // If getUsersData is defined, call setPostsAndFollowers
+      setPostsAndFollowers();
+    }
+  }, [getUsersData]);  // This effect will run whenever getUsersData changes
 
   const [createPostCheck, setCreatePostCheck] = useState<boolean>(false);
   
@@ -750,6 +759,7 @@ function HomeController() {
           </div>
         )}
       </div>
+
       {showLikeModalState && (
         <LikeFollowerModal
         handleClose={function (): void {
@@ -757,6 +767,7 @@ function HomeController() {
         }}
         />
       )}
+
 
       {showModalState && (
         <PostModal
