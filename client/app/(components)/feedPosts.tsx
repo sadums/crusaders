@@ -118,7 +118,7 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
                 </div>
               </div>
               <div className="my-auto">
-                <button className=" text-customPurple font-semibold dark:text-neonBlue p-1 pl-2 pr-2 rounded-xl">
+                <button className=" font-semibold  text-neonBlue p-[1px] pl-2 pr-2 rounded-md">
                   Follow
                 </button>
               </div>

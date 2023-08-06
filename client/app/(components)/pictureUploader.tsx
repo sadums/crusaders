@@ -1,4 +1,4 @@
-import { Uploader } from "uploader"; 
+import { Uploader } from "uploader";
 import { UploadButton } from "react-uploader";
 import { useState } from "react";
 
@@ -15,14 +15,13 @@ interface FileObject {
   fileUrl: string;
 }
 
-
 function PictureUploader({
   pictureState,
   setPictureState,
   uploadText,
 }: PictureUploaderProps) {
-    //We should move this to the process .env file
-    //Change the styles for the button to typescript
+  //We should move this to the process .env file
+  //Change the styles for the button to typescript
 
   const uploader = Uploader({ apiKey: "public_FW25bUsEgLaLmifCsyAEZMAxaX9j" });
 
@@ -45,7 +44,10 @@ function PictureUploader({
       onComplete={(files: FileObject[]) => {
         console.log(files[0].originalFile.fileUrl);
         console.log(files);
-        setPictureState({cropped: files[0].fileUrl, original: files[0].originalFile.fileUrl});
+        setPictureState({
+          cropped: files[0].fileUrl,
+          original: files[0].originalFile.fileUrl,
+        });
         setIsUploaded(true);
       }}
     >
@@ -53,12 +55,28 @@ function PictureUploader({
         <button
           className={
             isUploaded
-              ? "bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              : "bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              ? "dark:bg-green-600 bg-green-500 hover:bg-green-700 text-black dark:text-white text-sm font-semibold py-1 px-2 rounded focus:outline-none focus:shadow-outline mr-3"
+              : "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-2 text-sm rounded focus:outline-none focus:shadow-outline mr-3"
           }
           onClick={onClick}
         >
-          {isUploaded ? "Image uploaded" : uploadText}
+          <div className="flex items-center">
+          {isUploaded ? "Image Uploaded" : uploadText}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className={`${isUploaded ? "block" : "hidden"} h-8 w-8`}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          </div>
         </button>
       )}
     </UploadButton>
