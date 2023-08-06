@@ -320,7 +320,7 @@ function HomeController() {
               <div
                 className={` ease-in-out duration-300 ${
                   createPostDiv
-                    ? "w-[90%] border-[1px] bg-white  border-black dark:border-customPurple rounded-xl p-2"
+                    ? "w-[90%]  bg-white dark:bg-coolGray rounded-xl dark:shadow-notificationShadowPink shadow-xl p-2"
                     : "w-[50%]"
                 }`}
               >
@@ -343,7 +343,7 @@ function HomeController() {
                   <form>
                     <div className="">
                       <button
-                        className={`absolute top-0 right-0 z-50 ${
+                        className={`absolute top-0 right-0 z-50 dark:text-white text-black ${
                           createPostDiv ? "scale-100" : "scale-0"
                         }`}
                         onClick={() => {
@@ -367,48 +367,51 @@ function HomeController() {
                       </button>
                     </div>
                     <div className="">
-                      <h2 className="text-sm text-neonBlue">Post Title:</h2>
+                      <h2 className="text-sm text-neonBlue font-semibold">Post Title:</h2>
                       <input
                         type="text"
                         id=""
                         placeholder="Title"
-                        className="text-white bg-transparent border-solid border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[100%]"
+                        className="dark:text-white text-black bg-transparent border-solid border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[100%]"
                       ></input>
                     </div>
                     <div className="mt-4">
-                      <h2 className="text-sm text-neonBlue">Description:</h2>
+                      <h2 className="text-sm font-semibold text-neonBlue">Description:</h2>
                       <textarea
                         placeholder="Description, 400 max chars"
-                        className="bg-transparent border-solid border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[100%] h-20"
+                        className="bg-transparent border-solid border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[100%] h-20 max-h-20 dark:text-white text-black"
                       ></textarea>
                     </div>
-                    <div className="mt-4">
-                      <h2 className="text-sm text-neonBlue">Media:</h2>
+                    <div className="mt-4 border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 pb-1">
+                      <h2 className="text-sm font-semibold text-neonBlue">Media:</h2>
+                      <div className="flex">
                       <div onClick={pictureButtonHandler}>
                         {uploadTypeState !== "video" && (
                           <PictureUploader
                             pictureState={pictureState}
                             setPictureState={handleSetPictureState}
-                            uploadText={"Select your media"}
+                            uploadText={"Upload Picture"}
                           />
                         )}
                       </div>
                       <div onClick={videoButtonHandler}>
                         {uploadTypeState !== "picture" && (
                           <VideoUploader
-                            uploadText={"Upload a video"}
+                            uploadText={"Upload Video"}
                             videoState={videoState}
                             setVideoState={setVideoState}
                           />
                         )}
                       </div>
+                      </div>
+                      
                     </div>
-                    <div className="mt-4">
-                      <h2 className="text-sm text-neonBlue">Hashtags:</h2>
+                    <div className="mt-2">
+                      <h2 className="text-sm font-semibold text-neonBlue">Hashtags:</h2>
                       <div className="flex">
                         {hashtags.map((tag, index) => (
                           <div key={index}>
-                            <h4>#{tag}</h4>
+                            <h4 className="dark:text-white text-black mr-1">#{tag}</h4>
                           </div>
                         ))}
                       </div>
@@ -417,11 +420,11 @@ function HomeController() {
                         ref={inputRef}
                         id=""
                         placeholder="Hashtag"
-                        className="text-white mt-2 bg-transparent border-solid border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[20%]"
+                        className="dark:text-white text-black mt-2 bg-transparent border-solid border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[20%]"
                       ></input>
                       <button
                         type="button"
-                        className="pl-2 border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 hover:text-neonBlue ease-in-out transition duration-100"
+                        className="pl-2 dark:text-white text-black border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 hover:text-neonBlue ease-in-out transition duration-100"
                         // This error is annoying but doesn't change functionality
                         onClick={handleHashtagAddition}
                       >
@@ -430,7 +433,7 @@ function HomeController() {
                     </div>
                     <button
                       onClick={createPostHandler}
-                      className="pl-2 border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 hover:text-neonBlue ease-in-out transition duration-100"
+                      className="px-4 mt-2 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 hover:scale-105"
                       type="submit"
                     >
                       Create
@@ -524,7 +527,7 @@ function HomeController() {
                           Recieved
                         </h3>
                         <div className="flex justify-around items-center mt-0">
-                          <h2 className="text-black text-[30px] mr-1">19</h2>
+                          <h2 className="text-black dark:text-white text-[30px] mr-1">19</h2>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -546,7 +549,7 @@ function HomeController() {
                           Sent
                         </h3>
                         <div className="flex justify-around items-center mt-0">
-                          <h2 className="text-black text-[30px] mr-1">219</h2>
+                          <h2 className="text-black text-[30px] mr-1 dark:text-white">219</h2>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
