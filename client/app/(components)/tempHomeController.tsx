@@ -19,6 +19,7 @@ import { GET_ALL_USERS, GET_POST, GET_USER_BY_ID } from "../(GraphQL)/queries";
 import Auth from "../(utils)/auth";
 import VideoUploader from "./videoUploader";
 import PostModal from "./postModal";
+import LikeFollowerModal from "./likeFollowerFollowingModal";
 
 function HomeController() {
   type PostData = {
@@ -57,6 +58,7 @@ function HomeController() {
 
   const [createPostDiv, showCreatePostDiv] = useState(false);
   const [showModalState, setShowModalState] = useState(false);
+  const [showLikeModalState, setShowLikeModalState] = useState(false);
   const [whoToFollowState, setWhoToFollow] = useState();
   const [activePostData, setActivePostData] = useState<PostData | null>(null);
   const [feedPostState, setFeedPostState] = useState([]);
@@ -91,6 +93,10 @@ function HomeController() {
       addHashtags((prev) => [...prev, newHashtag]);
       inputRef.current.value = "";
     }
+  };
+
+  const likeClickHandler = () => {
+    setShowLikeModalState(true);
   };
 
   //Change this to work
@@ -272,7 +278,7 @@ function HomeController() {
       const response = await getUsers();
       console.log(response.data.getAllUsers);
       const newPostData = await formatPosts(response.data.getAllUsers);
-      console.log(newPostData)
+      console.log(newPostData);
       const usernameArray = await response.data.getAllUsers.map(
         (user: { username: any }, index: any) => {
           return user.username;
@@ -292,22 +298,41 @@ function HomeController() {
     setPostsAndFollowers();
   }, []);
 
-  const [createPostCheck, setCreatePostCheck] = useState(false);
+  const [createPostCheck, setCreatePostCheck] = useState<boolean>(false);
+
+  const tempLikes = [
+    {
+      username: "carreejoh",
+      firstname: "IDK",
+      lastname: "IDK",
+      pfp: "asdf",
+      userId: "1",
+    },
+    {
+      username: "carreejoh",
+      firstname: "IDK",
+      lastname: "IDK",
+      pfp: "asdf",
+      userId: "1",
+    },
+  ];
 
   return (
     // Original Background bg-gradient-to-tr from-lightestWhite via-slate-300 to-lightestWhite
-    <div className="homePageMainDiv bg-gradient-to-tr from-lightestWhite via-slate-300 to-lightestWhite dark:from-darkestCoolGray dark:to-darkCoolGray ml-20">
+    <div className="homePageMainDiv bg-gradient-to-tr from-mediumWhite via-mediumWhite to-mediumWhite dark:from-darkModeDarkGray dark:to-darkModeDarkGray ml-20">
       <div className="grid grid-cols-6 gap-4">
-        <div className="col-span-1 bg-customPurpleDark border-customPurpleDark border-r-[2px] dark:border-0 dark:bg-contrastBlue">
-          <div className="bg-schemeWhite  dark:bg-semiDarkCoolGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
+        <div className="col-span-1 bg-mainBlue border-customPurpleDark border-r-[2px] dark:border-0 dark:bg-mainPurple">
+          <div className="bg-darkestWhite  dark:bg-darkModeMediumGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
         </div>
         <div className="col-span-3 pl-40">
           <div className="homePageFeedMainDiv bg- pl-2 pr-2 border-customPurpleDark dark:border-customPurple">
             <div className="feedPostsTop"></div>
             {feedPostState ? (
               <FeedPosts
+                likes={tempLikes}
                 posts={feedPostState}
                 postClickHandler={postClickHandler}
+                likeClickHandler={likeClickHandler}
               />
             ) : null}
           </div>
@@ -458,7 +483,6 @@ function HomeController() {
                         createPostCheck ? "block" : "hidden"
                       } text-customPurple mt-4 flex`}
                     >
-                      
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -725,6 +749,12 @@ function HomeController() {
           </div>
         )}
       </div>
+      {showLikeModalState && (
+        <LikeFollowerModal
+          likes={tempLikes}
+        />
+      )}
+
       {showModalState && (
         <PostModal
           //The error is that this data is possibly null which is fine
