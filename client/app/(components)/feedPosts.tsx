@@ -5,6 +5,7 @@ import { ADD_COMMENT } from "../(GraphQL)/mutations";
 import { useMutation } from "@apollo/client";
 import Auth from "../(utils)/auth";
 import { comment } from "postcss";
+import LikeFollowerModal from "./likeFollowerFollowingModal";
 
 interface Post {
   username: string;
@@ -45,6 +46,7 @@ function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPos
     [key: number]: boolean;
   }>({});
 
+  const [showLikeModalStateFeedPosts, setShowLikeModalStateFeedPosts] = useState(false);
   const [commentState, setCommentState] = useState<any[][]>([]);
 
   const showCommentsFn = (index: number) => {
@@ -118,6 +120,10 @@ function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPos
     const dataComments = posts.map((post) => post.postComments);
     setCommentState(dataComments);
   }, [posts]);
+
+  const likeClickHandlerFeedPosts = () => {
+    setShowLikeModalStateFeedPosts(true);
+  };
 
   return posts.map((post, index) => {
     return (
@@ -295,6 +301,13 @@ function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPos
             </h2>
           </div>
         </div>
+        {showLikeModalStateFeedPosts && (
+        <LikeFollowerModal
+          handleClose={function (): void {
+            setShowLikeModalStateFeedPosts(false);
+          }}
+        />
+      )}
       </div>
     );
   });
