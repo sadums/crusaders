@@ -271,6 +271,7 @@ function HomeController() {
       const response = await getUsers();
       console.log(response.data.getAllUsers);
       const newPostData = await formatPosts(response.data.getAllUsers);
+      console.log(newPostData)
       const usernameArray = await response.data.getAllUsers.map(
         (user: { username: any }, index: any) => {
           return user.username;

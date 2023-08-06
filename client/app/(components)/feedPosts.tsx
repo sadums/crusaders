@@ -1,6 +1,9 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import "../(styles)/homepage.css";
+import { ADD_COMMENT } from "../(GraphQL)/mutations";
+import { useMutation } from "@apollo/client";
+import Auth from "../(utils)/auth";
 
 interface Post {
   username: string;
@@ -25,6 +28,56 @@ interface FeedPostsProps {
 }
 
 function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
+  // const tempComments = [
+  //   {
+  //     id: 1,
+  //     comment: "Nice post! This reminds me of so and so",
+  //     user: "carreejoh",
+  //     pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
+  //   },
+  //   {
+  //     id: 2,
+  //     comment:
+  //       "Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text,",
+  //     user: "carreejoh",
+  //     pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
+  //   },
+  //   {
+  //     id: 3,
+  //     comment:
+  //       "Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text,",
+  //     user: "carreejoh",
+  //     pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
+  //   },
+  //   {
+  //     id: 4,
+  //     comment:
+  //       "Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text,",
+  //     user: "carreejoh",
+  //     pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
+  //   },
+  //   {
+  //     id: 5,
+  //     comment: "Nice post!  long text, long text, long text,",
+  //     user: "carreejoh",
+  //     pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
+  //   },
+  // ];
+
+  const [expandedPosts, setExpandedPosts] = useState<{
+    [key: number]: boolean;
+  }>({});
+
+  const [commentState, setCommentState] = useState<any[][]>([]);
+
+  const showCommentsFn = (index: number) => {
+    setExpandedPosts((prevExpandedPosts) => ({
+      ...prevExpandedPosts,
+      [index]: !prevExpandedPosts[index],
+    }));
+  };
+
+  const [addComment, { data }] = useMutation(ADD_COMMENT);
 
   function formatDate(timestamp: string) {
     let date = new Date(parseInt(timestamp));
@@ -37,230 +90,229 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
     let formattedMinute = minute < 10 ? `0${minute}` : `${minute}`;
 
     return `${month}/${day} ${hour}:${formattedMinute}`;
-}
+  }
 
-
-
-  const tempComments = [
-    {
-      id: 1,
-      comment: "Nice post! This reminds me of so and so",
-      user: "carreejoh",
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-    },
-    {
-      id: 2,
-      comment:
-        "Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text,",
-      user: "carreejoh",
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-    },
-    {
-      id: 3,
-      comment:
-        "Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text,",
-      user: "carreejoh",
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-    },
-    {
-      id: 4,
-      comment:
-        "Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text,",
-      user: "carreejoh",
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-    },
-    {
-      id: 5,
-      comment: "Nice post!  long text, long text, long text,",
-      user: "carreejoh",
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-    },
-  ];
-
-  const [expandedPosts, setExpandedPosts] = useState<{
-    [key: number]: boolean;
-  }>({});
-
-  const showCommentsFn = (index: number) => {
-    setExpandedPosts((prevExpandedPosts) => ({
-      ...prevExpandedPosts,
-      [index]: !prevExpandedPosts[index],
-    }));
+  const postCommentHandler = async (
+    event: React.FormEvent,
+    post: any,
+    index: number
+  ) => {
+    event.preventDefault();
+    // console.log(Auth.getProfile().data.username);
+    // console.log(commentState);
+    try {
+      if (Auth.loggedIn()) {
+        const target = event.target as HTMLFormElement;
+        const commentBody = target.form[0].value;
+        if (commentBody) {
+          const response = await addComment({
+            variables: {
+              username: Auth.getProfile().data.username,
+              body: commentBody,
+              postId: post.postId,
+            },
+          });
+          console.log(response);
+          const newComment = {
+            username: Auth.getProfile().data.username,
+            body: commentBody,
+            createdAt: Date.now().toString(),
+          };
+          let newCommentState = [...commentState]; // copy the main array
+          let currentComments = newCommentState[index] || []; // get the current comments or an empty array if undefined
+          let newComments = [...currentComments, newComment]; // create a new array for the nested array
+          newCommentState[index] = newComments; // assign the new array to the main array
+          console.log(newCommentState[index]);
+          setCommentState(newCommentState);
+          target.form[0].value =''
+          
+        } else {
+          alert("The comment cant be blank");
+        }
+      } else {
+        alert("Sign in to make a comment");
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
+
+  useEffect(() => {
+    const dataComments = posts.map((post) => post.postComments);
+    setCommentState(dataComments);
+  }, [posts]);
 
   return posts.map((post, index) => {
     return (
-        <div key={index}>
-          <div
-            
-            className="mt-4 p-3 border-[1px] rounded-lg border-black dark:border-0 shadow-2xl bg-white dark:bg-darkCoolGray"
-          >
-            <div className="flex justify-between border-gray-700 pb-2 border-b-[1px]">
-              <div className="flex">
-                <img
-                  className="h-12 w-auto rounded-full object-cover"
-                  src={post.pfp}
-                  alt="Your Company"
-                ></img>
+      <div key={index}>
+        <div className="mt-4 p-3 border-[1px] rounded-lg border-black dark:border-0 shadow-2xl bg-white dark:bg-darkCoolGray">
+          <div className="flex justify-between border-gray-700 pb-2 border-b-[1px]">
+            <div className="flex">
+              <img
+                className="h-12 w-auto rounded-full object-cover"
+                src={post.pfp}
+                alt="Your Company"
+              ></img>
+              <div>
+                <h2 className="text-md text-black font-semibold dark:text-white ml-1">
+                  {`${post.firstName} ${post.lastName}`}
+                </h2>
                 <div>
-                  <h2 className="text-md text-black font-semibold dark:text-white ml-1">
-                    {`${post.firstName} ${post.lastName}`}
-                  </h2>
-                  <div>
-                    <a
-                      href="#"
-                      className="text-gray-500 text-md ml-1 py-2"
-                      aria-current="page"
-                    >
-                      @{post.username}
-                    </a>
-                  </div>
+                  <a
+                    href="#"
+                    className="text-gray-500 text-md ml-1 py-2"
+                    aria-current="page"
+                  >
+                    @{post.username}
+                  </a>
                 </div>
               </div>
-              <div className="my-auto">
-                <button className=" text-customPurple font-semibold dark:text-neonBlue p-1 pl-2 pr-2 rounded-xl">
-                  Follow
-                </button>
-              </div>
             </div>
-
-
-            <div className="mt-4">
-              <p className="dark:text-white text-black">{post.postBody}</p>
+            <div className="my-auto">
+              <button className=" text-customPurple font-semibold dark:text-neonBlue p-1 pl-2 pr-2 rounded-xl">
+                Follow
+              </button>
             </div>
-            {post.postHashtags && (
-              <div className="mt-0">
-                {post.postHashtags.map((hashtag, hashIndex) => {
-                  return (
-                    <a className="mr-1 text-gray-500" key={hashIndex}>
-                      #{hashtag.hashtagText}
-                    </a>
-                  );
-                })}
-              </div>
-            )}
+          </div>
 
-            <div className="mt-4 border-gray-700 pb-2 border-b-[1px]">
-              <img
-                onClick={() => postClickHandler(posts[index])}
-                className="postContentImg w-[90%] border-[2px] border-gray-500 rounded-xl"
-                src={post.postPreview || "no preview"}
-                alt="Post"
-              ></img>
+          <div className="mt-4">
+            <p className="dark:text-white text-black">{post.postBody}</p>
+          </div>
+          {post.postHashtags && (
+            <div className="mt-0">
+              {post.postHashtags.map((hashtag, hashIndex) => {
+                return (
+                  <a className="mr-1 text-gray-500" key={hashIndex}>
+                    #{hashtag.hashtagText}
+                  </a>
+                );
+              })}
             </div>
-            <div
-              className={`${
-                expandedPosts[index] ? "h-88" : " h-0"
-              } w-full mt-2 transition-all duration-400 ease-in-out border-[2px] rounded-xl p-2 border-black`}
-            >
-              <div
-                className={`${
-                  expandedPosts[index] ? "block" : " hidden"
-                }`}
-              >
-                <form className="border-black pb-2 border-b-[2px]">
-                  <div className="flex">
+          )}
+
+          <div className="mt-4 border-gray-700 pb-2 border-b-[1px]">
+            <img
+              onClick={() => postClickHandler(posts[index])}
+              className="postContentImg w-[90%] border-[2px] border-gray-500 rounded-xl"
+              src={post.postPreview || "no preview"}
+              alt="Post"
+            ></img>
+          </div>
+          <div
+            className={`${
+              expandedPosts[index] ? "h-88" : " h-0"
+            } w-full mt-2 transition-all duration-400 ease-in-out border-[2px] rounded-xl p-2 border-black`}
+          >
+            <div className={`${expandedPosts[index] ? "block" : " hidden"}`}>
+              <form className="border-black pb-2 border-b-[2px]">
+                <div className="flex">
                   <textarea
                     placeholder="Leave a comment, (200 characters max)"
                     className="bg-transparent border-solid border-customPurple text-black dark:text-white border-[1px] outline-none w-[75%] h-16 max-h-16"
                   ></textarea>
-                  <button className="ml-2 mr-2 px-4 py-2 mt-2 border border-customPurple rounded-md h-10 self-end shadow-sm text-sm font-medium text-black dark:text-white bg-transparent hover:bg-indigo-700 transition duration-300 hover:scale-105">
+                  <button
+                    className="ml-2 mr-2 px-4 py-2 mt-2 border border-customPurple rounded-md h-10 self-end shadow-sm text-sm font-medium text-black dark:text-white bg-transparent hover:bg-indigo-700 transition duration-300 hover:scale-105"
+                    onClick={(event) => postCommentHandler(event, post, index)}
+                  >
                     Comment
                   </button>
-                  </div>
-                </form>
+                </div>
+              </form>
+
                 <div
                   className={`max-h-64 overflow-y-scroll feedPostCommentSection`}
                 >
-                  {tempComments.map((comment, commentIndex) => (
+                  {commentState[index]?.map((comment, commentIndex) => (
                     <div
                       key={commentIndex}
                       className="flex justify-between border-gray-700 pb-2 border-b-[1px]"
                     >
                       <p className="dark:text-white transition-all duration-500 ease-in-out text-black self-end max-w-[70%]">
-                        {comment.comment}
+                        {comment.body}
                       </p>
+                      <p>{formatDate(comment.createdAt)}</p>
 
                       <a className="dark:text-white transition-all duration-500 ease-in-out text-black cursor-pointer self-end text-lg">
-                        -{comment.user}
+                        -{comment.username}
                       </a>
                     </div>
                   ))}
                 </div>
-              </div>
-            </div>
 
-            <div className="flex justify-between">
-              <div className="flex mt-1">
-                <button
-                  type="button"
-                  className="rounded-full mr-3 p-1 text-customPurpleDark dark:text-white "
-                >
-                  <span className="sr-only">Like</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                    />
-                  </svg>
-                </button>
-                <button
-                  type="button"
-                  className="rounded-full mr-3 p-1 text-customPurpleDark dark:text-white"
-                  id={`commentBtn${index}`}
-                  onClick={() => showCommentsFn(index)}
-                >
-                  <span className="sr-only">Comment</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
-                    />
-                  </svg>
-                </button>
-                <button
-                  type="button"
-                  className="rounded-full mr-3 p-1 text-customPurpleDark dark:text-white"
-                >
-                  <span className="sr-only">Share</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <h2 className="mt-4 text-sm text-gray-500">
-              <p>Posted: {formatDate(post.postDate)}</p>
-              </h2>
             </div>
           </div>
+
+          <div className="flex justify-between">
+            <div className="flex mt-1">
+              <button
+                type="button"
+                className="rounded-full mr-3 p-1 text-customPurpleDark dark:text-white "
+              >
+                <span className="sr-only">Like</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                  />
+                </svg>
+              </button>
+              <button
+                type="button"
+                className="rounded-full mr-3 p-1 text-customPurpleDark dark:text-white"
+                id={`commentBtn${index}`}
+                onClick={() => showCommentsFn(index)}
+              >
+                <span className="sr-only">Comment</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
+                  />
+                </svg>
+              </button>
+              <button
+                type="button"
+                className="rounded-full mr-3 p-1 text-customPurpleDark dark:text-white"
+              >
+                <span className="sr-only">Share</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                  />
+                </svg>
+              </button>
+            </div>
+            <h2 className="mt-4 text-sm text-gray-500">
+              <p>Posted: {formatDate(post.postDate)}</p>
+            </h2>
+          </div>
         </div>
+      </div>
     );
   });
 }

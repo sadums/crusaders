@@ -12,6 +12,7 @@ export const GET_POST = gql`
       comments {
         _id
         body
+        username
         createdAt
       }
       hashtags {
@@ -42,6 +43,7 @@ export const GET_ALL_USERS = gql`
         comments {
           _id
           body
+          username
           createdAt
         }
         createdAt
