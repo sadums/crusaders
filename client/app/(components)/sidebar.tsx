@@ -71,11 +71,11 @@ const Sidebar: React.FC<NavbarProps> = ({
     let application = window.document.body.classList;
     if (choice === "dark") {
       application.add("dark");
-      application.remove("border-customPurpleDark")
-      application.add("border-customPurpleDark")
+      application.remove("border-mainBlue")
+      application.add("border-mainPurple")
     } else {
-      application.remove("border-coolGray")
-      application.add("border-customPurpleDark")
+      application.remove("border-mainPurple")
+      application.add("border-mainBlue")
     }
   }, [enableDarkMode, enableLightMode]);
 
@@ -112,8 +112,8 @@ const Sidebar: React.FC<NavbarProps> = ({
   const handleSidebarChange = (page: any) => setShowSidebar(page);
 
   return (
-    <>
-      <div className="bg-gradient-to-t from-[#5b53ec] to-customPurpleDark dark:from-[#111034] dark:to-contrastBlue h-[100vh] fixed top-0 left-0 w-20 shadow-lg z-50">
+    <> 
+      <div className="bg-gradient-to-t dark:from-mainDarkPurple  dark:to-mainPurple from-mainDarkPurple via-mainBlueComp to-mainBlue h-[100vh] fixed top-0 left-0 w-20 shadow-lg z-50">
         <div className="container mx-auto z-50">
           <div className="grid grid-cols-1 gap-4">
             <h5 className="text-sm text-center mt-2">Crusaders</h5>

@@ -305,7 +305,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
             {tempNotificationData.map((notif) => {
               if (notif.type === "friendRequest") {
                 return (
-                  <div key={notif.id} className=" shadow-xl bg-white rounded-xl dark:bg-coolGray dark:shadow-notificationShadowPink ring-blue-700 p-1 mt-3">
+                  <div key={notif.id} className=" shadow-xl bg-white rounded-xl dark:bg-darkModeLightGray  dark:shadow-notificationShadowPink ring-blue-700 p-1 mt-3">
                     <div className="flex justify-between">
                       {" "}
                       <div className="flex">

@@ -48,17 +48,19 @@ module.exports = {
         //131922 as primary
         darkModeDarkGray: '#131922',
         darkModeMediumGray: '#1D2633',
-        darkModeLightGray: '#3D516E',
+        darkModeLightGray: '#334359',
 
         //4F46E5 as primary
         mainPurple: '#4F46E5',
+        // mainPurple: '#B061FF',
         mainDarkPurple: '#232066',
         mainBlue: '#3C8DE6',
-        mainDarkBlue: '#1B3F66',
+        mainDarkBlue: '#0A1C45',
+        mainBlueComp: '#185799',
 
         //lightModeWhite
         lightestWhite: '#fcfcfd',
-        mediumWhite: '#dbe2ea',
+        mediumWhite: '#ebeff4',
         darkestWhite: '#abbbce'
       },
       fontFamily: {
