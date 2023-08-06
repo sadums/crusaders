@@ -120,6 +120,7 @@ function HomeController() {
 
   const createPostHandler = async (event: React.FormEvent) => {
     event.preventDefault();
+    setCreatePostCheck(!createPostCheck);
     try {
       const target = event.target as HTMLFormElement;
       type HashtagInput = {
@@ -290,6 +291,8 @@ function HomeController() {
     setPostsAndFollowers();
   }, []);
 
+  const [createPostCheck, setCreatePostCheck] = useState(false);
+
   return (
     // Original Background bg-gradient-to-tr from-lightestWhite via-slate-300 to-lightestWhite
     <div className="homePageMainDiv bg-gradient-to-tr from-lightestWhite via-slate-300 to-lightestWhite dark:from-darkestCoolGray dark:to-darkCoolGray ml-20">
@@ -367,7 +370,9 @@ function HomeController() {
                       </button>
                     </div>
                     <div className="">
-                      <h2 className="text-sm text-neonBlue font-semibold">Post Title:</h2>
+                      <h2 className="text-sm text-neonBlue font-semibold">
+                        Post Title:
+                      </h2>
                       <input
                         type="text"
                         id=""
@@ -376,42 +381,49 @@ function HomeController() {
                       ></input>
                     </div>
                     <div className="mt-4">
-                      <h2 className="text-sm font-semibold text-neonBlue">Description:</h2>
+                      <h2 className="text-sm font-semibold text-neonBlue">
+                        Description:
+                      </h2>
                       <textarea
                         placeholder="Description, 400 max chars"
                         className="bg-transparent border-solid border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[100%] h-20 max-h-20 dark:text-white text-black"
                       ></textarea>
                     </div>
                     <div className="mt-4 border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 pb-1">
-                      <h2 className="text-sm font-semibold text-neonBlue">Media:</h2>
+                      <h2 className="text-sm font-semibold text-neonBlue">
+                        Media:
+                      </h2>
                       <div className="flex">
-                      <div onClick={pictureButtonHandler}>
-                        {uploadTypeState !== "video" && (
-                          <PictureUploader
-                            pictureState={pictureState}
-                            setPictureState={handleSetPictureState}
-                            uploadText={"Upload Picture"}
-                          />
-                        )}
+                        <div onClick={pictureButtonHandler}>
+                          {uploadTypeState !== "video" && (
+                            <PictureUploader
+                              pictureState={pictureState}
+                              setPictureState={handleSetPictureState}
+                              uploadText={"Upload Picture"}
+                            />
+                          )}
+                        </div>
+                        <div onClick={videoButtonHandler}>
+                          {uploadTypeState !== "picture" && (
+                            <VideoUploader
+                              uploadText={"Upload Video"}
+                              videoState={videoState}
+                              setVideoState={setVideoState}
+                            />
+                          )}
+                        </div>
                       </div>
-                      <div onClick={videoButtonHandler}>
-                        {uploadTypeState !== "picture" && (
-                          <VideoUploader
-                            uploadText={"Upload Video"}
-                            videoState={videoState}
-                            setVideoState={setVideoState}
-                          />
-                        )}
-                      </div>
-                      </div>
-                      
                     </div>
                     <div className="mt-2">
-                      <h2 className="text-sm font-semibold text-neonBlue">Hashtags:</h2>
+                      <h2 className="text-sm font-semibold text-neonBlue">
+                        Hashtags:
+                      </h2>
                       <div className="flex">
                         {hashtags.map((tag, index) => (
                           <div key={index}>
-                            <h4 className="dark:text-white text-black mr-1">#{tag}</h4>
+                            <h4 className="dark:text-white text-black mr-1">
+                              #{tag}
+                            </h4>
                           </div>
                         ))}
                       </div>
@@ -433,11 +445,34 @@ function HomeController() {
                     </div>
                     <button
                       onClick={createPostHandler}
-                      className="px-4 mt-2 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 hover:scale-105"
+                      className={`${
+                        createPostCheck ? "hidden" : "block"
+                      } px-4 mt-2 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 hover:scale-105`}
                       type="submit"
                     >
                       Create
                     </button>
+                    <div
+                      className={`${
+                        createPostCheck ? "block" : "hidden"
+                      } text-customPurple mt-4 flex`}
+                    >
+                      
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-10 h-10"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                    </div>
                   </form>
                 </div>
               </div>
@@ -527,7 +562,9 @@ function HomeController() {
                           Recieved
                         </h3>
                         <div className="flex justify-around items-center mt-0">
-                          <h2 className="text-black dark:text-white text-[30px] mr-1">19</h2>
+                          <h2 className="text-black dark:text-white text-[30px] mr-1">
+                            19
+                          </h2>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -549,7 +586,9 @@ function HomeController() {
                           Sent
                         </h3>
                         <div className="flex justify-around items-center mt-0">
-                          <h2 className="text-black text-[30px] mr-1 dark:text-white">219</h2>
+                          <h2 className="text-black text-[30px] mr-1 dark:text-white">
+                            219
+                          </h2>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -592,7 +631,10 @@ function HomeController() {
                   </h3>
                   {whoToFollowState.map((username: string, index: any) => {
                     return (
-                      <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start" key={index}>
+                      <div
+                        className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"
+                        key={index}
+                      >
                         <div className="flex flex-shrink-0 items-center">
                           <img
                             className="h-7 w-auto rounded-full object-cover"
