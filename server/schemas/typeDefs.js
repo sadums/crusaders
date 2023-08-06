@@ -1,6 +1,17 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
+  type Like {
+    _id: ID
+    userId: String
+    postId: String
+    username: String
+    pfp: String
+    firstName: String
+    lastName: String
+    preview: String
+  }
+
   type User {
     _id: ID
     username: String!
@@ -13,6 +24,7 @@ const typeDefs = gql`
     posts: [Post]
     followers: [User]
     following: [User]
+    likes: [Like]
     chats: [Chat]
   }
 
@@ -45,12 +57,23 @@ const typeDefs = gql`
     body: String
     createdAt: String
     comments: [Comment]
+    likes: [Like]
     hashtags: [Hashtag]
   }
 
   type Hashtag {
     hashtagText: String!
     category: String
+  }
+
+  type LikePostResponse {
+    user: User
+    post: Post
+  }  
+
+  type UnlikeResult {
+    user: User
+    post: Post
   }
 
   type AuthPayload {
@@ -67,6 +90,8 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    unlikePost(postId: String!, userId: String!): UnlikeResult
+    likePost(input: likePostInput!, postId: String!, userId: String!): LikePostResponse
     addComment(username: String!, body: String!, postId: String!): Post
     createUser(input: CreateUserInput!): AuthPayload
     addPost(input: newPostInput!, userId: ID!): User
@@ -77,27 +102,33 @@ const typeDefs = gql`
     updatePost(postId: ID!, input: updatePostInput!): User
     createChat(members: [ID]): Chat
     createMessage(userId: ID!, chatId: ID!, body: String!): Chat
-}
+  }
 
-type Subscription {
-  messages: Message
-}
+  type Subscription {
+    messages: Message
+  }
 
-input updatePostInput {
-  preview: String
-  media: String
-  title: String
-  body: String
-  createdAt: String
-  hashtags: [hashtagInput]
-}
+  input updatePostInput {
+    preview: String
+    media: String
+    title: String
+    body: String
+    createdAt: String
+    hashtags: [hashtagInput]
+  }
 
-
+  input likePostInput {
+    username: String
+    pfp: String
+    firstName: String
+    lastName: String
+    preview: String
+  }
+  
 
   type Subscription {
     messages(chatId: ID, userId: ID): Message
   }
-
 
   input CreateUserInput {
     username: String!
@@ -116,7 +147,7 @@ input updatePostInput {
     lastName: String
   }
 
-input newPostInput {
+  input newPostInput {
     preview: String
     media: String
     title: String
@@ -124,7 +155,6 @@ input newPostInput {
     createdAt: String
     hashtags: [hashtagInput]
   }
-
 
   input hashtagInput {
     hashtagText: String

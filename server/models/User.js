@@ -1,6 +1,30 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
-const postSchema = require('./Post')
+const postSchema = require("./Post");
+
+const likesSchema = new Schema({
+  username: {
+    type: String,
+  },
+  pfp: {
+    type: String,
+  },
+  userId: {
+    type: String,
+  },
+  postId: {
+    type: String,
+  },
+  firstName: {
+    type: String,
+  },
+  lastName: {
+    type: String,
+  },
+  preview: {
+    type: String,
+  }
+})
 
 const userSchema = new Schema(
   {
@@ -9,10 +33,10 @@ const userSchema = new Schema(
       required: true,
       unique: true,
     },
-    firstName:{
+    firstName: {
       type: String,
     },
-    lastName:{
+    lastName: {
       type: String,
     },
     email: {
@@ -27,7 +51,8 @@ const userSchema = new Schema(
     },
     pfp: {
       type: String,
-      default: 'https://cdn.discordapp.com/attachments/1110381245063503936/1135348931778322453/image.png'
+      default:
+        "https://cdn.discordapp.com/attachments/1110381245063503936/1135348931778322453/image.png",
     },
     bio: {
       type: String,
@@ -45,12 +70,13 @@ const userSchema = new Schema(
         ref: "User",
       },
     ],
+    likes: [likesSchema],
     chats: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Chat"
-      }
-    ]
+        ref: "Chat",
+      },
+    ],
   },
   {
     toJSON: {
