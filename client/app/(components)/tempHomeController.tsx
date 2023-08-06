@@ -26,6 +26,7 @@ function HomeController() {
     title: string;
     body: string;
     comments: any[]; // Adjust this type as needed
+    likes: any[];
     createdAt: string;
     hashtags: any[]; // Adjust this type as needed
     preview: string;
@@ -37,14 +38,18 @@ function HomeController() {
     _id: string;
   };
 
-  const id = Auth.getProfile().data._id;
-  const {
-    loading: singleUserLoading,
-    error: singleUserError,
-    data: singleUserData,
-  } = useQuery(GET_USER_BY_ID, {
-    variables: { id: id },
-  });
+let id;
+ const [getUserById, { loading: singleUserLoading, error: singleUserError, data: singleUserData }] = useLazyQuery(
+    GET_USER_BY_ID,
+    {
+      variables: { id: id },
+    }
+  );
+
+  if(Auth.loggedIn()){
+    id=Auth.getProfile().data._id
+    getUserById()
+  }
   //console.log(singleUserData.getUserById)
 
   const [addPostMutation, { loading: loading, error: error, data: data }] =
@@ -160,16 +165,6 @@ function HomeController() {
       //I don't know what would happen if the video state has a picture
       //I dont know what would happen if the picture state has a video
 
-      //PICTURE
-      // const postInput = {
-      //   // preview: pictureState.cropped,
-      //   // media: pictureState.original,
-      //   title: target.form[1].value,
-      //   body: target.form[2].value,
-      //   hashtags: inputHashtags,
-      // };
-
-      //VIDEO
       const postInput = {
         preview: "",
         media: "",
@@ -768,11 +763,11 @@ function HomeController() {
           media={activePostData.media}
           preview={activePostData.preview}
           body={activePostData.body}
-          //Format the date in the backend
           date={activePostData.createdAt}
           comments={activePostData.comments}
           hashtags={activePostData.hashtags}
           username={activePostData.username}
+          likes={activePostData.likes}
           pfp={activePostData.pfp}
           firstName={activePostData.firstName}
           lastName={activePostData.lastName}

@@ -91,8 +91,9 @@ const PostModal: React.FC<ModalProps> = ({
     setShowLikeModalStateFeedPosts(true);
   };
 
-  console.log(media);
   const isVideo = media.endsWith(".mp4");
+
+  console.log(likes)
 
   function formatDate(timestamp: string) {
     let date = new Date(parseInt(timestamp));
@@ -253,7 +254,7 @@ const PostModal: React.FC<ModalProps> = ({
                   className="text-gray-700 text-sm dark:text-gray-500 cursor-pointer mr-2"
                   onClick={() => likeClickHandlerFeedPosts(likes)}
                 >
-                  24 Likes
+                  {likes ? `${likes.length} Likes` : "0 Likes"}
                 </a>
                 <button
                   onClick={() => setShowComments((prev) => !prev)}

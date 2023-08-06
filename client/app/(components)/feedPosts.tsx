@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, Dispatch, SetStateAction } from "react";
 import "../(styles)/homepage.css";
 import { ADD_COMMENT, LIKE_POST, UNLIKE_POST } from "../(GraphQL)/mutations";
 import { GET_USER_BY_ID } from "../(GraphQL)/queries";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import Auth from "../(utils)/auth";
 import { comment } from "postcss";
 import LikeFollowerModal from "./likeFollowerFollowingModal";
@@ -50,15 +50,19 @@ function FeedPosts({
     [key: number]: boolean;
   }>({});
 
-  const id = Auth.getProfile().data._id;
-  console.log(id);
-  const {
-    loading: userByIdLoading,
-    error: userByIdError,
-    data: userByIdData,
-  } = useQuery(GET_USER_BY_ID, {
-    variables: { id: id },
-  });
+  //const id = Auth.getProfile().data._id;
+  let id;
+ const [getUserById, { loading: userByIdLoading, error: userByIdError, data: userByIdData }] = useLazyQuery(
+    GET_USER_BY_ID,
+    {
+      variables: { id: id },
+    }
+  );
+
+  if(Auth.loggedIn()){
+    id=Auth.getProfile().data._id
+    getUserById()
+  }
 
   const [commentState, setCommentState] = useState<any[][]>([]);
   const [isLikedState, setIsLikedState] = useState<boolean[]>([]);
