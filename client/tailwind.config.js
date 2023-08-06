@@ -14,7 +14,7 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       colors: {
-        neonBlue: '#3B82F6',
+        neonBlue: '#2f68c4',
         lightPink: '#837dec',
         darkPurple: '#2f2a89',
         customPurple: '#4F46E5',
@@ -24,7 +24,7 @@ module.exports = {
         schemeVoid: '#0E0B16',
         schemePurple: '#A239CA',
         schemeIndigo: '#4717F6',
-        schemeWhite: '#F4FDFF',
+        schemeWhite: '#eaeded',
 
         lightestWhite: '#F3FDFF',
         mediumWhite: '#BFC6C8',

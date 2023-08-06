@@ -28,41 +28,6 @@ interface FeedPostsProps {
 }
 
 function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
-  // const tempComments = [
-  //   {
-  //     id: 1,
-  //     comment: "Nice post! This reminds me of so and so",
-  //     user: "carreejoh",
-  //     pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-  //   },
-  //   {
-  //     id: 2,
-  //     comment:
-  //       "Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text,",
-  //     user: "carreejoh",
-  //     pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-  //   },
-  //   {
-  //     id: 3,
-  //     comment:
-  //       "Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text,",
-  //     user: "carreejoh",
-  //     pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-  //   },
-  //   {
-  //     id: 4,
-  //     comment:
-  //       "Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text,",
-  //     user: "carreejoh",
-  //     pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-  //   },
-  //   {
-  //     id: 5,
-  //     comment: "Nice post!  long text, long text, long text,",
-  //     user: "carreejoh",
-  //     pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-  //   },
-  // ];
 
   const [expandedPosts, setExpandedPosts] = useState<{
     [key: number]: boolean;
@@ -78,6 +43,7 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
   };
 
   const [addComment, { data }] = useMutation(ADD_COMMENT);
+
 
   function formatDate(timestamp: string) {
     let date = new Date(parseInt(timestamp));
@@ -169,7 +135,7 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
               </div>
             </div>
             <div className="my-auto">
-              <button className=" text-customPurple font-semibold dark:text-neonBlue p-1 pl-2 pr-2 rounded-xl">
+              <button className=" font-semibold  text-neonBlue p-[1px] pl-2 pr-2 rounded-md">
                 Follow
               </button>
             </div>
@@ -200,11 +166,13 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
           </div>
           <div
             className={`${
-              expandedPosts[index] ? "h-88" : " h-0"
-            } w-full mt-2 transition-all duration-400 ease-in-out border-[2px] rounded-xl p-2 border-black`}
+              expandedPosts[index] ? "h-88 scale-100" : " h-0 scale-0"
+            }transition-all duration-200 ease-in-out `}
           >
-            <div className={`${expandedPosts[index] ? "block" : " hidden"}`}>
-              <form className="border-black pb-2 border-b-[2px]">
+            <div
+              className={`${expandedPosts[index] ? "h-88 scale-100" : " h-0 scale-0"} ease-in transition-all duration-300 mt-2 border-[2px] rounded-xl p-2 border-black`}
+            >
+              <form className={`${expandedPosts[index] ? "scale-100" : "scale-0"} ease-in transition-all duration-200 border-black pb-2 border-b-[2px]`}>
                 <div className="flex">
                   <textarea
                     placeholder="Leave a comment, (200 characters max)"
@@ -216,11 +184,12 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
                   >
                     Comment
                   </button>
+
                 </div>
               </form>
 
                 <div
-                  className={`max-h-64 overflow-y-scroll feedPostCommentSection`}
+                  className={`${expandedPosts[index] ? "scale-100 max-h-64" : "scale-0"} overflow-y-scroll feedPostCommentSection`}
                 >
                   {commentState[index]?.map((comment, commentIndex) => (
                     <div
