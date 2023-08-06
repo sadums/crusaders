@@ -3,8 +3,8 @@ const { gql } = require("apollo-server-express");
 const typeDefs = gql`
   type Like {
     _id: ID
-    userId: String
-    postId: String
+    userId: String!
+    postId: String!
     username: String
     pfp: String
     firstName: String
@@ -53,7 +53,7 @@ const typeDefs = gql`
     _id: ID
     preview: String
     media: String
-    title: String!
+    title: String
     body: String
     createdAt: String
     comments: [Comment]
