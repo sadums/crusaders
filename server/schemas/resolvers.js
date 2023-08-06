@@ -74,6 +74,38 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+    addComment: async (parent, { username, body, postId }, context) => {
+      console.log(username);
+      console.log(body);
+      console.log(postId);
+    
+      const users = await User.find({});
+      for (let user of users) {
+        for (let post of user.posts) {
+          if (post._id.toString() === postId) {
+            const newComment = {
+              username: username,
+              createdAt: new Date().toISOString(),
+              body: body,
+            };
+            await User.updateOne(
+              { "posts._id": post._id },
+              { $push: { "posts.$.comments": newComment } },
+            );
+    
+            // After updating the post, find the user that has the updated post
+            const updatedUser = await User.findOne({"posts._id": post._id});
+            if (updatedUser) {
+              const updatedPost = updatedUser.posts.find(updatedPost => updatedPost._id.toString() === postId);
+              if (updatedPost) {
+                console.log(updatedPost);
+                return updatedPost; // return the updated post
+              }
+            }
+          }
+        }
+      }
+    },
     addPost: async (parent, { input, userId }) => {
       try {
         const updatedUser = await User.findByIdAndUpdate(
@@ -134,7 +166,7 @@ const resolvers = {
     editUser: async (parent, { input, _id }, context) => {
       try {
         console.log(input);
-    
+
         const fieldsToUpdate = {};
         if (input.username) fieldsToUpdate.username = input.username;
         if (input.email) fieldsToUpdate.email = input.email;
@@ -142,17 +174,17 @@ const resolvers = {
         if (input.bio) fieldsToUpdate.bio = input.bio;
         if (input.firstName) fieldsToUpdate.firstName = input.firstName;
         if (input.lastName) fieldsToUpdate.lastName = input.lastName;
-    
+
         const user = await User.findByIdAndUpdate(
           _id, // Using the provided ID
           fieldsToUpdate,
           { new: true }
         );
-    
+
         if (!user) {
-          throw new Error('User not found');
+          throw new Error("User not found");
         }
-    
+
         const token = signToken(user);
         return { token: token, user: user };
       } catch (err) {
@@ -160,7 +192,7 @@ const resolvers = {
         return err;
       }
     },
-    
+
     createChat: async (parent, { members }, context) => {
       const chat = await Chat.create({
         members: members,
@@ -203,7 +235,7 @@ const resolvers = {
         () => pubsub.asyncIterator(["NEW_MESSAGE"]),
         async (payload, variables) => {
           const user = await User.findById(variables.userId);
-          console.log(user)
+          console.log(user);
           console.log(payload, variables);
           return 1 === 1;
         }

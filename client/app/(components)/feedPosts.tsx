@@ -1,6 +1,9 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import "../(styles)/homepage.css";
+import { ADD_COMMENT } from "../(GraphQL)/mutations";
+import { useMutation } from "@apollo/client";
+import Auth from "../(utils)/auth";
 
 interface Post {
   username: string;
@@ -25,6 +28,23 @@ interface FeedPostsProps {
 }
 
 function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
+
+  const [expandedPosts, setExpandedPosts] = useState<{
+    [key: number]: boolean;
+  }>({});
+
+  const [commentState, setCommentState] = useState<any[][]>([]);
+
+  const showCommentsFn = (index: number) => {
+    setExpandedPosts((prevExpandedPosts) => ({
+      ...prevExpandedPosts,
+      [index]: !prevExpandedPosts[index],
+    }));
+  };
+
+  const [addComment, { data }] = useMutation(ADD_COMMENT);
+
+
   function formatDate(timestamp: string) {
     let date = new Date(parseInt(timestamp));
 
@@ -38,52 +58,55 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
     return `${month}/${day} ${hour}:${formattedMinute}`;
   }
 
-  const tempComments = [
-    {
-      id: 1,
-      comment: "Nice post! This reminds me of so and so",
-      user: "carreejoh",
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-    },
-    {
-      id: 2,
-      comment:
-        "Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text,",
-      user: "carreejoh",
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-    },
-    {
-      id: 3,
-      comment:
-        "Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text,",
-      user: "carreejoh",
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-    },
-    {
-      id: 4,
-      comment:
-        "Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text,",
-      user: "carreejoh",
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-    },
-    {
-      id: 5,
-      comment: "Nice post!  long text, long text, long text,",
-      user: "carreejoh",
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-    },
-  ];
-
-  const [expandedPosts, setExpandedPosts] = useState<{
-    [key: number]: boolean;
-  }>({});
-
-  const showCommentsFn = (index: number) => {
-    setExpandedPosts((prevExpandedPosts) => ({
-      ...prevExpandedPosts,
-      [index]: !prevExpandedPosts[index],
-    }));
+  const postCommentHandler = async (
+    event: React.FormEvent,
+    post: any,
+    index: number
+  ) => {
+    event.preventDefault();
+    // console.log(Auth.getProfile().data.username);
+    // console.log(commentState);
+    try {
+      if (Auth.loggedIn()) {
+        const target = event.target as HTMLFormElement;
+        const commentBody = target.form[0].value;
+        if (commentBody) {
+          const response = await addComment({
+            variables: {
+              username: Auth.getProfile().data.username,
+              body: commentBody,
+              postId: post.postId,
+            },
+          });
+          console.log(response);
+          const newComment = {
+            username: Auth.getProfile().data.username,
+            body: commentBody,
+            createdAt: Date.now().toString(),
+          };
+          let newCommentState = [...commentState]; // copy the main array
+          let currentComments = newCommentState[index] || []; // get the current comments or an empty array if undefined
+          let newComments = [...currentComments, newComment]; // create a new array for the nested array
+          newCommentState[index] = newComments; // assign the new array to the main array
+          console.log(newCommentState[index]);
+          setCommentState(newCommentState);
+          target.form[0].value =''
+          
+        } else {
+          alert("The comment cant be blank");
+        }
+      } else {
+        alert("Sign in to make a comment");
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
+
+  useEffect(() => {
+    const dataComments = posts.map((post) => post.postComments);
+    setCommentState(dataComments);
+  }, [posts]);
 
   return posts.map((post, index) => {
     return (
@@ -155,29 +178,36 @@ function FeedPosts({ posts, postClickHandler }: FeedPostsProps) {
                     placeholder="Leave a comment, (200 characters max)"
                     className="bg-transparent border-solid border-customPurple text-black dark:text-white border-[1px] outline-none w-[75%] h-16 max-h-16"
                   ></textarea>
-                  <button className="ml-2 mr-2 px-4 py-2 mt-2 border border-customPurple rounded-md h-10 self-end shadow-sm text-sm font-medium text-black dark:text-white bg-transparent hover:bg-indigo-700 transition duration-300 hover:scale-105">
+                  <button
+                    className="ml-2 mr-2 px-4 py-2 mt-2 border border-customPurple rounded-md h-10 self-end shadow-sm text-sm font-medium text-black dark:text-white bg-transparent hover:bg-indigo-700 transition duration-300 hover:scale-105"
+                    onClick={(event) => postCommentHandler(event, post, index)}
+                  >
                     Comment
                   </button>
+
                 </div>
               </form>
-              <div
-                className={`${expandedPosts[index] ? "scale-100 max-h-64" : "scale-0"} overflow-y-scroll feedPostCommentSection`}
-              >
-                {tempComments.map((comment, commentIndex) => (
-                  <div
-                    key={commentIndex}
-                    className="flex justify-between border-gray-700 pb-2 border-b-[1px]"
-                  >
-                    <p className="dark:text-white transition-all duration-500 ease-in-out text-black self-end max-w-[70%]">
-                      {comment.comment}
-                    </p>
 
-                    <a className="dark:text-white transition-all duration-500 ease-in-out text-black cursor-pointer self-end text-lg">
-                      -{comment.user}
-                    </a>
-                  </div>
-                ))}
-              </div>
+                <div
+                  className={`${expandedPosts[index] ? "scale-100 max-h-64" : "scale-0"} overflow-y-scroll feedPostCommentSection`}
+                >
+                  {commentState[index]?.map((comment, commentIndex) => (
+                    <div
+                      key={commentIndex}
+                      className="flex justify-between border-gray-700 pb-2 border-b-[1px]"
+                    >
+                      <p className="dark:text-white transition-all duration-500 ease-in-out text-black self-end max-w-[70%]">
+                        {comment.body}
+                      </p>
+                      <p>{formatDate(comment.createdAt)}</p>
+
+                      <a className="dark:text-white transition-all duration-500 ease-in-out text-black cursor-pointer self-end text-lg">
+                        -{comment.username}
+                      </a>
+                    </div>
+                  ))}
+                </div>
+
             </div>
           </div>
 
