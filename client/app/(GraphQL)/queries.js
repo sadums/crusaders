@@ -9,6 +9,16 @@ export const GET_POST = gql`
       title
       body
       createdAt
+      likes {
+        _id
+        userId
+        postId
+        username
+        pfp
+        firstName
+        lastName
+        preview
+      }
       comments {
         _id
         body
