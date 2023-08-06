@@ -40,6 +40,9 @@ export const GET_ALL_USERS = gql`
           hashtagText
           category
         }
+        likes {
+          _id
+        }
         comments {
           _id
           body
