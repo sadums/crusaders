@@ -51,18 +51,12 @@ function FeedPosts({
   }>({});
 
   //const id = Auth.getProfile().data._id;
-  let id;
  const [getUserById, { loading: userByIdLoading, error: userByIdError, data: userByIdData }] = useLazyQuery(
     GET_USER_BY_ID,
     {
-      variables: { id: id },
+      variables: { id: '' },
     }
   );
-
-  if(Auth.loggedIn()){
-    id=Auth.getProfile().data._id
-    getUserById()
-  }
 
   const [commentState, setCommentState] = useState<any[][]>([]);
   const [isLikedState, setIsLikedState] = useState<boolean[]>([]);
@@ -207,6 +201,13 @@ function FeedPosts({
     const dataComments = posts.map((post) => post.postComments);
     setCommentState(dataComments);
   }, [posts]);
+
+  useEffect(()=> {
+    if (Auth.loggedIn()) {
+      const id = Auth.getProfile().data._id;
+      getUserById({ variables: { id } }); // Call getUserById inside the useEffect with the correct variables
+    }
+  }, [])
 
   return posts.map((post, index) => {
     return (

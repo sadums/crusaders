@@ -39,17 +39,12 @@ function HomeController() {
   };
 
 let id;
- const [getUserById, { loading: singleUserLoading, error: singleUserError, data: singleUserData }] = useLazyQuery(
-    GET_USER_BY_ID,
-    {
-      variables: { id: id },
-    }
-  );
-
-  if(Auth.loggedIn()){
-    id=Auth.getProfile().data._id
-    getUserById()
+const [getUserById, { loading: singleUserLoading, error: singleUserError, data: singleUserData }] = useLazyQuery(
+  GET_USER_BY_ID,
+  {
+    variables: { id: '' }, // Initialize with an empty string
   }
+);
   //console.log(singleUserData.getUserById)
 
   const [addPostMutation, { loading: loading, error: error, data: data }] =
@@ -313,6 +308,13 @@ let id;
       setPostsAndFollowers();
     }
   }, [getUsersData]); // This effect will run whenever getUsersData changes
+
+  useEffect(()=> {
+    if (Auth.loggedIn()) {
+      const id = Auth.getProfile().data._id;
+      getUserById({ variables: { id } }); // Call getUserById inside the useEffect with the correct variables
+    }
+  }, [])
 
   return (
     // Original Background bg-gradient-to-tr from-lightestWhite via-slate-300 to-lightestWhite
