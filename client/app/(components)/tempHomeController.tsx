@@ -68,6 +68,7 @@ function HomeController() {
   const [whoToFollowState, setWhoToFollow] = useState();
   const [activePostData, setActivePostData] = useState<PostData | null>(null);
   const [feedPostState, setFeedPostState] = useState([]);
+  const [likeModalDataState, setLikeModalDataState] = useState();
   const [uploadTypeState, setUploadTypeState] = useState("");
   const [hashtags, addHashtags] = useState<string[]>([]);
   const [pictureState, setPictureState] = useState<{
@@ -101,10 +102,17 @@ function HomeController() {
     }
   };
 
-  const likeClickHandler = () => {
-    setShowLikeModalState(true);
-  };
+  const likeClickHandler = (postLikes: any) => {
+    console.log(postLikes.length);
+    if(postLikes.length){
+      setLikeModalDataState(postLikes);
+      setShowLikeModalState(true);
+    }else{
+      alert(`Post doesn't have any likes`)
+    }
 
+  };
+  const [createPostCheck, setCreatePostCheck] = useState<boolean>(false);
   //Change this to work
   const postClickHandler = async (postInfo: any) => {
     // console.log(data.getUserById)
@@ -246,6 +254,7 @@ function HomeController() {
                 title: any;
                 preview: any;
                 comments: any;
+                likes: any;
                 createdAt: any;
                 hashtags: any;
                 _id: any;
@@ -262,6 +271,7 @@ function HomeController() {
                 postTitle: post.title,
                 postPreview: post.preview,
                 postComments: post.comments,
+                postLikes: post.likes,
                 postDate: post.createdAt,
                 postHashtags: post.hashtags,
                 postId: post._id,
@@ -279,7 +289,7 @@ function HomeController() {
     }
   };
   useEffect(() => {
-    // console.log({getUsersLoading, getUsersError, getUsersData});
+    console.log(getUsersData);
     const setPostsAndFollowers = async () => {
       if (getUsersData && getUsersData.getAllUsers) {
         console.log(getUsersData);
@@ -309,25 +319,6 @@ function HomeController() {
     }
   }, [getUsersData]); // This effect will run whenever getUsersData changes
 
-  const [createPostCheck, setCreatePostCheck] = useState<boolean>(false);
-
-  const tempLikes = [
-    {
-      username: "carreejoh",
-      firstname: "IDK",
-      lastname: "IDK",
-      pfp: "asdf",
-      userId: "1",
-    },
-    {
-      username: "carreejoh",
-      firstname: "IDK",
-      lastname: "IDK",
-      pfp: "asdf",
-      userId: "1",
-    },
-  ];
-
   return (
     // Original Background bg-gradient-to-tr from-lightestWhite via-slate-300 to-lightestWhite
     <div className="homePageMainDiv bg-gradient-to-tr from-mediumWhite via-mediumWhite to-mediumWhite dark:from-darkModeDarkGray dark:to-darkModeDarkGray ml-20">
@@ -340,7 +331,6 @@ function HomeController() {
             <div className="feedPostsTop"></div>
             {feedPostState ? (
               <FeedPosts
-                likes={tempLikes}
                 posts={feedPostState}
                 postClickHandler={postClickHandler}
                 likeClickHandler={likeClickHandler}
@@ -763,9 +753,11 @@ function HomeController() {
 
       {showLikeModalState && (
         <LikeFollowerModal
-          handleClose={function (): void {
+          handleClose={() => {
             setShowLikeModalState(false);
           }}
+          users={likeModalDataState ?? []} // Use nullish coalescing operator to provide a default value
+
         />
       )}
 

@@ -7,81 +7,15 @@ interface ModalProps {
 
 interface User {
   username: string;
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   pfp: string;
   id: number;
 }
 
-const tempLikeData = [
-  {
-    id: 1,
-    user: "carreejoh",
-    firstname: "John",
-    lastname: "Doe",
-    pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-  },
-  {
-    id: 2,
-    user: "carreejoh",
-    firstname: "John",
-    lastname: "Doe",
-    pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-  },
-  {
-    id: 3,
-    user: "carreejoh",
-    firstname: "John",
-    lastname: "Doe",
-    pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-  },
-  {
-    id: 4,
-    user: "carreejoh",
-    firstname: "John",
-    lastname: "Doe",
-    pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-  },
-  {
-    id: 5,
-    user: "carreejoh",
-    firstname: "John",
-    lastname: "Doe",
-    pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-  },
-  {
-    id: 6,
-    user: "carreejoh",
-    firstname: "John",
-    lastname: "Doe",
-    pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-  },
-  {
-    id: 7,
-    user: "carreejoh",
-    firstname: "John",
-    lastname: "Doe",
-    pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-  },
-  {
-    id: 8,
-    user: "carreejoh",
-    firstname: "John",
-    lastname: "Doe",
-    pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-  },
-  {
-    id: 9,
-    user: "carreejoh",
-    firstname: "John",
-    lastname: "Doe",
-    pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-  },
-];
-
-const LikeFollowerModal: React.FC<ModalProps> = ({ handleClose }) => {
+const LikeFollowerModal: React.FC<ModalProps> = ({ handleClose, users }) => {
   //   const [closeModal, setCloseModal] = useState(false);
-
+  console.log(users);
   return (
     <div className="fixed z-10 inset-0 overflow-y-auto duration-200 ease-in-out flex items-center justify-center">
       <div
@@ -117,24 +51,27 @@ const LikeFollowerModal: React.FC<ModalProps> = ({ handleClose }) => {
             </button>
           </div>
           <div className="p-2 overflow-y-scroll max-h-[36vh]">
-            {tempLikeData.map((user) => (
-              <div className="flex justify-between border-gray-700 border-b-[1px]">
+            {users.map((user, index) => (
+              <div
+                className="flex justify-between border-gray-700 border-b-[1px]"
+                key={index}
+              >
                 <div className="flex items-center ">
                   <img
                     className="h-10 w-10 rounded-full object-cover"
-                    src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images"
+                    src={user.pfp}
                     alt="Your Company"
                   ></img>
                   <div className="flex flex-col">
                     <h4 className="text-black text-md ml-1 dark:text-white">
-                      {user.firstname} {user.lastname}
+                      {user.firstName} {user.lastName}
                     </h4>
                     <a
                       href="#"
                       className="text-gray-500 text-md ml-1"
                       aria-current="page"
                     >
-                      @{user.user}
+                      @{user.username}
                     </a>
                   </div>
                 </div>
