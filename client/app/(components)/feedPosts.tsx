@@ -40,13 +40,16 @@ interface FeedPostsProps {
   // setCreatePostCheck: Dispatch<SetStateAction<boolean>>;
 }
 
-function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPostsProps) {
-
+function FeedPosts({
+  likes,
+  posts,
+  postClickHandler,
+  likeClickHandler,
+}: FeedPostsProps) {
   const [expandedPosts, setExpandedPosts] = useState<{
     [key: number]: boolean;
   }>({});
 
-  const [showLikeModalStateFeedPosts, setShowLikeModalStateFeedPosts] = useState(false);
   const [commentState, setCommentState] = useState<any[][]>([]);
 
   const showCommentsFn = (index: number) => {
@@ -103,8 +106,7 @@ function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPos
           newCommentState[index] = newComments; // assign the new array to the main array
           console.log(newCommentState[index]);
           setCommentState(newCommentState);
-          target.form[0].value =''
-          
+          target.form[0].value = "";
         } else {
           alert("The comment cant be blank");
         }
@@ -120,10 +122,6 @@ function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPos
     const dataComments = posts.map((post) => post.postComments);
     setCommentState(dataComments);
   }, [posts]);
-
-  const likeClickHandlerFeedPosts = () => {
-    setShowLikeModalStateFeedPosts(true);
-  };
 
   return posts.map((post, index) => {
     return (
@@ -187,9 +185,15 @@ function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPos
             }transition-all duration-200 ease-linear `}
           >
             <div
-              className={`${expandedPosts[index] ? "h-88 scale-100" : " h-0 scale-0"} ease-in transition-all duration-200 mt-2 border-[2px] rounded-xl p-2 border-black`}
+              className={`${
+                expandedPosts[index] ? "h-88 scale-100" : " h-0 scale-0"
+              } ease-in transition-all duration-200 mt-2 border-[2px] rounded-xl p-2 border-black`}
             >
-              <form className={`${expandedPosts[index] ? "scale-100" : "scale-0"} ease-in transition-all duration-200 border-black pb-2 border-b-[2px]`}>
+              <form
+                className={`${
+                  expandedPosts[index] ? "scale-100" : "scale-0"
+                } ease-in transition-all duration-200 border-black pb-2 border-b-[2px]`}
+              >
                 <div className="flex">
                   <textarea
                     placeholder="Leave a comment, (200 characters max)"
@@ -201,30 +205,30 @@ function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPos
                   >
                     Comment
                   </button>
-
                 </div>
               </form>
 
-                <div
-                  className={`${expandedPosts[index] ? "scale-100 max-h-64" : "scale-0"} overflow-y-scroll feedPostCommentSection`}
-                >
-                  {commentState[index]?.map((comment, commentIndex) => (
-                    <div
-                      key={commentIndex}
-                      className="flex justify-between border-gray-700 pb-2 border-b-[1px]"
-                    >
-                      <p className="dark:text-white transition-all duration-500 ease-in-out text-black self-end max-w-[70%]">
-                        {comment.body}
-                      </p>
-                      <p>{formatDate(comment.createdAt)}</p>
+              <div
+                className={`${
+                  expandedPosts[index] ? "scale-100 max-h-64" : "scale-0"
+                } overflow-y-scroll feedPostCommentSection`}
+              >
+                {commentState[index]?.map((comment, commentIndex) => (
+                  <div
+                    key={commentIndex}
+                    className="flex justify-between border-gray-700 pb-2 border-b-[1px]"
+                  >
+                    <p className="dark:text-white transition-all duration-500 ease-in-out text-black self-end max-w-[70%]">
+                      {comment.body}
+                    </p>
+                    <p>{formatDate(comment.createdAt)}</p>
 
-                      <a className="dark:text-white transition-all duration-500 ease-in-out text-black cursor-pointer self-end text-lg">
-                        -{comment.username}
-                      </a>
-                    </div>
-                  ))}
-                </div>
-
+                    <a className="dark:text-white transition-all duration-500 ease-in-out text-black cursor-pointer self-end text-lg">
+                      -{comment.username}
+                    </a>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -250,8 +254,12 @@ function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPos
                   />
                 </svg>
               </button>
-              <a className="text-gray-700 text-sm dark:text-gray-500 cursor-pointer mr-4"
-              onClick={() => likeClickHandler(likes)}>24 Likes</a>
+              <a
+                className="text-gray-700 text-sm dark:text-gray-500 cursor-pointer mr-2"
+                onClick={() => likeClickHandler(likes)}
+              >
+                24 Likes
+              </a>
               <button
                 type="button"
                 className="rounded-full p-1 text-customPurpleDark dark:text-white"
@@ -274,7 +282,12 @@ function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPos
                   />
                 </svg>
               </button>
-              <a onClick={() => showCommentsFn(index)} className="text-gray-700 text-sm dark:text-gray-500 cursor-pointer mr-4">{commentState.length} Comments</a>
+              <a
+                onClick={() => showCommentsFn(index)}
+                className="text-gray-700 text-sm dark:text-gray-500 cursor-pointer mr-2"
+              >
+                {commentState.length} Comments
+              </a>
               <button
                 type="button"
                 className="rounded-full mr-3 p-1 text-customPurpleDark dark:text-white"
@@ -301,13 +314,6 @@ function FeedPosts({ likes, posts, postClickHandler, likeClickHandler }: FeedPos
             </h2>
           </div>
         </div>
-        {showLikeModalStateFeedPosts && (
-        <LikeFollowerModal
-          handleClose={function (): void {
-            setShowLikeModalStateFeedPosts(false);
-          }}
-        />
-      )}
       </div>
     );
   });
