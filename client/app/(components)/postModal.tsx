@@ -87,7 +87,8 @@ const PostModal: React.FC<ModalProps> = ({
   const [showLikeModalStateFeedPosts, setShowLikeModalStateFeedPosts] =
     useState(false);
 
-  const likeClickHandlerFeedPosts = () => {
+  const likeClickHandlerFeedPosts = (likes) => {
+    console.log(likes)
     setShowLikeModalStateFeedPosts(true);
   };
 
@@ -313,8 +314,7 @@ const PostModal: React.FC<ModalProps> = ({
           <LikeFollowerModal
             handleClose={function (): void {
               setShowLikeModalStateFeedPosts(false);
-            }}
-          />
+            } } users={likes}          />
         )}
       </div>
     </>
