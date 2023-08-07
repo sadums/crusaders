@@ -164,7 +164,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
   });
 
   const [getPost, { loading: postLoading, data: postData }] =
-  useLazyQuery(GET_POST);
+    useLazyQuery(GET_POST);
 
   interface FriendRequestNotificationData {
     senderName: string;
@@ -326,20 +326,18 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
 
     //This is missing some data username, firstName, lastName, pfp
     const likesPictureHandler = async (post) => {
-      try{
-        console.log(post.postId)
-        console.log(post)
+      try {
+        console.log(post.postId);
+        console.log(post);
         const response = await getPost({ variables: { postId: post.postId } });
-        console.log(response.data.getPost)
-
-      }catch(err){
-        console.error(err)
+        console.log(response.data.getPost);
+      } catch (err) {
+        console.error(err);
       }
-    }
+    };
     if (type === "Likes") {
       return (
         <>
-
           <div
             className={`bottom-0 p-3 top-32 left-20 w-72 text-white fixed z-10 ease-in-out duration-500 ${
               sidebarOpacity
@@ -518,7 +516,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
                             <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
-                              d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                              d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
                             />
                           </svg>
                         </div>

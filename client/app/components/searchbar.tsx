@@ -17,7 +17,7 @@ export default function Searchbar() {
           <input
             type="search"
             id="search-dropdown"
-            className="rounded-lg block p-2.5 w-full z-20 text-sm text-white bg-transparent rounded-r-lg border-l-customPurple border-l-2 border border-customPurple focus:ring-transparent focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+            className="rounded-xl block p-2.5 w-full z-20 text-sm text-white bg-transparent rounded-r-lg border-l-customPurple border-l-2 border border-customPurple focus:ring-transparent focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
             placeholder="Any Hashtag..."
             required
           />
@@ -44,7 +44,7 @@ export default function Searchbar() {
             <span className="sr-only">Search</span>
           </button>
 
-          <ul
+          {/* <ul
             className="absolute z-[1000] float-left m-0 w-full mt-1 list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
             aria-labelledby="dropdownMenuButton1"
             data-te-dropdown-menu-ref
@@ -85,7 +85,7 @@ export default function Searchbar() {
                 content
               </a>
             </li>
-          </ul>
+          </ul> */}
         </div>
       </div>
     </form>
