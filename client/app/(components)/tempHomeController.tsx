@@ -208,15 +208,15 @@ function HomeController() {
     setUploadTypeState("video");
   };
 
-  //This needs a differnt modal or something, with the preview image
-  const likeCounterClickHandler = () => {
-    if (singleUserData.getUserById.likes) {
-      setLikeModalDataState(singleUserData.getUserById.likes);
-      setShowLikeModalState(true);
-    } else {
-      alert(`You have no posts liked`);
-    }
-  };
+  // This needs a differnt modal or something, with the preview image
+  // const likeCounterClickHandler = () => {
+  //   if (singleUserData.getUserById.likes) {
+  //     setLikeModalDataState(singleUserData.getUserById.likes);
+  //     setShowLikeModalState(true);
+  //   } else {
+  //     alert(`You have no posts liked`);
+  //   }
+  // };
 
   const formatPosts = async (usersArray: any) => {
     try {
@@ -528,7 +528,7 @@ function HomeController() {
                   </div>
                   <div
                     className="h-32 border-0 dark:shadow-notificationShadowPink dark:bg-coolGray bg-white border-black shadow-xl dark:border-customPurple rounded-xl p-2"
-                    onClick={likeCounterClickHandler}
+                    // onClick={likeCounterClickHandler}
                   >
                     <h3 className="text-black text-center font-semibold dark:text-white">
                       Like Counter
@@ -553,7 +553,7 @@ function HomeController() {
                         />
                       </svg>
                       <h1 className="text-black text-[54px] dark:text-white">
-                        {singleUserData.getUserById.likes.length}
+                        {singleUserData ? singleUserData.getUserById.likes.length : '0'}
                       </h1>
                     </div>
                   </div>
