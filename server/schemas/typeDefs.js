@@ -11,6 +11,7 @@ const typeDefs = gql`
     lastName: String
     preview: String
   }
+  
   type User {
     _id: ID
     username: String!

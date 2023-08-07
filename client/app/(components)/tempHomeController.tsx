@@ -146,20 +146,10 @@ function HomeController() {
       type HashtagInput = {
         hashtagText: string;
       };
-
       const inputHashtags: HashtagInput[] = [];
-      //const hashtags: string[] = ["newpost", "graphql"]; // Example hashtags
-
       hashtags.forEach((tag) => {
         inputHashtags.push({ hashtagText: tag });
       });
-
-      console.log(inputHashtags);
-      console.log(videoState);
-
-      //I don't know what would happen if the video state has a picture
-      //I dont know what would happen if the picture state has a video
-
       const postInput = {
         preview: "",
         media: "",
@@ -178,7 +168,8 @@ function HomeController() {
         postInput.media = videoState.video;
       }
       console.log(postInput);
-      const id = Auth.getProfile().data._id;
+      if(postInput.title && postInput.preview && postInput.media && postInput.body){
+        const id = Auth.getProfile().data._id;
       const response = await addPostMutation({
         variables: {
           input: postInput,
@@ -186,8 +177,9 @@ function HomeController() {
         },
       });
       console.log(response);
-      console.log(response);
-      //Connect to backend
+      }else{
+        alert('Please fill out all fields')
+      }
     } catch (err) {
       console.error(err);
     }

@@ -57,7 +57,14 @@ const resolvers = {
     },
     getPost: async (parent, { postId }, context) => {
       try {
-        const post = await Post.findById(postId).populate("user");
+        const post = await Post.findById(postId)
+                .populate("user")
+                .populate({
+                  path: "likes",
+                  populate: {
+                    path: "user",
+                  },
+                });
         if (!post) {
           throw new Error("Post not found");
         }
