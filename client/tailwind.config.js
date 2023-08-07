@@ -46,7 +46,7 @@ module.exports = {
         // Offical Color Scheme
 
         //131922 as primary
-        darkModeDarkestGray: '#07090d',
+        darkModeDarkestGray: '#080b0f',
         darkModeDarkGray: '#131922',
         darkModeMediumGray: '#1D2633',
         darkModeLightGray: '#334359',

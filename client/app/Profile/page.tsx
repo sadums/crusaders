@@ -54,10 +54,10 @@ export default function Profile() {
   // }, []);
 
   return (
-    <div className="ml-20 bg-gradient-to-tr from-mediumWhite via-mediumWhite to-mediumWhite dark:from-darkModeDarkestGray dark:to-darkModeDarkestGray">
+    <div className="ml-20 bg-gradient-to-tr from-mediumWhite via-mediumWhite to-mediumWhite dark:from-black dark:to-black">
       <div className="grid grid-cols-6 gap-4">
         <div className="col-span-1 bg-mainDarkPurple dark:bg-mainPurple border-customPurpleDark">
-          <div className="bg-darkestWhite  dark:bg-darkModeMediumGray p-2 pt-20 h-[100vh] secondaryMenuMainDiv"></div>
+          <div className="bg-darkestWhite  dark:bg-darkModeDarkestGray p-2 pt-20 h-[100vh] secondaryMenuMainDiv"></div>
         </div>
         {/* <div className="col-span-2 ml-40 w-[100%] mt-4">
           {data && <ProfileSideInfo userInfo={data.getUserById} />}
