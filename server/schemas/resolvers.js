@@ -1,5 +1,6 @@
-const { User, Chat } = require("../models");
+const { User, Chat, Post, Like } = require("../models");
 const { signToken } = require("../utils/auth");
+const mongoose = require("mongoose");
 const { PubSub, withFilter } = require("graphql-subscriptions");
 
 const pubsub = new PubSub();
@@ -7,26 +8,46 @@ const pubsub = new PubSub();
 const resolvers = {
   Query: {
     getAllUsers: async () => {
-      return await User.find({});
+      return await User.find({}).populate({
+        path: "posts",
+        model: "Post",
+        populate: {
+          path: "user",
+          model: "User",
+        },
+      });
     },
-    getUserById: async (parent, { input }, context) => {
-      const user = await User.findById(input);
+    getAllPosts: async () => {
+      try {
+        const posts = await Post.find({}).populate("user"); // assuming you want to populate the user data for each post
+        return posts;
+      } catch (error) {
+        throw new Error("Error fetching all posts");
+      }
+    },
+    getUserById: async (parent, { userId }, context) => {
+      const user = await User.findById(userId).populate({
+        path: "posts",
+        populate: {
+          path: "user",
+        },
+      });
       if (!user) {
         throw new Error("Could not find this user");
       }
       return user;
     },
-    getLoggedInUser: async (parent, { input }, context) => {
-      try {
-        const { user } = context;
-        console.log("user");
-        const selectedUser = await User.findById(user._id);
-        console.log(selectedUser);
-        return selectedUser;
-      } catch (err) {
-        console.error(err);
-      }
-    },
+    // getLoggedInUser: async (parent, { input }, context) => {
+    //   try {
+    //     const { user } = context;
+    //     console.log("user");
+    //     const selectedUser = await User.findById(user._id);
+    //     console.log(selectedUser);
+    //     return selectedUser;
+    //   } catch (err) {
+    //     console.error(err);
+    //   }
+    // },
     getChatById: async (parent, { input }, context) => {
       const chat = await Chat.findById(input);
       if (!chat) {
@@ -36,17 +57,14 @@ const resolvers = {
     },
     getPost: async (parent, { postId }, context) => {
       try {
-        const users = await User.find({});
-        for (let user of users) {
-          for (let post of user.posts) {
-            if (post._id.toString() === postId) {
-              return post;
-            }
-          }
+        const post = await Post.findById(postId).populate("user");
+        if (!post) {
+          throw new Error("Post not found");
         }
-        throw new Error("Post not found");
+        return post;
       } catch (err) {
         console.error(err);
+        throw new Error("Error fetching the post.");
       }
     },
   },
@@ -74,195 +92,207 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    addComment: async (parent, { username, body, postId }, context) => {
-      console.log(username);
-      console.log(body);
-      console.log(postId);
+    addComment: async (parent, { username, body, postId }) => {
+      try {
+        // Add the comment to the specified post
+        const updatedPost = await Post.findOneAndUpdate(
+          { _id: postId }, // find the post by its id
+          {
+            $push: {
+              comments: {
+                body: body,
+                createdAt: new Date().toISOString(),
+                username: username,
+              },
+            },
+          },
+          { new: true } // return the modified post
+        );
 
-      const users = await User.find({});
-      for (let user of users) {
-        for (let post of user.posts) {
-          if (post._id.toString() === postId) {
-            const newComment = {
-              username: username,
-              createdAt: new Date().toISOString(),
-              body: body,
-            };
-            await User.updateOne(
-              { "posts._id": post._id },
-              { $push: { "posts.$.comments": newComment } }
-            );
-
-            // After updating the post, find the user that has the updated post
-            const updatedUser = await User.findOne({ "posts._id": post._id });
-            if (updatedUser) {
-              const updatedPost = updatedUser.posts.find(
-                (updatedPost) => updatedPost._id.toString() === postId
-              );
-              if (updatedPost) {
-                console.log(updatedPost);
-                return updatedPost; // return the updated post
-              }
-            }
-          }
+        if (!updatedPost) {
+          throw new Error("Post not found");
         }
+
+        return updatedPost; // return the updated post with the new comment
+      } catch (err) {
+        console.error(err);
+        throw new Error(err.message);
       }
     },
     likePost: async (parent, { input, postId, userId }, context, info) => {
       try {
-        console.log(input);
-        console.log(postId);
-        console.log(userId);
         const { username, pfp, firstName, lastName, preview } = input;
-
-        const userWithPost = await User.findOne({ "posts._id": postId });
-
-        if (!userWithPost) {
-          throw new Error("User with the post not found.");
+    
+        // Check if the user has already liked the post
+        const existingLike = await Like.findOne({ user: userId, post: postId });
+        if (existingLike) {
+          throw new Error("User has already liked this post.");
         }
-
-        const post = userWithPost.posts.id(postId);
-        if (!post) {
-          throw new Error("Post not found.");
-        }
-
-        post.likes.push({
-          userId,
-          postId,
+    
+        // 1. Create a new Like document
+        const newLike = new Like({
+          user: new mongoose.Types.ObjectId(userId),
+          post: new mongoose.Types.ObjectId(postId),
           username,
           pfp,
           firstName,
           lastName,
           preview,
         });
-
-        await userWithPost.save();
-        const updatedUser = await User.findByIdAndUpdate(
-          userId,
-          { $push: { likes: { userId, postId, username, pfp, firstName, lastName, preview } } },
-          { new: true }
-        );
-
-        if (!updatedUser) {
-          throw new Error("User who liked the post not found.");
+        await newLike.save();
+    
+        // 2. Update the post with the reference to the newly created Like
+        const postToUpdate = await Post.findById(postId);
+        if (!postToUpdate) {
+          throw new Error("Post not found.");
         }
-
-        console.log(updatedUser);
-        return { user: updatedUser, post: post };
+        postToUpdate.likes.push(newLike._id);
+        await postToUpdate.save();
+    
+        // 3. Update the user who liked the post with the reference to the new Like
+        const userToUpdate = await User.findById(userId);
+        if (!userToUpdate) {
+          throw new Error("User not found.");
+        }
+        userToUpdate.likes.push(newLike._id);
+        await userToUpdate.save();
+    
+        // 4. Populate the user and post fields in the newLike document before returning
+        const populatedLike = await Like.findById(newLike._id)
+          .populate("user")
+          .populate("post");
+    
+        // 5. Return the newly created Like with populated user and post fields
+        return populatedLike;
       } catch (err) {
         console.error(err);
         throw err;
       }
     },
+    
+    
+    
     unlikePost: async (parent, { postId, userId }, context, info) => {
       try {
-        const userWithPost = await User.findOne({ "posts._id": postId });
+        // 1. Find the Like document based on the postId and userId.
+        const likeToRemove = await Like.findOne({ post: postId, user: userId });
     
-        if (!userWithPost) {
-          throw new Error("User with the post not found.");
+        // If there's no such Like, throw an error.
+        if (!likeToRemove) {
+          throw new Error("Like not found.");
         }
     
-        const post = userWithPost.posts.id(postId);
-        if (!post) {
+        // 2. Update the post to remove the reference to the Like.
+        const postToUpdate = await Post.findById(postId);
+        if (!postToUpdate) {
           throw new Error("Post not found.");
-        } else {
-          // remove the like from the post's likes array
-          post.likes = post.likes.filter(like => like.userId.toString() !== userId);
-          await userWithPost.save();
         }
+        postToUpdate.likes.pull(likeToRemove._id);
+        await postToUpdate.save();
     
-        // find the user who liked the post and remove the post from their likes array
-        const updatedUser = await User.findByIdAndUpdate(
-          userId,
-          { $pull: { likes: { postId: postId } } },
-          { new: true }
-        );
-    
-        if (!updatedUser) {
-          throw new Error("User who unliked the post not found.");
+        // 3. Update the user to remove the reference to the Like.
+        const userToUpdate = await User.findById(userId);
+        if (!userToUpdate) {
+          throw new Error("User not found.");
         }
+        userToUpdate.likes.pull(likeToRemove._id);
+        await userToUpdate.save();
     
-        console.log(updatedUser);
-        return { user: updatedUser, post: post };
+        // 4. Remove the found Like from the database.
+        await Like.deleteOne({ _id: likeToRemove._id });
+    
+        // 5. Return the removed Like object
+        return likeToRemove;
       } catch (err) {
         console.error(err);
         throw err;
       }
-    },    
+    },
+    
     addPost: async (parent, { input, userId }) => {
       try {
-        const updatedUser = await User.findByIdAndUpdate(
+        // First create the Post
+        const newPost = new Post({
+          ...input,
+          user: userId,
+        });
+        const savedPost = await newPost.save();
+
+        // Then associate the Post with the User
+        await User.findByIdAndUpdate(
           userId,
-          { $addToSet: { posts: input } },
+          { $addToSet: { posts: savedPost._id } },
           { new: true }
         );
 
-        console.log(updatedUser);
-        return updatedUser;
+        // Populate the user details before returning the saved post
+        const postWithUser = await Post.findById(savedPost._id).populate(
+          "user"
+        );
+
+        return postWithUser;
       } catch (err) {
         console.error(err);
-        throw new Error("Failed to add post to user.");
+        throw new Error("Failed to add post.");
       }
     },
-    deletePost: async (parent, { postId }, context) => {
+    deletePost: async (parent, { postId }) => {
       try {
-        const { user } = context;
-        const updatedUser = await User.findByIdAndUpdate(
-          user._id,
-          { $pull: { posts: { _id: postId } } },
-          { new: true }
-        );
-        if (!updatedUser) {
+        const post = await Post.findByIdAndDelete(postId);
+        if (!post) {
           throw new Error("Post not found");
         }
-        return updatedUser;
+        return post;
+        // Returning the deleted post; if you prefer, you can also return
+        // a success message or any other structure.
       } catch (err) {
         console.error(err);
+        throw new Error(err.message);
       }
     },
-    updatePost: async (parent, { postId, input }, context) => {
+    updatePost: async (parent, { postId, input }) => {
       try {
-        const { user } = context;
-        const updatedUser = await User.findOneAndUpdate(
-          { _id: user._id, "posts._id": postId },
-          { "posts.$": input },
-          { new: true }
-        );
-        if (!updatedUser) {
+        // Find the post by its id and update it
+        const post = await Post.findOneAndUpdate(
+          { _id: postId }, // Only using post's id for finding the post
+          input, // the fields you want to update
+          { new: true } // return the updated document
+        ).populate("user"); // populate the user associated with the post
+
+        if (!post) {
           throw new Error("Post not found");
         }
-        return updatedUser;
+
+        return post;
       } catch (err) {
         console.error(err);
+        throw new Error(err.message);
       }
     },
-    deleteUser: async (parent, { input }, context) => {
+
+    deleteUser: async (parent, { userId }, context) => {
       try {
-        const { user } = context;
-        console.log(user);
-        const deletedUser = await User.findByIdAndDelete(user._id);
+        const deletedUser = await User.findByIdAndDelete(userId);
+        if (!deletedUser) {
+          throw new Error("User not found");
+        }
         return deletedUser;
       } catch (err) {
         console.error(err);
+        throw new Error("Failed to delete user.");
       }
     },
     editUser: async (parent, { input, _id }, context) => {
       try {
-        console.log(input);
-
-        const fieldsToUpdate = {};
-        if (input.username) fieldsToUpdate.username = input.username;
-        if (input.email) fieldsToUpdate.email = input.email;
-        if (input.pfp) fieldsToUpdate.pfp = input.pfp;
-        if (input.bio) fieldsToUpdate.bio = input.bio;
-        if (input.firstName) fieldsToUpdate.firstName = input.firstName;
-        if (input.lastName) fieldsToUpdate.lastName = input.lastName;
-
-        const user = await User.findByIdAndUpdate(
-          _id, // Using the provided ID
-          fieldsToUpdate,
-          { new: true }
-        );
+        const user = await User.findByIdAndUpdate(_id, input, {
+          new: true,
+        }).populate({
+          path: "posts",
+          populate: {
+            path: "user",
+            model: "User",
+          },
+        });
 
         if (!user) {
           throw new Error("User not found");
