@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { ADD_COMMENT, LIKE_POST, UNLIKE_POST } from "../(GraphQL)/mutations";
 import { GET_USER_BY_ID } from "../(GraphQL)/queries";
 import { useMutation, useLazyQuery } from "@apollo/client";
-import Auth from '../(utils)/auth'
+import Auth from "../(utils)/auth";
 interface Hashtag {
   hashtagText: string;
   catagory: string;
@@ -53,27 +53,30 @@ const PostModal: React.FC<ModalProps> = ({
   firstName,
   lastName,
 }) => {
-
   const [showComments, setShowComments] = useState(false);
-  const [likeArrayState, setLikeArrayState] = useState(likes)
+  const [likeArrayState, setLikeArrayState] = useState(likes);
   const [isPostLikedState, setIsPostLikedState] = useState<boolean>(false);
   const [commentState, setCommentState] = useState<any[]>(comments);
   const [addComment, { data: addCommentData }] = useMutation(ADD_COMMENT);
   const [showLikeModalStateFeedPosts, setShowLikeModalStateFeedPosts] =
     useState(false);
   const likeClickHandlerFeedPosts = () => {
-    if(likeArrayState.length){
+    if (likeArrayState.length) {
       setShowLikeModalStateFeedPosts(true);
     } else {
       alert(`Post doesn't have any likes`);
     }
   };
-  const [getUserById, { loading: singleUserLoading, error: singleUserError, data: singleUserData }] = useLazyQuery(
-    GET_USER_BY_ID,
+  const [
+    getUserById,
     {
-      variables: { id: '' }, // Initialize with an empty string
-    }
-  );
+      loading: singleUserLoading,
+      error: singleUserError,
+      data: singleUserData,
+    },
+  ] = useLazyQuery(GET_USER_BY_ID, {
+    variables: { id: "" }, // Initialize with an empty string
+  });
   const [likePost, { data: likeData }] = useMutation(LIKE_POST);
   const [unlikePost, { data: unlikeData }] = useMutation(UNLIKE_POST);
 
@@ -100,7 +103,7 @@ const PostModal: React.FC<ModalProps> = ({
         // const { postPreview, postId } = post;
         if (isPostLikedState) {
           console.log("is liked");
-          console.log(singleUserData.getUserById)
+          console.log(singleUserData.getUserById);
           const response = await unlikePost({
             variables: {
               postId: postId,
@@ -108,8 +111,7 @@ const PostModal: React.FC<ModalProps> = ({
             },
           });
           console.log(response);
-          setLikeArrayState(response.data.unlikePost.post.likes)
-
+          setLikeArrayState(response.data.unlikePost.post.likes);
         } else {
           console.log("isnt liked");
           const response = await likePost({
@@ -126,9 +128,9 @@ const PostModal: React.FC<ModalProps> = ({
             },
           });
           console.log(response);
-          setLikeArrayState(response.data.likePost.post.likes)
+          setLikeArrayState(response.data.likePost.post.likes);
         }
-        setIsPostLikedState((prev) => !prev)
+        setIsPostLikedState((prev) => !prev);
       } else {
         alert("Sign into like a post");
       }
@@ -137,9 +139,7 @@ const PostModal: React.FC<ModalProps> = ({
     }
   };
 
-  const postCommentHandler = async (
-    event: React.FormEvent,
-  ) => {
+  const postCommentHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     // console.log(Auth.getProfile().data.username);
     // console.log(commentState);
@@ -148,8 +148,8 @@ const PostModal: React.FC<ModalProps> = ({
         const target = event.target as HTMLFormElement;
         const commentBody = target.form[0].value;
         if (commentBody) {
-          console.log(commentBody)
-          console.log(postId)
+          console.log(commentBody);
+          console.log(postId);
           const response = await addComment({
             variables: {
               username: Auth.getProfile().data.username,
@@ -163,7 +163,7 @@ const PostModal: React.FC<ModalProps> = ({
             body: commentBody,
             createdAt: Date.now().toString(),
           };
-          setCommentState((prev) => [...prev, newComment])
+          setCommentState((prev) => [...prev, newComment]);
         } else {
           alert("The comment cant be blank");
         }
@@ -175,23 +175,25 @@ const PostModal: React.FC<ModalProps> = ({
     }
   };
 
-  useEffect(()=> {
-    if(singleUserData){
-      console.log(singleUserData.getUserById.likes)
-      const likedPosts = singleUserData.getUserById.likes.map((like: { postId: any; }) => {
-        return like.postId
-      })
-      console.log(likedPosts)
-      setIsPostLikedState((likedPosts.includes(postId)))
+  useEffect(() => {
+    if (singleUserData) {
+      console.log(singleUserData.getUserById.likes);
+      const likedPosts = singleUserData.getUserById.likes.map(
+        (like: { postId: any }) => {
+          return like.postId;
+        }
+      );
+      console.log(likedPosts);
+      setIsPostLikedState(likedPosts.includes(postId));
     }
-  }, [singleUserData])
+  }, [singleUserData]);
 
-  useEffect(()=> {
+  useEffect(() => {
     if (Auth.loggedIn()) {
       const id = Auth.getProfile().data._id;
       getUserById({ variables: { id } }); // Call getUserById inside the useEffect with the correct variables
     }
-  }, [])
+  }, []);
 
   return (
     <>
