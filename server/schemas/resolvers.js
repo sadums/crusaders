@@ -74,6 +74,30 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+    addFollower: async (parent, { userId, followerId }, context) => {
+      try {
+        const follower = await User.findByIdAndUpdate(
+          followerId,
+          {
+            $addToSet: { following: userId }
+          },
+          { new: true }
+        );
+        console.log(follower);
+        const user = await User.findByIdAndUpdate(
+          userId,
+          {
+            $addToSet: { followers: followerId },
+          },
+          { new: true }
+        );
+        console.log(user);
+        return user;
+      } catch (e) {
+        console.error(e);
+        return e;
+      }
+    },
     addComment: async (parent, { username, body, postId }, context) => {
       console.log(username);
       console.log(body);
@@ -139,7 +163,19 @@ const resolvers = {
         await userWithPost.save();
         const updatedUser = await User.findByIdAndUpdate(
           userId,
-          { $push: { likes: { userId, postId, username, pfp, firstName, lastName, preview } } },
+          {
+            $push: {
+              likes: {
+                userId,
+                postId,
+                username,
+                pfp,
+                firstName,
+                lastName,
+                preview,
+              },
+            },
+          },
           { new: true }
         );
 
@@ -157,38 +193,40 @@ const resolvers = {
     unlikePost: async (parent, { postId, userId }, context, info) => {
       try {
         const userWithPost = await User.findOne({ "posts._id": postId });
-    
+
         if (!userWithPost) {
           throw new Error("User with the post not found.");
         }
-    
+
         const post = userWithPost.posts.id(postId);
         if (!post) {
           throw new Error("Post not found.");
         } else {
           // remove the like from the post's likes array
-          post.likes = post.likes.filter(like => like.userId.toString() !== userId);
+          post.likes = post.likes.filter(
+            (like) => like.userId.toString() !== userId
+          );
           await userWithPost.save();
         }
-    
+
         // find the user who liked the post and remove the post from their likes array
         const updatedUser = await User.findByIdAndUpdate(
           userId,
           { $pull: { likes: { postId: postId } } },
           { new: true }
         );
-    
+
         if (!updatedUser) {
           throw new Error("User who unliked the post not found.");
         }
-    
+
         console.log(updatedUser);
         return { user: updatedUser, post: post };
       } catch (err) {
         console.error(err);
         throw err;
       }
-    },    
+    },
     addPost: async (parent, { input, userId }) => {
       try {
         const updatedUser = await User.findByIdAndUpdate(
