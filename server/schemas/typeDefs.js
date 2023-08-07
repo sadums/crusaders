@@ -100,6 +100,8 @@ const typeDefs = gql`
     editUser(input: UpdateUserInput!, _id: ID!): AuthPayload
     deletePost(postId: ID!): User
     updatePost(postId: ID!, input: updatePostInput!): User
+    addFollower(userId: ID!, followerId: ID!): User
+    removeFollower(userId: ID!, followerId: ID!): User
     createChat(members: [ID]): Chat
     createMessage(userId: ID!, chatId: ID!, body: String!): Chat
   }
