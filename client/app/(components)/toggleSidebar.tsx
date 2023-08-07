@@ -2,13 +2,15 @@
 
 import "../(styles)/navbar.css";
 import "../(styles)/profile.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Key } from "react";
 import MessagesSidebar from "./messagesSidebar";
 import ProfilePosts from "./profilePosts";
-
+import { GET_USER_BY_ID, GET_POST } from "../(GraphQL)/queries";
+import { useMutation, useLazyQuery } from "@apollo/client";
 import terms from "../(searchData)/terms.json";
 import jaroWinkler from "../(utils)/search/jaroWinklerSearch";
 import PostModal from "./postModal";
+import Auth from "../(utils)/auth";
 
 interface toggle {
   props: any;
@@ -131,7 +133,38 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
     lastname: "Doe",
   };
 
+  type PostData = {
+    title: string;
+    body: string;
+    comments: any[]; // Adjust this type as needed
+    likes: any[];
+    createdAt: string;
+    hashtags: any[]; // Adjust this type as needed
+    preview: string;
+    media: string;
+    username: string;
+    firstName: string;
+    lastName: string;
+    pfp: string;
+    _id: string;
+  };
+
   const [likePostModal, setLikePostModal] = useState(false);
+  const [showModalState, setShowModalState] = useState(false);
+  const [activePostData, setActivePostData] = useState<PostData | null>(null);
+  const [
+    getUserById,
+    {
+      loading: singleUserLoading,
+      error: singleUserError,
+      data: singleUserData,
+    },
+  ] = useLazyQuery(GET_USER_BY_ID, {
+    variables: { id: "" }, // Initialize with an empty string
+  });
+
+  const [getPost, { loading: postLoading, data: postData }] =
+  useLazyQuery(GET_POST);
 
   interface FriendRequestNotificationData {
     senderName: string;
@@ -151,6 +184,13 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
   //     </div>
   //   );
   // };
+  useEffect(() => {
+    if (Auth.loggedIn()) {
+      const id = Auth.getProfile().data._id;
+      getUserById({ variables: { id } }); // Call getUserById inside the useEffect with the correct variables
+    }
+    console.log(singleUserData);
+  }, []);
 
   const sidebarSelector = () => {
     if (type === "Search") {
@@ -283,64 +323,84 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
         </div>
       );
     }
+
+    //This is missing some data username, firstName, lastName, pfp
+    const likesPictureHandler = async (post) => {
+      try{
+        console.log(post.postId)
+        console.log(post)
+        const response = await getPost({ variables: { postId: post.postId } });
+        console.log(response.data.getPost)
+
+      }catch(err){
+        console.error(err)
+      }
+    }
     if (type === "Likes") {
       return (
         <>
-        <div
-          className={`bottom-0 p-3 top-32 left-20 w-72 fixed z-10 ease-in-out duration-500 ${
-            sidebarOpacity
-              ? "translate-y-full opacity-0"
-              : "translate-y-0 opacity-1"
-          }`}
-        >
-          <h1 className="text-lg dark:text-white text-black font-semibold border-customPurpleDark border-b-2">
-            Your Liked Posts:
-          </h1>
+
           <div
-            className="grid grid-cols-2 gap-3 scroll mt-3 homepageLikedPosts"
-            style={{
-              maxHeight: "100%",
-              overflowY: "scroll",
-              scrollbarWidth: "none",
-              /* For Firefox */
-              scrollbarColor: "transparent transparent",
-            }}
+            className={`bottom-0 p-3 top-32 left-20 w-72 text-white fixed z-10 ease-in-out duration-500 ${
+              sidebarOpacity
+                ? "translate-y-full opacity-0"
+                : "translate-y-0 opacity-1"
+            }`}
           >
-            {tempLikedPostData.map((post, index) => (
-              // <ProfilePosts key={post.picture} postInfo={post} />
-              <div key={index} className="w-[100%] h-auto">
-                <img
-                  onClick={() => setLikePostModal(!likePostModal)}
-                  className="h-24 w-32 object-fill rounded-xl shadow-xl transition-transform duration-200 transform scale-100 cursor-pointer hover:scale-[96%] hover:brightness-75"
-                  src={post.picture}
-                ></img>
+            <h1 className="dark:text-white text-lg text-black font-semibold border-customPurpleDark border-b-2">
+              Your Liked Posts:
+            </h1>
+            {singleUserData && (
+              <div
+                className="grid grid-cols-2 gap-3 scroll mt-3 homepageLikedPosts"
+                style={{
+                  maxHeight: "100%",
+                  overflowY: "scroll",
+                  scrollbarWidth: "none",
+                  /* For Firefox */
+                  scrollbarColor: "transparent transparent",
+                }}
+              >
+                {singleUserData.getUserById.likes.map(
+                  (
+                    post: { preview: string | undefined },
+                    index: Key | null | undefined
+                  ) => (
+                    <div key={index} className="w-[100%] h-auto">
+                      <img
+                        onClick={() => likesPictureHandler(post)}
+                        className="h-24 w-32 object-fill rounded-xl shadow-xl transition-transform duration-200 transform scale-100 cursor-pointer hover:scale-[96%] hover:brightness-75"
+                        src={post.preview}
+                      ></img>
+                    </div>
+                  )
+                )}
               </div>
-            ))}
+            )}
           </div>
-        </div>
-        {likePostModal && (
+          {showModalState && (
             <div className="z-50 fixed inset-0 flex justify-center items-center">
-            <PostModal
-              title={tempPostModalData.title}
-              media={tempPostModalData.media}
-              preview={tempPostModalData.preview}
-              body={tempPostModalData.body}
-              date={"1691369322412"}
-              comments={tempPostModalData.comments}
-              hashtags={tempPostModalData.hashtags}
-              username={tempPostModalData.username}
-              likes={tempPostModalData.likes}
-              pfp={tempPostModalData.pfp}
-              firstName={tempPostModalData.firstname}
-              lastName={tempPostModalData.lastname}
-              handleClose={function (): void {
-                setLikePostModal(false);
-              }}
-            />
+              <PostModal
+                title={tempPostModalData.title}
+                media={tempPostModalData.media}
+                preview={tempPostModalData.preview}
+                body={tempPostModalData.body}
+                date={"1691369322412"}
+                comments={tempPostModalData.comments}
+                hashtags={tempPostModalData.hashtags}
+                username={tempPostModalData.username}
+                likes={tempPostModalData.likes}
+                pfp={tempPostModalData.pfp}
+                firstName={tempPostModalData.firstname}
+                lastName={tempPostModalData.lastname}
+                handleClose={function (): void {
+                  setLikePostModal(false);
+                }}
+                postId={""}
+              />
             </div>
           )}
         </>
-
       );
     }
     if (type === "Notifications") {
