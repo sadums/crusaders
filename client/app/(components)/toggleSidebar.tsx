@@ -133,25 +133,25 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
     lastname: "Doe",
   };
 
-  type PostData = {
-    title: string;
-    body: string;
-    comments: any[]; // Adjust this type as needed
-    likes: any[];
-    createdAt: string;
-    hashtags: any[]; // Adjust this type as needed
-    preview: string;
-    media: string;
-    username: string;
-    firstName: string;
-    lastName: string;
-    pfp: string;
-    _id: string;
-  };
+  // type PostData = {
+  //   title: string;
+  //   body: string;
+  //   comments: any[]; // Adjust this type as needed
+  //   likes: any[];
+  //   createdAt: string;
+  //   hashtags: any[]; // Adjust this type as needed
+  //   preview: string;
+  //   media: string;
+  //   username: string;
+  //   firstName: string;
+  //   lastName: string;
+  //   pfp: string;
+  //   _id: string;
+  // };
 
   const [likePostModal, setLikePostModal] = useState(false);
   const [showModalState, setShowModalState] = useState(false);
-  const [activePostData, setActivePostData] = useState<PostData | null>(null);
+  const [activePostId, setActivePostId] = useState<PostData | null>(null);
   const [
     getUserById,
     {
@@ -187,7 +187,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
   useEffect(() => {
     if (Auth.loggedIn()) {
       const id = Auth.getProfile().data._id;
-      getUserById({ variables: { id } }); // Call getUserById inside the useEffect with the correct variables
+      getUserById({ variables: { userId: id } }); // Call getUserById inside the useEffect with the correct variables
     }
     console.log(singleUserData);
   }, []);
@@ -324,13 +324,13 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
       );
     }
 
-    //This is missing some data username, firstName, lastName, pfp
-    const likesPictureHandler = async (post) => {
+    const likesPictureHandler = async (postId: any) => {
       try{
-        console.log(post.postId)
-        console.log(post)
-        const response = await getPost({ variables: { postId: post.postId } });
-        console.log(response.data.getPost)
+        console.log(postId)
+        setActivePostId(postId)
+        setShowModalState(true)
+        // const response = await getPost({ variables: { postId: post.postId } });
+        // console.log(response.data.getPost)
 
       }catch(err){
         console.error(err)
@@ -367,9 +367,9 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
                   ) => (
                     <div key={index} className="w-[100%] h-auto">
                       <img
-                        onClick={() => likesPictureHandler(post)}
+                        onClick={() => likesPictureHandler(post.post._id)}
                         className="h-24 w-32 object-fill rounded-xl shadow-xl transition-transform duration-200 transform scale-100 cursor-pointer hover:scale-[96%] hover:brightness-75"
-                        src={post.preview}
+                        src={post.post.preview}
                       ></img>
                     </div>
                   )
@@ -380,22 +380,10 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
           {showModalState && (
             <div className="z-50 fixed inset-0 flex justify-center items-center">
               <PostModal
-                title={tempPostModalData.title}
-                media={tempPostModalData.media}
-                preview={tempPostModalData.preview}
-                body={tempPostModalData.body}
-                date={"1691369322412"}
-                comments={tempPostModalData.comments}
-                hashtags={tempPostModalData.hashtags}
-                username={tempPostModalData.username}
-                likes={tempPostModalData.likes}
-                pfp={tempPostModalData.pfp}
-                firstName={tempPostModalData.firstname}
-                lastName={tempPostModalData.lastname}
+                postId={activePostId}
                 handleClose={function (): void {
-                  setLikePostModal(false);
+                  setShowModalState(false);
                 }}
-                postId={""}
               />
             </div>
           )}

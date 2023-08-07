@@ -19,7 +19,16 @@ const resolvers = {
     },
     getAllPosts: async () => {
       try {
-        const posts = await Post.find({}).populate("user"); // assuming you want to populate the user data for each post
+        const posts = await Post.find({})
+          .populate('user')
+          .populate({
+            path: 'likes',
+            populate: {
+              path: 'user',
+              model: 'User' // Assuming 'User' is the name of your user model
+            }
+          });
+    
         return posts;
       } catch (error) {
         throw new Error("Error fetching all posts");

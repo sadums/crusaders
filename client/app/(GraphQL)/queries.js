@@ -33,50 +33,93 @@ import { gql } from "@apollo/client";
 //   }
 // `;
 
-export const GET_POST = gql`
-query GetPost($postId: ID!) {
-  getPost(postId: $postId) {
-    _id
+export const GET_ALL_POSTS = gql`
+  query GetAllPosts {
+    getAllPosts {
+      _id
       preview
-      media
       title
       body
       createdAt
-    comments {
-      _id
-      body
-      username
-      createdAt
-    }
-    user {
-      _id
-      pfp
-      firstName
-      lastName
-      username
-      email
-    }
-    likes {
-      _id
+      comments {
+        _id
+        body
+        username
+        createdAt
+      }
       user {
         _id
         pfp
         firstName
         lastName
         username
+        email
       }
-      post {
+      likes {
         _id
-        preview
+        user {
+          _id
+          pfp
+          firstName
+          lastName
+          username
+        }
+        post {
+          _id
+          preview
+        }
       }
-
-    }
-    hashtags {
-      hashtagText
-      category
+      hashtags {
+        hashtagText
+        category
+      }
     }
   }
-}
+`;
+
+export const GET_POST = gql`
+  query GetPost($postId: ID!) {
+    getPost(postId: $postId) {
+      _id
+      preview
+      media
+      title
+      body
+      createdAt
+      comments {
+        _id
+        body
+        username
+        createdAt
+      }
+      user {
+        _id
+        pfp
+        firstName
+        lastName
+        username
+        email
+      }
+      likes {
+        _id
+        user {
+          _id
+          pfp
+          firstName
+          lastName
+          username
+        }
+        post {
+          _id
+          preview
+        }
+      }
+      hashtags {
+        hashtagText
+        category
+      }
+    }
+  }
 `;
 
 export const GET_ALL_USERS = gql`
@@ -98,8 +141,6 @@ export const GET_ALL_USERS = gql`
         }
         likes {
           _id
-          userId
-          postId
           username
           pfp
           firstName
@@ -124,6 +165,17 @@ export const GET_ALL_USERS = gql`
   }
 `;
 
+export const GET_ALL_FOLLOWERS = gql`
+  query GetAllUsers {
+    getAllUsers {
+      _id
+      username
+    }
+  }
+`;
+
+
+//MAYBE DELETE
 export const GET_LOGGED_IN_USER = gql`
   query GetLoggedInUser {
     getLoggedInUser {
@@ -207,6 +259,10 @@ export const GET_USER_BY_ID = gql`
       }
       likes {
         _id
+        post {
+          _id
+          preview
+        }
       }
       followers {
         _id

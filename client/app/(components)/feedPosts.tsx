@@ -1,7 +1,7 @@
 "use client";
-import { useState, useRef, useEffect, Dispatch, SetStateAction } from "react";
+import { useState, useRef, useEffect, Dispatch, SetStateAction, Key, JSXElementConstructor, PromiseLikeOfReactNode, ReactElement, ReactNode, ReactPortal, JSXElementConstructor, PromiseLikeOfReactNode, ReactElement, ReactNode, ReactPortal } from "react";
 import "../(styles)/homepage.css";
-import { ADD_COMMENT, LIKE_POST, UNLIKE_POST } from "../(GraphQL)/mutations";
+import { ADD_COMMENT, ADD_COMMENT_TO_POST, LIKE_POST, UNLIKE_POST } from "../(GraphQL)/mutations";
 import { GET_USER_BY_ID } from "../(GraphQL)/queries";
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import Auth from "../(utils)/auth";
@@ -33,9 +33,12 @@ interface Like {
   userId: string;
 }
 
+type SetLikeCountType = (value: number | null | ((prev: number | null) => number | null)) => void;
+
 // The component's props type
 interface FeedPostsProps {
-  posts: Post[];
+  posts: any;
+  setLikeCount: SetLikeCountType;
   postClickHandler: (postInfo: Post) => void;
   likeClickHandler: (likeInfo: Like) => void;
   // setCreatePostCheck: Dispatch<SetStateAction<boolean>>;
@@ -43,6 +46,7 @@ interface FeedPostsProps {
 
 function FeedPosts({
   posts,
+  setLikeCount,
   postClickHandler,
   likeClickHandler,
 }: FeedPostsProps) {
@@ -50,15 +54,19 @@ function FeedPosts({
     [key: number]: boolean;
   }>({});
 
-  //const id = Auth.getProfile().data._id;
  const [getUserById, { loading: userByIdLoading, error: userByIdError, data: userByIdData }] = useLazyQuery(
     GET_USER_BY_ID,
     {
       variables: { id: '' },
     }
   );
+  const [
+    addComment,
+    { data: commentData, loading: commentLoading, error: commentError },
+  ] = useMutation(ADD_COMMENT_TO_POST);
 
   const [commentState, setCommentState] = useState<any[][]>([]);
+  const [postLikesState, setPostLikesState] = useState<any[][]>([]);
   const [isLikedState, setIsLikedState] = useState<boolean[]>([]);
 
   const showCommentsFn = (index: number) => {
@@ -67,19 +75,17 @@ function FeedPosts({
       [index]: !prevExpandedPosts[index],
     }));
   };
-
-  const [addComment, { data: addCommentData }] = useMutation(ADD_COMMENT);
   const [likePost, { data: likeData }] = useMutation(LIKE_POST);
   const [unlikePost, { data: unlikeData }] = useMutation(UNLIKE_POST);
 
   function formatDate(timestamp: string) {
     let date = new Date(parseInt(timestamp));
 
-    let month = date.getMonth() + 1; // JavaScript counts months from 0 to 11, so we add 1 to get the correct month.
+    let month = date.getMonth() + 1; 
     let day = date.getDate();
     let hour = date.getHours();
     let minute = date.getMinutes();
-    // The minutes are less than 10, we add a '0' before it.
+
     let formattedMinute = minute < 10 ? `0${minute}` : `${minute}`;
 
     return `${month}/${day} ${hour}:${formattedMinute}`;
@@ -88,38 +94,57 @@ function FeedPosts({
   const likePostHandler = async (post: Post, index: number) => {
     try {
       if (Auth.loggedIn()) {
-        const { firstName, lastName, username, pfp, _id } =
+        const userId = Auth.getProfile().data._id
+        const { firstName, lastName, username, pfp } =
           userByIdData.getUserById;
-        const { postPreview, postId } = post;
+        console.log(lastName)
+        const { preview, _id } = post;
         if (isLikedState[index]) {
           console.log("is liked");
           const response = await unlikePost({
             variables: {
-              postId: postId,
-              userId: _id,
+              postId: _id,
+              userId: userId,
             },
           });
           console.log(response);
+          let tempLikeData = [...postLikesState];
+          tempLikeData[index] = tempLikeData[index].filter(
+            (like: { _id: any }) => like._id !== response.data.unlikePost._id
+          );
+          setPostLikesState(tempLikeData);
         } else {
           console.log("isnt liked");
           const response = await likePost({
             variables: {
-              postId: postId,
-              userId: _id,
+              postId: _id,
+              userId: userId,
               input: {
                 username: username,
                 firstName: firstName,
                 lastName: lastName,
                 pfp: pfp,
-                preview: postPreview,
+                preview: preview,
               },
             },
           });
           console.log(response);
+          //THESE DON'T DO BY INDEX
+          let tempLikeData = [...postLikesState];
+
+          if (response.data && response.data.likePost) {
+            tempLikeData[index] = [...tempLikeData[index], response.data.likePost];
+            setPostLikesState(tempLikeData);
+          } else {
+            console.error('Like post data is not available');
+          }
         }
         let tempIsLikedState = [...isLikedState];
         tempIsLikedState[index] = !tempIsLikedState[index];
+        console.log(tempIsLikedState)
+        const tempLikeCount = tempIsLikedState.filter(Boolean).length;
         setIsLikedState(tempIsLikedState);
+        setLikeCount(tempLikeCount)
       } else {
         alert("Sign into like a post");
       }
@@ -134,8 +159,6 @@ function FeedPosts({
     index: number
   ) => {
     event.preventDefault();
-    // console.log(Auth.getProfile().data.username);
-    // console.log(commentState);
     try {
       if (Auth.loggedIn()) {
         const target = event.target as HTMLFormElement;
@@ -145,22 +168,24 @@ function FeedPosts({
             variables: {
               username: Auth.getProfile().data.username,
               body: commentBody,
-              postId: post.postId,
+              postId: post._id,
             },
           });
           console.log(response);
+
           const newComment = {
             username: Auth.getProfile().data.username,
             body: commentBody,
             createdAt: Date.now().toString(),
           };
-          let newCommentState = [...commentState]; // copy the main array
-          let currentComments = newCommentState[index] || []; // get the current comments or an empty array if undefined
-          let newComments = [...currentComments, newComment]; // create a new array for the nested array
-          newCommentState[index] = newComments; // assign the new array to the main array
-          console.log(newCommentState[index]);
-          setCommentState(newCommentState);
-          target.form[0].value = "";
+          //MAYBE TAKE OUT
+          // let newCommentState = [...commentState]; // copy the main array
+          // let currentComments = newCommentState[index] || []; // get the current comments or an empty array if undefined
+          // let newComments = [...currentComments, newComment]; // create a new array for the nested array
+          // newCommentState[index] = newComments; // assign the new array to the main array
+          // console.log(newCommentState[index]);
+          // setCommentState(newCommentState);
+          // target.form[0].value = "";
         } else {
           alert("The comment cant be blank");
         }
@@ -173,43 +198,28 @@ function FeedPosts({
   };
 
   useEffect(() => {
-    const formatLikedState = () => {
-      let tempIsLikedState: boolean[] = [];
-      const likedPosts = Object.values<{ postId: any }>(
-        userByIdData.getUserById.likes
-      ).map((userLikes) => {
-        return userLikes.postId;
-      });
-      console.log(likedPosts);
-      posts.forEach((post) => {
-        if (likedPosts.some((likeId) => likeId === post.postId)) {
-          tempIsLikedState.push(true);
-        } else {
-          tempIsLikedState.push(false);
-        }
-      });
-      return tempIsLikedState;
-    };
-    if (userByIdData?.getUserById) {
-      const tempIsLikedState = formatLikedState();
-      console.log(tempIsLikedState);
-      setIsLikedState(tempIsLikedState);
-    }
-  }, [userByIdData, commentState]);
-
-  useEffect(() => {
-    const dataComments = posts.map((post) => post.postComments);
+    const dataComments = posts.getAllPosts.map((post: { comments: any; }) => post.comments);
+    const dataLikes = posts.getAllPosts.map((post: { likes: any; }) => post.likes);
+    console.log(dataLikes)
+    console.log(dataComments)
+    const tempLikedState = posts.getAllPosts.map((post: { likes: { user: { _id: any; }; }[]; }) => {
+      return post.likes.some(
+        (like: { user: { _id: any } }) =>
+          like.user._id === Auth.getProfile().data._id
+      );
+    });
+    setPostLikesState(dataLikes)
+    setIsLikedState(tempLikedState);
     setCommentState(dataComments);
   }, [posts]);
 
   useEffect(()=> {
     if (Auth.loggedIn()) {
       const id = Auth.getProfile().data._id;
-      getUserById({ variables: { id } }); // Call getUserById inside the useEffect with the correct variables
-    }
+      getUserById({ variables: { userId: id } });    }
   }, [])
 
-  return posts.map((post, index) => {
+  return posts.getAllPosts.map((post: Post, index: Key | null | undefined) => {
     return (
       <div key={index}>
         <div className="mt-4 p-3 border-[1px] rounded-lg border-black dark:border-0 shadow-2xl bg-white dark:bg-coolGray">
@@ -217,12 +227,12 @@ function FeedPosts({
             <div className="flex">
               <img
                 className="h-12 w-auto rounded-full object-cover"
-                src={post.pfp}
+                src={post.user.pfp}
                 alt="Your Company"
               ></img>
               <div>
                 <h2 className="text-md text-black font-semibold dark:text-white ml-1">
-                  {`${post.firstName} ${post.lastName}`}
+                  {`${post.user.firstName} ${post.user.lastName}`}
                 </h2>
                 <div>
                   <a
@@ -230,7 +240,7 @@ function FeedPosts({
                     className="text-gray-500 text-md ml-1 py-2"
                     aria-current="page"
                   >
-                    @{post.username}
+                    @{post.user.username}
                   </a>
                 </div>
               </div>
@@ -243,11 +253,11 @@ function FeedPosts({
           </div>
 
           <div className="mt-4">
-            <p className="dark:text-white text-black">{post.postBody}</p>
+            <p className="dark:text-white text-black">{post.body}</p>
           </div>
-          {post.postHashtags && (
+          {post.hashtags && (
             <div className="mt-0">
-              {post.postHashtags.map((hashtag, hashIndex) => {
+              {post.hashtags.map((hashtag: { hashtagText: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; }, hashIndex: Key | null | undefined) => {
                 return (
                   <a className="mr-1 text-gray-500" key={hashIndex}>
                     #{hashtag.hashtagText}
@@ -259,9 +269,9 @@ function FeedPosts({
 
           <div className="mt-4 border-gray-700 pb-2 border-b-[1px]">
             <img
-              onClick={() => postClickHandler(posts[index])}
+              onClick={() => postClickHandler(post)}
               className="postContentImg w-[90%] border-[2px] border-black rounded-xl"
-              src={post.postPreview || "no preview"}
+              src={post.preview || "no preview"}
               alt="Post"
             ></img>
           </div>
@@ -299,7 +309,7 @@ function FeedPosts({
                   expandedPosts[index] ? "scale-100 max-h-64" : "scale-0"
                 } overflow-y-scroll feedPostCommentSection`}
               >
-                {commentState[index]?.map((comment, commentIndex) => (
+                {commentState[index]?.map((comment: { body: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; createdAt: string; username: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; }, commentIndex: Key | null | undefined) => (
                   <div
                     key={commentIndex}
                     className="flex justify-between border-gray-700 pb-2 border-b-[1px]"
@@ -343,9 +353,9 @@ function FeedPosts({
               </button>
               <a
                 className="text-gray-700 text-sm dark:text-gray-500 cursor-pointer mr-4"
-                onClick={() => likeClickHandler(post.postLikes)}
+                onClick={() => likeClickHandler(postLikesState[index])}
               >
-                {post.postLikes ? `${post.postLikes.length} Likes` : "0 Likes"}
+                {postLikesState[index] ? `${postLikesState[index].length} Likes` : "0 Likes"}
               </a>
               <button
                 type="button"
@@ -399,7 +409,7 @@ function FeedPosts({
               </button>
             </div>
             <h2 className="mt-4 text-sm text-gray-500">
-              <p>Posted: {formatDate(post.postDate)}</p>
+              <p>Posted: {formatDate(post.createdAt)}</p>
             </h2>
           </div>
         </div>

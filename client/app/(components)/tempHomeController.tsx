@@ -15,28 +15,19 @@ import {
 import PictureUploader from "./pictureUploader";
 import { ADD_POST } from "../(GraphQL)/mutations";
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
-import { GET_ALL_USERS, GET_POST, GET_USER_BY_ID } from "../(GraphQL)/queries";
+import {
+  GET_ALL_USERS,
+  GET_ALL_FOLLOWERS,
+  GET_POST,
+  GET_USER_BY_ID,
+  GET_ALL_POSTS,
+} from "../(GraphQL)/queries";
 import Auth from "../(utils)/auth";
 import VideoUploader from "./videoUploader";
 import PostModal from "./postModal";
 import LikeFollowerModal from "./likeFollowerFollowingModal";
 
 function HomeController() {
-  type PostData = {
-    title: string;
-    body: string;
-    comments: any[]; // Adjust this type as needed
-    likes: any[];
-    createdAt: string;
-    hashtags: any[]; // Adjust this type as needed
-    preview: string;
-    media: string;
-    username: string;
-    firstName: string;
-    lastName: string;
-    pfp: string;
-    _id: string;
-  };
 
   const [
     getUserById,
@@ -56,21 +47,30 @@ function HomeController() {
   //   getUsers,
   //   { loading: getUsersLoading, error: getUsersError, data: getUsersData },
   // ] = useLazyQuery(GET_ALL_USERS);
+  // const [getPost, { loading: postLoading, data: postData }] =
+  //   useLazyQuery(GET_POST);
+  const {
+    loading: getFollowersLoading,
+    error: getFollowersError,
+    data: getFollowerData,
+  } = useQuery(GET_ALL_FOLLOWERS);
+
+  // console.log(getFollowerData.getAllUsers)
 
   const {
-    loading: getUsersLoading,
-    error: getUsersError,
-    data: getUsersData,
-  } = useQuery(GET_ALL_USERS);
-  const [getPost, { loading: postLoading, data: postData }] =
-    useLazyQuery(GET_POST);
+    loading: allPostLoading,
+    error: allPostsError,
+    data: allPostsData,
+  } = useQuery(GET_ALL_POSTS);
+
 
   const [createPostDiv, showCreatePostDiv] = useState(false);
   const [showModalState, setShowModalState] = useState(false);
   const [showLikeModalState, setShowLikeModalState] = useState(false);
-  const [whoToFollowState, setWhoToFollow] = useState();
-  const [activePostData, setActivePostData] = useState<PostData | null>(null);
-  const [feedPostState, setFeedPostState] = useState([]);
+  // const [whoToFollowState, setWhoToFollow] = useState();
+  const [activePostId, setActivePostId] = useState<string>('');
+  // const [feedPostState, setFeedPostState] = useState([]);
+  const [likeCount, setLikeCount] = useState<number | null>(null);
   const [likeModalDataState, setLikeModalDataState] = useState();
   const [uploadTypeState, setUploadTypeState] = useState("");
   const [hashtags, addHashtags] = useState<string[]>([]);
@@ -117,26 +117,13 @@ function HomeController() {
   const [createPostCheck, setCreatePostCheck] = useState<boolean>(false);
   //Change this to work
   const postClickHandler = async (postInfo: any) => {
-    // console.log(data.getUserById)
-    const response = await getPost({ variables: { postId: postInfo.postId } });
-    let post: PostData | null = response.data.getPost;
-
-    post = {
-      ...post,
-      username: postInfo.username,
-      firstName: postInfo.firstName,
-      lastName: postInfo.lastName,
-      pfp: postInfo.pfp,
-    };
-    console.log(post);
-    setActivePostData(post);
-    setShowModalState(true);
+    try{
+      setActivePostId(postInfo._id)
+      setShowModalState(true)
+    }catch(err){
+      console.error(err)
+    }
   };
-
-  // username={data.getUserById.username}
-  // pfp={data.getUserById.pfp}
-  // firstName={data.getUserById.firstName}
-  // lastName={data.getUserById.lastName}
 
   const createPostHandler = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -168,17 +155,22 @@ function HomeController() {
         postInput.media = videoState.video;
       }
       console.log(postInput);
-      if(postInput.title && postInput.preview && postInput.media && postInput.body){
+      if (
+        postInput.title &&
+        postInput.preview &&
+        postInput.media &&
+        postInput.body
+      ) {
         const id = Auth.getProfile().data._id;
-      const response = await addPostMutation({
-        variables: {
-          input: postInput,
-          userId: id,
-        },
-      });
-      console.log(response);
-      }else{
-        alert('Please fill out all fields')
+        const response = await addPostMutation({
+          variables: {
+            input: postInput,
+            userId: id,
+          },
+        });
+        console.log(response);
+      } else {
+        alert("Please fill out all fields");
       }
     } catch (err) {
       console.error(err);
@@ -200,121 +192,13 @@ function HomeController() {
     setUploadTypeState("video");
   };
 
-  // This needs a differnt modal or something, with the preview image
-  // const likeCounterClickHandler = () => {
-  //   if (singleUserData.getUserById.likes) {
-  //     setLikeModalDataState(singleUserData.getUserById.likes);
-  //     setShowLikeModalState(true);
-  //   } else {
-  //     alert(`You have no posts liked`);
-  //   }
-  // };
-
-  const formatPosts = async (usersArray: any) => {
-    try {
-      const changedPostData: {
-        username: any;
-        firstName: any;
-        lastName: any;
-        pfp: any;
-        userId: any;
-        postBody: any;
-        postTitle: any;
-        postPreview: any;
-        postComments: any;
-        postDate: any;
-        postHashtags: any;
-        postId: any;
-      }[] = [];
-      console.log(usersArray);
-      await usersArray.forEach(
-        (
-          user: {
-            posts: any[];
-            username: any;
-            firstName: any;
-            lastName: any;
-            pfp: any;
-            _id: any;
-          },
-          parIndex: any
-        ) => {
-          user.posts.forEach(
-            (
-              post: {
-                body: any;
-                title: any;
-                preview: any;
-                comments: any;
-                likes: any;
-                createdAt: any;
-                hashtags: any;
-                _id: any;
-              },
-              index: any
-            ) => {
-              const displayPostData = {
-                username: user.username,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                pfp: user.pfp,
-                userId: user._id,
-                postBody: post.body,
-                postTitle: post.title,
-                postPreview: post.preview,
-                postComments: post.comments,
-                postLikes: post.likes,
-                postDate: post.createdAt,
-                postHashtags: post.hashtags,
-                postId: post._id,
-              };
-
-              changedPostData.push(displayPostData);
-            }
-          );
-        }
-      );
-      changedPostData.sort((a, b) => Number(b.postDate) - Number(a.postDate));
-      return changedPostData;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-  useEffect(() => {
-    console.log(getUsersData);
-    const setPostsAndFollowers = async () => {
-      if (getUsersData && getUsersData.getAllUsers) {
-        console.log(getUsersData);
-        const newPostData = await formatPosts(getUsersData.getAllUsers);
-        console.log(newPostData);
-        const usernameArray = getUsersData.getAllUsers.map(
-          (user: { username: any }, index: any) => {
-            return user.username;
-          }
-        );
-        setWhoToFollow(usernameArray);
-
-        if (newPostData === undefined) {
-          // If newPostData is undefined, set it to an empty array
-          setFeedPostState([]);
-          console.error("POST STATE IS UNDEFINED");
-        } else {
-          // If newPostData is not undefined, set the state with it
-          setFeedPostState(newPostData);
-        }
-      }
-    };
-
-    if (getUsersData) {
-      // If getUsersData is defined, call setPostsAndFollowers
-      setPostsAndFollowers();
-    }
-  }, [getUsersData]); // This effect will run whenever getUsersData changes
-
   useEffect(() => {
     if (Auth.loggedIn()) {
-      const id = Auth.getProfile().data._id;
-      getUserById({ variables: { id } }); // Call getUserById inside the useEffect with the correct variables
+      const setState = async () => {
+        const id = Auth.getProfile().data._id;
+        await getUserById({ variables: { userId: id } });
+      }
+      setState()
     }
   }, []);
 
@@ -328,9 +212,10 @@ function HomeController() {
         <div className="col-span-3 pl-40">
           <div className="homePageFeedMainDiv bg- pl-2 pr-2 border-customPurpleDark dark:border-customPurple">
             <div className="feedPostsTop"></div>
-            {feedPostState ? (
+            {allPostsData ? (
               <FeedPosts
-                posts={feedPostState}
+                posts={allPostsData}
+                setLikeCount={setLikeCount}
                 postClickHandler={postClickHandler}
                 likeClickHandler={likeClickHandler}
               />
@@ -545,7 +430,9 @@ function HomeController() {
                         />
                       </svg>
                       <h1 className="text-black text-[54px] dark:text-white">
-                        {singleUserData ? singleUserData.getUserById.likes.length : '0'}
+                        {singleUserData
+                          ? likeCount || singleUserData.getUserById.likes.length
+                          : "0"}
                       </h1>
                     </div>
                   </div>
@@ -652,12 +539,12 @@ function HomeController() {
                 Sign up
               </button>
             </div> */}
-              {whoToFollowState && (
+              {getFollowerData && (
                 <div className="max-w-sm mt-3 border-0 dark:shadow-notificationShadowPink dark:bg-coolGray bg-white border-black shadow-xl dark:border-customPurple rounded-xl p-2 w-[50%]">
                   <h3 className="text-black font-semibold dark:text-white">
                     Who To Follow
                   </h3>
-                  {whoToFollowState.map((username: string, index: any) => {
+                  {getFollowerData.getAllUsers.map((user: any, index: any) => {
                     return (
                       <div
                         className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"
@@ -677,7 +564,7 @@ function HomeController() {
                               className="text-black font-semibold dark:text-white px-3 py-2"
                               aria-current="page"
                             >
-                              {username}
+                              {user.username}
                             </a>
                           </div>
                         </div>
@@ -764,20 +651,7 @@ function HomeController() {
 
       {showModalState && (
         <PostModal
-          //The error is that this data is possibly null which is fine
-          title={activePostData.title}
-          media={activePostData.media}
-          preview={activePostData.preview}
-          body={activePostData.body}
-          date={activePostData.createdAt}
-          comments={activePostData.comments}
-          hashtags={activePostData.hashtags}
-          username={activePostData.username}
-          likes={activePostData.likes}
-          pfp={activePostData.pfp}
-          postId={activePostData._id}
-          firstName={activePostData.firstName}
-          lastName={activePostData.lastName}
+          postId={activePostId}
           handleClose={function (): void {
             setShowModalState(false);
           }}

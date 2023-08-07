@@ -24,7 +24,7 @@ export default function Profile() {
 
   const postClickHandler = async (postInfo: any) => {
     try{
-      console.log(data.getUserById)
+      //console.log(data.getUserById)
     console.log(postInfo._id)
     setActivePostId(postInfo._id)
     setShowModalState(true);
