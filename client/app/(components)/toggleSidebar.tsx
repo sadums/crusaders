@@ -339,6 +339,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
     if (type === "Likes") {
       return (
         <>
+
           <div
             className={`bottom-0 p-3 top-32 left-20 w-72 text-white fixed z-10 ease-in-out duration-500 ${
               sidebarOpacity
@@ -420,7 +421,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
                 return (
                   <div
                     key={notif.id}
-                    className=" shadow-xl bg-white rounded-xl dark:bg-darkModeLightGray  dark:shadow-notificationShadowPink ring-blue-700 p-1 mt-3"
+                    className=" shadow-xl bg-white rounded-xl dark:bg-darkModeDarkGray  dark:shadow-notificationShadowPink ring-blue-700 p-1 mt-3"
                   >
                     <div className="flex justify-between">
                       {" "}
@@ -468,7 +469,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
               }
               if (notif.type === "messageResponse") {
                 return (
-                  <div className=" shadow-xl bg-white rounded-xl dark:shadow-notificationShadowPink dark:bg-coolGray p-1 mt-3">
+                  <div className=" shadow-xl bg-white rounded-xl dark:shadow-notificationShadowPink dark:bg-darkModeDarkGray p-1 mt-3">
                     <div className="flex justify-between">
                       {" "}
                       <div className="flex">

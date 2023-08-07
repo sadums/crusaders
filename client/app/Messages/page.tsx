@@ -200,7 +200,7 @@ export default function Messages() {
   return (
     <div className="messagesPageMainDiv bg-darkestCoolGray ml-20 h-[100vh]">
       <div className="grid grid-cols-6 gap-4">
-        <div className="col-span-1 bg-[#131922] border-coolGray border-r-4">
+        <div className="col-span-1 bg-mainDarkPurple dark:bg-mainPurple border-coolGray border-r-4">
           <div className="bg-darkCoolGray h-[100vh] p-2 secondaryMenuMainDiv"></div>
         </div>
         <div className="col-span-4">
@@ -287,6 +287,9 @@ export default function Messages() {
               </div>
             </div>
           </div>
+        </div>
+        <div className="col-span-1">
+
         </div>
       </div>
     </div>
