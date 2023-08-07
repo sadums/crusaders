@@ -10,7 +10,6 @@ interface User {
   firstName: string;
   lastName: string;
   pfp: string;
-  id: number;
 }
 
 const LikeFollowerModal: React.FC<ModalProps> = ({ handleClose, users }) => {
