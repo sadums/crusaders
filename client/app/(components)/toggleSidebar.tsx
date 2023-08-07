@@ -8,6 +8,7 @@ import ProfilePosts from "./profilePosts";
 
 import terms from "../(searchData)/terms.json";
 import jaroWinkler from "../(utils)/search/jaroWinklerSearch";
+import PostModal from "./postModal";
 
 interface toggle {
   props: any;
@@ -113,6 +114,24 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
       },
     },
   ];
+
+  const tempPostModalData = {
+    title: "TempTitle",
+    media:
+      "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.Ce2m8qM-qT6o1vVpH-0OrAHaEo%26pid%3DApi&f=1&ipt=44a797708b3b7b43595526fa739bdbb2f543c16becaca9ceeffa64d99ea69e54&ipo=images",
+    preview:
+      "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.Ce2m8qM-qT6o1vVpH-0OrAHaEo%26pid%3DApi&f=1&ipt=44a797708b3b7b43595526fa739bdbb2f543c16becaca9ceeffa64d99ea69e54&ipo=images",
+    body: "Temp Description",
+    comments: [],
+    hashtags: [],
+    username: "JohnDoe123",
+    likes: [],
+    pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.Ce2m8qM-qT6o1vVpH-0OrAHaEo%26pid%3DApi&f=1&ipt=44a797708b3b7b43595526fa739bdbb2f543c16becaca9ceeffa64d99ea69e54&ipo=images",
+    firstname: "John",
+    lastname: "Doe",
+  };
+
+  const [likePostModal, setLikePostModal] = useState(false);
 
   interface FriendRequestNotificationData {
     senderName: string;
@@ -266,16 +285,19 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
     }
     if (type === "Likes") {
       return (
+        <>
         <div
-          className={`bottom-0 p-5 top-32 left-20 w-72 text-white fixed z-10 ease-in-out duration-500 ${
+          className={`bottom-0 p-3 top-32 left-20 w-72 text-white fixed z-10 ease-in-out duration-500 ${
             sidebarOpacity
               ? "translate-y-full opacity-0"
               : "translate-y-0 opacity-1"
           }`}
         >
-          <h1 className="pb-4">Your Liked Posts:</h1>
+          <h1 className="dark:text-white text-lg text-black font-semibold border-customPurpleDark border-b-2">
+            Your Liked Posts:
+          </h1>
           <div
-            className="grid grid-cols-1 gap-3 scroll homepageLikedPosts"
+            className="grid grid-cols-2 gap-3 scroll mt-3 homepageLikedPosts"
             style={{
               maxHeight: "100%",
               overflowY: "scroll",
@@ -284,11 +306,41 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
               scrollbarColor: "transparent transparent",
             }}
           >
-            {tempLikedPostData.map((post) => (
-              <ProfilePosts key={post.picture} postInfo={post} />
+            {tempLikedPostData.map((post, index) => (
+              // <ProfilePosts key={post.picture} postInfo={post} />
+              <div key={index} className="w-[100%] h-auto">
+                <img
+                  onClick={() => setLikePostModal(!likePostModal)}
+                  className="h-24 w-32 object-fill rounded-xl shadow-xl transition-transform duration-200 transform scale-100 cursor-pointer hover:scale-[96%] hover:brightness-75"
+                  src={post.picture}
+                ></img>
+              </div>
             ))}
           </div>
         </div>
+        {likePostModal && (
+            <div className="z-50 fixed inset-0 flex justify-center items-center">
+            <PostModal
+              title={tempPostModalData.title}
+              media={tempPostModalData.media}
+              preview={tempPostModalData.preview}
+              body={tempPostModalData.body}
+              date={"1691369322412"}
+              comments={tempPostModalData.comments}
+              hashtags={tempPostModalData.hashtags}
+              username={tempPostModalData.username}
+              likes={tempPostModalData.likes}
+              pfp={tempPostModalData.pfp}
+              firstName={tempPostModalData.firstname}
+              lastName={tempPostModalData.lastname}
+              handleClose={function (): void {
+                setLikePostModal(false);
+              }}
+            />
+            </div>
+          )}
+        </>
+
       );
     }
     if (type === "Notifications") {
@@ -300,12 +352,17 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
               : "translate-y-0 opacity-1"
           }`}
         >
-          <h4 className="dark:text-white text-lg text-black font-semibold border-customPurpleDark border-b-2">Notifications</h4>
+          <h4 className="dark:text-white text-lg text-black font-semibold border-customPurpleDark border-b-2">
+            Notifications
+          </h4>
           <div>
             {tempNotificationData.map((notif) => {
               if (notif.type === "friendRequest") {
                 return (
-                  <div key={notif.id} className=" shadow-xl bg-white rounded-xl dark:bg-darkModeLightGray  dark:shadow-notificationShadowPink ring-blue-700 p-1 mt-3">
+                  <div
+                    key={notif.id}
+                    className=" shadow-xl bg-white rounded-xl dark:bg-darkModeLightGray  dark:shadow-notificationShadowPink ring-blue-700 p-1 mt-3"
+                  >
                     <div className="flex justify-between">
                       {" "}
                       <div className="flex">
@@ -389,23 +446,22 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
                     <div className="flex mt-2">
                       <button className="ml-11 text-blue-600 font-semibold dark:text-blue-500 text-sm  pl-1 pr-1 p-[.5%] rounded-md hover:bg-customPurple hover:text-white duration-150 ease-in-out">
                         <div className="flex">
-                        Respond
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-5 h-5"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
-                          />
-                        </svg>
+                          Respond
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-5 h-5"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                            />
+                          </svg>
                         </div>
-                        
                       </button>
                     </div>
                   </div>
