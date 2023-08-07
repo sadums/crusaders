@@ -355,7 +355,7 @@ function HomeController() {
               className="px-4 py-2 h-8 rounded-lg focus:outline-none navBarSearchBar"
             /> */}
               <div
-                className={` ease-in-out duration-300 ${
+                className={` ease-in-out translate-transform duration-300 ${
                   createPostDiv
                     ? "w-[90%]  bg-white dark:bg-coolGray rounded-xl dark:shadow-notificationShadowPink shadow-xl p-2"
                     : "w-[50%]"
@@ -480,7 +480,7 @@ function HomeController() {
                     <button
                       onClick={createPostHandler}
                       className={`${
-                        createPostCheck ? "hidden" : "block"
+                        createPostCheck ? "scale-0 hidden" : "scale-100 block"
                       } px-4 mt-2 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 hover:scale-105`}
                       type="submit"
                     >
@@ -488,7 +488,7 @@ function HomeController() {
                     </button>
                     <div
                       className={`${
-                        createPostCheck ? "block" : "hidden"
+                        createPostCheck ? "scale-100 block" : "scale-0 hidden"
                       } text-customPurple mt-4 flex`}
                     >
                       <svg
