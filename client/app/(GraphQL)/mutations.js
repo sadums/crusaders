@@ -110,6 +110,7 @@ export const LIKE_POST = gql`
           userId
           postId
           username
+          pfp
         }
       }
     }
@@ -137,6 +138,7 @@ export const UNLIKE_POST = gql`
           userId
           postId
           username
+          pfp
         }
       }
     }

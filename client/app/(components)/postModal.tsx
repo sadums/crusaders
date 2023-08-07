@@ -1,6 +1,10 @@
 "use client";
 import LikeFollowerModal from "./likeFollowerFollowingModal";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { ADD_COMMENT, LIKE_POST, UNLIKE_POST } from "../(GraphQL)/mutations";
+import { GET_USER_BY_ID } from "../(GraphQL)/queries";
+import { useMutation, useLazyQuery } from "@apollo/client";
+import Auth from '../(utils)/auth'
 interface Hashtag {
   hashtagText: string;
   catagory: string;
@@ -27,6 +31,7 @@ interface ModalProps {
   pfp: string;
   firstName: string;
   lastName: string;
+  postId: string;
   likes: Like[];
   handleClose: () => void;
   // likeClickHandlerFeedPosts: (likeInfo: Like) => void;
@@ -36,6 +41,7 @@ const PostModal: React.FC<ModalProps> = ({
   title,
   preview,
   media,
+  postId,
   body,
   date,
   comments,
@@ -47,54 +53,31 @@ const PostModal: React.FC<ModalProps> = ({
   firstName,
   lastName,
 }) => {
-  const tempComments = [
-    {
-      id: 1,
-      comment: "Nice post! This reminds me of so and so",
-      user: "carreejoh",
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-    },
-    {
-      id: 2,
-      comment:
-        "Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text,",
-      user: "carreejoh",
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-    },
-    {
-      id: 3,
-      comment:
-        "Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text,",
-      user: "carreejoh",
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-    },
-    {
-      id: 4,
-      comment:
-        "Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text, Nice post! This reminds me of so and so, long text, long text, long text,",
-      user: "carreejoh",
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-    },
-    {
-      id: 5,
-      comment: "Nice post!  long text, long text, long text,",
-      user: "carreejoh",
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.s__coU_NozvbjdTfl1ybNgHaEo%26pid%3DApi&f=1&ipt=dd5c31b186f062eacf4e9cf3f1a9b823fb0e9302f51f85bc6530c68952c83d29&ipo=images",
-    },
-  ];
 
   const [showComments, setShowComments] = useState(false);
+  const [likeArrayState, setLikeArrayState] = useState(likes)
+  const [isPostLikedState, setIsPostLikedState] = useState<boolean>(false);
+  const [commentState, setCommentState] = useState<any[]>(comments);
+  const [addComment, { data: addCommentData }] = useMutation(ADD_COMMENT);
   const [showLikeModalStateFeedPosts, setShowLikeModalStateFeedPosts] =
     useState(false);
-
-  const likeClickHandlerFeedPosts = (likes) => {
-    console.log(likes)
-    setShowLikeModalStateFeedPosts(true);
+  const likeClickHandlerFeedPosts = () => {
+    if(likeArrayState.length){
+      setShowLikeModalStateFeedPosts(true);
+    } else {
+      alert(`Post doesn't have any likes`);
+    }
   };
+  const [getUserById, { loading: singleUserLoading, error: singleUserError, data: singleUserData }] = useLazyQuery(
+    GET_USER_BY_ID,
+    {
+      variables: { id: '' }, // Initialize with an empty string
+    }
+  );
+  const [likePost, { data: likeData }] = useMutation(LIKE_POST);
+  const [unlikePost, { data: unlikeData }] = useMutation(UNLIKE_POST);
 
   const isVideo = media.endsWith(".mp4");
-
-  console.log(likes)
 
   function formatDate(timestamp: string) {
     let date = new Date(parseInt(timestamp));
@@ -108,6 +91,107 @@ const PostModal: React.FC<ModalProps> = ({
 
     return `${month}/${day} ${hour}:${formattedMinute}`;
   }
+
+  const likePostHandler = async () => {
+    try {
+      if (Auth.loggedIn()) {
+        // const { firstName, lastName, username, pfp, _id } =
+        //   userByIdData.getUserById;
+        // const { postPreview, postId } = post;
+        if (isPostLikedState) {
+          console.log("is liked");
+          console.log(singleUserData.getUserById)
+          const response = await unlikePost({
+            variables: {
+              postId: postId,
+              userId: singleUserData.getUserById._id,
+            },
+          });
+          console.log(response);
+          setLikeArrayState(response.data.unlikePost.post.likes)
+
+        } else {
+          console.log("isnt liked");
+          const response = await likePost({
+            variables: {
+              postId: postId,
+              userId: singleUserData.getUserById._id,
+              input: {
+                username: username,
+                firstName: firstName,
+                lastName: lastName,
+                pfp: pfp,
+                preview: preview,
+              },
+            },
+          });
+          console.log(response);
+          setLikeArrayState(response.data.likePost.post.likes)
+        }
+        setIsPostLikedState((prev) => !prev)
+      } else {
+        alert("Sign into like a post");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const postCommentHandler = async (
+    event: React.FormEvent,
+  ) => {
+    event.preventDefault();
+    // console.log(Auth.getProfile().data.username);
+    // console.log(commentState);
+    try {
+      if (Auth.loggedIn()) {
+        const target = event.target as HTMLFormElement;
+        const commentBody = target.form[0].value;
+        if (commentBody) {
+          console.log(commentBody)
+          console.log(postId)
+          const response = await addComment({
+            variables: {
+              username: Auth.getProfile().data.username,
+              body: commentBody,
+              postId: postId,
+            },
+          });
+          console.log(response);
+          const newComment = {
+            username: Auth.getProfile().data.username,
+            body: commentBody,
+            createdAt: Date.now().toString(),
+          };
+          setCommentState((prev) => [...prev, newComment])
+        } else {
+          alert("The comment cant be blank");
+        }
+      } else {
+        alert("Sign in to make a comment");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(()=> {
+    if(singleUserData){
+      console.log(singleUserData.getUserById.likes)
+      const likedPosts = singleUserData.getUserById.likes.map((like: { postId: any; }) => {
+        return like.postId
+      })
+      console.log(likedPosts)
+      setIsPostLikedState((likedPosts.includes(postId)))
+    }
+  }, [singleUserData])
+
+  useEffect(()=> {
+    if (Auth.loggedIn()) {
+      const id = Auth.getProfile().data._id;
+      getUserById({ variables: { id } }); // Call getUserById inside the useEffect with the correct variables
+    }
+  }, [])
 
   return (
     <>
@@ -205,24 +289,25 @@ const PostModal: React.FC<ModalProps> = ({
                   ></textarea>
                   <button
                     className="ml-2 mr-2 px-4 py-2 mt-2 border border-customPurple rounded-md h-10 self-end shadow-sm text-sm font-medium text-black dark:text-white bg-transparent hover:bg-indigo-700 transition duration-300 hover:scale-105"
-                    // onClick={(event) => postCommentHandler(event, post, index)}
+                    onClick={(event) => postCommentHandler(event)}
                   >
                     Comment
                   </button>
                 </div>
               </form>
               <div className=" mt-2 border-[2px] h-36 max-w-[40vw] rounded-xl overflow-y-scroll p-2 border-black">
-                {tempComments.map((comment, commentIndex) => (
+                {commentState.map((comment, commentIndex) => (
                   <div
                     key={commentIndex}
                     className="flex justify-between border-gray-700 pb-2 border-b-[1px]"
                   >
                     <p className="dark:text-white transition-all duration-500 ease-in-out w-[75%] text-black self-end">
-                      {comment.comment}
+                      {comment.body}
                     </p>
+                    <p>{formatDate(comment.createdAt)}</p>
 
                     <a className="dark:text-white transition-all duration-500 ease-in-out text-black cursor-pointer self-end">
-                      -{comment.user}
+                      -{comment.username}
                     </a>
                   </div>
                 ))}
@@ -237,8 +322,9 @@ const PostModal: React.FC<ModalProps> = ({
                 >
                   <span className="sr-only">Like</span>
                   <svg
+                    onClick={() => likePostHandler()}
                     xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
+                    fill={isPostLikedState ? "red" : "none"}
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
@@ -253,9 +339,9 @@ const PostModal: React.FC<ModalProps> = ({
                 </button>
                 <a
                   className="text-gray-700 text-sm dark:text-gray-500 cursor-pointer mr-2"
-                  onClick={() => likeClickHandlerFeedPosts(likes)}
+                  onClick={() => likeClickHandlerFeedPosts()}
                 >
-                  {likes ? `${likes.length} Likes` : "0 Likes"}
+                  {likes ? `${likeArrayState.length} Likes` : "0 Likes"}
                 </a>
                 <button
                   onClick={() => setShowComments((prev) => !prev)}
@@ -278,31 +364,31 @@ const PostModal: React.FC<ModalProps> = ({
                   </svg>
                 </button>
                 <a
-                onClick={() => setShowComments((prev) => !prev)}
-                className="text-gray-700 text-sm dark:text-gray-500 cursor-pointer mr-2"
-              >
-                10 hardcode Comments
-              </a>
-              <button
-                type="button"
-                className="rounded-full mr-2 p-1 text-customPurpleDark dark:text-white"
-              >
-                <span className="sr-only">Share</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-7 h-7"
+                  onClick={() => setShowComments((prev) => !prev)}
+                  className="text-gray-700 text-sm dark:text-gray-500 cursor-pointer mr-2"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
-                  />
-                </svg>
-              </button>
+                  {commentState.length}
+                </a>
+                <button
+                  type="button"
+                  className="rounded-full mr-2 p-1 text-customPurpleDark dark:text-white"
+                >
+                  <span className="sr-only">Share</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-7 h-7"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                    />
+                  </svg>
+                </button>
               </div>
               <h2 className="mt-1 text-black dark:text-white">
                 Posted on: {formatDate(date)}
@@ -314,7 +400,9 @@ const PostModal: React.FC<ModalProps> = ({
           <LikeFollowerModal
             handleClose={function (): void {
               setShowLikeModalStateFeedPosts(false);
-            } } users={likes}          />
+            }}
+            users={likeArrayState}
+          />
         )}
       </div>
     </>
