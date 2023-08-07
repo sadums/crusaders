@@ -79,11 +79,10 @@ const resolvers = {
         const follower = await User.findByIdAndUpdate(
           followerId,
           {
-            $addToSet: { following: userId }
+            $addToSet: { following: userId },
           },
           { new: true }
         );
-        console.log(follower);
         const user = await User.findByIdAndUpdate(
           userId,
           {
@@ -91,7 +90,28 @@ const resolvers = {
           },
           { new: true }
         );
-        console.log(user);
+        return user;
+      } catch (e) {
+        console.error(e);
+        return e;
+      }
+    },
+    removeFollower: async (parent, { userId, followerId }, context) => {
+      try {
+        const follower = await User.findByIdAndUpdate(
+          followerId,
+          {
+            $pull: { following: userId },
+          },
+          { new: true }
+        );
+        const user = await User.findByIdAndUpdate(
+          userId,
+          {
+            $pull: { followers: followerId },
+          },
+          { new: true }
+        );
         return user;
       } catch (e) {
         console.error(e);
