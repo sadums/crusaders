@@ -1,25 +1,17 @@
 "use client";
-import "../(styles)/profile.css";
-import "../(styles)/homepage.css";
-import ProfileSideInfo from "../components/profileSideInfo";
-import ProfilePosts from "../components/profilePosts";
+import "../../(styles)/profile.css";
+import "../../(styles)/homepage.css";
+import ProfileSideInfo from "../../components/profileSideInfo";
+import ProfilePosts from "../../components/profilePosts";
 import { useEffect, useState } from "react";
-import PostModal from "../components/postModal";
-import Auth from "../(utils)/auth";
+import PostModal from "../../components/postModal";
+import Auth from "../../(utils)/auth";
 import { useQuery, useLazyQuery } from "@apollo/client";
 import {
   GET_LOGGED_IN_USER,
   GET_POST,
   GET_USER_BY_ID,
-} from "../GraphQL/queries";
-
-export const dynamic = 'auto',
-dynamicParams = true,
-revalidate = Infinity,
-fetchCache = 'auto',
-runtime = 'nodejs',
-preferredRegion = 'auto'
-
+} from "../../GraphQL/queries";
 
 type PostData = {
   title: string;

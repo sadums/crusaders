@@ -239,7 +239,7 @@ const Sidebar: React.FC<NavbarProps> = ({
               </li>
               <li className="flex items-center space-x-2 sidebarIcon group">
                 <a
-                  href="/Explore"
+                  href="/explore"
                   className="text-gray-300 rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
                 >
                   <svg
@@ -317,7 +317,7 @@ const Sidebar: React.FC<NavbarProps> = ({
                   </li>
                   <li className="flex items-center space-x-2 sidebarIcon group">
                     <a
-                      href="/Messages"
+                      href="/messages"
                       className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
                       // onClick={() => {
                       //   handleSidebarChange("Messages");
@@ -373,7 +373,7 @@ const Sidebar: React.FC<NavbarProps> = ({
                   </li>
                   <li className="flex items-center space-x-2 sidebarIcon group">
                     <a
-                      href="/Profile"
+                      href="/profile"
                       className="text-gray-300rounded-md py-2 text-md font-medium transition duration-300 group-hover:scale-100"
                       // onClick={() => setShowSidebar(!showSidebar)}
                     >

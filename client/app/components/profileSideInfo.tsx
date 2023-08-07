@@ -3,7 +3,7 @@ import "../(styles)/profile.css";
 import PictureUploader from "./pictureUploader";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { UPDATE_USER_MUTATION } from "../(GraphQL)/mutations";
+import { UPDATE_USER_MUTATION } from "../GraphQL/mutations";
 import Auth from "../(utils)/auth";
 
 interface UserInfo {
