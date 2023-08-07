@@ -39,8 +39,9 @@ export default function Profile() {
   // console.log(Auth.getProfile())
 
   const postClickHandler = async (postInfo: any) => {
-    console.log(data.getUserById);
-    console.log(postInfo);
+
+    console.log(data.getUserById)
+
     const response = await getPost({ variables: { postId: postInfo._id } });
     console.log(response.data.getPost);
     const post: PostData | null = response.data.getPost;
