@@ -2,9 +2,17 @@
 import "../(styles)/messages.css";
 import "../(styles)/homepage.css";
 import { useEffect, useState } from "react";
-import Conversations from "./(components)/conversation";
-import { CHAT_SUBSCRIPTION } from "../(GraphQL)/subscriptions"
+import Conversations from "../components/conversation";
+import { CHAT_SUBSCRIPTION } from "../GraphQL/subscriptions"
 import { useSubscription } from "@apollo/client";
+
+export const dynamic = 'auto',
+dynamicParams = true,
+revalidate = Infinity,
+fetchCache = 'auto',
+runtime = 'nodejs',
+preferredRegion = 'auto'
+
 
 export default function Messages() {
   function chatSubscription(){

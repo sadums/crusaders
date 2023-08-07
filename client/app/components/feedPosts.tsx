@@ -1,8 +1,8 @@
 "use client";
 import { useState, useRef, useEffect, Dispatch, SetStateAction } from "react";
 import "../(styles)/homepage.css";
-import { ADD_COMMENT, LIKE_POST, UNLIKE_POST } from "../(GraphQL)/mutations";
-import { GET_USER_BY_ID } from "../(GraphQL)/queries";
+import { ADD_COMMENT, LIKE_POST, UNLIKE_POST } from "../GraphQL/mutations";
+import { GET_USER_BY_ID } from "../GraphQL/queries";
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import Auth from "../(utils)/auth";
 import { comment } from "postcss";
