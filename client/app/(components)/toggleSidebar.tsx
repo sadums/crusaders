@@ -287,13 +287,13 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
       return (
         <>
         <div
-          className={`bottom-0 p-3 top-32 left-20 w-72 text-white fixed z-10 ease-in-out duration-500 ${
+          className={`bottom-0 p-3 top-32 left-20 w-72 fixed z-10 ease-in-out duration-500 ${
             sidebarOpacity
               ? "translate-y-full opacity-0"
               : "translate-y-0 opacity-1"
           }`}
         >
-          <h1 className="dark:text-white text-lg text-black font-semibold border-customPurpleDark border-b-2">
+          <h1 className="text-lg dark:text-white text-black font-semibold border-customPurpleDark border-b-2">
             Your Liked Posts:
           </h1>
           <div
@@ -361,7 +361,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
                 return (
                   <div
                     key={notif.id}
-                    className=" shadow-xl bg-white rounded-xl dark:bg-darkModeLightGray  dark:shadow-notificationShadowPink ring-blue-700 p-1 mt-3"
+                    className=" shadow-xl bg-white rounded-xl dark:bg-darkModeDarkGray  dark:shadow-notificationShadowPink ring-blue-700 p-1 mt-3"
                   >
                     <div className="flex justify-between">
                       {" "}
@@ -409,7 +409,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
               }
               if (notif.type === "messageResponse") {
                 return (
-                  <div className=" shadow-xl bg-white rounded-xl dark:shadow-notificationShadowPink dark:bg-coolGray p-1 mt-3">
+                  <div className=" shadow-xl bg-white rounded-xl dark:shadow-notificationShadowPink dark:bg-darkModeDarkGray p-1 mt-3">
                     <div className="flex justify-between">
                       {" "}
                       <div className="flex">

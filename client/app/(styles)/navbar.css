@@ -6,9 +6,9 @@
     .sidebarIcon {
         @apply relative flex items-center justify-center
         h-12 w-12 mx-auto mt-3
-        hover:bg-mainDarkBlue dark:hover:bg-mainDarkPurple shadow-2xl
+        hover:bg-mainPurple dark:hover:bg-mainDarkPurple shadow-2xl
         rounded-3xl hover:rounded-xl transition-all duration-200
-        z-50 bg-mainBlue dark:bg-mainDarkPurple
+        z-50 bg-mainDarkPurple dark:bg-mainDarkPurple
     }
 
     .sidebarIconInfo {

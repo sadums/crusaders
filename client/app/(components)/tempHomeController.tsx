@@ -328,9 +328,9 @@ function HomeController() {
 
   return (
     // Original Background bg-gradient-to-tr from-lightestWhite via-slate-300 to-lightestWhite
-    <div className="homePageMainDiv bg-gradient-to-tr from-mediumWhite via-mediumWhite to-mediumWhite dark:from-darkModeDarkGray dark:to-darkModeDarkGray ml-20">
+    <div className="homePageMainDiv bg-gradient-to-tr from-mediumWhite via-mediumWhite to-mediumWhite dark:from-darkModeDarkestGray dark:to-darkModeDarkestGray ml-20">
       <div className="grid grid-cols-6 gap-4">
-        <div className="col-span-1 bg-mainBlue border-customPurpleDark border-r-[2px] dark:border-0 dark:bg-mainPurple">
+        <div className="col-span-1 bg-mainDarkPurple dark:bg-mainPurple border-customPurpleDark border-r-[2px] dark:border-0 ">
           <div className="bg-darkestWhite  dark:bg-darkModeMediumGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
         </div>
         <div className="col-span-3 pl-40">
@@ -553,7 +553,7 @@ function HomeController() {
                         />
                       </svg>
                       <h1 className="text-black text-[54px] dark:text-white">
-                        {singleUserData.getUserById.likes.length}
+                        {singleUserData ? singleUserData.getUserById.likes.length : "0"}
                       </h1>
                     </div>
                   </div>
