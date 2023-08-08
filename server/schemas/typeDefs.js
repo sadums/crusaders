@@ -82,7 +82,7 @@ const typeDefs = gql`
 
   type Mutation {
     unlikePost(postId: String!, userId: String!): Like
-    likePost(input: likePostInput!, postId: String!, userId: String!): Like
+    likePost(input: likePostInput, postId: String!, userId: String!): Like
     addComment(username: String!, body: String!, postId: String!): Post
     createUser(input: CreateUserInput!): AuthPayload
     addPost(input: newPostInput!, userId: ID!): Post

@@ -12,11 +12,6 @@ import { GET_USER_BY_ID, GET_POST } from "../GraphQL/queries";
 import { useMutation, useLazyQuery, useQuery } from "@apollo/client";
 import Auth from "../(utils)/auth";
 
-type Like = {
-  _id: string;
-  // ... other properties of a "Like"
-};
-
 interface ModalProps {
   postId: string;
   handleClose: () => void;
@@ -39,7 +34,7 @@ const PostModal: React.FC<ModalProps> = ({ postId, handleClose }) => {
   console.log(postData);
   //FIX HOW I SET THIS FOR TYPESCRIPT ECT
   const [showComments, setShowComments] = useState(false);
-  const [likeArrayState, setLikeArrayState] = useState<Like[]>([]);
+  const [likeArrayState, setLikeArrayState] = useState<any[]>([]);
   const [isPostLikedState, setIsPostLikedState] = useState<boolean>(false);
   const [commentState, setCommentState] = useState<any[]>();
   const [
@@ -109,13 +104,6 @@ const PostModal: React.FC<ModalProps> = ({ postId, handleClose }) => {
             variables: {
               postId: postId,
               userId: Auth.getProfile().data._id,
-              input: {
-                username: postData.getPost.user.username,
-                firstName: postData.getPost.user.firstName,
-                lastName: postData.getPost.user.lastName,
-                pfp: postData.getPost.pfp,
-                preview: postData.getPost.preview,
-              },
             },
           });
           console.log(postData.getPost.likes);
@@ -385,7 +373,7 @@ const PostModal: React.FC<ModalProps> = ({ postId, handleClose }) => {
                   </button>
                   <a
                     className="text-gray-700 text-sm dark:text-gray-500 cursor-pointer mr-2"
-                    onClick={() => likeClickHandlerFeedPosts()}
+                    onClick={likeClickHandlerFeedPosts}
                   >
                     {likeArrayState
                       ? `${likeArrayState.length} Likes`

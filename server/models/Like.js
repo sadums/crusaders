@@ -3,7 +3,6 @@ const { Schema, model } = require("mongoose");
 const likesSchema = new Schema({
     username: {
       type: String,
-      required: true
     },
     pfp: {
       type: String,
