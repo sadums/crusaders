@@ -3,18 +3,17 @@
 import "../(styles)/navbar.css";
 import { useState, useEffect } from "react";
 import ToggleSidebar from "./toggleSidebar";
+import SignInModal from "./signin";
+import SignUpModal from "./signup";
 import { render } from "react-dom";
 import Auth from "../(utils)/auth";
 
-interface NavbarProps {
-  setIsSignInModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsSignUpModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const Sidebar: React.FC<NavbarProps> = ({
-  setIsSignInModalOpen,
-  setIsSignUpModalOpen,
+const Sidebar = ({
 }) => {
+
+  const [isSignInModalOpen, setIsSignInModalOpen] = useState<boolean>(false);
+  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState<boolean>(false);
+
   const sidebarData = [
     {
       username: "Carreejoh",
@@ -523,7 +522,12 @@ const Sidebar: React.FC<NavbarProps> = ({
           </div>
         </div>
       </div>
-
+      {isSignUpModalOpen && (
+            <SignUpModal setIsSignUpModalOpen={setIsSignUpModalOpen} />
+          )}
+          {isSignInModalOpen && (
+            <SignInModal setIsSignInModalOpen={setIsSignInModalOpen} />
+          )}
       {/* For toggleSidebar */}
 
       {/* <div className={`top-0 left-0 w-[10vw] bg-blue-600  text-white fixed h-full z-10 ease-in-out duration-300 toggleSidebarMainDiv ${

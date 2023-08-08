@@ -157,7 +157,7 @@ export const ADD_COMMENT_TO_POST = gql`
 // `;
 
 export const LIKE_POST = gql`
-  mutation LikePost($input: likePostInput!, $postId: String!, $userId: String!) {
+  mutation LikePost($input: likePostInput, $postId: String!, $userId: String!) {
     likePost(input: $input, postId: $postId, userId: $userId) {
       _id
       user {
