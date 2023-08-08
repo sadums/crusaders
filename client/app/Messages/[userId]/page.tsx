@@ -1,4 +1,3 @@
-"use client";
 
 import "../(styles)/messages.css";
 import "../(styles)/homepage.css";
@@ -7,7 +6,6 @@ import Conversations from "../components/conversation";
 import { CHAT_SUBSCRIPTION } from "../GraphQL/subscriptions";
 import { useSubscription } from "@apollo/client";
 import Searchbar from "../components/searchbar";
-import FriendListItem from "../components/friendListItem";
 
 export const dynamic = "auto",
   dynamicParams = true,
@@ -309,29 +307,10 @@ export default function Messages() {
   ]);
   const [user, setUser] = useState("Nobody");
   const [textBox, setTextBox] = useState(false);
-  const [showTextarea, setShowTextarea] = useState(false);
-
-  useEffect(() => {
-    if (textBox) {
-      const timeoutId = setTimeout(() => {
-        setShowTextarea(true);
-      }, 200);
-
-      return () => {
-        clearTimeout(timeoutId);
-        setShowTextarea(false);
-      };
-    }
-  }, [textBox]);
-
-  //   const setUserHandler = (newUser: string) => {
-  //     setUser(newUser);
-  //   };
 
   useEffect(() => {
     let newConvo = tempFriendLinks
       .filter((friend) => friend.username === user)
-      // .filter((friend) => friend.pfp === pfp)
       .map((friend) => friend.convo)
       .flat();
     console.log(newConvo);
@@ -339,111 +318,151 @@ export default function Messages() {
   }, [user]);
 
   return (
-    <div className="col-span-4 h-full">
-      <div className="flex">
-        <div className="mt-4 pl-32">
-          <div className="w-72 pr-2 pl-2">
-            <h1 className="mb-1 font-semibold text-xl dark:text-white text-black">Find Someone</h1>
-            <Searchbar />
-          </div>
-          <div className="mt-4 flex-column bottom-0 ">
-          <h2 className="pl-2 mb-1 font-semibold text-xl dark:text-white text-black">Your Friends</h2>
-            <div className="overflow-y-scroll h-[81vh] friendListMessages">
-            {tempFriendLinks.map((friend, index) => (
-              <FriendListItem
-                username={friend.username}
-                firstname={friend.firstname}
-                lastname={friend.lastname}
-                pfp={friend.pfp}
-                key={index}
-                setUser={setUser}
-              />
-            ))}
-            </div>
-          </div>
+    <div className="ml-20 bg-gradient-to-tr from-mediumWhite via-mediumWhite to-mediumWhite dark:from-black dark:to-black">
+      <div className="grid grid-cols-6 gap-4 h-[97vh]">
+        <div className="col-span-1 bg-mainDarkPurple dark:bg-mainPurple border-customPurpleDark border-r-[2px] dark:border-0 ">
+          <div className="bg-darkestWhite  dark:bg-darkModeDarkestGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
         </div>
-        <div className="relative w-full mt-4 ml-4 border-2 bg-white dark:bg-darkModeDarkGray border-mainDarkPurple flex flex-col ">
-          <Conversations pfp={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.2ttZm63g10QST-zUfee9bAHaHa%26pid%3DApi&f=1&ipt=2a2e9a8ed813a72d1e579820ca1d4eedbba93128fafac81acac7c6a220bfee88&ipo=images"} user={user} convo={userConvo} />
-          <div
-            className={`absolute bottom-0 w-full transition-all duration-200 dark:bg-darkModeDarkGray bg-darkestWhite  bg-opacity-80 ease-in-out ${
-              textBox ? "h-40" : "h-16"
-            }`}
-          >
-            <div
-              className={`${
-                textBox ? "hidden" : "block"
-              } flex h-full justify-center items-center border-t-2 border-mainDarkPurple`}
-            >
-              <button onClick={() => setTextBox(!textBox)} className="rounded-full bg-gradient-to-tr p-2 to-lightPink from-mainPurple hover:scale-110 hover:bg-blue-800 ease-in-out duration-100">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-8 h-8"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div
-              className={`${
-                textBox ? "block" : "hidden"
-              } transition-all ease-in-out duration-300`}
-            >
-              <div className="flex justify-end">
-                <button
-                  onClick={() => setTextBox(!textBox)}
-                  className="text-black dark:text-white"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
+
+        <div className="col-span-4 h-full">
+          <div className="flex">
+            <div className="mt-20 pl-32">
+              <div className="w-72 pr-2 pl-2">
+                <Searchbar />
               </div>
-              {showTextarea && (
-                <div className="pl-2 pr-2 pb-2">
-                  <form className="w-full flex ease-in-out relative transition-all">
-                    <textarea placeholder="Your Message, 280 max characters" className="max-h-28 p-1 w-[80%] h-28 text-black dark:text-white text-sm"></textarea>
-                    <button className="rounded-full absolute bottom-0 right-24 mb-0 h-12 w-12 bg-blue-600 dark:bg-blue-600 flex justify-center items-center hover:scale-110 hover:bg-blue-800 ease-in-out duration-100">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-8 h-8 transform rotate-[-35deg]"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-                        />
-                      </svg>
-                    </button>
-                  </form>
-                </div>
-              )}
+              <div className="mt-4 flex-column overflow-y-scroll bottom-0 h-[82vh] friendListMessages">
+                {tempFriendLinks.map((friend, index) => (
+                  <div
+                    key={index}
+                    className="align-center mt-1 shadow-2xl bg-white dark:bg-darkModeDarkGray p-2 duration-150 ease-in-out scale-95 hover:scale-100"
+                  >
+                    <div className="flex">
+                      <a className="cursor-pointer">
+                        <img
+                          src={friend.pfp}
+                          className="h-12 w-12 rounded-full object-cover border-customPurple border-2"
+                        ></img>
+                      </a>
+                      <div className="items-center  align-center h-full">
+                        <h2 className="text-md cursor-pointer text-black font-semibold dark:text-white ml-1">
+                          {`${friend.firstname} ${friend.lastname}`}
+                        </h2>
+                        <div>
+                          <a
+                            href="#"
+                            className="text-gray-500 cursor-pointer text-md ml-1 py-2"
+                            aria-current="page"
+                          >
+                            @{friend.username}
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
+            <div className="w-full mt-20 ml-4 border-2 border-black"></div>
           </div>
         </div>
+        <div className="col-span-1"></div>
       </div>
     </div>
+
+    // <div className="ml-20 bg-gradient-to-tr from-mediumWhite via-mediumWhite to-mediumWhite dark:from-black dark:to-black">
+    //   <div className="grid grid-cols-6 gap-4 bottom-0">
+    //     <div className="col-span-1 bg-mainDarkPurple dark:bg-mainPurple border-customPurpleDark border-r-[2px] dark:border-0 ">
+    //       <div className="bg-darkestWhite  dark:bg-darkModeDarkestGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
+    //     </div>
+    //     {/* <div className="col-span-5 pl-40 pr-24 mt-4">
+
+    //     </div> */}
+    //     <div className="col-span-2">
+    //       <div className="mt-4 flex-column border-coolGray border-b-2 pb-4">
+    //         {tempFriendLinks.map((friend) => (
+    //           <a
+    //             onClick={() => setUser(friend.username)}
+    //             key={friend.username}
+    //             className="mr-3 overflow-x-hidden cursor-pointer hover:scale-110 duration-150 ease-in-out"
+    //           >
+    //             <img
+    //               src={friend.pfp}
+    //               className="h-20 w-20 rounded-full object-cover border-customPurple border-2"
+    //             ></img>
+    //           </a>
+    //         ))}
+    //       </div>
+    //     </div>
+    //     <div className="col-span-3">
+    //       <div className="w-[50%] pt-4 ml-[25%] border-coolGray border-r-2 border-l-2 relative flex flex-col">
+    //         <div className="overflow-y-scroll pb-16 conversationDiv">
+    //           <Conversations user={user} convo={userConvo} />
+    //         </div>
+    //         <div
+    //           className={`w-[100%] bottom-0 left-0 p-3 flex bg-darkCoolGray ease-in-out duration-200
+    //         ${
+    //           textBox
+    //             ? "h-72 bg-opacity-90"
+    //             : "h-[6.5vh] justify-center bg-opacity-90"
+    //         }`}
+    //         >
+    //           <button
+    //             onClick={() => setTextBox(!textBox)}
+    //             className={`text-black rounded-xl h-9 p-1 border-2 border-customPurple bg-customPurple ${
+    //               textBox ? "hidden" : "block"
+    //             }`}
+    //           >
+    //             Send a message
+    //           </button>
+    //           <div
+    //             className={`w-[100%] h-[100%] justify-between ${
+    //               textBox ? "block" : "hidden"
+    //             }`}
+    //           >
+    //             <button
+    //               onClick={() => setTextBox(!textBox)}
+    //               className={`top-0 h-4 right-0 relative ml-[96%] ${
+    //                 textBox ? "block" : "hidden"
+    //               }`}
+    //             >
+    //               <svg
+    //                 xmlns="http://www.w3.org/2000/svg"
+    //                 fill="none"
+    //                 viewBox="0 0 24 24"
+    //                 strokeWidth={1.5}
+    //                 stroke="currentColor"
+    //                 className="w-6 h-6"
+    //               >
+    //                 <path
+    //                   strokeLinecap="round"
+    //                   strokeLinejoin="round"
+    //                   d="M6 18L18 6M6 6l12 12"
+    //                 />
+    //               </svg>
+    //             </button>
+
+    //             <textarea className="bg-transparent border-solid border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[80%] h-20"></textarea>
+    //             <button className=" rounded-full h-10 w-10 ">
+    //               <svg
+    //                 xmlns="http://www.w3.org/2000/svg"
+    //                 fill="none"
+    //                 viewBox="0 0 24 24"
+    //                 strokeWidth={1.5}
+    //                 stroke="currentColor"
+    //                 className="w-6 h-6"
+    //               >
+    //                 <path
+    //                   strokeLinecap="round"
+    //                   strokeLinejoin="round"
+    //                   d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+    //                 />
+    //               </svg>
+    //             </button>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
   );
 }
