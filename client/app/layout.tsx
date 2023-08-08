@@ -21,12 +21,12 @@ import Sidebar from "../app/components/sidebar";
 import client from "./apollo-client";
 import Loading from "./loading";
 
-export const dynamic = 'auto',
-dynamicParams = true,
-revalidate = Infinity,
-fetchCache = 'auto',
-runtime = 'nodejs',
-preferredRegion = 'auto'
+export const dynamic = "auto",
+  dynamicParams = true,
+  revalidate = Infinity,
+  fetchCache = "auto",
+  runtime = "nodejs",
+  preferredRegion = "auto";
 
 const authLink = setContext((_, { headers }) => {
   //This authLink is middleware that inercepts the out going GraphQL requests and attaches an Authorization header to it
@@ -75,9 +75,7 @@ export default function RootLayout({
             setIsSignInModalOpen={setIsSignInModalOpen}
             setIsSignUpModalOpen={setIsSignUpModalOpen}
           />
-          <div>
-          {children}
-          </div>
+          <div>{children}</div>
           {/* <Footer></Footer> */}
           {isSignUpModalOpen && (
             <SignUpModal setIsSignUpModalOpen={setIsSignUpModalOpen} />
@@ -87,7 +85,6 @@ export default function RootLayout({
           )}
         </body>
       </html>
-     </ApolloProvider>
+    </ApolloProvider>
   );
 }
-
