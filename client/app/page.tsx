@@ -63,7 +63,9 @@ function HomeController() {
     data: allPostsData,
   } = useQuery(GET_ALL_POSTS);
 
-  console.log(allPostsData);
+  console.log(allPostsData)
+
+
   const [createPostDiv, showCreatePostDiv] = useState(false);
   const [showModalState, setShowModalState] = useState(false);
   const [showLikeModalState, setShowLikeModalState] = useState(false);
