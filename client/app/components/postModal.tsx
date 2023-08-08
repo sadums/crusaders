@@ -5,8 +5,8 @@ import {
   ADD_COMMENT_TO_POST,
   LIKE_POST,
   UNLIKE_POST,
-} from "../(GraphQL)/mutations";
-import { GET_USER_BY_ID, GET_POST } from "../(GraphQL)/queries";
+} from "../GraphQL/mutations";
+import { GET_USER_BY_ID, GET_POST } from "../GraphQL/queries";
 import { useMutation, useLazyQuery, useQuery } from "@apollo/client";
 import Auth from "../(utils)/auth";
 
