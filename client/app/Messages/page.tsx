@@ -45,6 +45,7 @@ export default function Messages() {
         {
           speaker: true,
           message: "Yeah brother",
+          date: "08/02/2023",
         },
       ],
       newMessage: false,
@@ -58,19 +59,23 @@ export default function Messages() {
         {
           speaker: false,
           message: "I love OceanGate",
+          date: "08/01/2023",
         },
         {
           speaker: true,
           message:
             "Me too, lololo lolol olol olo lasdf asd fsd fs dfa sdf asd fasd fas dfa sdfasdfasdfasd fasdfasdfa sdfdsfdsds as dfasdf asdfsdfs dsfdfdsdfa",
+          date: "08/01/2023",
         },
         {
           speaker: false,
           message: "That sucks ass man",
+          date: "08/01/2023",
         },
         {
           speaker: true,
           message: "Yeah brother",
+          date: "08/02/2023",
         },
       ],
       newMessage: true,
@@ -132,23 +137,28 @@ export default function Messages() {
         {
           speaker: true,
           message: "Yeah brother",
+          date: "08/01/2023",
         },
         {
           speaker: false,
           message: "I love OceanGate",
+          date: "08/01/2023",
         },
         {
           speaker: false,
           message:
             "Me too, lololo lolol olol olo lasdf asd fsd fs dfa sdf asd fasd fas dfa sdfasdfasdfasd fasdfasdfa sdfdsfdsds as dfasdf asdfsdfs dsfdfdsdfa",
+          date: "08/01/2023",
         },
         {
           speaker: true,
           message: "That sucks ass man",
+          date: "08/02/2023",
         },
         {
           speaker: false,
           message: "Yeah brother",
+          date: "08/02/2023",
         },
         {
           speaker: true,
@@ -158,15 +168,28 @@ export default function Messages() {
         {
           speaker: true,
           message: "Yeah brother",
+          date: "08/01/2023",
         },
         {
           speaker: true,
           message:
             "Whats good my guy, React is dank, I need to make this sentence logn enough so that it will wrap around and make a full semi paragraph so I can style it",
+          date: "08/01/2023",
         },
         {
           speaker: true,
           message: "Yeah brother",
+        },
+        {
+          speaker: false,
+          message:
+            "Whats good my guy, React is dank, I need to make this sentence logn enough so that it will wrap around and make a full semi paragraph so I can style it",
+        },
+        {
+          speaker: false,
+          message:
+            "Whats good my guy, React is dank, I need to make this sentence logn enough so that it will wrap around and make a full semi paragraph so I can style it",
+          date: "08/05/2023",
         },
       ],
       newMessage: true,
@@ -368,8 +391,8 @@ export default function Messages() {
         </div>
       </div>
 
-      <div className="col-span-5 h-[97vh] mr-20">
-        <div className="relative w-full ml-4 flex flex-col ">
+      <div className="col-span-5 border-mainDarkPurple dark:border-mainPurple border-l-2 border-r-2 h-[97vh]">
+        <div className="relative w-full flex flex-col ">
           <Conversations
             pfp={
               "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.2ttZm63g10QST-zUfee9bAHaHa%26pid%3DApi&f=1&ipt=2a2e9a8ed813a72d1e579820ca1d4eedbba93128fafac81acac7c6a220bfee88&ipo=images"
@@ -377,43 +400,48 @@ export default function Messages() {
             user={user}
             convo={userConvo}
           />
+
           <div
-            className={`absolute bottom-0 w-full min-w-32 transition-all duration-200  dark:bg-black dark:bg-opacity-70 ease-in-out ${
-              textBox ? "h-40 bg-black bg-opacity-30" : "h-16"
+            className={`${
+              textBox ? "hidden" : "block"
+            } absolute bottom-0 flex w-40 p-2 mb-6 ml-4 rounded-xl bg-darkestWhite dark:bg-darkModeDarkGray ease-in-out duration-150 translate`}
+          >
+            <button
+              onClick={() => setTextBox(!textBox)}
+              className="z-20 cursor-pointer flex justify-between items-center h-10 px-4 mt-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300"
+            >
+              <h1 className="text-lg mr-5 text-white">Chat</h1>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className=" top-2 right-2 w-4 h-4 text-white"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div
+            className={`absolute bottom-0 transition-all duration-100 ease-in-out ${
+              textBox
+                ? "h-40 bg-darkestWhite bg-opacity-80 dark:bg-darkModeDarkGray dark:bg-opacity-80 w-full"
+                : "h-16 bg-transparent dark:bg-opacity-70 bg-opacity-70 w-[80%]"
             }`}
           >
-            <div
-              className={`${
-                textBox ? "hidden" : "block"
-              } flex h-full w-32 pl-4 `}
-            >
-              <button
-                onClick={() => setTextBox(!textBox)}
-                className="relative flex justify-between items-center ml-2 h-8 mr-2 px-4 mt-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="absolute top-2 right-2 w-4 h-4 text-white"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
-                  />
-                </svg>
-                <h1 className="text-lg mr-5 text-white">Chat</h1>
-              </button>
-            </div>
             <div
               className={`${
                 textBox ? "block" : "hidden"
               } transition-all ease-in-out duration-300`}
             >
-              <div className="flex justify-end">
+              <div className="flex justify-between p-2">
+              <h1 className="text-black dark:text-white pl-2">Your Message</h1>
                 <button
                   onClick={() => setTextBox(!textBox)}
                   className="text-black dark:text-white"
@@ -439,16 +467,16 @@ export default function Messages() {
                   <form className="w-full flex relative transition-all">
                     <textarea
                       placeholder="Your Message, 280 max characters"
-                      className="max-h-28 p-1 w-[80%] h-28 text-black dark:text-white text-sm"
+                      className="rounded-lg max-h-28 p-1 w-[80%] min-h-16 h-20 outline-none bg-white dark:bg-darkModeDarkGray text-black dark:text-white text-sm"
                     ></textarea>
-                    <button className="rounded-full absolute bottom-0 right-24 mb-0 h-12 w-12 bg-blue-600 dark:bg-blue-600 flex justify-center items-center hover:scale-110 hover:bg-blue-800 ease-in-out duration-100">
+                    <button className="rounded-full bottom-0 mb-0 ml-2 mt-10 h-10 w-10 bg-mainPurple dark:bg-mainPurple flex justify-center items-center hover:scale-110 hover:bg-blue-800 ease-in-out duration-100">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
                         strokeWidth={1.5}
                         stroke="currentColor"
-                        className="w-8 h-8 transform rotate-[-35deg]"
+                        className="w-7 h-7 transform rotate-[-35deg]"
                       >
                         <path
                           strokeLinecap="round"

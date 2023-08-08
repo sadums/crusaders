@@ -5,6 +5,7 @@ import client from "./apollo-client";
 import { Metadata } from "next";
 import dynamic from 'next/dynamic';
 
+
 // Load Sidebar dynamically and only on the client side
 const Sidebar = dynamic(() => import('../app/components/sidebar'), {
   ssr: false
@@ -44,3 +45,4 @@ function RootLayout({ children }: { children: React.ReactNode; }) {
 }
 
 export default RootLayout;
+
