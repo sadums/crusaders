@@ -173,6 +173,7 @@ export const GET_ALL_FOLLOWERS = gql`
     getAllUsers {
       _id
       username
+      pfp
     }
   }
 `;

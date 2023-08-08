@@ -175,27 +175,27 @@ function SinglePost(post: {
       console.error(err);
     }
   };
+  const setTheState = async () => {
+    try {
+      setCommentState(post.post.comments);
+      console.log(post.post.likes);
+      if (Auth.loggedIn()) {
+        const isLiked = post.post.likes.some(
+          (like: { user: { _id: any } }) =>
+            like.user._id === Auth.getProfile().data._id
+        );
+        console.log(isLiked);
+        setIsPostLikedState(isLiked);
+      } else {
+        setIsPostLikedState(false);
+      }
+      setLikeArrayState(post.post.likes);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
-    const setTheState = async () => {
-      try {
-        setCommentState(post.post.comments);
-        console.log(post.post.likes);
-        if (Auth.loggedIn()) {
-          const isLiked = post.post.likes.some(
-            (like: { user: { _id: any } }) =>
-              like.user._id === Auth.getProfile().data._id
-          );
-          console.log(isLiked);
-          setIsPostLikedState(isLiked);
-        } else {
-          setIsPostLikedState(false);
-        }
-        setLikeArrayState(post.post.likes);
-      } catch (err) {
-        console.error(err);
-      }
-    };
     setTheState();
   }, []);
 
@@ -411,6 +411,7 @@ function SinglePost(post: {
           postId={activePostId}
           handleClose={function (): void {
             setShowModalState(false);
+            setTheState();
           }}
         />
       )}

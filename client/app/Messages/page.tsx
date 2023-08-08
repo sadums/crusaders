@@ -3,7 +3,7 @@
 import "../(styles)/messages.css";
 import "../(styles)/homepage.css";
 import { useEffect, useState } from "react";
-import Conversations from "../components/conversation";
+import Conversations from "./messagesComponents/conversation";
 import { CHAT_SUBSCRIPTION } from "../GraphQL/subscriptions";
 import { useSubscription } from "@apollo/client";
 import Searchbar from "../components/searchbar";
@@ -364,18 +364,18 @@ export default function Messages() {
   return (
     <>
       <div className="col-span-3 h-[97vh] flex-grow-1">
-        <div className="flex-col pl-32">
+        <div className="flex-col pl-40">
           <div className="w-72 pr-2 mt-16 pl-2">
             <h1 className="mb-1 font-semibold text-xl dark:text-white text-black">
               Find Someone
             </h1>
             <Searchbar />
           </div>
-          <div className="mt-4 flex-column bottom-0 flex-grow-1">
-            <h2 className="pl-2 mb-1 font-semibold text-xl dark:text-white text-black">
+          <div className="bg-darkestWhite dark:bg-darkModeDarkestGray rounded-xl p-2 mt-4 flex-column bottom-0 flex-grow-1">
+            <h2 className="mb-2 font-semibold text-xl dark:text-white text-black">
               Your Friends
             </h2>
-            <div className="overflow-y-scroll h-[60vh] friendListMessages">
+            <div className="overflow-y-scroll h-[73.5vh] friendListMessages">
               {tempFriendLinks.map((friend, index) => (
                 <FriendListItem
                   username={friend.username}
@@ -404,7 +404,7 @@ export default function Messages() {
           <div
             className={`${
               textBox ? "hidden" : "block"
-            } absolute bottom-0 flex w-40 p-2 mb-6 ml-4 rounded-xl bg-darkestWhite dark:bg-darkModeDarkGray ease-in-out duration-150 translate`}
+            } absolute bottom-0 flex w-40 p-2 mb-6 ml-4 rounded-xl bg-opacity-90 dark:bg-opacity-90 bg-darkestWhite dark:bg-darkModeDarkGray ease-in-out duration-150 translate`}
           >
             <button
               onClick={() => setTextBox(!textBox)}

@@ -12,7 +12,7 @@ interface ModalProps {
 
 function FriendListItem({ username, firstname, lastname, pfp, setUser }: ModalProps) {
   return (
-    <div onClick={() => setUser(username)} className="align-center mt-1 shadow-2xl dark:notificationShadowPink cursor-pointer bg-white dark:bg-darkModeDarkGray p-2 duration-150 ease-in-out scale-95 hover:scale-100">
+    <div onClick={() => setUser(username)} className="align-center mt-1 shadow-2xl rounded-lg cursor-pointer bg-white dark:bg-darkModeDarkGray p-2 duration-150 ease-in-out scale-95 hover:scale-100">
       <div className="flex">
         <a className="cursor-pointer">
           <img

@@ -75,13 +75,15 @@ export const ADD_POST = gql`
   mutation AddPost($userId: ID!, $input: newPostInput!) {
     addPost(userId: $userId, input: $input) {
       _id
-      media
+      preview
       title
       body
       createdAt
-      hashtags {
-        hashtagText
-        category
+      comments {
+        _id
+        body
+        createdAt
+        username
       }
       user {
         _id
@@ -89,6 +91,13 @@ export const ADD_POST = gql`
         pfp
         firstName
         lastName
+      }
+      hashtags {
+        hashtagText
+        category
+      }
+      likes {
+        _id
       }
     }
   }

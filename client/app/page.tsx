@@ -1,12 +1,9 @@
 "use client";
 
 import "./(styles)/homepage.css";
-import { Key } from "react";
+import { Key, useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
-import {
-  GET_ALL_FOLLOWERS,
-  GET_ALL_POSTS,
-} from "./GraphQL/queries";
+import { GET_ALL_POSTS } from "./GraphQL/queries";
 import Auth from "./(utils)/auth";
 import Widgets from "./components/homepage/widgets";
 import CreateAPost from "./components/homepage/createAPost";
@@ -19,6 +16,14 @@ const HomeController: React.FC = () => {
     data: allPostsData,
   } = useQuery(GET_ALL_POSTS);
 
+  const [displayPosts, setDisplayPosts] = useState<any[] | null>(null);
+
+  useEffect(() => {
+    if (allPostsData) {
+      setDisplayPosts([...allPostsData.getAllPosts].reverse());
+    }
+  }, [allPostsData]);
+
   return (
     // Original Background bg-gradient-to-tr from-lightestWhite via-slate-300 to-lightestWhite
     <div className="homePageMainDiv bg-gradient-to-tr from-mediumWhite via-mediumWhite to-mediumWhite dark:from-black dark:to-black ml-20">
@@ -29,20 +34,18 @@ const HomeController: React.FC = () => {
         <div className="col-span-3 pl-40">
           <div className="homePageFeedMainDiv bg- pl-2 pr-2 border-customPurpleDark dark:border-customPurple">
             <div className="feedPostsTop"></div>
-            {allPostsData
-              ? allPostsData.getAllPosts.map(
-                  (post: any, index: Key | null | undefined) => (
-                    <SinglePost post={post} key={index} />
-                  )
-                )
+            {displayPosts
+              ? displayPosts.map((post: any, index: Key | null | undefined) => (
+                  <SinglePost post={post} key={index} />
+                ))
               : null}
           </div>
         </div>
         {Auth.loggedIn() && (
           <div className="col-span-2 mt-4">
             <div className="homepageInfoMainDiv">
-              <CreateAPost />
-              <Widgets />
+              <CreateAPost setDisplayPosts={setDisplayPosts} />
+              <Widgets displayPosts={displayPosts}/>
             </div>
           </div>
         )}
