@@ -1,7 +1,7 @@
 "use client";
 import LikeFollowerModal from "./likeFollowerFollowingModal";
 import React, { useState, useEffect } from "react";
-import { ADD_COMMENT, LIKE_POST, UNLIKE_POST } from "../GraphQL/mutations";
+import { ADD_COMMENT, LIKE_POST, UNLIKE_POST, FOLLOW_USER, UNFOLLOW_USER } from "../GraphQL/mutations";
 import { GET_USER_BY_ID } from "../GraphQL/queries";
 import { useMutation, useLazyQuery } from "@apollo/client";
 import Auth from "../(utils)/auth";
@@ -79,6 +79,8 @@ const PostModal: React.FC<ModalProps> = ({
   });
   const [likePost, { data: likeData }] = useMutation(LIKE_POST);
   const [unlikePost, { data: unlikeData }] = useMutation(UNLIKE_POST);
+  const [followUser, { data: followData }] = useMutation(FOLLOW_USER);
+  const [unfollowUser, { data: unfollowData }] = useMutation(UNFOLLOW_USER);
 
   const isVideo = media.endsWith(".mp4");
 
