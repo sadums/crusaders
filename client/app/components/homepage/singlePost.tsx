@@ -19,6 +19,7 @@ function SinglePost(post: {
     comments: SetStateAction<any[]>;
     likes: any[];
     user: {
+      _id: string,
       pfp: string | undefined;
       firstName: any;
       lastName: any;
@@ -35,7 +36,8 @@ function SinglePost(post: {
   const [likePost, { loading: likeLoading, error: likeError, data: likeData }] =
     useMutation(LIKE_POST);
   const [unlikePost, { data: unlikeData }] = useMutation(UNLIKE_POST);
-
+  const [followUser, { data: followData }] = useMutation(FOLLOW_USER);
+  const [unfollowUser, { data: unfollowData }] = useMutation(UNFOLLOW_USER);
   const [
     addComment,
     { data: commentData, loading: commentLoading, error: commentError },
@@ -64,7 +66,7 @@ function SinglePost(post: {
 
   const likeClickHandlerFeedPosts = () => {
     if (likeArrayState.length) {
-        setShowLikeModalState(true);
+      setShowLikeModalState(true);
     } else {
       alert(`Post doesn't have any likes`);
     }
@@ -119,7 +121,25 @@ function SinglePost(post: {
       console.error(err);
     }
   };
+  const followHandler = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      if (Auth.loggedIn()) {
+        const target = event.target as HTMLFormElement;
+        const response = await followUser({
+          variables:{
+            userId: post.post.user._id,
+            followerId: Auth.getProfile().data._id,
+          }
+        });
 
+      } else {
+        alert("Sign in to follow someone");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
   const postCommentHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
@@ -202,7 +222,10 @@ function SinglePost(post: {
             </div>
           </div>
           <div className="my-auto">
-            <button className=" font-semibold  text-neonBlue p-[1px] pl-2 pr-2 rounded-md">
+            <button
+              className=" font-semibold  text-neonBlue p-[1px] pl-2 pr-2 rounded-md"
+              onClick={(e) => followHandler(e)}
+            >
               Follow
             </button>
           </div>
