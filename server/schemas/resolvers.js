@@ -187,7 +187,7 @@ const resolvers = {
     },
     likePost: async (parent, { input, postId, userId }, context, info) => {
       try {
-        const { username, pfp, firstName, lastName, preview } = input;
+        // const { username, pfp, firstName, lastName, preview } = input;
 
         console.log(postId)
         console.log(userId)
@@ -201,11 +201,11 @@ const resolvers = {
         const newLike = new Like({
           user: new mongoose.Types.ObjectId(userId),
           post: new mongoose.Types.ObjectId(postId),
-          username,
-          pfp,
-          firstName,
-          lastName,
-          preview,
+          // username,
+          // pfp,
+          // firstName,
+          // lastName,
+          // preview,
         });
         await newLike.save();
 
