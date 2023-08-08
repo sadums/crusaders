@@ -40,7 +40,7 @@ export default function Profile() {
       userId: id,
     },
   });
-
+console.log(error);
 
   const [showModalState, setShowModalState] = useState(false);
   const [activePostId, setActivePostId] = useState<string>('');

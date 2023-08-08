@@ -35,12 +35,20 @@ const resolvers = {
       }
     },
     getUserById: async (parent, { userId }, context) => {
+      console.log(userId);
+      console.log("HERE");
       const user = await User.findById(userId).populate({
         path: "posts",
         populate: {
           path: "user",
         },
-      });
+      })
+      .populate({
+        path:"likes",
+        populate: {
+          path: "post"
+        }
+      })
       if (!user) {
         throw new Error("Could not find this user");
       }
@@ -210,12 +218,11 @@ const resolvers = {
           userId,
           {
             $push: {
-              likes: newLike._id
+              likes: newLike._id,
             },
           },
           { new: true }
         );
-        
 
         if (!updatedUser) {
           throw new Error("User who liked the post not found.");
