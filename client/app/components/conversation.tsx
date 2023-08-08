@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import TheirText from "./theirTextComponent";
 import YourText from "./yourTextComponent";
 
@@ -16,7 +17,18 @@ function Conversations({
   pfp: string;
 }) {
   const buildConversation = () => {
+
+
+    const [nobodyChat, activateNobodyChat] = useState(false)
+
+    useEffect(() => {
+
+    }, [])
+
     if (user === "Nobody") {
+
+      activateNobodyChat(!nobodyChat);
+
       return (
         <>
         {/* <div className="flex w-full h-16 p-2 justify-center darkModeGradientOpacity items-center">
