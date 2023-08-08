@@ -19,7 +19,7 @@ function Conversations({
     if (user === "Nobody") {
       return (
         <>
-        <div className="flex w-full h-16 p-2 justify-center border-b-2 bg-darkestWhite dark:bg-darkModeDarkGray border-mainDarkPurple items-center">
+        {/* <div className="flex w-full h-16 p-2 justify-center darkModeGradientOpacity items-center">
             <div className="flex items-center h-full">
               <div>
                 <a
@@ -31,8 +31,8 @@ function Conversations({
                 </a>
               </div>
             </div>
-          </div>
-          <div className="w-[100%] p-2 overflow-y-scroll friendListMessages bg-white dark:bg-darkModeDarkestGray pb-32 h-[82vh]">
+          </div> */}
+          <div className="w-[100%] p-2 overflow-y-scroll friendListMessages  pb-32 h-[97vh]">
             
           </div>
         </>
@@ -40,16 +40,16 @@ function Conversations({
     }
     if (!convo[0]) {
       return (
-        <h1 className="text-black dark:text-white text-center">
-          You have no messages with this user
-        </h1>
+        <div className="w-[100%] p-2 overflow-y-scroll friendListMessages  pb-32 h-[97vh]">
+            
+          </div>
       );
     } else {
       return (
-        <>
-          <div className="flex w-full h-16 p-2 justify-center border-b-2 bg-darkestWhite dark:bg-darkModeDarkGray border-mainDarkPurple items-center">
-            <div className="flex items-center h-full">
-              <div>
+        <div className="bg-transparent">
+          {/* <div className="flex w-full p-2 bg-transparent ">
+            <div className="flex items-center bg-transparent h-full">
+              <div className="bg-transparent">
                 <a
                   href="#"
                   className="text-black dark:text-white font-semibold cursor-pointer text-xl mr-2 py-2"
@@ -65,9 +65,9 @@ function Conversations({
                 ></img>
               </a>
             </div>
-          </div>
+          </div> */}
 
-          <div className="w-[100%] p-2 overflow-y-scroll friendListMessages bg-white dark:bg-darkModeDarkestGray pb-32 h-[82vh]">
+          <div className="w-[100%] p-2 overflow-y-scroll friendListMessages pt-0 pb-40 h-[97vh]">
             {convo.map((text, index) => {
               if (text.speaker === true) {
                 return <YourText text={text.message} key={index} />;
@@ -77,7 +77,7 @@ function Conversations({
               }
             })}
           </div>
-        </>
+        </div>
       );
     }
   };

@@ -206,10 +206,10 @@ function HomeController() {
 
   return (
     // Original Background bg-gradient-to-tr from-lightestWhite via-slate-300 to-lightestWhite
-    <div className="homePageMainDiv bg-gradient-to-tr from-mediumWhite via-mediumWhite to-mediumWhite dark:from-darkModeDarkGray dark:to-darkModeDarkGray ml-20">
+    <div className="homePageMainDiv bg-gradient-to-tr from-mediumWhite via-mediumWhite to-mediumWhite dark:from-black dark:to-black ml-20">
       <div className="grid grid-cols-6 gap-4">
-        <div className="col-span-1 bg-mainBlue border-customPurpleDark border-r-[2px] dark:border-0 dark:bg-mainPurple">
-          <div className="bg-darkestWhite  dark:bg-darkModeMediumGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
+        <div className="col-span-1 bg-mainDarkPurple border-customPurpleDark border-r-[2px] dark:border-0 dark:bg-mainPurple">
+          <div className="bg-darkestWhite  dark:bg-darkModeDarkestGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
         </div>
         <div className="col-span-3 pl-40">
           <div className="homePageFeedMainDiv bg- pl-2 pr-2 border-customPurpleDark dark:border-customPurple">
@@ -260,7 +260,7 @@ function HomeController() {
                     <div className="">
                       <button
                         className={`absolute top-0 right-0 z-50 dark:text-white text-black ${
-                          createPostDiv ? "scale-100" : "scale-0"
+                          createPostDiv ? "block" : "hidden"
                         }`}
                         onClick={() => {
                           showCreatePostDiv(!createPostDiv);
@@ -432,9 +432,9 @@ function HomeController() {
                         />
                       </svg>
                       <h1 className="text-black text-[54px] dark:text-white">
-                        {singleUserData
+                        {/* {singleUserData
                           ? likeCount || singleUserData.getUserById.likes.length
-                          : "0"}
+                          : "0"} */}
                       </h1>
                     </div>
                   </div>
@@ -463,7 +463,7 @@ function HomeController() {
                         </svg>
 
                         <h1 className="text-black text-[54px] dark:text-white">
-                          {singleUserData.getUserById ? singleUserData.getUserById.posts.length : '0'}
+                          {/* {singleUserData.getUserById ? singleUserData.getUserById.posts.length : '0'} */}
                         </h1>
                       </div>
                     </div>
