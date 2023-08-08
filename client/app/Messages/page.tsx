@@ -371,11 +371,11 @@ export default function Messages() {
             </h1>
             <Searchbar />
           </div>
-          <div className="bg-white dark:bg-darkModeDarkGray p-2 mt-4 flex-column bottom-0 flex-grow-1">
-            <h2 className="mb-1 font-semibold text-xl dark:text-white text-black">
+          <div className="bg-darkestWhite dark:bg-darkModeDarkestGray rounded-xl p-2 mt-4 flex-column bottom-0 flex-grow-1">
+            <h2 className="mb-2 font-semibold text-xl dark:text-white text-black">
               Your Friends
             </h2>
-            <div className="overflow-y-scroll h-[60vh] friendListMessages">
+            <div className="overflow-y-scroll h-[73.5vh] friendListMessages">
               {tempFriendLinks.map((friend, index) => (
                 <FriendListItem
                   username={friend.username}
