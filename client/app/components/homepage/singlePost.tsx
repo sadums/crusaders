@@ -200,8 +200,8 @@ function SinglePost(post: {
   }, []);
 
 
-  let isFollowing = false;
   const userId = Auth.getProfile().data._id;
+  let isFollowing = userId === post.post.user._id;
   for(const follower in post.post.user.followers){
     if(post.post.user.followers[follower]._id === userId) isFollowing = true;
   }
@@ -231,7 +231,7 @@ function SinglePost(post: {
               </div>
             </div>
           </div>
-          {!isFollowing && <div className="my-auto">
+          {(!isFollowing) && <div className="my-auto">
             <button
               className=" font-semibold  text-neonBlue p-[1px] pl-2 pr-2 rounded-md"
               onClick={(e) => followHandler(e)}
