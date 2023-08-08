@@ -24,6 +24,9 @@ function SinglePost(post: {
       firstName: any;
       lastName: any;
       username: any;
+      followers: {
+        _id: string
+      }
     };
     body: any;
     hashtags: any[];
@@ -196,6 +199,13 @@ function SinglePost(post: {
     setTheState();
   }, []);
 
+
+  let isFollowing = false;
+  const userId = Auth.getProfile().data._id;
+  for(const follower in post.post.user.followers){
+    if(post.post.user.followers[follower]._id === userId) isFollowing = true;
+  }
+
   return (
     <div>
       <div className="mt-4 p-3 border-[1px] rounded-lg border-black dark:border-0 shadow-2xl bg-white dark:bg-coolGray">
@@ -221,14 +231,14 @@ function SinglePost(post: {
               </div>
             </div>
           </div>
-          <div className="my-auto">
+          {!isFollowing && <div className="my-auto">
             <button
               className=" font-semibold  text-neonBlue p-[1px] pl-2 pr-2 rounded-md"
               onClick={(e) => followHandler(e)}
             >
               Follow
             </button>
-          </div>
+          </div>}
         </div>
 
         <div className="mt-4">
