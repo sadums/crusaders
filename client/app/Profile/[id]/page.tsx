@@ -1,25 +1,17 @@
 "use client";
-import "../(styles)/profile.css";
-import "../(styles)/homepage.css";
-import ProfileSideInfo from "../components/profileSideInfo";
-import ProfilePosts from "../components/profilePosts";
+import "../../(styles)/profile.css";
+import "../../(styles)/homepage.css";
+import ProfileSideInfo from "../../components/profileSideInfo";
+import ProfilePosts from "../../components/profilePosts";
 import { useEffect, useState } from "react";
-import PostModal from "../components/postModal";
-import Auth from "../(utils)/auth";
+import PostModal from "../../components/postModal";
+import Auth from "../../(utils)/auth";
 import { useQuery, useLazyQuery } from "@apollo/client";
 import {
   GET_LOGGED_IN_USER,
   GET_POST,
   GET_USER_BY_ID,
-} from "../GraphQL/queries";
-
-export const dynamic = 'auto',
-dynamicParams = true,
-revalidate = Infinity,
-fetchCache = 'auto',
-runtime = 'nodejs',
-preferredRegion = 'auto'
-
+} from "../../GraphQL/queries";
 
 type PostData = {
   title: string;
@@ -36,25 +28,31 @@ export default function Profile() {
   const id = Auth.getProfile().data._id;
   console.log(id);
   const { loading, error, data } = useQuery(GET_USER_BY_ID, {
-    variables: {
-      userId: id,
-    },
+    variables: { id: id },
   });
-
+  //console.log(data)
+  const [getPost, { loading: postLoading, data: postData }] =
+    useLazyQuery(GET_POST);
 
   const [showModalState, setShowModalState] = useState(false);
-  const [activePostId, setActivePostId] = useState<string>('');
+  const [activePostData, setActivePostData] = useState<PostData | null>(null);
+  // console.log(Auth.getProfile())
 
   const postClickHandler = async (postInfo: any) => {
-    try{
-      //console.log(data.getUserById)
-    console.log(postInfo._id)
-    setActivePostId(postInfo._id)
+
+    console.log(data.getUserById)
+
+    const response = await getPost({ variables: { postId: postInfo._id } });
+    console.log(response.data.getPost);
+    const post: PostData | null = response.data.getPost;
+    console.log(post); // Using the PostData type here
+    setActivePostData(post);
     setShowModalState(true);
-    }catch(err){
-      console.error(err)
-    }
   };
+
+  // useEffect(() => {
+  //   getUserById();
+  // }, []);
 
   return (
     <div className="ml-20 bg-gradient-to-tr from-mediumWhite via-mediumWhite to-mediumWhite dark:from-black dark:to-black">
@@ -116,7 +114,18 @@ export default function Profile() {
       {showModalState && (
         <PostModal
           //The error is that this data is possibly null which is fine
-          postId={activePostId}
+          title={activePostData.title}
+          media={activePostData.media}
+          preview={activePostData.preview}
+          body={activePostData.body}
+          //Format the date in the backend
+          date={activePostData.createdAt}
+          comments={activePostData.comments}
+          hashtags={activePostData.hashtags}
+          username={data.getUserById.username}
+          pfp={data.getUserById.pfp}
+          firstName={data.getUserById.firstName}
+          lastName={data.getUserById.lastName}
           handleClose={function (): void {
             setShowModalState(false);
           }}

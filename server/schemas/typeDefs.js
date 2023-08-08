@@ -11,7 +11,7 @@ const typeDefs = gql`
     lastName: String
     preview: String
   }
-  
+
   type User {
     _id: ID
     username: String!
@@ -91,6 +91,8 @@ const typeDefs = gql`
     editUser(input: UpdateUserInput!, _id: ID!): AuthPayload
     deletePost(postId: ID!): Post
     updatePost(postId: ID!, input: updatePostInput!): Post
+    addFollower(userId: ID!, followerId: ID!): User
+    removeFollower(userId: ID!, followerId: ID!): User
     createChat(members: [ID]): Chat
     createMessage(userId: ID!, chatId: ID!, body: String!): Chat
   }

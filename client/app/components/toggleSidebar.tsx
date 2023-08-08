@@ -5,7 +5,7 @@ import "../(styles)/profile.css";
 import { useState, useEffect, Key } from "react";
 import MessagesSidebar from "./messagesSidebar";
 import ProfilePosts from "./profilePosts";
-import { GET_USER_BY_ID, GET_POST } from "../(GraphQL)/queries";
+import { GET_USER_BY_ID, GET_POST } from "../GraphQL/queries";
 import { useMutation, useLazyQuery } from "@apollo/client";
 import terms from "../(searchData)/terms.json";
 import jaroWinkler from "../(utils)/search/jaroWinklerSearch";

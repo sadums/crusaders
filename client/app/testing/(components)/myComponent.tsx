@@ -1,6 +1,6 @@
 "use client";
 import { useSubscription } from "@apollo/client";
-import { CHAT_SUBSCRIPTION } from "../../(GraphQL)/subscriptions";
+import { CHAT_SUBSCRIPTION } from "../../GraphQL/subscriptions";
 
 export default function MyComponent() {
   const { data, loading, error } = useSubscription(CHAT_SUBSCRIPTION, {

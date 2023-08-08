@@ -124,7 +124,6 @@ const resolvers = {
           },
           { new: true } // return the modified post
         );
-
         if (!updatedPost) {
           throw new Error("Post not found");
         }
@@ -135,6 +134,50 @@ const resolvers = {
         throw new Error(err.message);
       }
     },
+    addFollower: async (parent, { userId, followerId }, context) => {
+      try {
+        const follower = await User.findByIdAndUpdate(
+          followerId,
+          {
+            $addToSet: { following: userId },
+          },
+          { new: true }
+        );
+        const user = await User.findByIdAndUpdate(
+          userId,
+          {
+            $addToSet: { followers: followerId },
+          },
+          { new: true }
+        );
+        return user;
+      } catch (e) {
+        console.error(e);
+        return e;
+      }
+    },
+    removeFollower: async (parent, { userId, followerId }, context) => {
+      try {
+        const follower = await User.findByIdAndUpdate(
+          followerId,
+          {
+            $pull: { following: userId },
+          },
+          { new: true }
+        );
+        const user = await User.findByIdAndUpdate(
+          userId,
+          {
+            $pull: { followers: followerId },
+          },
+          { new: true }
+        );
+        return user;
+      } catch (e) {
+        console.error(e);
+        return e;
+      }
+    },       
     likePost: async (parent, { input, postId, userId }, context, info) => {
       try {
         const { username, pfp, firstName, lastName, preview } = input;
@@ -161,6 +204,28 @@ const resolvers = {
         const postToUpdate = await Post.findById(postId);
         if (!postToUpdate) {
           throw new Error("Post not found.");
+        }
+        await userWithPost.save();
+        const updatedUser = await User.findByIdAndUpdate(
+          userId,
+          {
+            $push: {
+              likes: {
+                userId,
+                postId,
+                username,
+                pfp,
+                firstName,
+                lastName,
+                preview,
+              },
+            },
+          },
+          { new: true }
+        );
+
+        if (!updatedUser) {
+          throw new Error("User who liked the post not found.");
         }
         postToUpdate.likes.push(newLike._id);
         await postToUpdate.save();

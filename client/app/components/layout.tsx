@@ -14,19 +14,12 @@ import { setContext } from "@apollo/client/link/context";
 import Auth from "../app/(utils)/auth";
 // import Navbar from "./(components)/NIU-navbar";
 // import NewNavbar from "./(components)/NIU-newNavbar";
-import Footer from "../app/components/footer";
-import SignInModal from "../app/components/signin";
-import SignUpModal from "../app/components/signup";
-import Sidebar from "../app/components/sidebar";
-import client from "./apollo-client";
-import Loading from "./loading";
-
-export const dynamic = 'auto',
-dynamicParams = true,
-revalidate = Infinity,
-fetchCache = 'auto',
-runtime = 'nodejs',
-preferredRegion = 'auto'
+import Footer from "../app/(components)/footer";
+import SignInModal from "../app/(components)/signin";
+import SignUpModal from "../app/(components)/signup";
+import Sidebar from "../app/(components)/sidebar";
+import Profile from "./pages/Profile";
+import client from "../app/apollo-client";
 
 const authLink = setContext((_, { headers }) => {
   //This authLink is middleware that inercepts the out going GraphQL requests and attaches an Authorization header to it
@@ -87,7 +80,7 @@ export default function RootLayout({
           )}
         </body>
       </html>
-     </ApolloProvider>
+  </ApolloProvider>
   );
 }
 

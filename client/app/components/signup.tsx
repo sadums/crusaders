@@ -1,6 +1,6 @@
 import { sign } from "crypto";
 import React, { useState } from "react";
-import { CREATE_USER_MUTATION } from "../(GraphQL)/mutations";
+import { CREATE_USER_MUTATION } from "../GraphQL/mutations";
 import { useMutation } from "@apollo/client";
 import Auth from "../(utils)/auth";
 

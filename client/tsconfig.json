@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(components)/toggleSidebar.jsx", "app/(components)/sidebar.tsx", "app/explore/(utils)/jaroWinklerSearch.js", "app/explore/(utils)/mongeElkanSearch.js", "app/testing/(components)/myComponent.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/components/toggleSidebar.jsx", "app/components/sidebar.tsx", "app/explore/(utils)/jaroWinklerSearch.js", "app/explore/(utils)/mongeElkanSearch.js", "app/testing/(components)/myComponent.tsx"],
   "exclude": ["node_modules"]
 }
