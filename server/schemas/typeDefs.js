@@ -2,9 +2,9 @@ const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   type Like {
-    _id: ID
-    userId: String!
-    postId: String!
+    _id: ID!
+    user: User!
+    post: Post!
     username: String
     pfp: String
     firstName: String
@@ -51,6 +51,7 @@ const typeDefs = gql`
 
   type Post {
     _id: ID
+    user: User
     preview: String
     media: String
     title: String
@@ -66,40 +67,30 @@ const typeDefs = gql`
     category: String
   }
 
-  type LikePostResponse {
-    user: User
-    post: Post
-  }  
-
-  type UnlikeResult {
-    user: User
-    post: Post
-  }
-
   type AuthPayload {
     token: String!
     user: User!
   }
 
   type Query {
+    getAllPosts: [Post]
     getAllUsers: [User]
-    getUserById(input: ID!): User
-    getLoggedInUser: User
+    getUserById(userId: ID!): User
     getPost(postId: ID!): Post
     getChatById(input: ID!): Chat
   }
 
   type Mutation {
-    unlikePost(postId: String!, userId: String!): UnlikeResult
-    likePost(input: likePostInput!, postId: String!, userId: String!): LikePostResponse
+    unlikePost(postId: String!, userId: String!): Like
+    likePost(input: likePostInput!, postId: String!, userId: String!): Like
     addComment(username: String!, body: String!, postId: String!): Post
     createUser(input: CreateUserInput!): AuthPayload
-    addPost(input: newPostInput!, userId: ID!): User
+    addPost(input: newPostInput!, userId: ID!): Post
     login(email: String!, password: String!): AuthPayload
-    deleteUser: User
+    deleteUser(userId: ID!): User
     editUser(input: UpdateUserInput!, _id: ID!): AuthPayload
-    deletePost(postId: ID!): User
-    updatePost(postId: ID!, input: updatePostInput!): User
+    deletePost(postId: ID!): Post
+    updatePost(postId: ID!, input: updatePostInput!): Post
     addFollower(userId: ID!, followerId: ID!): User
     removeFollower(userId: ID!, followerId: ID!): User
     createChat(members: [ID]): Chat
@@ -126,7 +117,6 @@ const typeDefs = gql`
     lastName: String
     preview: String
   }
-  
 
   type Subscription {
     messages(chatId: ID, userId: ID): Message

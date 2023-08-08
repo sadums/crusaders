@@ -71,29 +71,30 @@ export const UNFOLLOW_USER = gql`
 `;
 
 export const ADD_POST = gql`
-  mutation AddPost($input: newPostInput!, $userId: ID!) {
-    addPost(input: $input, userId: $userId) {
+  mutation AddPost($userId: ID!, $input: newPostInput!) {
+    addPost(userId: $userId, input: $input) {
       _id
-      username
-      posts {
+      media
+      title
+      body
+      createdAt
+      hashtags {
+        hashtagText
+        category
+      }
+      user {
         _id
-        preview
-        media
-        title
-        body
-        createdAt
-        comments {
-          _id
-          body
-        }
-        hashtags {
-          hashtagText
-        }
+        username
+        pfp
+        firstName
+        lastName
       }
     }
   }
 `;
 
+
+//Get rid of
 export const ADD_COMMENT = gql`
   mutation AddComment($username: String!, $body: String!, $postId: String!) {
     addComment(username: $username, body: $body, postId: $postId) {
@@ -109,59 +110,119 @@ export const ADD_COMMENT = gql`
 `;
 
 
-
-export const LIKE_POST = gql`
-  mutation LikePost($postId: String!, $userId: String!, $input: likePostInput!) {
-    likePost(postId: $postId, userId: $userId, input: $input) {
-      user {
+export const ADD_COMMENT_TO_POST = gql`
+  mutation AddCommentToPost($username: String!, $body: String!, $postId: String!) {
+    addComment(username: $username, body: $body, postId: $postId) {
+      _id
+      body
+      title
+      createdAt
+      comments {
         _id
+        body
+        createdAt
         username
-        likes {
-          _id
-          userId
-          postId
-          username
-        }
-      }
-      post {
-        _id
-        title
-        likes {
-          _id
-          userId
-          postId
-          username
-          pfp
-        }
       }
     }
   }
 `;
 
-export const UNLIKE_POST = gql`
-  mutation UnlikePost($postId: String!, $userId: String!) {
-    unlikePost(postId: $postId, userId: $userId) {
+
+// export const LIKE_POST = gql`
+//   mutation LikePost($postId: String!, $userId: String!, $input: likePostInput!) {
+//     likePost(postId: $postId, userId: $userId, input: $input) {
+//       user {
+//         _id
+//         username
+//         likes {
+//           _id
+//           userId
+//           postId
+//           username
+//         }
+//       }
+//       post {
+//         _id
+//         title
+//         likes {
+//           _id
+//           userId
+//           postId
+//           username
+//           pfp
+//         }
+//       }
+//     }
+//   }
+// `;
+
+export const LIKE_POST = gql`
+  mutation LikePost($input: likePostInput!, $postId: String!, $userId: String!) {
+    likePost(input: $input, postId: $postId, userId: $userId) {
+      _id
       user {
         _id
         username
-        likes {
-          _id
-          userId
-          postId
-          username
-        }
       }
       post {
         _id
         title
         likes {
           _id
-          userId
-          postId
-          username
-          pfp
         }
       }
+      username
+      pfp
+      firstName
+      lastName
+      preview
     }
   }
+`;
+
+// export const UNLIKE_POST = gql`
+//   mutation UnlikePost($postId: String!, $userId: String!) {
+//     unlikePost(postId: $postId, userId: $userId) {
+//       user {
+//         _id
+//         username
+//         likes {
+//           _id
+//           userId
+//           postId
+//           username
+//         }
+//       }
+//       post {
+//         _id
+//         title
+//         likes {
+//           _id
+//           userId
+//           postId
+//           username
+//           pfp
+//         }
+//       }
+//     }
+//   }
+// `;
+
+export const UNLIKE_POST = gql`
+mutation UnlikePost($postId: String!, $userId: String!) {
+  unlikePost(postId: $postId, userId: $userId) {
+    _id
+    user {
+      _id
+    }
+    post {
+      _id
+    }
+    username
+    pfp
+    firstName
+    lastName
+    preview
+  }
+}
 `;

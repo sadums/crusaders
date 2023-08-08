@@ -19,58 +19,6 @@ interface toggle {
 }
 
 const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
-  const tempLikedPostData = [
-    {
-      title: "Coding",
-      picture:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.05gBtkpqfy-OonbTZNVNUgHaE8%26pid%3DApi&f=1&ipt=be6845eac96b9f23fb9a35404120bea1610926d7b529640e64426c73861fab7f&ipo=images",
-    },
-    {
-      title: "Travel",
-      picture:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.pixelstalk.net%2Fwp-content%2Fuploads%2F2016%2F08%2FTravel-Images-For-Desktop.jpg&f=1&nofb=1&ipt=f102570e72b628d53418d9680add971373a1b8bb016b9be2d51594f3c5b96d30&ipo=images",
-    },
-    {
-      title: "Plane I saw",
-      picture:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.CSU0WYkZwY4keDZCuzMsfQHaE5%26pid%3DApi&f=1&ipt=4bb77a96611792db60e533091c5fa231ed0edd86d48b4cc094ce2d652769089a&ipo=images",
-    },
-    {
-      title: "Oil Refinery",
-      picture:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi2.wp.com%2Fwww.oilandgas360.com%2Fwp-content%2Fuploads%2F2018%2F02%2FCanton-Refinery-in-Canton-Ohio.jpg%3Ffit%3D3600%252C2400%26ssl%3D1&f=1&nofb=1&ipt=55a3e0a7127f9a0991faa9bbe41d182c06ba3cda1f157067e704ff8f5fe786b2&ipo=images",
-    },
-    {
-      title: "Nature",
-      picture:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallup.net%2Fwp-content%2Fuploads%2F2016%2F01%2F111509-landscape-nature.jpg&f=1&nofb=1&ipt=a8e47dc44480d87f1d5a9ded42e6337c47323587ada2e854bb957a9d96f11cde&ipo=images",
-    },
-    {
-      title: "Mountains",
-      picture:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.YEpnOBigXfti5tjP_2n3UgHaE8%26pid%3DApi&f=1&ipt=37909f0bbcad8559d7c52af3a0959cb37bf1be9018938c809523e1cf8a3ac092&ipo=images",
-    },
-    {
-      title: "Beach",
-      picture:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.H44yKeMtUgYB1W5cLslHOwHaE8%26pid%3DApi&f=1&ipt=f5f934fe840ef9b79562a21b22ea4b591c3247f92454d0fc3b93365054916edc&ipo=images",
-    },
-    {
-      title: "Cityscape",
-      picture:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallup.net%2Fwp-content%2Fuploads%2F2017%2F11%2F23%2F515009-cityscape-USA-Chicago.jpg&f=1&nofb=1&ipt=9b67d50523f85415891f97bfdc9a2ac106b614ece1170c2e30a75fec4deac843&ipo=images",
-    },
-    {
-      title: "Went Snowboarding",
-      picture:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.UNY2Aohxm8cYxJ7JbELKBgHaE7%26pid%3DApi&f=1&ipt=5e53029b6947625da5c8b94c9a3eb790041f1784372b1f23d0bb902508dcadfc&ipo=images",
-    },
-    {
-      title: "Scuba Diving",
-      picture:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.4diJwgKVPmNeaSOImvSHggHaE8%26pid%3DApi&f=1&ipt=f9cd121a49cfa9f697da84d17b5502471593277070c3e1da0f67641522f9ee46&ipo=images",
-    },
-  ];
 
   const tempNotificationData = [
     {
@@ -133,25 +81,25 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
     lastname: "Doe",
   };
 
-  type PostData = {
-    title: string;
-    body: string;
-    comments: any[]; // Adjust this type as needed
-    likes: any[];
-    createdAt: string;
-    hashtags: any[]; // Adjust this type as needed
-    preview: string;
-    media: string;
-    username: string;
-    firstName: string;
-    lastName: string;
-    pfp: string;
-    _id: string;
-  };
+  // type PostData = {
+  //   title: string;
+  //   body: string;
+  //   comments: any[]; // Adjust this type as needed
+  //   likes: any[];
+  //   createdAt: string;
+  //   hashtags: any[]; // Adjust this type as needed
+  //   preview: string;
+  //   media: string;
+  //   username: string;
+  //   firstName: string;
+  //   lastName: string;
+  //   pfp: string;
+  //   _id: string;
+  // };
 
   const [likePostModal, setLikePostModal] = useState(false);
   const [showModalState, setShowModalState] = useState(false);
-  const [activePostData, setActivePostData] = useState<PostData | null>(null);
+  const [activePostId, setActivePostId] = useState<PostData | null>(null);
   const [
     getUserById,
     {
@@ -164,7 +112,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
   });
 
   const [getPost, { loading: postLoading, data: postData }] =
-    useLazyQuery(GET_POST);
+  useLazyQuery(GET_POST);
 
   interface FriendRequestNotificationData {
     senderName: string;
@@ -187,7 +135,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
   useEffect(() => {
     if (Auth.loggedIn()) {
       const id = Auth.getProfile().data._id;
-      getUserById({ variables: { id } }); // Call getUserById inside the useEffect with the correct variables
+      getUserById({ variables: { userId: id } }); // Call getUserById inside the useEffect with the correct variables
     }
     console.log(singleUserData);
   }, []);
@@ -324,17 +272,18 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
       );
     }
 
-    //This is missing some data username, firstName, lastName, pfp
-    const likesPictureHandler = async (post) => {
-      try {
-        console.log(post.postId);
-        console.log(post);
-        const response = await getPost({ variables: { postId: post.postId } });
-        console.log(response.data.getPost);
-      } catch (err) {
-        console.error(err);
+    const likesPictureHandler = async (postId: any) => {
+      try{
+        console.log(postId)
+        setActivePostId(postId)
+        setShowModalState(true)
+        // const response = await getPost({ variables: { postId: post.postId } });
+        // console.log(response.data.getPost)
+
+      }catch(err){
+        console.error(err)
       }
-    };
+    }
     if (type === "Likes") {
       return (
         <>
@@ -366,9 +315,9 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
                   ) => (
                     <div key={index} className="w-[100%] h-auto">
                       <img
-                        onClick={() => likesPictureHandler(post)}
+                        onClick={() => likesPictureHandler(post.post._id)}
                         className="h-24 w-32 object-fill rounded-xl shadow-xl transition-transform duration-200 transform scale-100 cursor-pointer hover:scale-[96%] hover:brightness-75"
-                        src={post.preview}
+                        src={post.post.preview}
                       ></img>
                     </div>
                   )
@@ -379,22 +328,10 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
           {showModalState && (
             <div className="z-50 fixed inset-0 flex justify-center items-center">
               <PostModal
-                title={tempPostModalData.title}
-                media={tempPostModalData.media}
-                preview={tempPostModalData.preview}
-                body={tempPostModalData.body}
-                date={"1691369322412"}
-                comments={tempPostModalData.comments}
-                hashtags={tempPostModalData.hashtags}
-                username={tempPostModalData.username}
-                likes={tempPostModalData.likes}
-                pfp={tempPostModalData.pfp}
-                firstName={tempPostModalData.firstname}
-                lastName={tempPostModalData.lastname}
+                postId={activePostId}
                 handleClose={function (): void {
-                  setLikePostModal(false);
+                  setShowModalState(false);
                 }}
-                postId={""}
               />
             </div>
           )}
@@ -419,7 +356,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
                 return (
                   <div
                     key={notif.id}
-                    className=" shadow-xl bg-white rounded-xl dark:bg-darkModeDarkGray  dark:shadow-notificationShadowPink ring-blue-700 p-1 mt-3"
+                    className=" shadow-xl bg-white rounded-xl dark:bg-darkModeLightGray  dark:shadow-notificationShadowPink ring-blue-700 p-1 mt-3"
                   >
                     <div className="flex justify-between">
                       {" "}
@@ -467,7 +404,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
               }
               if (notif.type === "messageResponse") {
                 return (
-                  <div className=" shadow-xl bg-white rounded-xl dark:shadow-notificationShadowPink dark:bg-darkModeDarkGray p-1 mt-3">
+                  <div className=" shadow-xl bg-white rounded-xl dark:shadow-notificationShadowPink dark:bg-coolGray p-1 mt-3">
                     <div className="flex justify-between">
                       {" "}
                       <div className="flex">
@@ -516,7 +453,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
                             <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
-                              d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+                              d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
                             />
                           </svg>
                         </div>

@@ -6,6 +6,7 @@ interface ModalProps {
 }
 
 interface User {
+  user: any;
   username: string;
   firstName: string;
   lastName: string;
@@ -58,19 +59,19 @@ const LikeFollowerModal: React.FC<ModalProps> = ({ handleClose, users }) => {
                 <div className="flex items-center ">
                   <img
                     className="h-10 w-10 rounded-full object-cover"
-                    src={user.pfp}
+                    src={user.user.pfp}
                     alt="Your Company"
                   ></img>
                   <div className="flex flex-col">
                     <h4 className="text-black text-md ml-1 dark:text-white">
-                      {user.firstName} {user.lastName}
+                      {user.user.firstName} {user.user.lastName}
                     </h4>
                     <a
                       href="#"
                       className="text-gray-500 text-md ml-1"
                       aria-current="page"
                     >
-                      @{user.username}
+                      @{user.user.username}
                     </a>
                   </div>
                 </div>
