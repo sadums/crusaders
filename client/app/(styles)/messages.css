@@ -1,7 +1,15 @@
-.conversationDiv::-webkit-scrollbar {
+/* .conversationDiv::-webkit-scrollbar {
     display: none;
-}
+} */
+
+/* .friendListMessages::-webkit-scrollbar {
+    background-color: transparent;
+} */
 
 .friendListMessages::-webkit-scrollbar {
     display: none;
 }
+
+/* .friendListMessages::-webkit-scrollbar-thumb {
+    background: gold;
+} */
