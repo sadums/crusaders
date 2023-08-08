@@ -6,9 +6,14 @@ import { ADD_POST } from "../../GraphQL/mutations";
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import Auth from '../../(utils)/auth'
 
+type CreateAPostProps = {
+  setDisplayPosts: React.Dispatch<React.SetStateAction<any[] | null>>;
+};
 
 
-function CreateAPost() {
+
+
+function CreateAPost({ setDisplayPosts }: CreateAPostProps) {
 
     const [addPostMutation, { loading: loading, error: error, data: data }] =
     useMutation(ADD_POST);
@@ -106,6 +111,9 @@ function CreateAPost() {
               },
             });
             console.log(response);
+            console.log(response.data)
+            const newPost = response.data.addPost
+            setDisplayPosts((prev)=> [newPost, ...prev])
             setCreatePostCheck(!createPostCheck);
           } else {
             alert("Please fill out all fields");
