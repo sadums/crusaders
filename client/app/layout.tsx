@@ -3,12 +3,22 @@
 import { ApolloProvider } from "@apollo/client";
 import client from "./apollo-client";
 import { Metadata } from "next";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+import Loading from "./loading";
+import "./globals.css";
 
+// export const dynamic = 'auto',
+
+export const dynamicParams = true,
+  revalidate = Infinity,
+  fetchCache = "auto",
+  runtime = "nodejs",
+  preferredRegion = "auto";
 
 // Load Sidebar dynamically and only on the client side
-const Sidebar = dynamic(() => import('../app/components/sidebar'), {
-  ssr: false
+const Sidebar = dynamic(() => import("../app/components/sidebar"), {
+  ssr: false,
 });
 
 // If there are other components you want to load only on the client side, follow the same pattern.
@@ -18,7 +28,7 @@ export const metadata: Metadata = {
   description: "",
 };
 
-function RootLayout({ children }: { children: React.ReactNode; }) {
+function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ApolloProvider client={client}>
       <html lang="en">
@@ -36,8 +46,7 @@ function RootLayout({ children }: { children: React.ReactNode; }) {
         </head>
         <body className="border-coolGray">
           <Sidebar />
-          <div>{children}</div>
-          {/* <Footer></Footer> */}
+          <Suspense fallback={<Loading />}>{children}</Suspense>
         </body>
       </html>
     </ApolloProvider>
@@ -45,4 +54,3 @@ function RootLayout({ children }: { children: React.ReactNode; }) {
 }
 
 export default RootLayout;
-
