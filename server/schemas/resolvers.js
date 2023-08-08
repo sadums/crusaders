@@ -20,15 +20,15 @@ const resolvers = {
     getAllPosts: async () => {
       try {
         const posts = await Post.find({})
-          .populate('user')
+          .populate("user")
           .populate({
-            path: 'likes',
+            path: "likes",
             populate: {
-              path: 'user',
-              model: 'User' // Assuming 'User' is the name of your user model
-            }
+              path: "user",
+              model: "User", // Assuming 'User' is the name of your user model
+            },
           });
-    
+
         return posts;
       } catch (error) {
         throw new Error("Error fetching all posts");
@@ -67,13 +67,13 @@ const resolvers = {
     getPost: async (parent, { postId }, context) => {
       try {
         const post = await Post.findById(postId)
-                .populate("user")
-                .populate({
-                  path: "likes",
-                  populate: {
-                    path: "user",
-                  },
-                });
+          .populate("user")
+          .populate({
+            path: "likes",
+            populate: {
+              path: "user",
+            },
+          });
         if (!post) {
           throw new Error("Post not found");
         }
@@ -177,17 +177,17 @@ const resolvers = {
         console.error(e);
         return e;
       }
-    },       
+    },
     likePost: async (parent, { input, postId, userId }, context, info) => {
       try {
         const { username, pfp, firstName, lastName, preview } = input;
-    
+
         // Check if the user has already liked the post
         const existingLike = await Like.findOne({ user: userId, post: postId });
         if (existingLike) {
           throw new Error("User has already liked this post.");
         }
-    
+
         // 1. Create a new Like document
         const newLike = new Like({
           user: new mongoose.Types.ObjectId(userId),
@@ -199,13 +199,13 @@ const resolvers = {
           preview,
         });
         await newLike.save();
-    
+
         // 2. Update the post with the reference to the newly created Like
         const postToUpdate = await Post.findById(postId);
         if (!postToUpdate) {
           throw new Error("Post not found.");
         }
-        await userWithPost.save();
+        //await userWithPost.save();
         const updatedUser = await User.findByIdAndUpdate(
           userId,
           {
@@ -229,7 +229,7 @@ const resolvers = {
         }
         postToUpdate.likes.push(newLike._id);
         await postToUpdate.save();
-    
+
         // 3. Update the user who liked the post with the reference to the new Like
         const userToUpdate = await User.findById(userId);
         if (!userToUpdate) {
@@ -237,12 +237,12 @@ const resolvers = {
         }
         userToUpdate.likes.push(newLike._id);
         await userToUpdate.save();
-    
+
         // 4. Populate the user and post fields in the newLike document before returning
         const populatedLike = await Like.findById(newLike._id)
           .populate("user")
           .populate("post");
-    
+
         // 5. Return the newly created Like with populated user and post fields
         return populatedLike;
       } catch (err) {
@@ -250,19 +250,16 @@ const resolvers = {
         throw err;
       }
     },
-    
-    
-    
     unlikePost: async (parent, { postId, userId }, context, info) => {
       try {
         // 1. Find the Like document based on the postId and userId.
         const likeToRemove = await Like.findOne({ post: postId, user: userId });
-    
+
         // If there's no such Like, throw an error.
         if (!likeToRemove) {
           throw new Error("Like not found.");
         }
-    
+
         // 2. Update the post to remove the reference to the Like.
         const postToUpdate = await Post.findById(postId);
         if (!postToUpdate) {
@@ -270,7 +267,7 @@ const resolvers = {
         }
         postToUpdate.likes.pull(likeToRemove._id);
         await postToUpdate.save();
-    
+
         // 3. Update the user to remove the reference to the Like.
         const userToUpdate = await User.findById(userId);
         if (!userToUpdate) {
@@ -278,10 +275,10 @@ const resolvers = {
         }
         userToUpdate.likes.pull(likeToRemove._id);
         await userToUpdate.save();
-    
+
         // 4. Remove the found Like from the database.
         await Like.deleteOne({ _id: likeToRemove._id });
-    
+
         // 5. Return the removed Like object
         return likeToRemove;
       } catch (err) {
@@ -289,7 +286,7 @@ const resolvers = {
         throw err;
       }
     },
-    
+
     addPost: async (parent, { input, userId }) => {
       try {
         // First create the Post
