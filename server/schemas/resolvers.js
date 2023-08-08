@@ -205,7 +205,7 @@ const resolvers = {
         if (!postToUpdate) {
           throw new Error("Post not found.");
         }
-        await userWithPost.save();
+        //await userWithPost.save();
         const updatedUser = await User.findByIdAndUpdate(
           userId,
           {
