@@ -49,19 +49,21 @@ export const UPDATE_USER_MUTATION = gql`
 `;
 
 export const FOLLOW_USER = gql`
-  mutation AddFolower($userId: ID!, $followerId: ID!){
-    addFollower(userd: $userId, followerId: $followerId){
-      followers:{
-        _id
+  mutation AddFollower($userId: ID!, $followerId: ID!){
+    addFollower(userId: $userId, followerId: $followerId){
+      user{
+        followers{
+          _id
+        }
       }
     }
   }
 `;
 
 export const UNFOLLOW_USER = gql`
-  mutation AddFolower($userId: ID!, $followerId: ID!){
-    addFollower(userd: $userId, followerId: $followerId){
-      followers:{
+  mutation AddFollower($userId: ID!, $followerId: ID!){
+    addFollower(userId: $userId, followerId: $followerId){
+      followers{
         _id
       }
     }
