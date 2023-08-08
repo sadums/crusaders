@@ -1,10 +1,10 @@
 "use client";
 
-import "../(styles)/homepage.css";
-import FeedPosts from "./feedPosts";
-import ToggleSidebar from "./toggleSidebar";
-import MessagesSidebar from "./messagesSidebar";
-import Sidebar from "./sidebar";
+import "./(styles)/homepage.css";
+import FeedPosts from "./components/feedPosts";
+import ToggleSidebar from "./components/toggleSidebar";
+import MessagesSidebar from "./components/messagesSidebar";
+import Sidebar from "./components/sidebar";
 import {
   useState,
   useRef,
@@ -12,8 +12,8 @@ import {
   MouseEventHandler,
   useEffect,
 } from "react";
-import PictureUploader from "./pictureUploader";
-import { ADD_POST } from "../(GraphQL)/mutations";
+import PictureUploader from "./components/pictureUploader";
+import { ADD_POST } from "./GraphQL/mutations";
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import {
   GET_ALL_USERS,
@@ -21,11 +21,11 @@ import {
   GET_POST,
   GET_USER_BY_ID,
   GET_ALL_POSTS,
-} from "../(GraphQL)/queries";
-import Auth from "../(utils)/auth";
-import VideoUploader from "./videoUploader";
-import PostModal from "./postModal";
-import LikeFollowerModal from "./likeFollowerFollowingModal";
+} from "./GraphQL/queries";
+import Auth from "./(utils)/auth";
+import VideoUploader from "./components/videoUploader";
+import PostModal from "./components/postModal";
+import LikeFollowerModal from "./components/likeFollowerFollowingModal";
 
 function HomeController() {
 
@@ -196,7 +196,7 @@ function HomeController() {
     if (Auth.loggedIn()) {
       const setState = async () => {
         const id = Auth.getProfile().data._id;
-        await getUserById({ variables: { userId: id } });
+        getUserById({ variables: { userId: id } });
       }
       setState()
     }
@@ -461,7 +461,7 @@ function HomeController() {
                         </svg>
 
                         <h1 className="text-black text-[54px] dark:text-white">
-                          {singleUserData.getUserById.posts.length}
+                          {singleUserData.getUserById ? singleUserData.getUserById.posts.length : '0'}
                         </h1>
                       </div>
                     </div>

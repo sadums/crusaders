@@ -1,8 +1,20 @@
 "use client";
-import { useState, useRef, useEffect, Dispatch, SetStateAction, Key, JSXElementConstructor, PromiseLikeOfReactNode, ReactElement, ReactNode, ReactPortal, JSXElementConstructor, PromiseLikeOfReactNode, ReactElement, ReactNode, ReactPortal } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+  Key,
+} from "react";
 import "../(styles)/homepage.css";
-import { ADD_COMMENT, ADD_COMMENT_TO_POST, LIKE_POST, UNLIKE_POST } from "../(GraphQL)/mutations";
-import { GET_USER_BY_ID } from "../(GraphQL)/queries";
+import {
+  ADD_COMMENT,
+  ADD_COMMENT_TO_POST,
+  LIKE_POST,
+  UNLIKE_POST,
+} from "../GraphQL/mutations";
+import { GET_USER_BY_ID } from "../GraphQL/queries";
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import Auth from "../(utils)/auth";
 import { comment } from "postcss";
@@ -33,7 +45,9 @@ interface Like {
   userId: string;
 }
 
-type SetLikeCountType = (value: number | null | ((prev: number | null) => number | null)) => void;
+type SetLikeCountType = (
+  value: number | null | ((prev: number | null) => number | null)
+) => void;
 
 // The component's props type
 interface FeedPostsProps {
@@ -54,12 +68,12 @@ function FeedPosts({
     [key: number]: boolean;
   }>({});
 
- const [getUserById, { loading: userByIdLoading, error: userByIdError, data: userByIdData }] = useLazyQuery(
-    GET_USER_BY_ID,
-    {
-      variables: { id: '' },
-    }
-  );
+  const [
+    getUserById,
+    { loading: userByIdLoading, error: userByIdError, data: userByIdData },
+  ] = useLazyQuery(GET_USER_BY_ID, {
+    variables: { id: "" },
+  });
   const [
     addComment,
     { data: commentData, loading: commentLoading, error: commentError },
@@ -81,7 +95,7 @@ function FeedPosts({
   function formatDate(timestamp: string) {
     let date = new Date(parseInt(timestamp));
 
-    let month = date.getMonth() + 1; 
+    let month = date.getMonth() + 1;
     let day = date.getDate();
     let hour = date.getHours();
     let minute = date.getMinutes();
@@ -94,10 +108,9 @@ function FeedPosts({
   const likePostHandler = async (post: Post, index: number) => {
     try {
       if (Auth.loggedIn()) {
-        const userId = Auth.getProfile().data._id
-        const { firstName, lastName, username, pfp } =
-          userByIdData.getUserById;
-        console.log(lastName)
+        const userId = Auth.getProfile().data._id;
+        const { firstName, lastName, username, pfp } = userByIdData.getUserById;
+        console.log(lastName);
         const { preview, _id } = post;
         if (isLikedState[index]) {
           console.log("is liked");
@@ -133,18 +146,21 @@ function FeedPosts({
           let tempLikeData = [...postLikesState];
 
           if (response.data && response.data.likePost) {
-            tempLikeData[index] = [...tempLikeData[index], response.data.likePost];
+            tempLikeData[index] = [
+              ...tempLikeData[index],
+              response.data.likePost,
+            ];
             setPostLikesState(tempLikeData);
           } else {
-            console.error('Like post data is not available');
+            console.error("Like post data is not available");
           }
         }
         let tempIsLikedState = [...isLikedState];
         tempIsLikedState[index] = !tempIsLikedState[index];
-        console.log(tempIsLikedState)
+        console.log(tempIsLikedState);
         const tempLikeCount = tempIsLikedState.filter(Boolean).length;
         setIsLikedState(tempIsLikedState);
-        setLikeCount(tempLikeCount)
+        setLikeCount(tempLikeCount);
       } else {
         alert("Sign into like a post");
       }
@@ -198,26 +214,33 @@ function FeedPosts({
   };
 
   useEffect(() => {
-    const dataComments = posts.getAllPosts.map((post: { comments: any; }) => post.comments);
-    const dataLikes = posts.getAllPosts.map((post: { likes: any; }) => post.likes);
-    console.log(dataLikes)
-    console.log(dataComments)
-    const tempLikedState = posts.getAllPosts.map((post: { likes: { user: { _id: any; }; }[]; }) => {
-      return post.likes.some(
-        (like: { user: { _id: any } }) =>
-          like.user._id === Auth.getProfile().data._id
-      );
-    });
-    setPostLikesState(dataLikes)
+    const dataComments = posts.getAllPosts.map(
+      (post: { comments: any }) => post.comments
+    );
+    const dataLikes = posts.getAllPosts.map(
+      (post: { likes: any }) => post.likes
+    );
+    console.log(dataLikes);
+    console.log(dataComments);
+    const tempLikedState = posts.getAllPosts.map(
+      (post: { likes: { user: { _id: any } }[] }) => {
+        return post.likes.some(
+          (like: { user: { _id: any } }) =>
+            like.user._id === Auth.getProfile().data._id
+        );
+      }
+    );
+    setPostLikesState(dataLikes);
     setIsLikedState(tempLikedState);
     setCommentState(dataComments);
   }, [posts]);
 
-  useEffect(()=> {
+  useEffect(() => {
     if (Auth.loggedIn()) {
       const id = Auth.getProfile().data._id;
-      getUserById({ variables: { userId: id } });    }
-  }, [])
+      getUserById({ variables: { userId: id } });
+    }
+  }, []);
 
   return posts.getAllPosts.map((post: Post, index: Key | null | undefined) => {
     return (
@@ -257,13 +280,11 @@ function FeedPosts({
           </div>
           {post.hashtags && (
             <div className="mt-0">
-              {post.hashtags.map((hashtag: { hashtagText: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; }, hashIndex: Key | null | undefined) => {
-                return (
-                  <a className="mr-1 text-gray-500" key={hashIndex}>
-                    #{hashtag.hashtagText}
-                  </a>
-                );
-              })}
+              {post.hashtags.map((hashtag, hashIndex) => (
+                <a className="mr-1 text-gray-500" key={hashIndex}>
+                  #{hashtag.hashtagText}
+                </a>
+              ))}
             </div>
           )}
 
@@ -309,7 +330,7 @@ function FeedPosts({
                   expandedPosts[index] ? "scale-100 max-h-64" : "scale-0"
                 } overflow-y-scroll feedPostCommentSection`}
               >
-                {commentState[index]?.map((comment: { body: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; createdAt: string; username: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; }, commentIndex: Key | null | undefined) => (
+                {commentState[index]?.map((comment, commentIndex) => (
                   <div
                     key={commentIndex}
                     className="flex justify-between border-gray-700 pb-2 border-b-[1px]"
@@ -355,7 +376,9 @@ function FeedPosts({
                 className="text-gray-700 text-sm dark:text-gray-500 cursor-pointer mr-4"
                 onClick={() => likeClickHandler(postLikesState[index])}
               >
-                {postLikesState[index] ? `${postLikesState[index].length} Likes` : "0 Likes"}
+                {postLikesState[index]
+                  ? `${postLikesState[index].length} Likes`
+                  : "0 Likes"}
               </a>
               <button
                 type="button"
