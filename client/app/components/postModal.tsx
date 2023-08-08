@@ -5,6 +5,8 @@ import {
   ADD_COMMENT_TO_POST,
   LIKE_POST,
   UNLIKE_POST,
+  FOLLOW_USER,
+  UNFOLLOW_USER,
 } from "../GraphQL/mutations";
 import { GET_USER_BY_ID, GET_POST } from "../GraphQL/queries";
 import { useMutation, useLazyQuery, useQuery } from "@apollo/client";
@@ -66,6 +68,8 @@ const PostModal: React.FC<ModalProps> = ({ postId, handleClose }) => {
   const [likePost, { loading: likeLoading, error: likeError, data: likeData }] =
     useMutation(LIKE_POST);
   const [unlikePost, { data: unlikeData }] = useMutation(UNLIKE_POST);
+  const [followUser, { data: followData }] = useMutation(FOLLOW_USER);
+  const [unfollowUser, { data: unfollowData }] = useMutation(UNFOLLOW_USER);
 
   let isVideo;
 
@@ -154,7 +158,7 @@ const PostModal: React.FC<ModalProps> = ({ postId, handleClose }) => {
         } else {
           alert("The comment cant be blank");
         }
-        target.form[0].value = ''
+        target.form[0].value = "";
       } else {
         alert("Sign in to make a comment");
       }

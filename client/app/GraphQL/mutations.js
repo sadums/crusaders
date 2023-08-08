@@ -48,6 +48,27 @@ export const UPDATE_USER_MUTATION = gql`
   }
 `;
 
+export const FOLLOW_USER = gql`
+  mutation AddFollower($userId: ID!, $followerId: ID!){
+    addFollower(userId: $userId, followerId: $followerId){
+      user{
+        followers{
+          _id
+        }
+      }
+    }
+  }
+`;
+
+export const UNFOLLOW_USER = gql`
+  mutation AddFollower($userId: ID!, $followerId: ID!){
+    addFollower(userId: $userId, followerId: $followerId){
+      followers{
+        _id
+      }
+    }
+  }
+`;
 
 export const ADD_POST = gql`
   mutation AddPost($userId: ID!, $input: newPostInput!) {
