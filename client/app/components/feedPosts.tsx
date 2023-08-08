@@ -222,16 +222,22 @@ function FeedPosts({
     );
     console.log(dataLikes);
     console.log(dataComments);
-    const tempLikedState = posts.getAllPosts.map(
-      (post: { likes: { user: { _id: any } }[] }) => {
-        return post.likes.some(
-          (like: { user: { _id: any } }) =>
-            like.user._id === Auth.getProfile().data._id
-        );
-      }
-    );
+    if(Auth.loggedIn()){
+      const tempLikedState = posts.getAllPosts.map(
+        (post: { likes: { user: { _id: any } }[] }) => {
+          return post.likes.some(
+            (like: { user: { _id: any } }) =>
+              like.user._id === Auth.getProfile().data._id
+          );
+        }
+      );
+      setIsLikedState(tempLikedState);
+    }else{
+      setIsLikedState(false);
+    }
+
     setPostLikesState(dataLikes);
-    setIsLikedState(tempLikedState);
+
     setCommentState(dataComments);
   }, [posts]);
 

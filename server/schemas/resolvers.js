@@ -210,19 +210,12 @@ const resolvers = {
           userId,
           {
             $push: {
-              likes: {
-                userId,
-                postId,
-                username,
-                pfp,
-                firstName,
-                lastName,
-                preview,
-              },
+              likes: newLike._id
             },
           },
           { new: true }
         );
+        
 
         if (!updatedUser) {
           throw new Error("User who liked the post not found.");
