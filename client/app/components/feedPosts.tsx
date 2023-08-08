@@ -109,6 +109,7 @@ function FeedPosts({
     try {
       if (Auth.loggedIn()) {
         const userId = Auth.getProfile().data._id;
+        console.log(userByIdData)
         const { firstName, lastName, username, pfp } = userByIdData.getUserById;
         console.log(lastName);
         const { preview, _id } = post;
@@ -244,6 +245,7 @@ function FeedPosts({
   useEffect(() => {
     if (Auth.loggedIn()) {
       const id = Auth.getProfile().data._id;
+      console.log(id)
       getUserById({ variables: { userId: id } });
     }
   }, []);
