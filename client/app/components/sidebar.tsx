@@ -94,8 +94,12 @@ const Sidebar: React.FC<NavbarProps> = ({
     localStorage.setItem("darkMode", "light");
   }
 
-  const [showSidebar, setShowSidebar] = useState("Search");
+  const [showSidebar, setShowSidebar] = useState("Notifications");
   const [sidebarOpacity, setSidebarOpacity] = useState(true);
+
+  useEffect(() => {
+    setSidebarOpacity(false)
+  }, [showSidebar])
 
   useEffect(() => {
     handleSidebarChange("Notifications");
@@ -119,7 +123,7 @@ const Sidebar: React.FC<NavbarProps> = ({
             <h5 className="text-sm text-center mt-2">Crusaders</h5>
             <div className="sidebarLogo ">
               <img
-                className="h-16 mx-auto w-16  rounded-full p-1"
+                className="h-16 mx-auto w-16 rounded-full p-1"
                 src="/horseOnlyLogo.png"
                 alt="Your Company"
               ></img>

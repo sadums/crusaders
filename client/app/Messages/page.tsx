@@ -339,56 +339,73 @@ export default function Messages() {
   }, [user]);
 
   return (
-    <div className="col-span-4 h-full">
-      <div className="flex">
-        <div className="mt-4 pl-32">
-          <div className="w-72 pr-2 pl-2">
-            <h1 className="mb-1 font-semibold text-xl dark:text-white text-black">Find Someone</h1>
+    <>
+      <div className="col-span-3 h-[97vh] flex-grow-1">
+        <div className="flex-col pl-32">
+          <div className="w-72 pr-2 mt-16 pl-2">
+            <h1 className="mb-1 font-semibold text-xl dark:text-white text-black">
+              Find Someone
+            </h1>
             <Searchbar />
           </div>
-          <div className="mt-4 flex-column bottom-0 ">
-          <h2 className="pl-2 mb-1 font-semibold text-xl dark:text-white text-black">Your Friends</h2>
-            <div className="overflow-y-scroll h-[81vh] friendListMessages">
-            {tempFriendLinks.map((friend, index) => (
-              <FriendListItem
-                username={friend.username}
-                firstname={friend.firstname}
-                lastname={friend.lastname}
-                pfp={friend.pfp}
-                key={index}
-                setUser={setUser}
-              />
-            ))}
+          <div className="mt-4 flex-column bottom-0 flex-grow-1">
+            <h2 className="pl-2 mb-1 font-semibold text-xl dark:text-white text-black">
+              Your Friends
+            </h2>
+            <div className="overflow-y-scroll h-[60vh] friendListMessages">
+              {tempFriendLinks.map((friend, index) => (
+                <FriendListItem
+                  username={friend.username}
+                  firstname={friend.firstname}
+                  lastname={friend.lastname}
+                  pfp={friend.pfp}
+                  key={index}
+                  setUser={setUser}
+                />
+              ))}
             </div>
           </div>
         </div>
-        <div className="relative w-full mt-4 ml-4 border-2 bg-white dark:bg-darkModeDarkGray border-mainDarkPurple flex flex-col ">
-          <Conversations pfp={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.2ttZm63g10QST-zUfee9bAHaHa%26pid%3DApi&f=1&ipt=2a2e9a8ed813a72d1e579820ca1d4eedbba93128fafac81acac7c6a220bfee88&ipo=images"} user={user} convo={userConvo} />
+      </div>
+
+      <div className="col-span-5 h-[97vh] mr-20">
+        <div className="relative w-full ml-4 flex flex-col ">
+          <Conversations
+            pfp={
+              "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.2ttZm63g10QST-zUfee9bAHaHa%26pid%3DApi&f=1&ipt=2a2e9a8ed813a72d1e579820ca1d4eedbba93128fafac81acac7c6a220bfee88&ipo=images"
+            }
+            user={user}
+            convo={userConvo}
+          />
           <div
-            className={`absolute bottom-0 w-full transition-all duration-200 dark:bg-darkModeDarkGray bg-darkestWhite  bg-opacity-80 ease-in-out ${
-              textBox ? "h-40" : "h-16"
+            className={`absolute bottom-0 w-full min-w-32 transition-all duration-200  dark:bg-black dark:bg-opacity-70 ease-in-out ${
+              textBox ? "h-40 bg-black bg-opacity-30" : "h-16"
             }`}
           >
             <div
               className={`${
                 textBox ? "hidden" : "block"
-              } flex h-full justify-center items-center border-t-2 border-mainDarkPurple`}
+              } flex h-full w-32 pl-4 `}
             >
-              <button onClick={() => setTextBox(!textBox)} className="rounded-full bg-gradient-to-tr p-2 to-lightPink from-mainPurple hover:scale-110 hover:bg-blue-800 ease-in-out duration-100">
+              <button
+                onClick={() => setTextBox(!textBox)}
+                className="relative flex justify-between items-center ml-2 h-8 mr-2 px-4 mt-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-8 h-8"
+                  className="absolute top-2 right-2 w-4 h-4 text-white"
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
+                    d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
                   />
                 </svg>
+                <h1 className="text-lg mr-5 text-white">Chat</h1>
               </button>
             </div>
             <div
@@ -419,8 +436,11 @@ export default function Messages() {
               </div>
               {showTextarea && (
                 <div className="pl-2 pr-2 pb-2">
-                  <form className="w-full flex ease-in-out relative transition-all">
-                    <textarea placeholder="Your Message, 280 max characters" className="max-h-28 p-1 w-[80%] h-28 text-black dark:text-white text-sm"></textarea>
+                  <form className="w-full flex relative transition-all">
+                    <textarea
+                      placeholder="Your Message, 280 max characters"
+                      className="max-h-28 p-1 w-[80%] h-28 text-black dark:text-white text-sm"
+                    ></textarea>
                     <button className="rounded-full absolute bottom-0 right-24 mb-0 h-12 w-12 bg-blue-600 dark:bg-blue-600 flex justify-center items-center hover:scale-110 hover:bg-blue-800 ease-in-out duration-100">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -444,6 +464,6 @@ export default function Messages() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -341,10 +341,10 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
     if (type === "Notifications") {
       return (
         <div
-          className={`bottom-0 p-3 top-32 left-20 w-72 text-white fixed z-10 ease-in-out duration-500 ${
+          className={`bottom-0 p-3 top-32 left-20 w-72 text-white fixed z-10 ease-in-out duration-300 ${
             sidebarOpacity
-              ? "translate-y-full opacity-0"
-              : "translate-y-0 opacity-1"
+            ? "w-0 opacity-0 translate-x-[-350px] "
+            : "w-100 opacity-1 translate-x-0"
           }`}
         >
           <h4 className="dark:text-white text-lg text-black font-semibold border-customPurpleDark border-b-2">
@@ -356,7 +356,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
                 return (
                   <div
                     key={notif.id}
-                    className=" shadow-xl bg-white rounded-xl dark:bg-darkModeLightGray  dark:shadow-notificationShadowPink ring-blue-700 p-1 mt-3"
+                    className=" shadow-xl bg-white rounded-xl dark:bg-darkModeDarkGray  dark:shadow-notificationShadowPink ring-blue-700 p-1 mt-3"
                   >
                     <div className="flex justify-between">
                       {" "}
