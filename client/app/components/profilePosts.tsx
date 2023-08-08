@@ -1,6 +1,5 @@
 "use client"
 import "../(styles)/profile.css";
-import { useState } from "react";
 
 interface PostInfo {
   title: string;

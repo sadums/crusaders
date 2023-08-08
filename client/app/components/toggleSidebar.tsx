@@ -133,25 +133,25 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
     lastname: "Doe",
   };
 
-  type PostData = {
-    title: string;
-    body: string;
-    comments: any[]; // Adjust this type as needed
-    likes: any[];
-    createdAt: string;
-    hashtags: any[]; // Adjust this type as needed
-    preview: string;
-    media: string;
-    username: string;
-    firstName: string;
-    lastName: string;
-    pfp: string;
-    _id: string;
-  };
+  // type PostData = {
+  //   title: string;
+  //   body: string;
+  //   comments: any[]; // Adjust this type as needed
+  //   likes: any[];
+  //   createdAt: string;
+  //   hashtags: any[]; // Adjust this type as needed
+  //   preview: string;
+  //   media: string;
+  //   username: string;
+  //   firstName: string;
+  //   lastName: string;
+  //   pfp: string;
+  //   _id: string;
+  // };
 
   const [likePostModal, setLikePostModal] = useState(false);
   const [showModalState, setShowModalState] = useState(false);
-  const [activePostData, setActivePostData] = useState<PostData | null>(null);
+  const [activePostId, setActivePostId] = useState<PostData | null>(null);
   const [
     getUserById,
     {
@@ -164,7 +164,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
   });
 
   const [getPost, { loading: postLoading, data: postData }] =
-    useLazyQuery(GET_POST);
+  useLazyQuery(GET_POST);
 
   interface FriendRequestNotificationData {
     senderName: string;
@@ -187,7 +187,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
   useEffect(() => {
     if (Auth.loggedIn()) {
       const id = Auth.getProfile().data._id;
-      getUserById({ variables: { id } }); // Call getUserById inside the useEffect with the correct variables
+      getUserById({ variables: { userId: id } }); // Call getUserById inside the useEffect with the correct variables
     }
     console.log(singleUserData);
   }, []);
@@ -324,17 +324,18 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
       );
     }
 
-    //This is missing some data username, firstName, lastName, pfp
-    const likesPictureHandler = async (post) => {
-      try {
-        console.log(post.postId);
-        console.log(post);
-        const response = await getPost({ variables: { postId: post.postId } });
-        console.log(response.data.getPost);
-      } catch (err) {
-        console.error(err);
+    const likesPictureHandler = async (postId: any) => {
+      try{
+        console.log(postId)
+        setActivePostId(postId)
+        setShowModalState(true)
+        // const response = await getPost({ variables: { postId: post.postId } });
+        // console.log(response.data.getPost)
+
+      }catch(err){
+        console.error(err)
       }
-    };
+    }
     if (type === "Likes") {
       return (
         <>
@@ -366,9 +367,9 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
                   ) => (
                     <div key={index} className="w-[100%] h-auto">
                       <img
-                        onClick={() => likesPictureHandler(post)}
+                        onClick={() => likesPictureHandler(post.post._id)}
                         className="h-24 w-32 object-fill rounded-xl shadow-xl transition-transform duration-200 transform scale-100 cursor-pointer hover:scale-[96%] hover:brightness-75"
-                        src={post.preview}
+                        src={post.post.preview}
                       ></img>
                     </div>
                   )
@@ -379,22 +380,10 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
           {showModalState && (
             <div className="z-50 fixed inset-0 flex justify-center items-center">
               <PostModal
-                title={tempPostModalData.title}
-                media={tempPostModalData.media}
-                preview={tempPostModalData.preview}
-                body={tempPostModalData.body}
-                date={"1691369322412"}
-                comments={tempPostModalData.comments}
-                hashtags={tempPostModalData.hashtags}
-                username={tempPostModalData.username}
-                likes={tempPostModalData.likes}
-                pfp={tempPostModalData.pfp}
-                firstName={tempPostModalData.firstname}
-                lastName={tempPostModalData.lastname}
+                postId={activePostId}
                 handleClose={function (): void {
-                  setLikePostModal(false);
+                  setShowModalState(false);
                 }}
-                postId={""}
               />
             </div>
           )}
@@ -419,7 +408,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
                 return (
                   <div
                     key={notif.id}
-                    className=" shadow-xl bg-white rounded-xl dark:bg-darkModeDarkGray  dark:shadow-notificationShadowPink ring-blue-700 p-1 mt-3"
+                    className=" shadow-xl bg-white rounded-xl dark:bg-darkModeLightGray  dark:shadow-notificationShadowPink ring-blue-700 p-1 mt-3"
                   >
                     <div className="flex justify-between">
                       {" "}
@@ -467,7 +456,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
               }
               if (notif.type === "messageResponse") {
                 return (
-                  <div className=" shadow-xl bg-white rounded-xl dark:shadow-notificationShadowPink dark:bg-darkModeDarkGray p-1 mt-3">
+                  <div className=" shadow-xl bg-white rounded-xl dark:shadow-notificationShadowPink dark:bg-coolGray p-1 mt-3">
                     <div className="flex justify-between">
                       {" "}
                       <div className="flex">
@@ -516,7 +505,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
                             <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
-                              d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+                              d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
                             />
                           </svg>
                         </div>

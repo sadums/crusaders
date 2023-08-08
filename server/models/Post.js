@@ -1,4 +1,4 @@
-const { Schema } = require("mongoose");
+const { Schema, model } = require("mongoose");
 
 const hashtagSchema = new Schema({
   hashtagText: {
@@ -21,30 +21,6 @@ const commentSchema = new Schema({
     default: Date.now,
   },
   username: {
-    type: String,
-  },
-});
-
-const likesSchema = new Schema({
-  username: {
-    type: String,
-  },
-  pfp: {
-    type: String,
-  },
-  userId: {
-    type: String,
-  },
-  postId: {
-    type: String,
-  },
-  firstName: {
-    type: String,
-  },
-  lastName: {
-    type: String,
-  },
-  preview: {
     type: String,
   },
 });
@@ -76,7 +52,12 @@ const postSchema = new Schema({
     default: Date.now,
   },
   hashtags: [hashtagSchema],
-  likes: [likesSchema],
+  likes: [{
+    type: Schema.Types.ObjectId,
+    ref: "Like"
+  }],
 });
 
-module.exports = postSchema;
+const Post = model('Post', postSchema)
+
+module.exports = Post;

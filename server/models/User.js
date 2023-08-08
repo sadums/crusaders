@@ -1,30 +1,5 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
-const postSchema = require("./Post");
-
-const likesSchema = new Schema({
-  username: {
-    type: String,
-  },
-  pfp: {
-    type: String,
-  },
-  userId: {
-    type: String,
-  },
-  postId: {
-    type: String,
-  },
-  firstName: {
-    type: String,
-  },
-  lastName: {
-    type: String,
-  },
-  preview: {
-    type: String,
-  }
-})
 
 const userSchema = new Schema(
   {
@@ -57,7 +32,10 @@ const userSchema = new Schema(
     bio: {
       type: String,
     },
-    posts: [postSchema],
+    posts: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Post'
+    }],
     followers: [
       {
         type: Schema.Types.ObjectId,
@@ -70,7 +48,10 @@ const userSchema = new Schema(
         ref: "User",
       },
     ],
-    likes: [likesSchema],
+    likes: [{
+      type: Schema.Types.ObjectId,
+      ref: "Like"
+    }],
     chats: [
       {
         type: Schema.Types.ObjectId,
