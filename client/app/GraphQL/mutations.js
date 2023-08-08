@@ -49,22 +49,23 @@ export const UPDATE_USER_MUTATION = gql`
 `;
 
 export const FOLLOW_USER = gql`
-  mutation AddFollower($userId: ID!, $followerId: ID!){
-    addFollower(userId: $userId, followerId: $followerId){
-      user{
-        followers{
-          _id
-        }
+  mutation Mutation($userId: ID!, $followerId: ID!) {
+    addFollower(userId: $userId, followerId: $followerId) {
+      _id
+      followers {
+        _id
       }
     }
   }
 `;
 
 export const UNFOLLOW_USER = gql`
-  mutation AddFollower($userId: ID!, $followerId: ID!){
-    addFollower(userId: $userId, followerId: $followerId){
-      followers{
-        _id
+  mutation RemoveFollower($userId: ID!, $followerId: ID!) {
+    removeFollower(userId: $userId, followerId: $followerId) {
+      user {
+        followers {
+          _id
+        }
       }
     }
   }
@@ -102,7 +103,6 @@ export const ADD_POST = gql`
   }
 `;
 
-
 //Get rid of
 export const ADD_COMMENT = gql`
   mutation AddComment($username: String!, $body: String!, $postId: String!) {
@@ -118,9 +118,12 @@ export const ADD_COMMENT = gql`
   }
 `;
 
-
 export const ADD_COMMENT_TO_POST = gql`
-  mutation AddCommentToPost($username: String!, $body: String!, $postId: String!) {
+  mutation AddCommentToPost(
+    $username: String!
+    $body: String!
+    $postId: String!
+  ) {
     addComment(username: $username, body: $body, postId: $postId) {
       _id
       body
@@ -135,7 +138,6 @@ export const ADD_COMMENT_TO_POST = gql`
     }
   }
 `;
-
 
 // export const LIKE_POST = gql`
 //   mutation LikePost($postId: String!, $userId: String!, $input: likePostInput!) {
@@ -218,20 +220,20 @@ export const LIKE_POST = gql`
 // `;
 
 export const UNLIKE_POST = gql`
-mutation UnlikePost($postId: String!, $userId: String!) {
-  unlikePost(postId: $postId, userId: $userId) {
-    _id
-    user {
+  mutation UnlikePost($postId: String!, $userId: String!) {
+    unlikePost(postId: $postId, userId: $userId) {
       _id
+      user {
+        _id
+      }
+      post {
+        _id
+      }
+      username
+      pfp
+      firstName
+      lastName
+      preview
     }
-    post {
-      _id
-    }
-    username
-    pfp
-    firstName
-    lastName
-    preview
   }
-}
 `;
