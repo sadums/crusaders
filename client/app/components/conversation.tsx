@@ -29,14 +29,14 @@ function Conversations({
 
     if (user === "Nobody") {
       return (
-        <div className="w-[100%] p-2 overflow-y-scroll friendListMessages pt-0 pb-32 h-[97vh]">
+        <div className="w-[100%] p-2 overflow-y-scroll friendListMessages pt-20 pb-32 h-[97vh]">
           <NobodyChat firstInfoText="Welcome to the messaging page!" secondInfoText="Looks like you aren't currently talking to anyone, select a user to chat with."/>
         </div>
       );
     }
     if (!convo[0]) {
       return (
-        <div className="w-[100%] p-2 overflow-y-scroll friendListMessages  pb-32 h-[97vh]">
+        <div className="w-[100%] p-2 overflow-y-scroll friendListMessages pt-20 pb-32 h-[97vh]">
           <NobodyChat firstInfoText="This chat is empty!" secondInfoText="Select a user to chat with, or send a message."/>
         </div>
       );
