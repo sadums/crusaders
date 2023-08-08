@@ -35,12 +35,19 @@ const resolvers = {
       }
     },
     getUserById: async (parent, { userId }, context) => {
-      const user = await User.findById(userId).populate({
-        path: "posts",
-        populate: {
-          path: "user",
-        },
-      });
+      const user = await User.findById(userId)
+        .populate({
+          path: "posts",
+          populate: {
+            path: "user",
+          },
+        })
+        .populate({
+          path: "likes",
+          populate: {
+            path: "post",
+          },
+        });
       if (!user) {
         throw new Error("Could not find this user");
       }
@@ -182,6 +189,8 @@ const resolvers = {
       try {
         const { username, pfp, firstName, lastName, preview } = input;
 
+        console.log(postId)
+        console.log(userId)
         // Check if the user has already liked the post
         const existingLike = await Like.findOne({ user: userId, post: postId });
         if (existingLike) {
@@ -246,6 +255,8 @@ const resolvers = {
     unlikePost: async (parent, { postId, userId }, context, info) => {
       try {
         // 1. Find the Like document based on the postId and userId.
+        console.log(postId)
+        console.log(userId)
         const likeToRemove = await Like.findOne({ post: postId, user: userId });
 
         // If there's no such Like, throw an error.
