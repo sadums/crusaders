@@ -92,7 +92,7 @@ console.log(error);
               <div className="grid grid-cols-3 gap-3 overflow-y-scroll">
                 {data && data.getUserById && (
                   <>
-                    {data.getUserById.posts.map(
+                    {data.getUserById.posts?.map(
                       (
                         post: { title: string; preview: string },
                         index: number
