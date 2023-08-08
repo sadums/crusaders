@@ -1,4 +1,3 @@
-
 import "../(styles)/messages.css";
 import "../(styles)/homepage.css";
 // import Conversations from "../components/conversation";
@@ -13,11 +12,7 @@ export const dynamic = "auto",
   runtime = "nodejs",
   preferredRegion = "auto";
 
-export default function Messages({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Messages({ children }: { children: React.ReactNode }) {
   // function chatSubscription() {
   //   const { data, loading, error } = useSubscription(CHAT_SUBSCRIPTION);
   //   console.log(data, loading, error);
@@ -30,15 +25,13 @@ export default function Messages({
         <div className="col-span-2 bg-mainDarkPurple dark:bg-mainPurple border-customPurpleDark border-r-[2px] dark:border-0 ">
           <div className="bg-darkestWhite  dark:bg-darkModeDarkestGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
         </div>
-{/* 
+        {/* 
         <div className="col-span-8 h-full">
           {children}
         </div> */}
-  {children}
+        {children}
         <div className="col-span-2"></div>
       </div>
     </div>
-
-    
   );
 }

@@ -308,7 +308,7 @@ const ToggleSidebar = ({ props, type, sidebarOpacity }: toggle) => {
                   scrollbarColor: "transparent transparent",
                 }}
               >
-                {singleUserData.getUserById.likes.map(
+                {singleUserData.getUserById.likes?.map(
                   (
                     post: { preview: string | undefined },
                     index: Key | null | undefined

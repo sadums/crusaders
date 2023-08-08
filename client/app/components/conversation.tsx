@@ -21,13 +21,13 @@ function Conversations({
 
     const [nobodyChat, activateNobodyChat] = useState(false)
 
-    useEffect(() => {
+    // useEffect(() => {
 
-    }, [])
+    // }, [])
 
     if (user === "Nobody") {
 
-      activateNobodyChat(!nobodyChat);
+      // activateNobodyChat(!nobodyChat);
 
       return (
         <>
