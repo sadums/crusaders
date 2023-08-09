@@ -2,7 +2,7 @@
 
 import "../(styles)/navbar.css";
 import { useState, useEffect } from "react";
-import Search from "./toggleSideBar/search";
+import Search from "./search";
 import Notifications from "./toggleSideBar/notifications";
 import Likes from "./toggleSideBar/likes";
 import SignInModal from "./signin";
@@ -13,45 +13,6 @@ import Auth from "../(utils)/auth";
 const Sidebar = ({}) => {
   const [isSignInModalOpen, setIsSignInModalOpen] = useState<boolean>(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState<boolean>(false);
-
-  const sidebarData = [
-    {
-      username: "Carreejoh",
-      title: "Messages",
-      content: [
-        {
-          username: "carreejoh",
-          pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
-          message:
-            "super messages thing you got there, massive dubs, huge REACT win, tsx can suck my balls",
-        },
-        {
-          username: "JohnDoe",
-          pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
-          message: "Huge GPT dubs, massive typescript L",
-        },
-        {
-          username: "SarahConnor",
-          pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
-          message: "I'll be back!",
-        },
-        {
-          username: "MichaelScott",
-          pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
-          message: "That's what she said!",
-        },
-        {
-          username: "ElonMusk",
-          pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
-          message: "Mars, here we come!",
-        },
-      ],
-    },
-    {
-      title: "Likes",
-      content: "Your Likes",
-    },
-  ];
 
   const signUpButtonHandler = () => {
     console.log("SIGN UP");
@@ -91,7 +52,7 @@ const Sidebar = ({}) => {
   useEffect(() => {
     let choice = localStorage.getItem("darkMode");
     let previousLocation = localStorage.getItem("colorModeLocation");
-    let currentLocation = window.location.pathname
+    let currentLocation = window.location.pathname;
     // setLocationRender(window.location.pathname)
     if (choice === "dark") {
       setColorMode(true);
@@ -99,9 +60,9 @@ const Sidebar = ({}) => {
     if (currentLocation !== previousLocation) {
       // setLocation(previousLocation);
       console.log(currentLocation);
-      console.log(previousLocation + "previous")
+      console.log(previousLocation + "previous");
     }
-    if(currentLocation === previousLocation) {
+    if (currentLocation === previousLocation) {
       // console.log("Same spot")
     }
   }, []);
@@ -175,8 +136,9 @@ const Sidebar = ({}) => {
                     />
                   </svg>
                 </a>
-                <span className="sidebarIconInfo group-hover:scale-100">
-                  Dark Mode
+                <span className="sidebarIconInfo flex group-hover:scale-100">
+                  <span>Dark</span>
+                  <span className="ml-1">Mode</span>
                 </span>
               </li>
               <li
@@ -204,9 +166,10 @@ const Sidebar = ({}) => {
                     />
                   </svg>
                 </a>
-                <span className="sidebarIconInfo group-hover:scale-100">
-                  Light Mode
-                </span>
+                <span className="sidebarIconInfo flex group-hover:scale-100">
+                      <span>Light</span>
+                      <span className="ml-1">Mode</span>
+                    </span>
               </li>
 
               <li className=" flex items-center space-x-2 sidebarIcon group">
@@ -440,12 +403,12 @@ const Sidebar = ({}) => {
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                          d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
                         />
                       </svg>
                     </a>
-                    <span className="sidebarIconInfo group-hover:scale-100">
-                      Log out
+                    <span className="sidebarIconInfo flex group-hover:scale-100">
+                      <span>Logout</span>
                     </span>
                   </li>
                 </>
@@ -471,12 +434,13 @@ const Sidebar = ({}) => {
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
                         />
                       </svg>
                     </a>
-                    <span className="sidebarIconInfo group-hover:scale-100">
-                      Sign Up
+                    <span className="sidebarIconInfo flex group-hover:scale-100">
+                      <span>Sign</span>
+                      <span className="ml-1">Up</span>
                     </span>
                   </li>
                   <li
@@ -499,12 +463,13 @@ const Sidebar = ({}) => {
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                          d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
                         />
                       </svg>
                     </a>
-                    <span className="sidebarIconInfo group-hover:scale-100">
-                      Sign in
+                    <span className="sidebarIconInfo flex group-hover:scale-100">
+                      <span>Sign</span>
+                      <span className="ml-1">In</span>
                     </span>
                   </li>
                 </>
