@@ -2,7 +2,7 @@
 
 import "../(styles)/navbar.css";
 import { useState, useEffect } from "react";
-import Search from "./toggleSideBar/search";
+import Search from "./search";
 import Notifications from "./toggleSideBar/notifications";
 import Likes from "./toggleSideBar/likes";
 import SignInModal from "./signin";
@@ -120,8 +120,9 @@ const Sidebar = ({}) => {
                     />
                   </svg>
                 </a>
-                <span className="sidebarIconInfo group-hover:scale-100">
-                  Dark Mode
+                <span className="sidebarIconInfo flex group-hover:scale-100">
+                  <span>Dark</span>
+                  <span className="ml-1">Mode</span>
                 </span>
               </li>
 
@@ -150,9 +151,10 @@ const Sidebar = ({}) => {
                     />
                   </svg>
                 </a>
-                <span className="sidebarIconInfo group-hover:scale-100">
-                  Light Mode
-                </span>
+                <span className="sidebarIconInfo flex group-hover:scale-100">
+                      <span>Light</span>
+                      <span className="ml-1">Mode</span>
+                    </span>
               </li>
               <SidebarIcon
                 text="Home"
@@ -183,6 +185,7 @@ const Sidebar = ({}) => {
               />
               {Auth.loggedIn() ? (
                 <>
+
                   <SidebarIcon
                     text="Notifications"
                     href="#"

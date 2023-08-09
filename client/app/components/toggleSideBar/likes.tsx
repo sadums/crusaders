@@ -40,8 +40,8 @@ function Likes({ sidebarOpacity }: toggle) {
       <div
         className={`bottom-0 p-3 top-32 left-20 w-72 text-white fixed z-10 ease-in-out duration-500 ${
           sidebarOpacity
-            ? "translate-y-full opacity-0"
-            : "translate-y-0 opacity-1"
+            ? "w-0 opacity-0 translate-x-[-350px] "
+            : "w-100 opacity-1 translate-x-0"
         }`}
       >
         <h1 className="dark:text-white text-lg text-black font-semibold border-customPurpleDark border-b-2">
