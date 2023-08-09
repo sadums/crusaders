@@ -64,10 +64,20 @@ const Sidebar = ({
   };
 
   const [currentColorMode, setColorMode] = useState(false);
+  const [showSidebar, setShowSidebar] = useState("Notifications");
+  const [sidebarOpacity, setSidebarOpacity] = useState(true);
+  // const [locationRender, setLocationRender] = useState('/')
+
+  // useEffect(() => {
+  //   let currentLocation = window.location.pathname;
+  //   localStorage.setItem("colorModeLocation", currentLocation);
+  // }, [enableDarkMode, enableLightMode])
 
   useEffect(() => {
     let choice = localStorage.getItem("darkMode");
     let application = window.document.body.classList;
+    let currentLocation = window.location.pathname;
+    localStorage.setItem("colorModeLocation", currentLocation);
     if (choice === "dark") {
       application.add("dark");
       application.remove("border-mainDarkPurple")
@@ -80,21 +90,31 @@ const Sidebar = ({
 
   useEffect(() => {
     let choice = localStorage.getItem("darkMode");
+    let previousLocation = localStorage.getItem("colorModeLocation");
+    let currentLocation = window.location.pathname
+    // setLocationRender(window.location.pathname)
     if (choice === "dark") {
       setColorMode(true);
     }
+    if (currentLocation !== previousLocation) {
+      // setLocation(previousLocation);
+      console.log(currentLocation);
+      console.log(previousLocation + "previous")
+    }
+    if(currentLocation === previousLocation) {
+      // console.log("Same spot")
+    }
   }, []);
 
-  function enableDarkMode() {
-    localStorage.setItem("darkMode", "dark");
-  }
-
-  function enableLightMode() {
-    localStorage.setItem("darkMode", "light");
-  }
-
-  const [showSidebar, setShowSidebar] = useState("Notifications");
-  const [sidebarOpacity, setSidebarOpacity] = useState(true);
+  // function setLocation(location:string | null) {
+  //   if(location === null) {
+  //     window.location.assign('/')
+  //   }
+  //   // localStorage.setItem("colorModeLocation", window.location.pathname)
+  //   // if(location !== locationRender) {
+  //   //   window.location.assign(location);
+  //   // }
+  // }
 
   useEffect(() => {
     setSidebarOpacity(false)
@@ -105,11 +125,13 @@ const Sidebar = ({
     setSidebarOpacity(!sidebarOpacity);
   }, []);
 
-  // useEffect(() => {
-  //   if(sidebarOpacity === true) {
+  function enableDarkMode() {
+    localStorage.setItem("darkMode", "dark");
+  }
 
-  //   }
-  // },[sidebarOpacity])
+  function enableLightMode() {
+    localStorage.setItem("darkMode", "light");
+  }
 
   //This error is typescript I will change
   const handleSidebarChange = (page: any) => setShowSidebar(page);
