@@ -206,7 +206,7 @@ const PostModal: React.FC<ModalProps> = ({ postId, handleClose }) => {
   return (
     <>
       {postData && (
-        <div className="fixed z-10 inset-0 overflow-y-auto duration-200 ease-in-out flex items-center justify-center">
+        <div className="fixed z-50 inset-0 overflow-y-auto duration-200 ease-in-out flex items-center justify-center">
           <div
             className="fixed inset-0 bg-black opacity-90 duration-200 transition-all ease-in-out"
             aria-hidden="true"

@@ -9,7 +9,7 @@ function ProfileSideInfo({ userInfo }: any) {
 
   return (
     <>
-      <div className="bg-white dark:bg-coolGray p-2 rounded-xl shadow-2xl mb-0">
+      {/* <div className="bg-white dark:bg-coolGray p-2 rounded-xl shadow-2xl mb-0">
         <img
           src={userData.pfp}
           className="h-40 w-40 rounded-full border-[1px] border-customPurple object-cover"
@@ -25,7 +25,7 @@ function ProfileSideInfo({ userInfo }: any) {
         </p>
         <div className="relative flex items-start space-x-4 mt-2 border-b-[1px] border-gray-700 dark:border-gray-500 pb-2">
           {/* ADD THE REAL FUCTIONALIY OF THESE ASK SAM ABOUT IT */}
-          <button className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-mainBlue hover:bg-mainDarkBlue duration-300 ">
+          {/* <button className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-mainBlue hover:bg-mainDarkBlue duration-300 ">
             Follow
           </button>
           <button
@@ -78,7 +78,7 @@ function ProfileSideInfo({ userInfo }: any) {
             </>
           )}
         </div>
-      </div>
+      </div> */} 
       {Auth.loggedIn() && (
         <>
           {Auth.getProfile().data._id === userData._id && (

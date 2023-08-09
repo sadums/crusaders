@@ -18,10 +18,10 @@ function ProfilePosts({ postInfo }: ProfilePostsProps) {
   const [showModalState, setShowModalState] = useState(false);
 
   return (
-    <div className="relative profilePostMainDiv">
+    <div className="relative">
       {postInfo.preview ? (
         <img
-          className="w-full h-64 object-cover z-10 profilePostImg "
+          className="w-full h-[100%] object-cover z-10 profilePostImg "
           src={postInfo.preview}
           alt="Post"
           onClick={()=> setShowModalState(true)}
