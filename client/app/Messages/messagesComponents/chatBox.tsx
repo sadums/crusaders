@@ -22,8 +22,8 @@ export default function ChatBox() {
     <div className="col-span-5 border-mainDarkPurple dark:border-mainPurple border-l-2 border-r-2 h-[97vh]">
       <div className="relative w-full flex flex-col ">
         <Conversations user={{
-          firstname: "",
-          lastname: "",
+          firstName: "",
+          lastName: "",
           username: "",
           pfp: ""
         }} convo={[]} date={""}/>

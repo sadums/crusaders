@@ -16,8 +16,8 @@ function Conversations({
   date,
 }: {
   user: {
-    firstname: string,
-    lastname: string,
+    firstName: string,
+    lastName: string,
     username: string,
     pfp: string
   };
@@ -47,8 +47,8 @@ function Conversations({
             type={"user"}
             pfp={user.pfp}
             username={user.username}
-            firstname={user.firstname}
-            lastname={user.lastname}
+            firstname={user.firstName}
+            lastname={user.lastName}
           />
           <div className="w-[100%] p-2 overflow-y-scroll friendListMessages pt-20 pb-32 h-[97vh]">
             <NobodyChat
@@ -63,8 +63,8 @@ function Conversations({
         <>
           <ChatHeader
             type={"user"}
-            pfp={pfp}
-            username={user}
+            pfp={user.pfp}
+            username={user.username}
             firstname={tempFillerData.firstname}
             lastname={tempFillerData.lastname}
           />
