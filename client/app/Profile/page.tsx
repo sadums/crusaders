@@ -10,12 +10,14 @@ import {
   GET_USER_BY_ID,
 } from "../GraphQL/queries";
 
+
 export const dynamic = 'auto',
 dynamicParams = true,
 revalidate = Infinity,
 fetchCache = 'auto',
 runtime = 'nodejs',
 preferredRegion = 'auto'
+
 
 export default function Profile() {
   const id = Auth.getProfile().data._id;
