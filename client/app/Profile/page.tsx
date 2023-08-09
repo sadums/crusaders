@@ -17,7 +17,6 @@ export const dynamic = "auto",
 
 export default function Profile() {
   const id = Auth.getProfile().data._id;
-  console.log(id);
   const { loading, error, data } = useQuery(GET_USER_BY_ID, {
     variables: {
       userId: id,
@@ -69,6 +68,7 @@ export default function Profile() {
                 <button className="ml-6 text-md font-semibold dark:text-white text-black hover:text-blue-700 dark:hover:text-blue-500 duration-100">
                   Followers: 14
                 </button>
+
               </div>
             </div>
           </div>

@@ -9,6 +9,15 @@ import Widgets from "./components/homepage/widgets";
 import CreateAPost from "./components/homepage/createAPost";
 import SinglePost from "./components/homepage/singlePost";
 
+interface PostState {
+  posts: any[];  // Define the type of posts as you need, I've used any[] for demonstration
+}
+
+interface CreateAPostProps {
+  setDisplayPosts: React.Dispatch<React.SetStateAction<PostState[]>>;
+  // ... other props
+}
+
 const HomeController: React.FC = () => {
   const {
     loading: allPostLoading,
@@ -16,7 +25,8 @@ const HomeController: React.FC = () => {
     data: allPostsData,
   } = useQuery(GET_ALL_POSTS);
 
-  const [displayPosts, setDisplayPosts] = useState<any[] | null>(null);
+  const [displayPosts, setDisplayPosts] = useState<any[] | null>([]);
+
 
   useEffect(() => {
     if (allPostsData) {
