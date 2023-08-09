@@ -21,7 +21,12 @@ export default function ChatBox() {
   return (
     <div className="col-span-5 border-mainDarkPurple dark:border-mainPurple border-l-2 border-r-2 h-[97vh]">
       <div className="relative w-full flex flex-col ">
-        <Conversations/>
+        <Conversations user={{
+          firstname: "",
+          lastname: "",
+          username: "",
+          pfp: ""
+        }} convo={[]} date={""}/>
         <div
           className={`${
             textBox ? "hidden" : "block"
