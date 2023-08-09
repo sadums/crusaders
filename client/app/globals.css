@@ -44,3 +44,7 @@ html {
 .sign-up-modal{
   z-index: 100;
 }
+
+.profilePostsDiv::-webkit-scrollbar {
+  display: none;
+}

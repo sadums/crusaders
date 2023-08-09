@@ -9,7 +9,7 @@ function ProfileSideInfo({ userInfo }: any) {
 
   return (
     <>
-      <div className="bg-white dark:bg-coolGray p-2 rounded-xl shadow-2xl mb-0">
+      {/* <div className="bg-white dark:bg-coolGray p-2 rounded-xl shadow-2xl mb-0">
         <img
           src={userData.pfp}
           className="h-40 w-40 rounded-full border-[1px] border-customPurple object-cover"
@@ -71,7 +71,7 @@ function ProfileSideInfo({ userInfo }: any) {
             </svg>
           </button>
         </div>
-      </div>
+      </div> */}
       {Auth.loggedIn() && (
         <>
           {Auth.getProfile().data._id === userData._id && (

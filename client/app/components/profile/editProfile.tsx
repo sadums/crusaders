@@ -54,12 +54,12 @@ const EditProfile: FC<EditProfileProps> = ({ setUserData }) => {
   };
 
   return (
-    <div className="flex items-center justify-center mt-4 shadow-2xl">
-      <form className="bg-white rounded-lg shadow-md p-2 w-72 mx-auto">
+    <div className="flex items-center justify-center mt-16 pt-2 shadow-2xl">
+      <form className="bg-darkModeDarkGray rounded-lg shadow-md p-2 w-72 mx-auto">
         <div className="mb-4">
           <label
             htmlFor="username"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-semibold dark:text-gray-400 text-gray-700"
           >
             Change Username
           </label>
@@ -72,7 +72,7 @@ const EditProfile: FC<EditProfileProps> = ({ setUserData }) => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-semibold dark:text-gray-400 text-gray-700">
             Change Name
           </label>
           <input
@@ -91,7 +91,7 @@ const EditProfile: FC<EditProfileProps> = ({ setUserData }) => {
         <div className="mb-4">
           <label
             htmlFor="bio"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-semibold dark:text-gray-400 text-gray-700"
           >
             Change Bio
           </label>
