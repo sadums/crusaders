@@ -143,6 +143,7 @@ const resolvers = {
     },
     addFollower: async (parent, { userId, followerId }, context) => {
       try {
+        if(userId === followerId) return { message: "You cannot follow yourself" }
         const follower = await User.findByIdAndUpdate(
           followerId,
           {

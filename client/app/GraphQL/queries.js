@@ -54,6 +54,9 @@ export const GET_ALL_POSTS = gql`
         lastName
         username
         email
+        followers{
+          _id
+        }
       }
       likes {
         _id
