@@ -4,10 +4,12 @@ import "../(styles)/messages.css";
 import "../(styles)/homepage.css";
 import { useEffect, useState } from "react";
 import Conversations from "./messagesComponents/conversation";
+import { GET_CHAT_BY_ID, GET_USER_CHATS } from "../GraphQL/queries";
 import { CHAT_SUBSCRIPTION } from "../GraphQL/subscriptions";
-import { useSubscription } from "@apollo/client";
+import { useQuery, useSubscription } from "@apollo/client";
 import Searchbar from "../components/searchbar";
 import FriendListItem from "../components/friendListItem";
+import Auth from "../(utils)/auth";
 
 export const dynamic = "auto",
   dynamicParams = true,
@@ -19,308 +21,9 @@ export const dynamic = "auto",
 export default function Messages() {
   function chatSubscription() {
     const { data, loading, error } = useSubscription(CHAT_SUBSCRIPTION);
-    console.log(data, loading, error);
+    // console.log(data, loading, error);
   }
   chatSubscription();
-  const tempFriendLinks = [
-    {
-      username: "Sadums",
-      firstname: "John",
-      lastname: "Doe",
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpixel.nymag.com%2Fimgs%2Fdaily%2Fintelligencer%2F2019%2F10%2F15%2F15-hunter-biden.w700.h700.jpg&f=1&nofb=1&ipt=875a251388322106d0ff37211cd4197c54ee31a308e9798c16c74fd34e3262fc&ipo=images",
-      convo: [
-        {
-          speaker: true,
-          message: "Whats good",
-        },
-        {
-          speaker: true,
-          message:
-            "Idk idk idk, tried to commit repo to github, massive rip, fuck",
-        },
-        {
-          speaker: false,
-          message: "That sucks ass man",
-        },
-        {
-          speaker: true,
-          message: "Yeah brother",
-          date: "08/02/2023",
-        },
-      ],
-      newMessage: false,
-    },
-    {
-      username: "TitanicYoshi",
-      firstname: "John",
-      lastname: "Doe",
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.E3v8f0j8uhgRLnAk_2ou7AHaGX%26pid%3DApi&f=1&ipt=a532fbd2d3b278b927f5504a1cdab794f079828da0702c589a23a5a4cddf28f1&ipo=images",
-      convo: [
-        {
-          speaker: false,
-          message: "I love OceanGate",
-          date: "08/01/2023",
-        },
-        {
-          speaker: true,
-          message:
-            "Me too, lololo lolol olol olo lasdf asd fsd fs dfa sdf asd fasd fas dfa sdfasdfasdfasd fasdfasdfa sdfdsfdsds as dfasdf asdfsdfs dsfdfdsdfa",
-          date: "08/01/2023",
-        },
-        {
-          speaker: false,
-          message: "That sucks ass man",
-          date: "08/01/2023",
-        },
-        {
-          speaker: true,
-          message: "Yeah brother",
-          date: "08/02/2023",
-        },
-      ],
-      newMessage: true,
-    },
-    {
-      username: "Carreejoh",
-      firstname: "John",
-      lastname: "Doe",
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.E3v8f0j8uhgRLnAk_2ou7AHaGX%26pid%3DApi&f=1&ipt=a532fbd2d3b278b927f5504a1cdab794f079828da0702c589a23a5a4cddf28f1&ipo=images",
-      convo: [
-        {
-          speaker: false,
-          message: "I love OceanGate",
-        },
-        {
-          speaker: true,
-          message:
-            "Me too, lololo lolol olol olo lasdf asd fsd fs dfa sdf asd fasd fas dfa sdfasdfasdfasd fasdfasdfa sdfdsfdsds as dfasdf asdfsdfs dsfdfdsdfa",
-        },
-        {
-          speaker: false,
-          message: "That sucks ass man",
-        },
-        {
-          speaker: true,
-          message: "Yeah brother",
-        },
-      ],
-      newMessage: true,
-    },
-    {
-      username: "Xtra",
-      firstname: "John",
-      lastname: "Doe",
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.2ttZm63g10QST-zUfee9bAHaHa%26pid%3DApi&f=1&ipt=2a2e9a8ed813a72d1e579820ca1d4eedbba93128fafac81acac7c6a220bfee88&ipo=images",
-      convo: [
-        {
-          speaker: false,
-          message: "I love OceanGate",
-        },
-        {
-          speaker: true,
-          message:
-            "Me too, lololo lolol olol olo lasdf asd fsd fs dfa sdf asd fasd fas dfa sdfasdfasdfasd fasdfasdfa sdfdsfdsds as dfasdf asdfsdfs dsfdfdsdfa",
-        },
-        {
-          speaker: true,
-          message: "That sucks ass man",
-        },
-        {
-          speaker: false,
-          message: "Yeah brother",
-        },
-        {
-          speaker: true,
-          message:
-            "Whats good my guy, React is dank, I need to make this sentence logn enough so that it will wrap around and make a full semi paragraph so I can style it",
-        },
-        {
-          speaker: true,
-          message: "Yeah brother",
-          date: "08/01/2023",
-        },
-        {
-          speaker: false,
-          message: "I love OceanGate",
-          date: "08/01/2023",
-        },
-        {
-          speaker: false,
-          message:
-            "Me too, lololo lolol olol olo lasdf asd fsd fs dfa sdf asd fasd fas dfa sdfasdfasdfasd fasdfasdfa sdfdsfdsds as dfasdf asdfsdfs dsfdfdsdfa",
-          date: "08/01/2023",
-        },
-        {
-          speaker: true,
-          message: "That sucks ass man",
-          date: "08/02/2023",
-        },
-        {
-          speaker: false,
-          message: "Yeah brother",
-          date: "08/02/2023",
-        },
-        {
-          speaker: true,
-          message:
-            "Whats good my guy, React is dank, I need to make this sentence logn enough so that it will wrap around and make a full semi paragraph so I can style it",
-        },
-        {
-          speaker: true,
-          message: "Yeah brother",
-          date: "08/01/2023",
-        },
-        {
-          speaker: true,
-          message:
-            "Whats good my guy, React is dank, I need to make this sentence logn enough so that it will wrap around and make a full semi paragraph so I can style it",
-          date: "08/01/2023",
-        },
-        {
-          speaker: true,
-          message: "Yeah brother",
-        },
-        {
-          speaker: false,
-          message:
-            "Whats good my guy, React is dank, I need to make this sentence logn enough so that it will wrap around and make a full semi paragraph so I can style it",
-        },
-        {
-          speaker: false,
-          message:
-            "Whats good my guy, React is dank, I need to make this sentence logn enough so that it will wrap around and make a full semi paragraph so I can style it",
-          date: "08/05/2023",
-        },
-      ],
-      newMessage: true,
-    },
-    {
-      username: "Xtra1",
-      firstname: "John",
-      lastname: "Doe",
-      id: 1,
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.2ttZm63g10QST-zUfee9bAHaHa%26pid%3DApi&f=1&ipt=2a2e9a8ed813a72d1e579820ca1d4eedbba93128fafac81acac7c6a220bfee88&ipo=images",
-      convo: [],
-      newMessage: false,
-    },
-    {
-      username: "Xtra2",
-      firstname: "John",
-      lastname: "Doe",
-      id: 2,
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.2ttZm63g10QST-zUfee9bAHaHa%26pid%3DApi&f=1&ipt=2a2e9a8ed813a72d1e579820ca1d4eedbba93128fafac81acac7c6a220bfee88&ipo=images",
-      convo: [],
-      newMessage: false,
-    },
-    {
-      username: "Xtra3",
-      firstname: "John",
-      lastname: "Doe",
-      id: 3,
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.2ttZm63g10QST-zUfee9bAHaHa%26pid%3DApi&f=1&ipt=2a2e9a8ed813a72d1e579820ca1d4eedbba93128fafac81acac7c6a220bfee88&ipo=images",
-      convo: [],
-      newMessage: false,
-    },
-    {
-      username: "Xtra4",
-      firstname: "John",
-      lastname: "Doe",
-      id: 4,
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.2ttZm63g10QST-zUfee9bAHaHa%26pid%3DApi&f=1&ipt=2a2e9a8ed813a72d1e579820ca1d4eedbba93128fafac81acac7c6a220bfee88&ipo=images",
-      convo: [],
-      newMessage: false,
-    },
-    {
-      username: "Xtra123",
-      firstname: "John",
-      lastname: "Doe",
-      id: 1,
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.2ttZm63g10QST-zUfee9bAHaHa%26pid%3DApi&f=1&ipt=2a2e9a8ed813a72d1e579820ca1d4eedbba93128fafac81acac7c6a220bfee88&ipo=images",
-      convo: [],
-      newMessage: false,
-    },
-    {
-      username: "Xtra1234",
-      firstname: "John",
-      lastname: "Doe",
-      id: 2,
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.2ttZm63g10QST-zUfee9bAHaHa%26pid%3DApi&f=1&ipt=2a2e9a8ed813a72d1e579820ca1d4eedbba93128fafac81acac7c6a220bfee88&ipo=images",
-      convo: [],
-      newMessage: false,
-    },
-    {
-      username: "Xtra12345",
-      firstname: "John",
-      lastname: "Doe",
-      id: 3,
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.2ttZm63g10QST-zUfee9bAHaHa%26pid%3DApi&f=1&ipt=2a2e9a8ed813a72d1e579820ca1d4eedbba93128fafac81acac7c6a220bfee88&ipo=images",
-      convo: [],
-      newMessage: false,
-    },
-    {
-      username: "Xtra123456",
-      firstname: "John",
-      lastname: "Doe",
-      id: 4,
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.2ttZm63g10QST-zUfee9bAHaHa%26pid%3DApi&f=1&ipt=2a2e9a8ed813a72d1e579820ca1d4eedbba93128fafac81acac7c6a220bfee88&ipo=images",
-      convo: [],
-      newMessage: false,
-    },
-    {
-      username: "Xtra3",
-      firstname: "John",
-      lastname: "Doe",
-      id: 3,
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.2ttZm63g10QST-zUfee9bAHaHa%26pid%3DApi&f=1&ipt=2a2e9a8ed813a72d1e579820ca1d4eedbba93128fafac81acac7c6a220bfee88&ipo=images",
-      convo: [],
-      newMessage: false,
-    },
-    {
-      username: "Xtra4",
-      firstname: "John",
-      lastname: "Doe",
-      id: 4,
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.2ttZm63g10QST-zUfee9bAHaHa%26pid%3DApi&f=1&ipt=2a2e9a8ed813a72d1e579820ca1d4eedbba93128fafac81acac7c6a220bfee88&ipo=images",
-      convo: [],
-      newMessage: false,
-    },
-    {
-      username: "Xtra123",
-      firstname: "John",
-      lastname: "Doe",
-      id: 1,
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.2ttZm63g10QST-zUfee9bAHaHa%26pid%3DApi&f=1&ipt=2a2e9a8ed813a72d1e579820ca1d4eedbba93128fafac81acac7c6a220bfee88&ipo=images",
-      convo: [],
-      newMessage: true,
-    },
-    {
-      username: "Xtra1234",
-      firstname: "John",
-      lastname: "Doe",
-      id: 2,
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.2ttZm63g10QST-zUfee9bAHaHa%26pid%3DApi&f=1&ipt=2a2e9a8ed813a72d1e579820ca1d4eedbba93128fafac81acac7c6a220bfee88&ipo=images",
-      convo: [],
-      newMessage: false,
-    },
-    {
-      username: "Xtra12345",
-      firstname: "John",
-      lastname: "Doe",
-      id: 3,
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.2ttZm63g10QST-zUfee9bAHaHa%26pid%3DApi&f=1&ipt=2a2e9a8ed813a72d1e579820ca1d4eedbba93128fafac81acac7c6a220bfee88&ipo=images",
-      convo: [],
-      newMessage: false,
-    },
-    {
-      username: "Xtra123456",
-      firstname: "John",
-      lastname: "Doe",
-      id: 4,
-      pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.2ttZm63g10QST-zUfee9bAHaHa%26pid%3DApi&f=1&ipt=2a2e9a8ed813a72d1e579820ca1d4eedbba93128fafac81acac7c6a220bfee88&ipo=images",
-      convo: [],
-      newMessage: false,
-    },
-  ];
 
   interface Convo {
     speaker: boolean;
@@ -347,20 +50,33 @@ export default function Messages() {
     }
   }, [textBox]);
 
-  //   const setUserHandler = (newUser: string) => {
-  //     setUser(newUser);
-  //   };
 
-  useEffect(() => {
-    let newConvo = tempFriendLinks
-      .filter((friend) => friend.username === user)
-      // .filter((friend) => friend.pfp === pfp)
-      .map((friend) => friend.convo)
-      .flat();
-    console.log(newConvo);
-    setUserConvo(newConvo);
-  }, [user]);
 
+  const { error, loading, data } = useQuery(GET_USER_CHATS, {
+    variables: {
+      userId: Auth.getProfile().data._id,
+    },
+  });
+
+  const chats = [];
+  try {
+    for(const chat in data.getUserChats.chats){
+      for(const member in data.getUserChats.chats[chat].members){
+        const currentMember = data.getUserChats.chats[chat].members[member];
+        if(!(Auth.getProfile().data._id === currentMember._id)){
+          chats.push({
+            username: currentMember.username,
+            firstname: currentMember.firstName,
+            lastname: currentMember.lastName,
+            id: currentMember._id,
+            pfp: currentMember.pfp,
+          });
+        }
+      }
+    }
+  } catch (e) {
+    console.log(e);
+  }
   return (
     <>
       <div className="col-span-3 h-[97vh] flex-grow-1">
@@ -373,17 +89,17 @@ export default function Messages() {
           </div>
           <div className="bg-darkestWhite dark:bg-darkModeDarkestGray rounded-xl p-2 mt-4 flex-column bottom-0 flex-grow-1">
             <h2 className="mb-2 font-semibold text-xl dark:text-white text-black">
-              Your Friends
+              Chats
             </h2>
             <div className="overflow-y-scroll h-[73.5vh] friendListMessages">
-              {tempFriendLinks.map((friend, index) => (
+              {chats.map((friend, index) => (
                 <FriendListItem
                   username={friend.username}
                   firstname={friend.firstname}
                   lastname={friend.lastname}
                   pfp={friend.pfp}
                   key={index}
-                  setUser={setUser}
+                  setUser={() => {location.replace(`/Messages/${friend.username}`)}}
                 />
               ))}
             </div>
@@ -393,13 +109,6 @@ export default function Messages() {
 
       <div className="col-span-5 border-mainDarkPurple dark:border-mainPurple border-l-2 border-r-2 h-[97vh]">
         <div className="relative w-full flex flex-col ">
-          <Conversations
-            pfp={
-              "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.2ttZm63g10QST-zUfee9bAHaHa%26pid%3DApi&f=1&ipt=2a2e9a8ed813a72d1e579820ca1d4eedbba93128fafac81acac7c6a220bfee88&ipo=images"
-            }
-            user={user}
-            convo={userConvo}
-          />
 
           <div
             className={`${
@@ -441,7 +150,9 @@ export default function Messages() {
               } transition-all ease-in-out duration-300`}
             >
               <div className="flex justify-between p-2">
-              <h1 className="text-black dark:text-white pl-2">Your Message</h1>
+                <h1 className="text-black dark:text-white pl-2">
+                  Your Message
+                </h1>
                 <button
                   onClick={() => setTextBox(!textBox)}
                   className="text-black dark:text-white"

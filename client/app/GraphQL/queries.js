@@ -33,6 +33,50 @@ import { gql } from "@apollo/client";
 //   }
 // `;
 
+
+export const GET_USER_CHATS = gql`
+  query Query($userId: ID!) {
+    getUserChats(userId: $userId) {
+      _id
+      username
+      chats {
+        _id
+        members {
+          _id
+          username
+          pfp
+          firstName
+          lastName
+        }
+        messages {
+          userId
+          createdAt
+          body
+          _id
+        }
+      }
+    }
+  }
+`;
+
+export const GET_CHAT_BY_ID = gql`
+  query Query($chatId: ID!) {
+    getChatById(chatId: $chatId) {
+      members {
+        _id
+        username
+      }
+      createdAt
+      messages {
+        body
+        createdAt
+        userId
+        _id
+      }
+    }
+  }
+`;
+
 export const GET_ALL_POSTS = gql`
   query GetAllPosts {
     getAllPosts {

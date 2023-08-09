@@ -11,14 +11,17 @@ interface Convo {
 }
 
 function Conversations({
-  pfp,
   user,
   convo,
   date,
 }: {
-  user: string;
+  user: {
+    firstname: string,
+    lastname: string,
+    username: string,
+    pfp: string
+  };
   convo: Convo[];
-  pfp: string;
   date: string;
 }) {
   const buildConversation = () => {
@@ -27,7 +30,7 @@ function Conversations({
       lastname: "Doe",
     };
 
-    if (user === "Nobody") {
+    if (!user) {
       return (
         <div className="w-[100%] p-2 overflow-y-scroll friendListMessages pt-20 pb-32 h-[97vh]">
           <NobodyChat
@@ -42,10 +45,10 @@ function Conversations({
         <>
           <ChatHeader
             type={"user"}
-            pfp={pfp}
-            username={user}
-            firstname={tempFillerData.firstname}
-            lastname={tempFillerData.lastname}
+            pfp={user.pfp}
+            username={user.username}
+            firstname={user.firstname}
+            lastname={user.lastname}
           />
           <div className="w-[100%] p-2 overflow-y-scroll friendListMessages pt-20 pb-32 h-[97vh]">
             <NobodyChat

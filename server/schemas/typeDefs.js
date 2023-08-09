@@ -77,7 +77,8 @@ const typeDefs = gql`
     getAllUsers: [User]
     getUserById(userId: ID!): User
     getPost(postId: ID!): Post
-    getChatById(input: ID!): Chat
+    getChatById(chatId: ID!): Chat
+    getUserChats(userId: ID!): User
   }
 
   type Mutation {
