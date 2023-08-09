@@ -2,56 +2,17 @@
 
 import "../(styles)/navbar.css";
 import { useState, useEffect } from "react";
-import ToggleSidebar from "./toggleSidebar";
+import Search from "./search";
+import Notifications from "./toggleSideBar/notifications";
+import Likes from "./toggleSideBar/likes";
 import SignInModal from "./signin";
 import SignUpModal from "./signup";
 import { render } from "react-dom";
 import Auth from "../(utils)/auth";
 
-const Sidebar = ({
-}) => {
-
+const Sidebar = ({}) => {
   const [isSignInModalOpen, setIsSignInModalOpen] = useState<boolean>(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState<boolean>(false);
-
-  const sidebarData = [
-    {
-      username: "Carreejoh",
-      title: "Messages",
-      content: [
-        {
-          username: "carreejoh",
-          pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
-          message:
-            "super messages thing you got there, massive dubs, huge REACT win, tsx can suck my balls",
-        },
-        {
-          username: "JohnDoe",
-          pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
-          message: "Huge GPT dubs, massive typescript L",
-        },
-        {
-          username: "SarahConnor",
-          pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
-          message: "I'll be back!",
-        },
-        {
-          username: "MichaelScott",
-          pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
-          message: "That's what she said!",
-        },
-        {
-          username: "ElonMusk",
-          pfp: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs.abcnews.com%2Fimages%2FNightline%2F191018_ntl_hunter_biden_1_1239_hpMain_1x1_992.jpg&f=1&nofb=1&ipt=622f05d73b64dcad7acc99165e37727bc9ee27c841f790f83f7628673c9df3d4&ipo=images",
-          message: "Mars, here we come!",
-        },
-      ],
-    },
-    {
-      title: "Likes",
-      content: "Your Likes",
-    },
-  ];
 
   const signUpButtonHandler = () => {
     console.log("SIGN UP");
@@ -64,25 +25,65 @@ const Sidebar = ({
   };
 
   const [currentColorMode, setColorMode] = useState(false);
+  const [showSidebar, setShowSidebar] = useState("Notifications");
+  const [sidebarOpacity, setSidebarOpacity] = useState(true);
+  // const [locationRender, setLocationRender] = useState('/')
+
+  // useEffect(() => {
+  //   let currentLocation = window.location.pathname;
+  //   localStorage.setItem("colorModeLocation", currentLocation);
+  // }, [enableDarkMode, enableLightMode])
 
   useEffect(() => {
     let choice = localStorage.getItem("darkMode");
     let application = window.document.body.classList;
+    let currentLocation = window.location.pathname;
+    localStorage.setItem("colorModeLocation", currentLocation);
     if (choice === "dark") {
       application.add("dark");
-      application.remove("border-mainDarkPurple")
-      application.add("border-mainPurple")
+      application.remove("border-mainDarkPurple");
+      application.add("border-mainPurple");
     } else {
-      application.remove("border-mainPurple")
-      application.add("border-mainDarkPurple")
+      application.remove("border-mainPurple");
+      application.add("border-mainDarkPurple");
     }
   }, [enableDarkMode, enableLightMode]);
 
   useEffect(() => {
     let choice = localStorage.getItem("darkMode");
+    let previousLocation = localStorage.getItem("colorModeLocation");
+    let currentLocation = window.location.pathname;
+    // setLocationRender(window.location.pathname)
     if (choice === "dark") {
       setColorMode(true);
     }
+    if (currentLocation !== previousLocation) {
+      // setLocation(previousLocation);
+      console.log(currentLocation);
+      console.log(previousLocation + "previous");
+    }
+    if (currentLocation === previousLocation) {
+      // console.log("Same spot")
+    }
+  }, []);
+
+  // function setLocation(location:string | null) {
+  //   if(location === null) {
+  //     window.location.assign('/')
+  //   }
+  //   // localStorage.setItem("colorModeLocation", window.location.pathname)
+  //   // if(location !== locationRender) {
+  //   //   window.location.assign(location);
+  //   // }
+  // }
+
+  useEffect(() => {
+    setSidebarOpacity(false);
+  }, [showSidebar]);
+
+  useEffect(() => {
+    handleSidebarChange("Notifications");
+    setSidebarOpacity(!sidebarOpacity);
   }, []);
 
   function enableDarkMode() {
@@ -93,29 +94,11 @@ const Sidebar = ({
     localStorage.setItem("darkMode", "light");
   }
 
-  const [showSidebar, setShowSidebar] = useState("Notifications");
-  const [sidebarOpacity, setSidebarOpacity] = useState(true);
-
-  useEffect(() => {
-    setSidebarOpacity(false)
-  }, [showSidebar])
-
-  useEffect(() => {
-    handleSidebarChange("Notifications");
-    setSidebarOpacity(!sidebarOpacity);
-  }, []);
-
-  // useEffect(() => {
-  //   if(sidebarOpacity === true) {
-
-  //   }
-  // },[sidebarOpacity])
-
   //This error is typescript I will change
   const handleSidebarChange = (page: any) => setShowSidebar(page);
 
   return (
-    <> 
+    <>
       <div className="bg-gradient-to-t  from-mainPurple to-mainDarkPurple dark:from-mainDarkPurple dark:to-mainPurple h-[100vh] fixed top-0 left-0 w-20 shadow-lg z-50">
         <div className="container mx-auto z-50">
           <div className="grid grid-cols-1 gap-4">
@@ -153,8 +136,9 @@ const Sidebar = ({
                     />
                   </svg>
                 </a>
-                <span className="sidebarIconInfo group-hover:scale-100">
-                  Dark Mode
+                <span className="sidebarIconInfo flex group-hover:scale-100">
+                  <span>Dark</span>
+                  <span className="ml-1">Mode</span>
                 </span>
               </li>
               <li
@@ -167,7 +151,6 @@ const Sidebar = ({
                   className="text-black rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
                   onClick={() => enableLightMode()}
                 >
-                
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -183,9 +166,10 @@ const Sidebar = ({
                     />
                   </svg>
                 </a>
-                <span className="sidebarIconInfo group-hover:scale-100">
-                  Light Mode
-                </span>
+                <span className="sidebarIconInfo flex group-hover:scale-100">
+                      <span>Light</span>
+                      <span className="ml-1">Mode</span>
+                    </span>
               </li>
 
               <li className=" flex items-center space-x-2 sidebarIcon group">
@@ -419,12 +403,12 @@ const Sidebar = ({
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                          d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
                         />
                       </svg>
                     </a>
-                    <span className="sidebarIconInfo group-hover:scale-100">
-                      Log out
+                    <span className="sidebarIconInfo flex group-hover:scale-100">
+                      <span>Logout</span>
                     </span>
                   </li>
                 </>
@@ -450,12 +434,13 @@ const Sidebar = ({
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
                         />
                       </svg>
                     </a>
-                    <span className="sidebarIconInfo group-hover:scale-100">
-                      Sign Up
+                    <span className="sidebarIconInfo flex group-hover:scale-100">
+                      <span>Sign</span>
+                      <span className="ml-1">Up</span>
                     </span>
                   </li>
                   <li
@@ -478,12 +463,13 @@ const Sidebar = ({
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                          d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
                         />
                       </svg>
                     </a>
-                    <span className="sidebarIconInfo group-hover:scale-100">
-                      Sign in
+                    <span className="sidebarIconInfo flex group-hover:scale-100">
+                      <span>Sign</span>
+                      <span className="ml-1">In</span>
                     </span>
                   </li>
                 </>
@@ -523,53 +509,17 @@ const Sidebar = ({
         </div>
       </div>
       {isSignUpModalOpen && (
-            <SignUpModal setIsSignUpModalOpen={setIsSignUpModalOpen} />
-          )}
-          {isSignInModalOpen && (
-            <SignInModal setIsSignInModalOpen={setIsSignInModalOpen} />
-          )}
-      {/* For toggleSidebar */}
+        <SignUpModal setIsSignUpModalOpen={setIsSignUpModalOpen} />
+      )}
+      {isSignInModalOpen && (
+        <SignInModal setIsSignInModalOpen={setIsSignInModalOpen} />
+      )}
+      {showSidebar === "Search" && <Search sidebarOpacity={sidebarOpacity} />}
 
-      {/* <div className={`top-0 left-0 w-[10vw] bg-blue-600  text-white fixed h-full z-10 ease-in-out duration-300 toggleSidebarMainDiv ${
-      showSidebar ? "w-0 opacity-0 translate-x-0 " : "w-[18vw] opacity-1 translate-x-[10vw]"
-    }`}>
-        <h2 className="mt-20 text-4xl font-semibold text-white">
-          I am a sidebar
-        </h2>
-      </div> */}
-
-      {/* <ToggleSidebar setShowSidebar={setShowSidebar}/> */}
-      {showSidebar === "None" && (
-        <ToggleSidebar props={undefined} type={""} sidebarOpacity={undefined} />
-      )}
-      {showSidebar === "Search" && (
-        <ToggleSidebar
-          type="Search"
-          props={sidebarData[0]}
-          sidebarOpacity={sidebarOpacity}
-        />
-      )}
-      {showSidebar === "Messages" && (
-        <ToggleSidebar
-          type="Messages"
-          props={sidebarData[0]}
-          sidebarOpacity={sidebarOpacity}
-        />
-      )}
       {showSidebar === "Notifications" && (
-        <ToggleSidebar
-          type="Notifications"
-          props={sidebarData[1]}
-          sidebarOpacity={sidebarOpacity}
-        />
+        <Notifications sidebarOpacity={sidebarOpacity} />
       )}
-      {showSidebar === "Likes" && (
-        <ToggleSidebar
-          type="Likes"
-          props={sidebarData[1]}
-          sidebarOpacity={sidebarOpacity}
-        />
-      )}
+      {showSidebar === "Likes" && <Likes sidebarOpacity={sidebarOpacity} />}
     </>
   );
 };

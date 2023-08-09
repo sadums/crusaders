@@ -37,6 +37,7 @@ type WidgetsProps = {
             <div className="h-32 flex flex-col justify-center border-0 dark:shadow-notificationShadowPink dark:bg-coolGray bg-white border-black shadow-xl dark:border-customPurple rounded-xl p-2">
               <h3
                 className="text-black font-semibold text-center dark:text-white"
+                // onClick={()=> {console.log(userByIdData)}}
               >
                 Go Pro!
               </h3>

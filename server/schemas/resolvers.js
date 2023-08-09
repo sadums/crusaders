@@ -230,19 +230,19 @@ const resolvers = {
           throw new Error("Post not found.");
         }
         //await userWithPost.save();
-        const updatedUser = await User.findByIdAndUpdate(
-          userId,
-          {
-            $push: {
-              likes: newLike._id,
-            },
-          },
-          { new: true }
-        );
+        // const updatedUser = await User.findByIdAndUpdate(
+        //   userId,
+        //   {
+        //     $push: {
+        //       likes: newLike._id,
+        //     },
+        //   },
+        //   { new: true }
+        // );
 
-        if (!updatedUser) {
-          throw new Error("User who liked the post not found.");
-        }
+        // if (!updatedUser) {
+        //   throw new Error("User who liked the post not found.");
+        // }
         postToUpdate.likes.push(newLike._id);
         await postToUpdate.save();
 
