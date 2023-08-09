@@ -3,14 +3,15 @@
 import "../(styles)/navbar.css";
 import { useState, useEffect } from "react";
 import ToggleSidebar from "./toggleSidebar";
+import Search from "./toggleSideBar/search";
+import Notifications from "./toggleSideBar/notifications";
+import Likes from "./toggleSideBar/likes";
 import SignInModal from "./signin";
 import SignUpModal from "./signup";
 import { render } from "react-dom";
 import Auth from "../(utils)/auth";
 
-const Sidebar = ({
-}) => {
-
+const Sidebar = ({}) => {
   const [isSignInModalOpen, setIsSignInModalOpen] = useState<boolean>(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState<boolean>(false);
 
@@ -70,11 +71,11 @@ const Sidebar = ({
     let application = window.document.body.classList;
     if (choice === "dark") {
       application.add("dark");
-      application.remove("border-mainDarkPurple")
-      application.add("border-mainPurple")
+      application.remove("border-mainDarkPurple");
+      application.add("border-mainPurple");
     } else {
-      application.remove("border-mainPurple")
-      application.add("border-mainDarkPurple")
+      application.remove("border-mainPurple");
+      application.add("border-mainDarkPurple");
     }
   }, [enableDarkMode, enableLightMode]);
 
@@ -97,8 +98,8 @@ const Sidebar = ({
   const [sidebarOpacity, setSidebarOpacity] = useState(true);
 
   useEffect(() => {
-    setSidebarOpacity(false)
-  }, [showSidebar])
+    setSidebarOpacity(false);
+  }, [showSidebar]);
 
   useEffect(() => {
     handleSidebarChange("Notifications");
@@ -115,7 +116,7 @@ const Sidebar = ({
   const handleSidebarChange = (page: any) => setShowSidebar(page);
 
   return (
-    <> 
+    <>
       <div className="bg-gradient-to-t  from-mainPurple to-mainDarkPurple dark:from-mainDarkPurple dark:to-mainPurple h-[100vh] fixed top-0 left-0 w-20 shadow-lg z-50">
         <div className="container mx-auto z-50">
           <div className="grid grid-cols-1 gap-4">
@@ -167,7 +168,6 @@ const Sidebar = ({
                   className="text-black rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
                   onClick={() => enableLightMode()}
                 >
-                
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -523,53 +523,17 @@ const Sidebar = ({
         </div>
       </div>
       {isSignUpModalOpen && (
-            <SignUpModal setIsSignUpModalOpen={setIsSignUpModalOpen} />
-          )}
-          {isSignInModalOpen && (
-            <SignInModal setIsSignInModalOpen={setIsSignInModalOpen} />
-          )}
-      {/* For toggleSidebar */}
+        <SignUpModal setIsSignUpModalOpen={setIsSignUpModalOpen} />
+      )}
+      {isSignInModalOpen && (
+        <SignInModal setIsSignInModalOpen={setIsSignInModalOpen} />
+      )}
+      {showSidebar === "Search" && <Search sidebarOpacity={sidebarOpacity} />}
 
-      {/* <div className={`top-0 left-0 w-[10vw] bg-blue-600  text-white fixed h-full z-10 ease-in-out duration-300 toggleSidebarMainDiv ${
-      showSidebar ? "w-0 opacity-0 translate-x-0 " : "w-[18vw] opacity-1 translate-x-[10vw]"
-    }`}>
-        <h2 className="mt-20 text-4xl font-semibold text-white">
-          I am a sidebar
-        </h2>
-      </div> */}
-
-      {/* <ToggleSidebar setShowSidebar={setShowSidebar}/> */}
-      {showSidebar === "None" && (
-        <ToggleSidebar props={undefined} type={""} sidebarOpacity={undefined} />
-      )}
-      {showSidebar === "Search" && (
-        <ToggleSidebar
-          type="Search"
-          props={sidebarData[0]}
-          sidebarOpacity={sidebarOpacity}
-        />
-      )}
-      {showSidebar === "Messages" && (
-        <ToggleSidebar
-          type="Messages"
-          props={sidebarData[0]}
-          sidebarOpacity={sidebarOpacity}
-        />
-      )}
       {showSidebar === "Notifications" && (
-        <ToggleSidebar
-          type="Notifications"
-          props={sidebarData[1]}
-          sidebarOpacity={sidebarOpacity}
-        />
+        <Notifications sidebarOpacity={sidebarOpacity} />
       )}
-      {showSidebar === "Likes" && (
-        <ToggleSidebar
-          type="Likes"
-          props={sidebarData[1]}
-          sidebarOpacity={sidebarOpacity}
-        />
-      )}
+      {showSidebar === "Likes" && <Likes sidebarOpacity={sidebarOpacity} />}
     </>
   );
 };
