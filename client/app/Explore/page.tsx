@@ -10,7 +10,7 @@ preferredRegion = 'auto'
 import SearchBar from "../components/searchbar";
 import "../(styles)/explore.css";
 import "../(styles)/homepage.css";
-import ProfilePosts from "../components/profilePosts";
+import ProfilePosts from "../components/profile/profilePosts";
 
 export default function Main() {
   const tempHashtagData = [

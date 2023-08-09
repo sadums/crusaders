@@ -1,3 +1,33 @@
+"use client";
+// import "../../(styles)/profile.css";
+// import "../../(styles)/homepage.css";
+// import ProfileSideInfo from "../../components/profile/profileSideInfo";
+// import ProfilePosts from "../../components/profile/profilePosts";
+// import { useEffect, useState } from "react";
+// import PostModal from "../../components/postModal";
+// import Auth from "../(utils)/auth";
+// import { useQuery, useLazyQuery } from "@apollo/client";
+// import {
+//   GET_LOGGED_IN_USER,
+//   GET_POST,
+//   GET_USER_BY_ID,
+// } from "../../GraphQL/queries";
+
+// export const dynamic = 'auto',
+// dynamicParams = true,
+// revalidate = Infinity,
+// fetchCache = 'auto',
+// runtime = 'nodejs',
+// preferredRegion = 'auto'
+
+
+function OtherProfile({ params }: { params: { slug: string } }) {
+    console.log(params)
+  return <div>My Post: {params.slug}</div>;
+}
+
+export default OtherProfile;
+
 // "use client";
 // import "../../(styles)/profile.css";
 // import "../../(styles)/homepage.css";
