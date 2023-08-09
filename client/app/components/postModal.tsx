@@ -11,6 +11,7 @@ import {
 import { GET_USER_BY_ID, GET_POST } from "../GraphQL/queries";
 import { useMutation, useLazyQuery, useQuery } from "@apollo/client";
 import Auth from "../(utils)/auth";
+import Link from "next/link";
 
 interface ModalProps {
   postId: string;
@@ -214,11 +215,13 @@ const PostModal: React.FC<ModalProps> = ({ postId, handleClose }) => {
             <div className="p-2">
               <div className="flex justify-between border-gray-700 pb-2 border-b-[1px]">
                 <div className="flex items-center">
-                  <img
-                    className="h-10 w-10 rounded-full object-cover"
-                    src={postData.getPost.user.pfp}
-                    alt="Your Company"
-                  ></img>
+                  <Link href={`/profile/${postData.getPost.user._id}`}>
+                      <img
+                        className="h-10 w-10 rounded-full object-cover"
+                        src={postData.getPost.user.pfp}
+                        alt="Your Company"
+                      />
+                  </Link>
                   <div className="flex flex-col">
                     <h4 className="text-black text-lg ml-1 dark:text-white">{`${postData.getPost.user.firstName} ${postData.getPost.user.lastName}`}</h4>
                     <a
