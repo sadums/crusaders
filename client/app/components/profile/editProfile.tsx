@@ -6,9 +6,11 @@ import { useState, FC } from "react";
 import Auth from "../../(utils)/auth";
 
 interface EditProfileProps {
-  setUserData: (data: any) => void; // Replace 'any' with the type of your user data if known
+  setUserData: (data: any) => void;
 }
 
+
+//MAKE THE FORM CLEAR AUTO MATICALLY AND RESET THE PICTURE STATE
 const EditProfile: FC<EditProfileProps> = ({ setUserData }) => {
   const [updateUserMutation, { loading, error, data }] =
     useMutation(UPDATE_USER_MUTATION);

@@ -13,14 +13,15 @@ type CreateAPostProps = {
 
 
 
+//REDO THIS BUT WITH USEREF NOT  EVENT TARGETING
+//CLEAR PICTURE STATE
 function CreateAPost({ setDisplayPosts }: CreateAPostProps) {
 
     const [addPostMutation, { loading: loading, error: error, data: data }] =
     useMutation(ADD_POST);
 
-    const [createPostDiv, showCreatePostDiv] = useState(false);
+    const [createPostDiv, setCreatePostDiv] = useState(false);
     const [uploadTypeState, setUploadTypeState] = useState("");
-    const [createPostCheck, setCreatePostCheck] = useState<boolean>(false);
     const [hashtags, addHashtags] = useState<string[]>([]);
     const [pictureState, setPictureState] = useState<{
         cropped: string;
@@ -44,8 +45,6 @@ function CreateAPost({ setDisplayPosts }: CreateAPostProps) {
         event: React.MouseEvent<HTMLButtonElement, MouseEvent>
       ) => {
         event.preventDefault();
-    
-        // Ensure the inputRef is current and has a value property
         if (inputRef.current && inputRef.current.value) {
           const newHashtag = inputRef.current.value;
           addHashtags((prev) => [...prev, newHashtag]);
@@ -113,8 +112,8 @@ function CreateAPost({ setDisplayPosts }: CreateAPostProps) {
             console.log(response);
             console.log(response.data)
             const newPost = response.data.addPost
-            setDisplayPosts((prev)=> [newPost, ...prev])
-            setCreatePostCheck(!createPostCheck);
+            setDisplayPosts((prev) => [newPost, ...(Array.isArray(prev) ? prev : [])]);
+            setCreatePostDiv((prev) => !prev);
           } else {
             alert("Please fill out all fields");
           }
@@ -133,7 +132,7 @@ function CreateAPost({ setDisplayPosts }: CreateAPostProps) {
   >
     <button
       onClick={() => {
-        showCreatePostDiv(!createPostDiv);
+        setCreatePostDiv((prev) => !prev);
       }}
       className={`px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 hover:scale-105 ${
         createPostDiv ? "hidden" : "block"
@@ -154,23 +153,9 @@ function CreateAPost({ setDisplayPosts }: CreateAPostProps) {
               createPostDiv ? "block" : "hidden"
             }`}
             onClick={() => {
-              showCreatePostDiv(!createPostDiv);
+              setCreatePostDiv(!createPostDiv);
             }}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
           </button>
         </div>
         <div className="">
@@ -241,7 +226,6 @@ function CreateAPost({ setDisplayPosts }: CreateAPostProps) {
           <button
             type="button"
             className="pl-2 dark:text-white text-black border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 hover:text-neonBlue ease-in-out transition duration-100"
-            // This error is annoying but doesn't change functionality
             onClick={handleHashtagAddition}
           >
             Add
@@ -249,33 +233,11 @@ function CreateAPost({ setDisplayPosts }: CreateAPostProps) {
         </div>
         <button
           onClick={createPostHandler}
-          className={`${
-            createPostCheck ? "hidden" : "block"
-          } px-4 mt-2 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 hover:scale-105`}
+          className="block px-4 mt-2 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 hover:scale-105"
           type="submit"
         >
           Create
         </button>
-        <div
-          className={`${
-            createPostCheck ? "block" : "hidden"
-          } text-customPurple mt-4 flex`}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-10 h-10"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-        </div>
       </form>
     </div>
   </div>

@@ -1,44 +1,38 @@
 "use client";
 import Auth from "../../(utils)/auth";
-import { useQuery, useLazyQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GET_ALL_FOLLOWERS, GET_USER_BY_ID } from "../../GraphQL/queries";
 import { useEffect } from "react";
+import Link from "next/link";
 
 type WidgetsProps = {
-    displayPosts: any[] | null;  // assuming displayPosts is either an array or null
-  };
+  displayPosts: any[] | null; // assuming displayPosts is either an array or null
+};
 
-  function Widgets({ displayPosts }: WidgetsProps) {
+function Widgets({ displayPosts }: WidgetsProps) {
   const {
     loading: getFollowersLoading,
     error: getFollowersError,
     data: getFollowerData,
   } = useQuery(GET_ALL_FOLLOWERS);
 
-  const [
-    getUserById,
-    { loading: userByIdLoading, error: userByIdError, data: userByIdData },
-  ] = useLazyQuery(GET_USER_BY_ID);
-
-  useEffect(() => {
-    const id = Auth.getProfile().data._id;
-    getUserById({
-      variables: {
-        userId: id,
-      },
-    });
-  }, []);
-
+  const id = Auth.getProfile().data._id;
+  const {
+    loading: userByIdLoading,
+    error: userByIdError,
+    data: userByIdData,
+  } = useQuery(GET_USER_BY_ID, {
+    variables: {
+      userId: id,
+    },
+  });
   return (
     <div className="col-span-2 mt-4">
       <div className="homepageInfoMainDiv">
         <div className="max-w-sm mt-3 w-[50%]">
           <div className="grid grid-cols-2 gap-3">
             <div className="h-32 flex flex-col justify-center border-0 dark:shadow-notificationShadowPink dark:bg-coolGray bg-white border-black shadow-xl dark:border-customPurple rounded-xl p-2">
-              <h3
-                className="text-black font-semibold text-center dark:text-white"
-                // onClick={()=> {console.log(userByIdData)}}
-              >
+              <h3 className="text-black font-semibold text-center dark:text-white">
                 Go Pro!
               </h3>
               <p className="text-gray-500 text-sm  text-center">
@@ -187,13 +181,13 @@ type WidgetsProps = {
                   </div>
                   <div className="hidden sm:ml-0 sm:flex sm:items-center sm:justify-center">
                     <div className="flex space-x-4">
-                      <a
-                        href="#"
+                      <Link
+                        href={`/profile/${user._id}`}
                         className="text-black font-semibold dark:text-white px-3 py-2"
                         aria-current="page"
                       >
                         {user.username}
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
