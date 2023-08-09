@@ -2,6 +2,7 @@
 import "../../(styles)/profile.css";
 import { useState } from "react";
 import EditProfile from "./editProfile";
+import Auth from "../../(utils)/auth";
 
 function ProfileSideInfo({ userInfo }: any) {
   const [userData, setUserData] = useState(userInfo);
@@ -71,7 +72,13 @@ function ProfileSideInfo({ userInfo }: any) {
           </button>
         </div>
       </div>
-      <EditProfile setUserData={setUserData} />
+      {Auth.loggedIn() && (
+        <>
+          {Auth.getProfile().data._id === userData._id && (
+            <EditProfile setUserData={setUserData} />
+          )}
+        </>
+      )}
     </>
   );
 }
