@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node server/server.js",
     "develop": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "postinstall": "cd client && npm install && npm run build",
     "install": "cd server && npm i && cd ../client && npm i",
     "build": "cd client && npm run build"
   },
@@ -19,6 +20,9 @@
   "devDependencies": {
     "concurrently": "^5.1.0"
   },
+  "engines": {
+    "node": "18.x"
+  },  
   "dependencies": {
     "dotenv": "^16.3.1",
     "mongodb": "^5.7.0"

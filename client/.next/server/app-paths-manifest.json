@@ -3,7 +3,7 @@
   "/testing/page": "app/testing/page.js",
   "/explore/page": "app/explore/page.js",
   "/profile/page": "app/profile/page.js",
-  "/messages/page": "app/messages/page.js",
   "/profile/[id]/page": "app/profile/[id]/page.js",
+  "/messages/page": "app/messages/page.js",
   "/messages/[chatId]/page": "app/messages/[chatId]/page.js"
 }
