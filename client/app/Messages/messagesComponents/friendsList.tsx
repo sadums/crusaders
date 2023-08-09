@@ -6,13 +6,21 @@ import { GET_CHAT_BY_ID, GET_USER_CHATS } from "@/app/GraphQL/queries";
 import { useQuery } from "@apollo/client";
 
 export default function FriendsList() {
+  const profile = Auth.getProfile();
+  const userId = profile?.data?._id;
+
+  if (!userId) {
+    return <div>Error: No user ID found</div>;
+  }
+
   const { error, loading, data } = useQuery(GET_USER_CHATS, {
     variables: {
-      userId: Auth.getProfile().data._id,
+      userId: userId,
     },
   });
 
   const chats: any[] = [];
+
   try {
     for (const chat in data.getUserChats.chats) {
       for (const member in data.getUserChats.chats[chat].members) {

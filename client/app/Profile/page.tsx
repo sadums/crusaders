@@ -15,13 +15,20 @@ export const dynamic = "auto",
   runtime = "nodejs",
   preferredRegion = "auto";
 
-export default function Profile() {
-  const id = Auth.getProfile().data._id;
-  const { loading, error, data } = useQuery(GET_USER_BY_ID, {
-    variables: {
-      userId: id,
-    },
-  });
+  export default function Profile() {
+    const profile = Auth.getProfile();
+    const id = profile?.data?._id;
+  
+    if (!id) {
+      // Handle the error or return early
+      return <div>Error: No user ID found</div>;
+    }
+  
+    const { loading, error, data } = useQuery(GET_USER_BY_ID, {
+      variables: {
+        userId: id,
+      },
+    });
   return (
     <div className="ml-20 bg-mediumWhite dark:bg-black">
       <div className="grid grid-cols-6 gap-4">
