@@ -16,16 +16,6 @@ interface ProfilePostsProps {
 function ProfilePosts({ postInfo }: ProfilePostsProps) {
 
   const [showModalState, setShowModalState] = useState(false);
-  const [activePostId, setActivePostId] = useState<string>('');
-
-  const postClickHandler = async () => {
-    try{
-    setActivePostId(postInfo._id)
-    setShowModalState(true);
-    }catch(err){
-      console.error(err)
-    }
-  };
 
   return (
     <div className="relative">
@@ -34,7 +24,7 @@ function ProfilePosts({ postInfo }: ProfilePostsProps) {
           className="w-full h-[100%] object-cover z-10 profilePostImg "
           src={postInfo.preview}
           alt="Post"
-          onClick={postClickHandler}
+          onClick={()=> setShowModalState(true)}
         />
       ) : (
         <div>
@@ -43,7 +33,7 @@ function ProfilePosts({ postInfo }: ProfilePostsProps) {
       )}
       {showModalState && (
         <PostModal
-          postId={activePostId}
+          postId={postInfo._id}
           handleClose={function (): void {
             setShowModalState(false);
           }}

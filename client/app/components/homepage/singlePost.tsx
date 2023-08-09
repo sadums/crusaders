@@ -12,21 +12,24 @@ import { useMutation } from "@apollo/client";
 import Auth from "../../(utils)/auth";
 import LikeFollowerModal from "../likeFollowerFollowingModal";
 import PostModal from "../postModal";
+import Link from "next/link";
 
+
+// IS FOLLOWING BUTTON ISN"T WORKING ASK SAM
 function SinglePost(post: {
   post: {
     _id: SetStateAction<string>;
     comments: SetStateAction<any[]>;
     likes: any[];
     user: {
-      _id: string,
+      _id: string;
       pfp: string | undefined;
       firstName: any;
       lastName: any;
       username: any;
       followers: {
-        _id: string
-      }
+        _id: string;
+      };
     };
     body: any;
     hashtags: any[];
@@ -53,6 +56,7 @@ function SinglePost(post: {
   const [showLikeModalState, setShowLikeModalState] = useState(false);
   const [activePostId, setActivePostId] = useState<string>("");
   const [showModalState, setShowModalState] = useState(false);
+  const [isFollowing, setIsFollowing] = useState<boolean>(true);
 
   const showCommentsFn = () => {
     setExpandedPosts((prev) => !prev);
@@ -130,12 +134,11 @@ function SinglePost(post: {
       if (Auth.loggedIn()) {
         const target = event.target as HTMLFormElement;
         const response = await followUser({
-          variables:{
+          variables: {
             userId: post.post.user._id,
             followerId: Auth.getProfile().data._id,
-          }
+          },
         });
-
       } else {
         alert("Sign in to follow someone");
       }
@@ -190,67 +193,62 @@ function SinglePost(post: {
         setIsPostLikedState(false);
       }
       setLikeArrayState(post.post.likes);
+      if (Auth.loggedIn()) {
+        const userId = Auth.getProfile().data._id;
+        const tempIsFollowing =
+          post.post.user._id === userId || post.post.likes.includes(userId);
+        if (tempIsFollowing) {
+          setIsFollowing(true);
+        } else {
+          setIsFollowing(false);
+        }
+      } else {
+      }
     } catch (err) {
       console.error(err);
     }
   };
-
   useEffect(() => {
     setTheState();
   }, []);
-
-
-  // DO WITH STATE
-  let isFollowing;
-if(Auth.loggedIn()){
-  const userId = Auth.getProfile().data._id;
-  isFollowing = userId === post.post.user._id;
-  for(const follower in post.post.user.followers){
-    if(post.post.user.followers[follower]._id === userId) isFollowing = true;
-  }
-}else{
-  isFollowing = true
-}
-  
 
   return (
     <div>
       <div className="mt-4 p-3 border-[1px] rounded-lg border-black dark:border-0 shadow-2xl bg-white dark:bg-coolGray">
         <div className="flex justify-between border-gray-700 pb-2 border-b-[1px]">
           <div className="flex">
-            <img
-              className="h-12 w-auto rounded-full object-cover"
-              src={post.post.user.pfp}
-              alt="Your Company"
-            ></img>
-            <div>
-              <h2 className="text-md text-black font-semibold dark:text-white ml-1">
-                {`${post.post.user.firstName} ${post.post.user.lastName}`}
-              </h2>
+            <Link href={`/profile/${post.post.user._id}`}>
+              <img
+                className="h-12 w-auto rounded-full object-cover"
+                src={post.post.user.pfp}
+                alt="Your Company"
+              ></img>
               <div>
-                <a
-                  href="#"
-                  className="text-gray-500 text-md ml-1 py-2"
-                  aria-current="page"
-                >
+                <h2 className="text-md text-black font-semibold dark:text-white ml-1">
+                  {`${post.post.user.firstName} ${post.post.user.lastName}`}
+                </h2>
+                <div className="text-gray-500 text-md ml-1 py-2">
                   @{post.post.user.username}
-                </a>
+                </div>
               </div>
-            </div>
+            </Link>
           </div>
-          {(!isFollowing) && <div className="my-auto">
-            <button
-              className=" font-semibold  text-neonBlue p-[1px] pl-2 pr-2 rounded-md"
-              onClick={(e) => followHandler(e)}
-            >
-              Follow
-            </button>
-          </div>}
+          {!isFollowing && (
+            <div className="my-auto">
+              <button
+                className=" font-semibold  text-neonBlue p-[1px] pl-2 pr-2 rounded-md"
+                onClick={(e) => followHandler(e)}
+              >
+                Follow
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="mt-4">
           <p className="dark:text-white text-black">{post.post.body}</p>
         </div>
+        {/* MAKE ALL THE HASHTAGS LINK TO THE EXPLORE PAGE WITH THE LINK */}
         {post.post.hashtags && (
           <div className="mt-0">
             {post.post.hashtags.map((hashtag, hashIndex) => (
@@ -312,7 +310,7 @@ if(Auth.loggedIn()){
                     {comment.body}
                   </p>
                   <p>{formatDate(comment.createdAt)}</p>
-
+{/* MAKE LINK TO THE PROFILE OF THE USER */}
                   <a className="dark:text-white transition-all duration-500 ease-in-out text-black cursor-pointer self-end text-lg">
                     -{comment.username}
                   </a>
@@ -345,12 +343,12 @@ if(Auth.loggedIn()){
                 />
               </svg>
             </button>
-            <a
+            <div
               className="text-gray-700 text-sm dark:text-gray-500 cursor-pointer mr-4"
               onClick={likeClickHandlerFeedPosts}
             >
               {likeArrayState ? `${likeArrayState.length} Likes` : "0 Likes"}
-            </a>
+            </div>
             <button
               type="button"
               className="rounded-full p-1 text-customPurpleDark dark:text-white"
@@ -373,12 +371,12 @@ if(Auth.loggedIn()){
                 />
               </svg>
             </button>
-            <a
+            <div
               onClick={showCommentsFn}
               className="text-gray-700 text-sm dark:text-gray-500 cursor-pointer mr-4"
             >
               {commentState ? `${commentState.length} Comments` : "0 Comments"}
-            </a>
+            </div>
             <button
               type="button"
               className="rounded-full mr-3 p-1 text-customPurpleDark dark:text-white"
