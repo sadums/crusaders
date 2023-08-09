@@ -200,10 +200,15 @@ function SinglePost(post: {
   }, []);
 
 
-  const userId = Auth.getProfile().data._id;
-  let isFollowing = userId === post.post.user._id;
-  for(const follower in post.post.user.followers){
-    if(post.post.user.followers[follower]._id === userId) isFollowing = true;
+  let isFollowing;
+  if(Auth.loggedIn()){
+    const userId = Auth.getProfile().data._id;
+    isFollowing = userId === post.post.user._id;
+    for(const follower in post.post.user.followers){
+      if(post.post.user.followers[follower]._id === userId) isFollowing = true;
+    }
+  }else{
+    isFollowing = true
   }
 
   return (

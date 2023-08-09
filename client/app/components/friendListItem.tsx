@@ -1,18 +1,17 @@
 "use client"
 
-import { Dispatch, SetStateAction } from "react";
+import Link from "next/link";
 
 interface ModalProps {
   username: string;
   firstname: string;
   lastname: string;
   pfp: string;
-  setUser: Dispatch<SetStateAction<string>>;
 }
 
-function FriendListItem({ username, firstname, lastname, pfp, setUser }: ModalProps) {
+function FriendListItem({ username, firstname, lastname, pfp }: ModalProps) {
   return (
-    <div onClick={() => setUser(username)} className="align-center mt-1 shadow-2xl rounded-lg cursor-pointer bg-white dark:bg-darkModeDarkGray p-2 duration-150 ease-in-out scale-95 hover:scale-100">
+    <Link href={`/Messages/${username}`} className="align-center mt-1 shadow-2xl rounded-lg cursor-pointer bg-white dark:bg-darkModeDarkGray p-2 duration-150 ease-in-out scale-95 hover:scale-100">
       <div className="flex">
         <a className="cursor-pointer">
           <img
@@ -35,7 +34,7 @@ function FriendListItem({ username, firstname, lastname, pfp, setUser }: ModalPr
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
