@@ -7,8 +7,18 @@ class AuthService {
   }
 
   getProfile() {
-    return decode(this.getToken());
+    const token = this.getToken();
+    if (token) {
+      try {
+        return decode(token);
+      } catch (error) {
+        console.error("Error decoding the token:", error);
+        return null;
+      }
+    }
+    return null;
   }
+  
 
   loggedIn() {
     const token = this.getToken();
