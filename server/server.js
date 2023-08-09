@@ -61,8 +61,10 @@ const wsServer = new WebSocketServer({
 // WebSocketServer start listening.
 const serverCleanup = useServer({ schema }, wsServer);
 
+
+//MAYBE THIS IS THE WAY HEROKU
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
+  app.use(express.static(path.join(__dirname, "../client/.next")));
 }
 
 const startApolloServer = async () => {
