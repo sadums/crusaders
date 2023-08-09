@@ -1,0 +1,19 @@
+/* .conversationDiv::-webkit-scrollbar {
+    display: none;
+} */
+
+/* .friendListMessages::-webkit-scrollbar {
+    background-color: transparent;
+} */
+
+.friendListMessages::-webkit-scrollbar {
+    display: none;
+}
+
+/* .friendListMessages::-webkit-scrollbar-thumb {
+    background: gold;
+} */
+
+/* .darkModeGradientOpacity::before {
+    background: linear-gradient(to top, rgba(79, 70, 229, .3), rgb(0, 0, 0));
+  } */
