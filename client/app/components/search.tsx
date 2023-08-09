@@ -1,6 +1,7 @@
 import { useState, useEffect, Key } from "react";
 import jaroWinkler from "../(utils)/search/jaroWinklerSearch";
 import terms from "../(searchData)/terms.json";
+import HomeSearchUserResult from "./toggleSideBar/homeSearchUserResult";
 
 interface toggle {
   sidebarOpacity: boolean | undefined;
@@ -64,11 +65,13 @@ function Search({ sidebarOpacity }: toggle) {
           : "w-100 opacity-1 translate-x-20"
       }`}
     >
-      <h1 className="dark:text-white font-semibold text-lg mr-8 text-black mt-2 border-customPurpleDark border-b-2">Search</h1>
+      <h1 className="dark:text-white font-semibold text-lg mr-8 text-black mt-2 border-customPurpleDark border-b-2">
+        Search
+      </h1>
       <input
         type="text"
         placeholder="Search Crusaders..."
-        className="text-black dark:text-white border-[1px] mt- border-mainPurple rounded-lg p-1 dark:bg-darkModeDarkGray bg-white border-solid outline-none w-64"
+        className="text-black dark:text-white border-[1px] border-mainPurple mt-2 rounded-lg p-1 dark:bg-darkModeDarkGray bg-white border-solid outline-none w-64"
         value={search}
         onChange={(e) => {
           setResults(e);
@@ -76,63 +79,76 @@ function Search({ sidebarOpacity }: toggle) {
         }}
       />
 
-        <div className={`${
+      <div
+        className={`${
           showResults ? "block" : "hidden scale-0"
-        } float-left m-0 w-64 mt-2 list-none overflow-hidden rounded-lg border-none bg-clip-padding text-left text-base dark:bg-neutral-700 [&[data-te-dropdown-show]]:block`}
+        } float-left m-0 w-64 mt-2 pb-4 list-none overflow-hidden border-none bg-clip-padding text-left text-base  [&[data-te-dropdown-show]]:block ease-in-out transform-all duration-100`}
         aria-labelledby="dropdownMenuButton1"
-        data-te-dropdown-menu-ref>
-
-          <h1 className="dark:text-white text-lg text-white">Users</h1>
-          <div className="">
-
-          </div>
-
+        data-te-dropdown-menu-ref
+      >
+        <h1 className="dark:text-white font-semibold text-lg text-black">
+          Users:
+        </h1>
+        <HomeSearchUserResult
+          username="Xtra"
+          firstname="John"
+          lastname="Doe"
+          pfp="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.H6Znb4LwWOEUCbMW8sxrTgHaEo%26pid%3DApi&f=1&ipt=5abca4869ffed3c53d3cf378ab1b63dee6e6955f9b4d2c7ee95728f8aac85ade&ipo=images"
+        />
+        <HomeSearchUserResult
+          username="Xtra1"
+          firstname="John"
+          lastname="Doe"
+          pfp="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.H6Znb4LwWOEUCbMW8sxrTgHaEo%26pid%3DApi&f=1&ipt=5abca4869ffed3c53d3cf378ab1b63dee6e6955f9b4d2c7ee95728f8aac85ade&ipo=images"
+        />
+        <HomeSearchUserResult
+          username="Xtra1"
+          firstname="John"
+          lastname="Doe"
+          pfp="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.H6Znb4LwWOEUCbMW8sxrTgHaEo%26pid%3DApi&f=1&ipt=5abca4869ffed3c53d3cf378ab1b63dee6e6955f9b4d2c7ee95728f8aac85ade&ipo=images"
+        />
+        <HomeSearchUserResult
+          username="Xtra1"
+          firstname="John"
+          lastname="Doe"
+          pfp="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.H6Znb4LwWOEUCbMW8sxrTgHaEo%26pid%3DApi&f=1&ipt=5abca4869ffed3c53d3cf378ab1b63dee6e6955f9b4d2c7ee95728f8aac85ade&ipo=images"
+        />
+        <h1 className="dark:text-white font-semibold text-lg mt-4 text-black">
+          Hashtags:
+        </h1>
+        <div className="inline-block mt-1 flex-wrap">
+          <a className="dark:hover:text-mainPurple cursor-pointer hover:text-mainPurple text-black dark:text-white inline-block mr-2">
+            #Coding
+          </a>
+          <a className="dark:hover:text-mainPurple cursor-pointer hover:text-mainPurple text-black dark:text-white inline-block mr-2">
+            #Xtra
+          </a>
+          <a className="dark:hover:text-mainPurple cursor-pointer hover:text-mainPurple text-black dark:text-white inline-block mr-2">
+            #Xtra1
+          </a>
+          <a className="dark:hover:text-mainPurple cursor-pointer hover:text-mainPurple text-black dark:text-white inline-block mr-2">
+            #Coding
+          </a>
+          <a className="dark:hover:text-mainPurple cursor-pointer hover:text-mainPurple text-black dark:text-white inline-block mr-2">
+            #Random
+          </a>
+          <a className="dark:hover:text-mainPurple cursor-pointer hover:text-mainPurple text-black dark:text-white inline-block mr-2">
+            #Random1
+          </a>
+          <a className="dark:hover:text-mainPurple cursor-pointer hover:text-mainPurple text-black dark:text-white inline-block mr-2">
+            #YO
+          </a>
+          <a className="dark:hover:text-mainPurple cursor-pointer hover:text-mainPurple text-black dark:text-white inline-block mr-2">
+            #asdf
+          </a>
+          <a className="dark:hover:text-mainPurple cursor-pointer hover:text-mainPurple text-black dark:text-white inline-block mr-2">
+            #fffff
+          </a>
+          <a className="dark:hover:text-mainPurple cursor-pointer hover:text-mainPurple text-black dark:text-white inline-block mr-2">
+            #fsdfsd
+          </a>
         </div>
-        {/* <li>
-          <a
-            className="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
-            href="#"
-            data-te-dropdown-item-ref
-          >
-            {result1}
-          </a>
-        </li>
-        <li>
-          <a
-            className="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
-            href="#"
-            data-te-dropdown-item-ref
-          >
-            {result2}
-          </a>
-        </li>
-        <li>
-          <a
-            className="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
-            href="#"
-            data-te-dropdown-item-ref
-          >
-            {result3}
-          </a>
-        </li>
-        <li>
-          <a
-            className="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
-            href="#"
-            data-te-dropdown-item-ref
-          >
-            {result4}
-          </a>
-        </li>
-        <li>
-          <a
-            className="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
-            href="#"
-            data-te-dropdown-item-ref
-          >
-            {result5}
-          </a>
-        </li> */}
+      </div>
     </div>
   );
 }
