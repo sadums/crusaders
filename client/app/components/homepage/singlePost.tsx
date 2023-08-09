@@ -19,14 +19,14 @@ function SinglePost(post: {
     comments: SetStateAction<any[]>;
     likes: any[];
     user: {
-      _id: string,
+      _id: string;
       pfp: string | undefined;
       firstName: any;
       lastName: any;
       username: any;
       followers: {
-        _id: string
-      }
+        _id: string;
+      };
     };
     body: any;
     hashtags: any[];
@@ -53,6 +53,7 @@ function SinglePost(post: {
   const [showLikeModalState, setShowLikeModalState] = useState(false);
   const [activePostId, setActivePostId] = useState<string>("");
   const [showModalState, setShowModalState] = useState(false);
+  const [isFollowing, setIsFollowing] = useState<boolean>(true);
 
   const showCommentsFn = () => {
     setExpandedPosts((prev) => !prev);
@@ -130,12 +131,11 @@ function SinglePost(post: {
       if (Auth.loggedIn()) {
         const target = event.target as HTMLFormElement;
         const response = await followUser({
-          variables:{
+          variables: {
             userId: post.post.user._id,
             followerId: Auth.getProfile().data._id,
-          }
+          },
         });
-
       } else {
         alert("Sign in to follow someone");
       }
@@ -190,28 +190,24 @@ function SinglePost(post: {
         setIsPostLikedState(false);
       }
       setLikeArrayState(post.post.likes);
+      if (Auth.loggedIn()) {
+        const userId = Auth.getProfile().data._id;
+        const tempIsFollowing =
+          post.post.user._id === userId || post.post.likes.includes(userId);
+        if (tempIsFollowing) {
+          setIsFollowing(true);
+        } else {
+          setIsFollowing(false);
+        }
+      } else {
+      }
     } catch (err) {
       console.error(err);
     }
   };
-
   useEffect(() => {
     setTheState();
   }, []);
-
-
-  // DO WITH STATE
-  let isFollowing;
-if(Auth.loggedIn()){
-  const userId = Auth.getProfile().data._id;
-  isFollowing = userId === post.post.user._id;
-  for(const follower in post.post.user.followers){
-    if(post.post.user.followers[follower]._id === userId) isFollowing = true;
-  }
-}else{
-  isFollowing = true
-}
-  
 
   return (
     <div>
@@ -238,14 +234,16 @@ if(Auth.loggedIn()){
               </div>
             </div>
           </div>
-          {(!isFollowing) && <div className="my-auto">
-            <button
-              className=" font-semibold  text-neonBlue p-[1px] pl-2 pr-2 rounded-md"
-              onClick={(e) => followHandler(e)}
-            >
-              Follow
-            </button>
-          </div>}
+          {!isFollowing && (
+            <div className="my-auto">
+              <button
+                className=" font-semibold  text-neonBlue p-[1px] pl-2 pr-2 rounded-md"
+                onClick={(e) => followHandler(e)}
+              >
+                Follow
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="mt-4">
