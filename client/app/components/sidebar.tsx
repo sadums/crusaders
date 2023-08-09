@@ -2,7 +2,7 @@
 
 import "../(styles)/navbar.css";
 import { useState, useEffect } from "react";
-import Search from "./toggleSideBar/search";
+import Search from "./search";
 import Notifications from "./toggleSideBar/notifications";
 import Likes from "./toggleSideBar/likes";
 import SignInModal from "./signin";
