@@ -64,12 +64,25 @@ const resolvers = {
     //     console.error(err);
     //   }
     // },
-    getChatById: async (parent, { input }, context) => {
-      const chat = await Chat.findById(input);
+    getChatById: async (parent, { chatId }, context) => {
+      const chat = await Chat.findById(chatId).populate("members");
       if (!chat) {
         throw new Error("Could not find chat!");
       }
       return chat;
+    },
+    getUserChats: async (parent, { userId }, context) => {
+      const user = await User.findById(userId).populate({
+        path:"chats",
+        populate:{
+          path:"members"
+        },
+        strictPopulate: false
+      });
+      if (!user) {
+        throw new Error("Could not find user!");
+      }
+      return user;
     },
     getPost: async (parent, { postId }, context) => {
       try {
@@ -143,7 +156,8 @@ const resolvers = {
     },
     addFollower: async (parent, { userId, followerId }, context) => {
       try {
-        if(userId === followerId) return { message: "You cannot follow yourself" }
+        if (userId === followerId)
+          return { message: "You cannot follow yourself" };
         const follower = await User.findByIdAndUpdate(
           followerId,
           {
@@ -190,8 +204,8 @@ const resolvers = {
       try {
         // const { username, pfp, firstName, lastName, preview } = input;
 
-        console.log(postId)
-        console.log(userId)
+        console.log(postId);
+        console.log(userId);
         // Check if the user has already liked the post
         const existingLike = await Like.findOne({ user: userId, post: postId });
         if (existingLike) {
@@ -255,8 +269,8 @@ const resolvers = {
     unlikePost: async (parent, { postId, userId }, context, info) => {
       try {
         // 1. Find the Like document based on the postId and userId.
-        console.log(postId)
-        console.log(userId)
+        console.log(postId);
+        console.log(userId);
         const likeToRemove = await Like.findOne({ post: postId, user: userId });
 
         // If there's no such Like, throw an error.
@@ -393,6 +407,12 @@ const resolvers = {
       });
       if (!chat) {
         throw new Error("Error with making a chat");
+      }
+      for (let i = 0; i < members.length; i++) {
+        await User.findByIdAndUpdate(
+          members[i],
+          { $addToSet: { chats: chat._id } },
+        );
       }
       return chat;
     },

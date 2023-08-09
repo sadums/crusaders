@@ -1,7 +1,5 @@
 "use client"
 
-import Link from "next/link";
-
 interface ModalProps {
   username: string;
   firstname: string;
@@ -9,9 +7,9 @@ interface ModalProps {
   pfp: string;
 }
 
-function FriendListItem({ username, firstname, lastname, pfp }: ModalProps) {
+function HomeSearchUserResult({ username, firstname, lastname, pfp }: ModalProps) {
   return (
-    <Link href={`/Messages/${username}`} className="align-center mt-1 shadow-2xl rounded-lg cursor-pointer bg-white dark:bg-darkModeDarkGray p-2 duration-150 ease-in-out scale-95 hover:scale-100">
+    <div className="align-center mt-2 shadow-xl dark:shadow-notificationShadowPink rounded-lg cursor-pointer bg-white dark:bg-darkModeDarkGray p-1 duration-150 ease-in-out scale-100 hover:scale-95">
       <div className="flex">
         <a className="cursor-pointer">
           <img
@@ -26,7 +24,7 @@ function FriendListItem({ username, firstname, lastname, pfp }: ModalProps) {
           <div>
             <a
               href="#"
-              className="text-gray-500 cursor-pointer text-md ml-1 py-2"
+              className="text-gray-500 cursor-pointer text-sm ml-1 py-2"
               aria-current="page"
             >
               @{username}
@@ -34,8 +32,8 @@ function FriendListItem({ username, firstname, lastname, pfp }: ModalProps) {
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 
-export default FriendListItem;
+export default HomeSearchUserResult;

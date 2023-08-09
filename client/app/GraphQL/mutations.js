@@ -71,6 +71,7 @@ export const UNFOLLOW_USER = gql`
   }
 `;
 
+
 export const ADD_POST = gql`
   mutation AddPost($userId: ID!, $input: newPostInput!) {
     addPost(userId: $userId, input: $input) {
