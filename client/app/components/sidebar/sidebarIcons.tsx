@@ -5,15 +5,17 @@ interface SidebarIconProps {
     text: string;
     pathD: string;
     href: string;
-    onClick: () => void;  // Add the onClick prop type
+    onClick: () => void;
 }
 
+
+//MAYBE ADD BACK IN THE GEAR THING HERE FOR THE SETTINGS
 const SidebarIcon: FC<SidebarIconProps> = ({ text, href, pathD, onClick }) => {
   return (
     <li className="flex items-center space-x-2 sidebarIcon group">
       <Link
         href={href}
-        onClick={onClick}  // Use the onClick prop here
+        onClick={onClick}
         className="text-gray-300 rounded-md py-2 text-md font-medium transition duration-300 hover:scale-100"
       >
         <svg

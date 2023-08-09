@@ -28,8 +28,6 @@ function Likes({ sidebarOpacity }: toggle) {
       console.log(postId);
       setActivePostId(postId);
       setShowModalState(true);
-      // const response = await getPost({ variables: { postId: post.postId } });
-      // console.log(response.data.getPost)
     } catch (err) {
       console.error(err);
     }
@@ -69,7 +67,7 @@ function Likes({ sidebarOpacity }: toggle) {
                 <div key={index} className="w-[100%] h-auto">
                   <img
                     onClick={() => likesPictureHandler(post.post._id)}
-                    className="h-24 w-32 object-fill rounded-xl shadow-xl transition-transform duration-200 transform scale-100 cursor-pointer hover:scale-[96%] hover:brightness-75"
+                    className="h-24 w-32 object-fill rounded-md shadow-xl transition-transform duration-200 transform scale-100 cursor-pointer hover:scale-[96%] hover:brightness-75"
                     src={post.post.preview}
                   ></img>
                 </div>
@@ -79,14 +77,12 @@ function Likes({ sidebarOpacity }: toggle) {
         )}
       </div>
       {showModalState && (
-        <div className="z-50 fixed inset-0 flex justify-center items-center">
           <PostModal
             postId={activePostId}
             handleClose={function (): void {
               setShowModalState(false);
             }}
           />
-        </div>
       )}
     </>
   );

@@ -4,6 +4,8 @@ interface toggle {
     sidebarOpacity: boolean | undefined;
   }
 
+  //MAYBE MAKE ALL THE NOTIFICATIONS THERE OWN COMPONENT INSTEAD OF THE IF TYPE THAT IS SET UP HERE
+  //CHANGE ALL THE A TAGS TO LINKS
 function Notifications({ sidebarOpacity }: toggle) {
 
     const tempNotificationData = [
