@@ -9,6 +9,7 @@ interface ModalProps {
 }
 
 function HomeSearchUserResult({ username, firstname, lastname, pfp, id }: ModalProps) {
+  console.log(pfp);
   return (
     <div className="align-center mt-2 shadow-xl dark:shadow-notificationShadowPink rounded-lg cursor-pointer bg-white dark:bg-darkModeDarkGray p-1 duration-150 ease-in-out scale-100 hover:scale-95" onClick={() => location.href = `/profile/${id}`}>
       <div className="flex">

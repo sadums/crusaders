@@ -127,7 +127,7 @@ function Search({ sidebarOpacity }: toggle) {
             username={result1.username}
             firstname={result1.firstName}
             lastname={result1.lastName}
-            pfp={result1.username}
+            pfp={result1.pfp}
             id={result1._id}
           />
         )}
@@ -136,7 +136,7 @@ function Search({ sidebarOpacity }: toggle) {
             username={result2.username}
             firstname={result2.firstName}
             lastname={result2.lastName}
-            pfp={result2.username}
+            pfp={result2.pfp}
             id={result2._id}
           />
         )}
@@ -145,7 +145,7 @@ function Search({ sidebarOpacity }: toggle) {
             username={result3.username}
             firstname={result3.firstName}
             lastname={result3.lastName}
-            pfp={result3.username}
+            pfp={result3.pfp}
             id={result3._id}
           />
         )}
@@ -154,7 +154,7 @@ function Search({ sidebarOpacity }: toggle) {
             username={result4.username}
             firstname={result4.firstName}
             lastname={result4.lastName}
-            pfp={result4.username}
+            pfp={result4.pfp}
             id={result4._id}
           />
         )}
@@ -163,7 +163,7 @@ function Search({ sidebarOpacity }: toggle) {
             username={result5.username}
             firstname={result5.firstName}
             lastname={result5.lastName}
-            pfp={result5.username}
+            pfp={result5.pfp}
             id={result5._id}
           />
         )}
