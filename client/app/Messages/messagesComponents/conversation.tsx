@@ -34,8 +34,8 @@ function Conversations({
       return (
         <div className="w-[100%] p-2 overflow-y-scroll friendListMessages pt-20 pb-32 h-[97vh]">
           <NobodyChat
-            firstInfoText="Welcome to the messaging page!"
-            secondInfoText="Looks like you aren't currently talking to anyone, select a user to chat with."
+            firstInfoText={"Welcome to the messaging page!"}
+            secondInfoText={"Looks like you aren't currently talking to anyone, select a user to chat with."}
           />
         </div>
       );
@@ -51,7 +51,7 @@ function Conversations({
             lastname={user.lastName}
           />
           <div className="w-[100%] p-2 overflow-y-scroll friendListMessages pt-20 pb-32 h-[97vh]">
-            <NobodyChat/>
+            <NobodyChat firstInfoText={""} secondInfoText={""}/>
           </div>
         </>
       );

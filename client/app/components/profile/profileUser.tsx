@@ -4,8 +4,8 @@ import { useState } from "react";
 import EditProfile from "./editProfile";
 import Auth from "../../(utils)/auth";
 
-function ProfileUser({ userInfo }: any) {
-  const [userData, setUserData] = useState(userInfo);
+function ProfileUser({ userData }: any) {
+
 
   return (
     <>
