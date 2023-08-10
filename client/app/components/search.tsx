@@ -87,7 +87,6 @@ function Search({ sidebarOpacity }: toggle) {
     setResult3(topFive[2][0]);
     setResult4(topFive[3][0]);
     setResult5(topFive[4][0]);
-
   };
 
   return (
@@ -119,9 +118,11 @@ function Search({ sidebarOpacity }: toggle) {
         aria-labelledby="dropdownMenuButton1"
         data-te-dropdown-menu-ref
       >
-        <h1 className="dark:text-white font-semibold text-lg text-black">
-          Users:
-        </h1>
+        {result1 && (
+          <h1 className="dark:text-white font-semibold text-lg text-black">
+            Users:
+          </h1>
+        )}
         {result1 && (
           <HomeSearchUserResult
             username={result1.username}
