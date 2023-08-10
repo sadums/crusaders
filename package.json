@@ -8,7 +8,8 @@
     "develop": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "build": "cd client && npm run build",
-    "heroku-postbuild": "cd client && next build"
+    "heroku-postbuild": "cd client && next build",
+    "postinstall": "cd client && npm install"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,9 @@
   "dependencies": {
     "dotenv": "^16.3.1",
     "mongodb": "^5.7.0"
+  },
+  "engines": {
+    "node": "18.x"
   },
   "bugs": {
     "url": "https://github.com/sadums/crusaders/issues"
