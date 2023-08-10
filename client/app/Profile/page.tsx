@@ -7,7 +7,7 @@ import EditProfile from "../components/profile/editProfile";
 import Auth from "../(utils)/auth";
 import { useQuery } from "@apollo/client";
 import { GET_USER_BY_ID } from "../GraphQL/queries";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const dynamic = "auto",
   dynamicParams = true,
@@ -20,6 +20,7 @@ export default function Profile() {
   const profile = Auth.getProfile();
   const id = profile?.data?._id;
   const [editModal, toggleEditModal] = useState(true);
+  const [userData, setUserData] = useState();
 
   if (!id) {
     // Handle the error or return early
@@ -31,6 +32,11 @@ export default function Profile() {
       userId: id,
     },
   });
+  useEffect(()=> {
+    if(data){
+      setUserData(data.getUserById)
+    }
+  }, [data])
   return (
     <div className="ml-20 bg-mediumWhite dark:bg-black">
       <div className="grid grid-cols-6 gap-4">
@@ -75,8 +81,8 @@ export default function Profile() {
 
           <div className="grid grid-cols-12 gap-4">
             <div className="col-span-3">
-              {data && (
-                <ProfileUser userInfo={data.getUserById } />
+              {userData && (
+                <ProfileUser userData={userData} />
               )}
               
             </div>
@@ -108,9 +114,7 @@ export default function Profile() {
                     : "opacity-1 h-72 translate-y-0 z-0"
                 } ease-in-out duration-200`}
               >
-                {data && <EditProfile userInfo={data.getUserById} />}
-                {/* <EditProfile setUserData={}/> */}
-                {/* {data && <ProfileSideInfo userInfo={data.getUserById} />} */}
+                {data && <EditProfile userInfo={data.getUserById} setUserData={setUserData} />}
               </div>
             </div>
           </div>

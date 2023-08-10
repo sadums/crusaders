@@ -7,10 +7,11 @@ import Auth from "../../(utils)/auth";
 
 interface EditProfileProps {
   setUserData: (data: any) => void;
+  userInfo: any;
 }
 
 //MAKE THE FORM CLEAR AUTO MATICALLY AND RESET THE PICTURE STATE
-const EditProfile: FC<EditProfileProps> = ({ setUserData }) => {
+const EditProfile: FC<EditProfileProps> = ({ setUserData, userInfo }) => {
   const [updateUserMutation, { loading, error, data }] =
     useMutation(UPDATE_USER_MUTATION);
 
