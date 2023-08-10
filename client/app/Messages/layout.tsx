@@ -36,8 +36,7 @@ export default function Messages({ children }: { children: React.ReactNode }) {
             </div>
           </div>
         </div>
-        
-        <ChatBox />
+        {children}
         <div className="col-span-2"></div>
       </div>
     </div>

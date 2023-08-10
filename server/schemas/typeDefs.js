@@ -78,6 +78,7 @@ const typeDefs = gql`
     getUserById(userId: ID!): User
     getPost(postId: ID!): Post
     getChatById(chatId: ID!): Chat
+    getUserChatsByUsername(username: String!): User
     getUserChats(userId: ID!): User
   }
 

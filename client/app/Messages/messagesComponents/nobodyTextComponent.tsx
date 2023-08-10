@@ -1,12 +1,9 @@
+"use client"
+
 import { useEffect, useState } from "react";
 import TheirText from "./theirTextComponent";
 
-interface NobodyChatProps {
-  firstInfoText: string;
-  secondInfoText: string;
-}
-
-function NobodyChat({ firstInfoText, secondInfoText }: NobodyChatProps) {
+function NobodyChat() {
   const [nobodyChatWelcome, activateNobodyChatWelcome] = useState(false);
   const [nobodyChatMessage, activateNobodyChatMessage] = useState(false);
 
@@ -29,7 +26,7 @@ function NobodyChat({ firstInfoText, secondInfoText }: NobodyChatProps) {
             : "w-0 opacity-0 translate-x-[-20px]"
         } ease-in-out duration-200`}
       >
-        <TheirText date="" text={firstInfoText} />
+        <TheirText date="" text={"It looks like you don't have a chat open yet..."} />
       </div>
       <div
         className={`${
@@ -38,7 +35,7 @@ function NobodyChat({ firstInfoText, secondInfoText }: NobodyChatProps) {
             : "w-0 opacity-0 translate-x-[-20px]"
         } ease-in-out duration-200`}
       >
-        <TheirText date="" text={secondInfoText} />
+        <TheirText date="" text={"Click on a chat or start a new one to the left"} />
       </div>
     </>
   );

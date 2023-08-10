@@ -57,7 +57,7 @@ export default function ChatBox() {
       <div
         className={`absolute bottom-0 transition-all duration-100 ease-in-out ${
           textBox
-            ? "h-40 bg-darkestWhite bg-opacity-80 dark:bg-darkModeDarkGray dark:bg-opacity-80 w-full"
+            ? "h-40 bg-darkestWhite bg-opacity-80 dark:bg-darkModeDarkGray dark:bg-opacity-80 w-[40%]"
             : "h-16 bg-transparent dark:bg-opacity-70 bg-opacity-70 w-[80%]"
         }`}
       >

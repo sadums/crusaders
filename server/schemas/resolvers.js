@@ -71,6 +71,19 @@ const resolvers = {
       }
       return chat;
     },
+    getUserChatsByUsername: async (parent, { username }, context) => {
+      const user = await User.findOne({username: username}).populate({
+        path:"chats",
+        populate:{
+          path:"members"
+        },
+        strictPopulate: false
+      });
+      if (!user) {
+        throw new Error("Could not find user!");
+      }
+      return user;
+    },
     getUserChats: async (parent, { userId }, context) => {
       const user = await User.findById(userId).populate({
         path:"chats",
