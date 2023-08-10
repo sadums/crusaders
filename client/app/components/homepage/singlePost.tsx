@@ -223,15 +223,17 @@ function SinglePost(post: {
                 src={post.post.user.pfp}
                 alt="Your Company"
               ></img>
+              </Link>
+              <Link href={`/profile/${post.post.user._id}`}>
               <div>
                 <h2 className="text-md text-black font-semibold dark:text-white ml-1">
                   {`${post.post.user.firstName} ${post.post.user.lastName}`}
                 </h2>
-                <div className="text-gray-500 text-md ml-1 py-2">
+                <div className="text-gray-500 text-md ml-1">
                   @{post.post.user.username}
                 </div>
               </div>
-            </Link>
+              </Link>
           </div>
           {!isFollowing && (
             <div className="my-auto">

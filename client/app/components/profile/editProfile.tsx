@@ -9,7 +9,6 @@ interface EditProfileProps {
   setUserData: (data: any) => void;
 }
 
-
 //MAKE THE FORM CLEAR AUTO MATICALLY AND RESET THE PICTURE STATE
 const EditProfile: FC<EditProfileProps> = ({ setUserData }) => {
   const [updateUserMutation, { loading, error, data }] =
@@ -56,65 +55,73 @@ const EditProfile: FC<EditProfileProps> = ({ setUserData }) => {
   };
 
   return (
-    <div className="flex items-center justify-center mt-16 pt-2 shadow-2xl">
-      <form className="bg-darkModeDarkGray rounded-lg shadow-md p-2 w-72 mx-auto">
+    <div className="flex items-center justify-center mt-16 pt-2 ">
+      <form className="bg-white dark:bg-darkModeDarkGray rounded-lg w-full shadow-xl p-2 mx-auto">
         <div className="mb-4">
-          <label
-            htmlFor="username"
-            className="block text-sm font-semibold dark:text-gray-400 text-gray-700"
-          >
-            Change Username
-          </label>
+          <h1 className="text-sm font-semibold text-neonBlue">Username</h1>
           <input
             type="text"
             id="username"
             name="username"
-            className="mt-1 p-2 w-full border rounded-md text-black"
+            className="bg-transparent border-solid border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[100%] dark:text-white text-black"
             placeholder="Username"
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-sm font-semibold dark:text-gray-400 text-gray-700">
-            Change Name
-          </label>
-          <input
-            type="text"
-            name="first-name"
-            className="mt-1 p-2 w-full border rounded-md text-black"
-            placeholder="Last Name"
-          />
-          <input
-            type="text"
-            name="last-name"
-            className="mt-1 p-2 w-full border rounded-md text-black"
-            placeholder="First Name"
-          />
+        <div className="mb-4 flex">
+          <div className="mr-2">
+            <label className="text-sm font-semibold text-neonBlue">
+              Firstname
+            </label>
+
+            <input
+              type="text"
+              name="first-name"
+              className="bg-transparent border-solid border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[100%] dark:text-white text-black"
+              placeholder="Last Name"
+            />
+          </div>
+
+          <div>
+            <label className="text-sm font-semibold text-neonBlue">
+              Lastname
+            </label>
+
+            <input
+              type="text"
+              name="last-name"
+              className="bg-transparent border-solid border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[100%] dark:text-white text-black"
+              placeholder="Last Name"
+            />
+          </div>
         </div>
         <div className="mb-4">
-          <label
-            htmlFor="bio"
-            className="block text-sm font-semibold dark:text-gray-400 text-gray-700"
-          >
-            Change Bio
+          <label htmlFor="bio" className="text-sm font-semibold text-neonBlue">
+            Biography
           </label>
           <input
             type="text"
             id="bio"
             name="bio"
-            className="mt-1 p-2 w-full border rounded-md text-black"
+            className="bg-transparent border-solid border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[100%] dark:text-white text-black"
             placeholder="Bio"
           />
         </div>
-        <PictureUploader
-          pictureState={pictureState}
-          setPictureState={handleSetPictureState}
-          uploadText={"Upload a pfp"}
-        />
+        <div className="mb-4 pb-1 flex-col border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[100%]">
+          <h1 className="mb-1 text-sm font-semibold text-neonBlue">
+            Profile Picture
+          </h1>
+          <PictureUploader
+            pictureState={pictureState}
+            setPictureState={handleSetPictureState}
+            uploadText={"Upload a pfp"}
+          />
+        </div>
+
         <div>
           <button
             onClick={updateUserHandler}
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+            className="font-semibold bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
           >
             Submit
           </button>
