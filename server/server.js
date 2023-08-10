@@ -4,42 +4,52 @@ const db = require("./config/connection");
 const { makeExecutableSchema } = require('@graphql-tools/schema');
 const { WebSocketServer } = require('ws');
 const { useServer } = require('graphql-ws/lib/use/ws');
+const next = require('next');
+const path = require('path');
 
 const PORT = process.env.PORT || 5500;
+const dev = process.env.NODE_ENV !== 'production';
+const nextApp = next({ dev, dir: path.resolve(__dirname, '../client') });
+const handle = nextApp.getRequestHandler();
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 const server = new ApolloServer({
   schema,
-  plugins: [
-    {
-      async serverWillStart() {
-        return {
-          async drainServer() {
-            await serverCleanup.dispose();
-          },
-        };
-      },
-    },
-  ],
+  async context({ req }) {
+    // If needed, you can pull the user from the request and pass it in the context
+    return { req };
+  }
 });
 
-const wsServer = new WebSocketServer({
-  server: server.httpServer,
-  path: '/graphql',
-});
+const startServer = async () => {
+  // Ensure MongoDB connection is established
+  db.once("open", async () => {
+    console.log("Connected to MongoDB");
 
-const serverCleanup = useServer({ schema }, wsServer);
+    // Prepare the Next.js app
+    await nextApp.prepare();
 
-const startApolloServer = async () => {
-  await server.listen(PORT).then(({ url }) => {
+    // Start the ApolloServer
+    const { server: httpServer, url } = await server.listen(PORT);
     console.log(`Server is live at ${url}`);
     console.log(`Make GraphQL requests to ${url}${server.graphqlPath}`);
-  });
 
-  db.once("open", () => {
-    console.log("Connected to MongoDB");
+    // Setup WebSocket for GraphQL Subscriptions
+    const wsServer = new WebSocketServer({
+      server: httpServer,
+      path: '/graphql',
+    });
+
+    useServer({ schema }, wsServer);
+
+    // Handle Next.js requests
+    httpServer.on('request', (req, res) => {
+      if (req.method === 'GET' && req.url === '/') {
+        handle(req, res);
+      }
+    });
   });
 };
 
-startApolloServer();
+startServer();
