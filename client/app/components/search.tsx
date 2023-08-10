@@ -1,26 +1,62 @@
 import { useState, useEffect, Key } from "react";
 import jaroWinkler from "../(utils)/search/jaroWinklerSearch";
-import terms from "../(searchData)/terms.json";
 import HomeSearchUserResult from "./toggleSideBar/homeSearchUserResult";
+import { useQuery } from "@apollo/client";
+import { GET_ALL_USERS_SEARCH } from "../GraphQL/queries";
 
 interface toggle {
   sidebarOpacity: boolean | undefined;
 }
 
 function Search({ sidebarOpacity }: toggle) {
+  const threshold = 0.5; // number between 0 and 1, higher number means more concise results
+
+  let terms = useQuery(GET_ALL_USERS_SEARCH);
+  console.log(terms);
+
   const [search, setSearch] = useState("");
 
   const [showResults, setShowResults] = useState(false);
 
-  const [result1, setResult1] = useState("");
-  const [result2, setResult2] = useState("");
-  const [result3, setResult3] = useState("");
-  const [result4, setResult4] = useState("");
-  const [result5, setResult5] = useState("");
+  const [result1, setResult1] = useState({
+    username: "",
+    firstName: "",
+    lastName: "",
+    pfp: "",
+    _id: "",
+  });
+  const [result2, setResult2] = useState({
+    username: "",
+    firstName: "",
+    lastName: "",
+    pfp: "",
+    _id: "",
+  });
+  const [result3, setResult3] = useState({
+    username: "",
+    firstName: "",
+    lastName: "",
+    pfp: "",
+    _id: "",
+  });
+  const [result4, setResult4] = useState({
+    username: "",
+    firstName: "",
+    lastName: "",
+    pfp: "",
+    _id: "",
+  });
+  const [result5, setResult5] = useState({
+    username: "",
+    firstName: "",
+    lastName: "",
+    pfp: "",
+    _id: "",
+  });
 
   const setResults = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    const start = Date.now();
+
     const topFive: [
       [any | null, number],
       [any | null, number],
@@ -28,33 +64,30 @@ function Search({ sidebarOpacity }: toggle) {
       [any | null, number],
       [any | null, number]
     ] = [
-      [null, 0.85],
-      [null, 0.85],
-      [null, 0.85],
-      [null, 0.85],
-      [null, 0.85],
+      [null, threshold],
+      [null, threshold],
+      [null, threshold],
+      [null, threshold],
+      [null, threshold],
     ];
 
-    for (let i = 0; i < terms.length; i++) {
-      const result = jaroWinkler(search, terms[i]);
-      if (result > 0.85) {
-        if (result > topFive[4][1]) {
-          topFive.pop();
-          topFive.push([terms[i], result]);
-          topFive.sort(function (a, b) {
-            return b[1] - a[1];
-          });
-        }
+    for (let i = 0; i < terms.data.getAllUsers.length; i++) {
+      const result = jaroWinkler(search, terms.data.getAllUsers[i].username);
+      if (result > topFive[4][1]) {
+        topFive.pop();
+        topFive.push([terms.data.getAllUsers[i], result]);
+        topFive.sort(function (a, b) {
+          return b[1] - a[1];
+        });
       }
     }
+    console.log(topFive);
     setResult1(topFive[0][0]);
     setResult2(topFive[1][0]);
     setResult3(topFive[2][0]);
     setResult4(topFive[3][0]);
     setResult5(topFive[4][0]);
 
-    const end = Date.now();
-    console.log(`Time spent: ${end - start}ms`);
   };
 
   return (
@@ -89,31 +122,52 @@ function Search({ sidebarOpacity }: toggle) {
         <h1 className="dark:text-white font-semibold text-lg text-black">
           Users:
         </h1>
-        <HomeSearchUserResult
-          username="Xtra"
-          firstname="John"
-          lastname="Doe"
-          pfp="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.H6Znb4LwWOEUCbMW8sxrTgHaEo%26pid%3DApi&f=1&ipt=5abca4869ffed3c53d3cf378ab1b63dee6e6955f9b4d2c7ee95728f8aac85ade&ipo=images"
-        />
-        <HomeSearchUserResult
-          username="Xtra1"
-          firstname="John"
-          lastname="Doe"
-          pfp="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.H6Znb4LwWOEUCbMW8sxrTgHaEo%26pid%3DApi&f=1&ipt=5abca4869ffed3c53d3cf378ab1b63dee6e6955f9b4d2c7ee95728f8aac85ade&ipo=images"
-        />
-        <HomeSearchUserResult
-          username="Xtra1"
-          firstname="John"
-          lastname="Doe"
-          pfp="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.H6Znb4LwWOEUCbMW8sxrTgHaEo%26pid%3DApi&f=1&ipt=5abca4869ffed3c53d3cf378ab1b63dee6e6955f9b4d2c7ee95728f8aac85ade&ipo=images"
-        />
-        <HomeSearchUserResult
-          username="Xtra1"
-          firstname="John"
-          lastname="Doe"
-          pfp="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.H6Znb4LwWOEUCbMW8sxrTgHaEo%26pid%3DApi&f=1&ipt=5abca4869ffed3c53d3cf378ab1b63dee6e6955f9b4d2c7ee95728f8aac85ade&ipo=images"
-        />
-        <h1 className="dark:text-white font-semibold text-lg mt-4 text-black">
+        {result1 && (
+          <HomeSearchUserResult
+            username={result1.username}
+            firstname={result1.firstName}
+            lastname={result1.lastName}
+            pfp={result1.username}
+            id={result1._id}
+          />
+        )}
+        {result2 && (
+          <HomeSearchUserResult
+            username={result2.username}
+            firstname={result2.firstName}
+            lastname={result2.lastName}
+            pfp={result2.username}
+            id={result2._id}
+          />
+        )}
+        {result3 && (
+          <HomeSearchUserResult
+            username={result3.username}
+            firstname={result3.firstName}
+            lastname={result3.lastName}
+            pfp={result3.username}
+            id={result3._id}
+          />
+        )}
+        {result4 && (
+          <HomeSearchUserResult
+            username={result4.username}
+            firstname={result4.firstName}
+            lastname={result4.lastName}
+            pfp={result4.username}
+            id={result4._id}
+          />
+        )}
+        {result5 && (
+          <HomeSearchUserResult
+            username={result5.username}
+            firstname={result5.firstName}
+            lastname={result5.lastName}
+            pfp={result5.username}
+            id={result5._id}
+          />
+        )}
+        {/* <h1 className="dark:text-white font-semibold text-lg mt-4 text-black">
           Hashtags:
         </h1>
         <div className="inline-block mt-1 flex-wrap">
@@ -147,7 +201,7 @@ function Search({ sidebarOpacity }: toggle) {
           <a className="dark:hover:text-mainPurple cursor-pointer hover:text-mainPurple text-black dark:text-white inline-block mr-2">
             #fsdfsd
           </a>
-        </div>
+        </div> */}
       </div>
     </div>
   );

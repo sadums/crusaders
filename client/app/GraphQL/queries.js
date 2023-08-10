@@ -212,6 +212,18 @@ export const GET_ALL_USERS = gql`
   }
 `;
 
+export const GET_ALL_USERS_SEARCH = gql`
+  query GetAllUsers {
+    getAllUsers {
+      _id
+      username
+      firstName
+      lastName
+      pfp
+    }
+  }
+`;
+
 export const GET_ALL_FOLLOWERS = gql`
   query GetAllUsers {
     getAllUsers {

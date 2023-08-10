@@ -33,13 +33,13 @@ export default function Page({ params }: { params: { chatId: string } }) {
   // CREATE MESSAGE EXAMPLE
   const [createMessage, {data:messageData, loading:messageLoading, error:messageError}] = useMutation(CREATE_MESSAGE);
 
-  createMessage({
-    variables:{
-      userId: userId,
-      chatId: params.chatId,
-      body: "" // this is what the user will send as their message
-    }
-  });
+  // createMessage({
+  //   variables:{
+  //     userId: userId,
+  //     chatId: params.chatId,
+  //     body: "" // this is what the user will send as their message
+  //   }
+  // });
   
 
   return (<div>My Post: {params.chatId}</div>)
