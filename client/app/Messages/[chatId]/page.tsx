@@ -13,7 +13,7 @@ export default function Page({ params }: { params: { chatId: string } }) {
       userId: Auth.getProfile().data._id,
     },
   });
-
-  console.log( error ? error : data)
+  
+  console.log(data)
   return (<div>My Post: {params.chatId}</div>)
 }

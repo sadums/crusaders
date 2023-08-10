@@ -100,7 +100,7 @@ const typeDefs = gql`
   }
 
   type Subscription {
-    messages: Message
+    messages(chatId: ID!, userId: ID!): Message
   }
 
   input updatePostInput {
