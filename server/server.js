@@ -19,8 +19,10 @@ const server = new ApolloServer({
   async context({ req }) {
     // If needed, you can pull the user from the request and pass it in the context
     return { req };
-  }
+  },
+  playground: process.env.NODE_ENV !== 'production', // Disable playground in production
 });
+
 
 const startServer = async () => {
   // Ensure MongoDB connection is established
@@ -45,10 +47,10 @@ const startServer = async () => {
 
     // Handle Next.js requests
     httpServer.on('request', (req, res) => {
-      if (req.method === 'GET' && req.url === '/') {
+      if (req.method === 'GET') {
         handle(req, res);
       }
-    });
+    });    
   });
 };
 
