@@ -98,7 +98,7 @@ export const GET_ALL_POSTS = gql`
         lastName
         username
         email
-        followers{
+        followers {
           _id
         }
       }
@@ -221,7 +221,6 @@ export const GET_ALL_FOLLOWERS = gql`
     }
   }
 `;
-
 
 //MAYBE DELETE
 export const GET_LOGGED_IN_USER = gql`

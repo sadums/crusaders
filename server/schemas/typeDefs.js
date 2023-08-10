@@ -78,6 +78,7 @@ const typeDefs = gql`
     getUserById(userId: ID!): User
     getPost(postId: ID!): Post
     getChatById(chatId: ID!): Chat
+    getUserChatsByUsername(username: String!): User
     getUserChats(userId: ID!): User
   }
 
@@ -99,7 +100,7 @@ const typeDefs = gql`
   }
 
   type Subscription {
-    messages: Message
+    messages(chatId: ID!, userId: ID!): Message
   }
 
   input updatePostInput {

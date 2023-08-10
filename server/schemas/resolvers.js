@@ -71,6 +71,19 @@ const resolvers = {
       }
       return chat;
     },
+    getUserChatsByUsername: async (parent, { username }, context) => {
+      const user = await User.findOne({username: username}).populate({
+        path:"chats",
+        populate:{
+          path:"members"
+        },
+        strictPopulate: false
+      });
+      if (!user) {
+        throw new Error("Could not find user!");
+      }
+      return user;
+    },
     getUserChats: async (parent, { userId }, context) => {
       const user = await User.findById(userId).populate({
         path:"chats",
@@ -448,10 +461,14 @@ const resolvers = {
       subscribe: withFilter(
         () => pubsub.asyncIterator(["NEW_MESSAGE"]),
         async (payload, variables) => {
-          const user = await User.findById(variables.userId);
-          console.log(user);
-          console.log(payload, variables);
-          return 1 === 1;
+          const chat = await Chat.findById(variables.chatId).populate({
+            path: "members"
+          });
+          for(let i = 0; i < chat.members.length; i++){
+            console.log(chat.members[i]._id == variables.userId);
+            if(chat.members[i]._id == variables.userId) return true;
+          }
+          return false;
         }
       ),
     },

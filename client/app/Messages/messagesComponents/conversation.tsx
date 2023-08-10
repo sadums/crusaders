@@ -20,7 +20,7 @@ function Conversations({
     lastName: string,
     username: string,
     pfp: string
-  };
+  } | undefined;
   convo: Convo[];
   date: string;
 }) {
@@ -51,10 +51,7 @@ function Conversations({
             lastname={user.lastName}
           />
           <div className="w-[100%] p-2 overflow-y-scroll friendListMessages pt-20 pb-32 h-[97vh]">
-            <NobodyChat
-              firstInfoText="This chat is empty!"
-              secondInfoText="Select a user to chat with, or send a message."
-            />
+            <NobodyChat/>
           </div>
         </>
       );

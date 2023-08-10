@@ -71,7 +71,6 @@ export const UNFOLLOW_USER = gql`
   }
 `;
 
-
 export const ADD_POST = gql`
   mutation AddPost($userId: ID!, $input: newPostInput!) {
     addPost(userId: $userId, input: $input) {
@@ -219,6 +218,13 @@ export const LIKE_POST = gql`
 //     }
 //   }
 // `;
+export const CREATE_MESSAGE = gql`
+  mutation Mutation($userId: ID!, $chatId: ID!, $body: String!) {
+    createMessage(userId: $userId, chatId: $chatId, body: $body) {
+      _id
+    }
+  }
+`;
 
 export const UNLIKE_POST = gql`
   mutation UnlikePost($postId: String!, $userId: String!) {
