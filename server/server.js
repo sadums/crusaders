@@ -16,10 +16,12 @@ const schema = makeExecutableSchema({ typeDefs, resolvers });
 const server = new ApolloServer({
   schema,
   playground: false,
+  persistedQueries: false,
   async context({ req }) {
     return { req };
   }
 });
+
 
 const startServer = async () => {
   await nextApp.prepare();
