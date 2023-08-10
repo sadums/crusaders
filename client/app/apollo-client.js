@@ -1,53 +1,44 @@
-// import { ApolloClient, InMemoryCache } from "@apollo/client";
-// import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
-// import { createClient } from 'graphql-ws';
+import { ApolloClient, InMemoryCache, split, HttpLink } from "@apollo/client";
+import { getMainDefinition } from "@apollo/client/utilities";
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
+import { createClient } from "graphql-ws";
 
-// const wsLink = new GraphQLWsLink(createClient({
-//   url: 'ws://localhost:5500/graphql',
-// }));
+// Define the URIs based on the environment
+const HTTP_URI =
+  process.env.NODE_ENV === "production"
+    ? "https://crusaders-media-e9469ade02da.herokuapp.com/graphql"
+    : "http://localhost:5500/graphql";
 
-// const client = new ApolloClient({
-//     uri: "http://localhost:5500",
-//     cache: new InMemoryCache(),
-// });
-
-// export default client;
-
-
-
-import { ApolloClient, InMemoryCache } from '@apollo/client';
-
-import { split, HttpLink } from '@apollo/client';
-import { getMainDefinition } from '@apollo/client/utilities';
-import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
-import { createClient } from 'graphql-ws';
+const WS_URI =
+  process.env.NODE_ENV === "production"
+    ? "wss://crusaders-media-e9469ade02da.herokuapp.com/graphql"
+    : "ws://localhost:5500/graphql";
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:5500/graphql',
+  uri: HTTP_URI,
 });
 
-const wsLink = new GraphQLWsLink(createClient({
-  url: 'ws://localhost:5500/graphql',
-}));
+const wsLink = new GraphQLWsLink(
+  createClient({
+    url: WS_URI,
+  })
+);
 
-// The split function takes three parameters:
-//
-// * A function that's called for each operation to execute
-// * The Link to use for an operation if the function returns a "truthy" value
-// * The Link to use for an operation if the function returns a "falsy" value
 const splitLink = split(
   ({ query }) => {
     const definition = getMainDefinition(query);
     return (
-      definition.kind === 'OperationDefinition' &&
-      definition.operation === 'subscription'
+      definition.kind === "OperationDefinition" &&
+      definition.operation === "subscription"
     );
   },
   wsLink,
-  httpLink,
+  httpLink
 );
+
 const client = new ApolloClient({
   link: splitLink,
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
-export default client
+
+export default client;
