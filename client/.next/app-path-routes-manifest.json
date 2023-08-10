@@ -1,9 +1,0 @@
-{
-  "/page": "/",
-  "/testing/page": "/testing",
-  "/explore/page": "/explore",
-  "/profile/page": "/profile",
-  "/profile/[id]/page": "/profile/[id]",
-  "/messages/page": "/messages",
-  "/messages/[chatId]/page": "/messages/[chatId]"
-}
