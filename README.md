@@ -1,34 +1,74 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Crusaders
+
+Crusaders is a revolutionary social media platform that redefines online interactions and connections.
+
+## Features
+
+1. **Social Media posting**: Users can easily post pictures, statuses, and comments to interact with the vast internet community. 
+
+2. **Friend Management**: The app allows users to connect and add friends within the platform. Users can search for friends using their usernames. Once connected, users can view their friends' activity and engage in friendly messaging.
+
+3. **Profile Customization**: Users have the option to personalize their profiles by adding a profile picture, bio, and other relevant information. This feature allows users to express themselves to the fullest while showcasing their own 
+talents and life highlights. 
+
+4. **Responsive Navbar**: A sleek and organized navbar capable of taking you to different pages while seemlessly rendering. 
+
+5. **Live Messaging**: Communicate with users through our seemless chat feature. 
 
 ## Getting Started
 
-First, run the development server:
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+To use Crusaders, follow these steps:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Visit the app's website at [www.crusaders.herokuapp.com](https://crusaders-media-e9469ade02da.herokuapp.com/).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. Sign up for a new account or log in using your existing credentials.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. Upon signing in, you will be prompted to set up your profile.
 
-## Learn More
+4. Customize your profile by adding a profile picture, bio, and other relevant information.
 
-To learn more about Next.js, take a look at the following resources:
+5. Connect with friends by searching for their usernames.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+6. Explore the app's features.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## System Requirements
 
-## Deploy on Vercel
+Crusaders can be accessed through any modern web browser on desktop and mobile devices. The app is designed to be responsive and optimized for a seamless experience across various screen sizes.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Feedback and Support
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+We value your feedback and are dedicated to improving Tyr's Vault. If you encounter any issues, have suggestions, or need assistance, please reach out.
+
+**Sam**
+
+Github: [sadums](https://github.com/sadums)
+
+Email: samjadams4@gmail.com
+
+**Carter**
+
+Github: [carreejoh](https://github.com/carreejoh)
+
+Email: carreejoh4637@mailbox.org
+
+**Kole**
+
+Github: [kolelam](https://github.com/kolelam)
+
+Email: kolelamied1@gmail.com
+
+**Jonny**
+
+Github: [jonny258](https://github.com/jonny258)
+
+Email: joncolsen3@gmail.com
+
+## License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+Crusaders is licensed under the [MIT License](https://opensource.org/licenses/MIT). You are free to use, modify, and distribute this software as per the terms and conditions specified in the license.
+
+**Note**: This README provides a general overview of Crusaders and its functionalities. For detailed instructions and information, please refer to the app
