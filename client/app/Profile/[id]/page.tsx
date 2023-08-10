@@ -1,12 +1,15 @@
+
+
 "use client";
 import "../../(styles)/profile.css";
 import "../../(styles)/homepage.css";
 import ProfileUser from "@/app/components/profile/profileUser";
 import ProfilePosts from "../../components/profile/profilePosts";
-
+import EditProfile from "../../components/profile/editProfile";
 import Auth from "../../(utils)/auth";
 import { useQuery } from "@apollo/client";
 import { GET_USER_BY_ID } from "../../GraphQL/queries";
+import { useEffect, useState } from "react";
 
 export const dynamic = "auto",
   dynamicParams = true,
@@ -15,6 +18,9 @@ export const dynamic = "auto",
   runtime = "nodejs",
   preferredRegion = "auto";
 
+interface UserData {
+  pfp: string;
+}
 export default function OtherProfile({
   params,
 }: {
@@ -25,12 +31,25 @@ export default function OtherProfile({
 }) {
   console.log(params);
   const id = params.id;
-  console.log(id);
+  const [editModal, toggleEditModal] = useState(true);
+  const [userData, setUserData] = useState<UserData | undefined>();
+
+
+  if (!id) {
+    // Handle the error or return early
+    return <div>Error: No user ID found</div>;
+  }
+
   const { loading, error, data } = useQuery(GET_USER_BY_ID, {
     variables: {
       userId: id,
     },
   });
+  useEffect(() => {
+    if (data) {
+      setUserData(data.getUserById);
+    }
+  }, [data]);
   return (
     <div className="ml-20 bg-mediumWhite dark:bg-black">
       <div className="grid grid-cols-6 gap-4">
@@ -44,7 +63,7 @@ export default function OtherProfile({
                 <div className="flex justify-between">
                   <img
                     className="h-48 w-48 ml-4 rounded-full object-cover -mt-28 border-[3px] dark:border-mainBlueComp border-mainPurple"
-                    src={data ? data.getUserById.pfp : ""}
+                    src={userData ? userData.pfp : ""}
                     alt="Your Company"
                   ></img>
                   <button className="ml-36 text-md font-semibold dark:text-blue-500 text-blue-700  duration-100">
@@ -57,17 +76,26 @@ export default function OtherProfile({
                     Comments
                   </button>
                 </div>
+                {Auth.loggedIn() && (
+                  <button
+                    onClick={() => toggleEditModal(!editModal)}
+                    className="text-mainPurple font-semibold text-md dark:text-mainPurple mr-4"
+                  >
+                    Edit Profile
+                  </button>
+                )}
               </div>
             </div>
           </div>
 
           <div className="grid grid-cols-12 gap-4">
             <div className="col-span-3">
-              {data && <ProfileUser userInfo={data.getUserById} />}
+              {userData && <ProfileUser userData={userData} />}
             </div>
 
-            <div className="col-span-9 gap-3 h-[71vh] overflow-y-scroll z-60 profilePostsDiv">
-              <div className="grid p-2 pt-0 mt-20 grid-cols-3 gap-2 ">
+            <div className="col-span-6 gap-3 h-[75vh] z-60">
+              {/* <h1 className="text-black mt-16 dark:text-white ml-2 mr-2 font-semibold text-lg border-b-[1px] border-gray-700 dark:border-gray-500">Posts:</h1> */}
+              <div className="grid p-2 pt-0 mt-16 grid-cols-1 gap-2 h-[70vh] overflow-y-scroll profilePostsDiv">
                 {data && data.getUserById && (
                   <>
                     {data.getUserById.posts?.map(
@@ -84,7 +112,7 @@ export default function OtherProfile({
                 )}
               </div>
             </div>
-            {/* <div className="col-span-3">
+            <div className="col-span-3">
               <div
                 className={`${
                   editModal
@@ -92,9 +120,16 @@ export default function OtherProfile({
                     : "opacity-1 h-72 translate-y-0 z-0"
                 } ease-in-out duration-200`}
               >
-                {data && <EditProfile userInfo={data.getUserById} />}
+                {data && (
+                  <EditProfile
+                    userInfo={data.getUserById}
+                    setUserData={setUserData}
+                    toggleEditModal={toggleEditModal}
+                    editModal={editModal}
+                  />
+                )}
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>

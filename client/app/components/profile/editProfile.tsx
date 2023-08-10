@@ -8,10 +8,12 @@ import Auth from "../../(utils)/auth";
 interface EditProfileProps {
   setUserData: (data: any) => void;
   userInfo: any;
+  toggleEditModal: (data: any) => void;
+  editModal: any;
 }
 
 //MAKE THE FORM CLEAR AUTO MATICALLY AND RESET THE PICTURE STATE
-const EditProfile: FC<EditProfileProps> = ({ setUserData, userInfo }) => {
+const EditProfile: FC<EditProfileProps> = ({ setUserData, userInfo, toggleEditModal, editModal}) => {
   const [updateUserMutation, { loading, error, data }] =
     useMutation(UPDATE_USER_MUTATION);
 
@@ -49,7 +51,9 @@ const EditProfile: FC<EditProfileProps> = ({ setUserData, userInfo }) => {
       const response = await updateUserMutation({
         variables: { input: updateUserData, _id: id },
       });
+      console.log(response.data.editUser.user)
       setUserData(response.data.editUser.user);
+      toggleEditModal(!editModal)
     } catch (err) {
       console.error(err);
     }

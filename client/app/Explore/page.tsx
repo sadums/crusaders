@@ -16,32 +16,70 @@ import { useQuery } from "@apollo/client";
 import { Key, useState, useEffect } from "react";
 
 export default function Main() {
-  const tempHashtagData = [
-    "coding",
-    "traveling",
-    "javascript",
-    "reactjs",
-    "science",
-    "chatGPT",
-    "2024election",
-    "snowboarding",
-    "hunterbiden",
-    "codingbootcamp",
-    "football",
-    "computers",
-    "rust",
-    "python",
-    "instagram",
-    "oceangate",
-    "tomcruise",
-    "donaldtrump",
-    "joebiden",
-    "guncontrol",
-    "america",
-    "tyrsvault",
-    "jonathon",
-    "sexymormons",
+  const group1Hashtags = [
+    "art",
+    "code",
+    "travel",
+    "photo",
+    "hike",
+    "read",
+    "music",
+    "gym",
+    "game",
+    "film",
+    "bike",
+    "yoga",
+    "cook",
+    "run",
+    "draw",
+    "DIY",
+    "camp",
+    "swim",
+    "dance",
+    "write",
+    "tech",
+    "pets",
+    "car",
+    "surf",
+    "work",
+    "poem",
+    "climb",
+    "fishing",
+    "paint",
   ];
+
+  const group2Hashtags = [
+    "movie",
+    "beach",
+    "party",
+    "history",
+    "art",
+    "food",
+    "book",
+    "muse",
+    "explore",
+    "style",
+    "fame",
+    "rock",
+    "game",
+    "jazz",
+    "city",
+    "folk",
+    "world",
+    "pop",
+    "soul",
+    "fun",
+    "zen",
+    "star",
+    "hero",
+    "film",
+    "museum",
+    "comic",
+    "play",
+    "gala",
+    "magic",
+  ];
+
   const {
     loading: allPostLoading,
     error: allPostsError,
@@ -77,7 +115,7 @@ export default function Main() {
               Trending
             </h3>
             <div className="mt-2">
-              {tempHashtagData.map((tag) => (
+              {group1Hashtags.map((tag) => (
                 <a
                   key={tag}
                   className="inline-block mr-2 mt-1 text-black dark:text-white hover:text-customPurple cursor-pointer duration-200 ease-in-out"
@@ -90,7 +128,7 @@ export default function Main() {
               For You
             </h3>
             <div className="mt-2">
-              {tempHashtagData.map((tag) => (
+              {group2Hashtags.map((tag) => (
                 <a
                   key={tag}
                   className="inline-block mr-2 mt-1 text-black dark:text-white hover:text-customPurple cursor-pointer duration-200 ease-in-out"
@@ -103,13 +141,15 @@ export default function Main() {
         </div>
 
         <div className="col-span-6 mt-2">
-          <h3 className="text-xl font-semibold h-8">Results For #Coding</h3>
+          <h1 className="text-xl font-bold h-8">Explore</h1>
           <div className="overflow-y-scroll">
             <div className="grid grid-cols-3 h-[92vh] p-4 mt-4 ">
               {displayPosts
                 ? displayPosts.map(
                     (post: any, index: Key | null | undefined) => (
-                      <ProfilePosts postInfo={post} key={index} />
+                      <div key={index} className={"m-1"}>
+                        <ProfilePosts postInfo={post} />
+                      </div>
                     )
                   )
                 : null}
