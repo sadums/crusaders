@@ -7,7 +7,7 @@
     "start": "node server/server.js",
     "develop": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
     "install": "cd server && npm i && cd ../client && npm i",
-    "heroku-postbuild": "cd client && next build",
+    "heroku-postbuild": "cd client && npx next build",
     "postinstall": "cd client && npm install"
   },
   "repository": {
