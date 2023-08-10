@@ -5,11 +5,12 @@ interface ModalProps {
   firstname: string;
   lastname: string;
   pfp: string;
+  id: string;
 }
 
-function HomeSearchUserResult({ username, firstname, lastname, pfp }: ModalProps) {
+function HomeSearchUserResult({ username, firstname, lastname, pfp, id }: ModalProps) {
   return (
-    <div className="align-center mt-2 shadow-xl dark:shadow-notificationShadowPink rounded-lg cursor-pointer bg-white dark:bg-darkModeDarkGray p-1 duration-150 ease-in-out scale-100 hover:scale-95">
+    <div className="align-center mt-2 shadow-xl dark:shadow-notificationShadowPink rounded-lg cursor-pointer bg-white dark:bg-darkModeDarkGray p-1 duration-150 ease-in-out scale-100 hover:scale-95" onClick={() => location.href = `/profile/${id}`}>
       <div className="flex">
         <a className="cursor-pointer">
           <img
