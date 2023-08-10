@@ -252,6 +252,84 @@ function Widgets({ displayPosts }: WidgetsProps) {
                 className="form-checkbox ml-2 h-4 w-4 text-blue-500"
               ></input>
             </div>
+            <div className="flex items-center flex-wrap infoInterestsDiv">
+              <label
+                id="interest1"
+                className="ml-2 text-black font-normal dark:text-white"
+              >
+                Fitness
+              </label>
+              <input
+                type="checkbox"
+                id="interest1"
+                name="interest1"
+                className="form-checkbox ml-2 h-4 w-4 text-blue-500"
+              ></input>
+              <label
+                id="interest1"
+                className="ml-2 text-black font-normal dark:text-white"
+              >
+                JavaScript
+              </label>
+              <input
+                type="checkbox"
+                id="interest1"
+                name="interest1"
+                className="form-checkbox ml-2 h-4 w-4 text-blue-500"
+              ></input>
+            </div>
+            <div className="flex items-center flex-wrap infoInterestsDiv">
+              <label
+                id="interest1"
+                className="ml-2 text-black font-normal dark:text-white"
+              >
+                  NBA
+              </label>
+              <input
+                type="checkbox"
+                id="interest1"
+                name="interest1"
+                className="form-checkbox ml-2 h-4 w-4 text-blue-500"
+              ></input>
+              <label
+                id="interest1"
+                className="ml-2 text-black font-normal dark:text-white"
+              >
+                Cooking
+              </label>
+              <input
+                type="checkbox"
+                id="interest1"
+                name="interest1"
+                className="form-checkbox ml-2 h-4 w-4 text-blue-500"
+              ></input>
+            </div>
+            <div className="flex items-center flex-wrap infoInterestsDiv">
+              <label
+                id="interest1"
+                className="ml-2 text-black font-normal dark:text-white"
+              >
+                  Art
+              </label>
+              <input
+                type="checkbox"
+                id="interest1"
+                name="interest1"
+                className="form-checkbox ml-2 h-4 w-4 text-blue-500"
+              ></input>
+              <label
+                id="interest1"
+                className="ml-2 text-black font-normal dark:text-white"
+              >
+                Music
+              </label>
+              <input
+                type="checkbox"
+                id="interest1"
+                name="interest1"
+                className="form-checkbox ml-2 h-4 w-4 text-blue-500"
+              ></input>
+            </div>
           </div>
         </form>
       </div>

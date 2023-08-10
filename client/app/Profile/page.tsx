@@ -16,14 +16,17 @@ export const dynamic = "auto",
   runtime = "nodejs",
   preferredRegion = "auto";
 
+interface UserData {
+  pfp: string;
+}
 export default function Profile() {
   const profile = Auth.getProfile();
   const id = profile?.data?._id;
   const [editModal, toggleEditModal] = useState(true);
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState<UserData | undefined>();
+
 
   if (!id) {
-    // Handle the error or return early
     return <div>Error: No user ID found</div>;
   }
 
@@ -32,11 +35,11 @@ export default function Profile() {
       userId: id,
     },
   });
-  useEffect(()=> {
-    if(data){
-      setUserData(data.getUserById)
+  useEffect(() => {
+    if (data) {
+      setUserData(data.getUserById);
     }
-  }, [data])
+  }, [data]);
   return (
     <div className="ml-20 bg-mediumWhite dark:bg-black">
       <div className="grid grid-cols-6 gap-4">
@@ -50,7 +53,7 @@ export default function Profile() {
                 <div className="flex justify-between">
                   <img
                     className="h-48 w-48 ml-4 rounded-full object-cover -mt-28 border-[3px] dark:border-mainBlueComp border-mainPurple"
-                    src={data ? data.getUserById.pfp : ""}
+                    src={userData ? userData.pfp : ""}
                     alt="Your Company"
                   ></img>
                   <button className="ml-36 text-md font-semibold dark:text-blue-500 text-blue-700  duration-100">
@@ -64,27 +67,20 @@ export default function Profile() {
                   </button>
                 </div>
                 {Auth.loggedIn() && (
-                  <button onClick={() => toggleEditModal(!editModal)} className="text-mainPurple font-semibold text-md dark:text-mainPurple mr-4">
+                  <button
+                    onClick={() => toggleEditModal(!editModal)}
+                    className="text-mainPurple font-semibold text-md dark:text-mainPurple mr-4"
+                  >
                     Edit Profile
                   </button>
                 )}
-                {/* {Auth.loggedIn() && (
-        <>
-          {Auth.getProfile().data._id === userData._id && (
-            <EditProfile setUserData={setUserData} />
-          )}
-        </>
-      )} */}
               </div>
             </div>
           </div>
 
           <div className="grid grid-cols-12 gap-4">
             <div className="col-span-3">
-              {userData && (
-                <ProfileUser userData={userData} />
-              )}
-              
+              {userData && <ProfileUser userData={userData} />}
             </div>
 
             <div className="col-span-6 gap-3 h-[75vh] z-60">
@@ -114,7 +110,14 @@ export default function Profile() {
                     : "opacity-1 h-72 translate-y-0 z-0"
                 } ease-in-out duration-200`}
               >
-                {data && <EditProfile userInfo={data.getUserById} setUserData={setUserData} />}
+                {data && (
+                  <EditProfile
+                    userInfo={data.getUserById}
+                    setUserData={setUserData}
+                    toggleEditModal={toggleEditModal}
+                    editModal={editModal}
+                  />
+                )}
               </div>
             </div>
           </div>

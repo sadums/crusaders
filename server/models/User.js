@@ -27,15 +27,17 @@ const userSchema = new Schema(
     pfp: {
       type: String,
       default:
-        "https://cdn.discordapp.com/attachments/1110381245063503936/1135348931778322453/image.png",
+        "https://upcdn.io/FW25bUs/raw/uploads/2023/08/10/user_318-159711-3jkk.webp",
     },
     bio: {
       type: String,
     },
-    posts: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Post'
-    }],
+    posts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Post",
+      },
+    ],
     followers: [
       {
         type: Schema.Types.ObjectId,
@@ -48,10 +50,12 @@ const userSchema = new Schema(
         ref: "User",
       },
     ],
-    likes: [{
-      type: Schema.Types.ObjectId,
-      ref: "Like"
-    }],
+    likes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Like",
+      },
+    ],
     chats: [
       {
         type: Schema.Types.ObjectId,
