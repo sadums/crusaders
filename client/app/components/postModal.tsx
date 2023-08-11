@@ -308,13 +308,13 @@ const PostModal: React.FC<ModalProps> = ({ postId, handleClose }) => {
 
               <div
                 className={`${
-                  showComments ? "h-46 scale-100" : " h-0 scale-0"
-                } transition-all duration-400 ease-in-out`}
+                  showComments ? "transition-all duration-400 ease-in-out h-46 scale-100" : " h-0 scale-0"
+                } `}
               >
                 <form
                   className={`${
-                    showComments ? "scale-100" : "scale-0"
-                  } ease-in transition-all duration-200 border-black pb-2 border-b-[2px]`}
+                    showComments ? "scale-100 ease-in transition-all duration-200" : "scale-0"
+                  }  border-black pb-2 border-b-[2px]`}
                 >
                   <div className="flex">
                     <textarea
