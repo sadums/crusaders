@@ -1,5 +1,3 @@
-
-
 "use client";
 import "../../(styles)/profile.css";
 import "../../(styles)/homepage.css";
@@ -31,9 +29,16 @@ export default function OtherProfile({
 }) {
   console.log(params);
   const id = params.id;
+  let isUserProfile;
+  if (Auth.loggedIn()) {
+    if (Auth.getProfile().data._id === params.id) {
+      isUserProfile = true;
+    } else {
+      isUserProfile = false;
+    }
+  }
   const [editModal, toggleEditModal] = useState(true);
   const [userData, setUserData] = useState<UserData | undefined>();
-
 
   if (!id) {
     // Handle the error or return early
@@ -76,7 +81,7 @@ export default function OtherProfile({
                     Comments
                   </button>
                 </div>
-                {Auth.loggedIn() && (
+                {Auth.loggedIn() && isUserProfile &&(
                   <button
                     onClick={() => toggleEditModal(!editModal)}
                     className="text-mainPurple font-semibold text-md dark:text-mainPurple mr-4"
@@ -120,7 +125,7 @@ export default function OtherProfile({
                     : "opacity-1 h-72 translate-y-0 z-0"
                 } ease-in-out duration-200`}
               >
-                {data && (
+                {data && isUserProfile && (
                   <EditProfile
                     userInfo={data.getUserById}
                     setUserData={setUserData}
