@@ -271,18 +271,42 @@ function SinglePost(post: {
         </div>
         <div
           className={`${
-            expandedPosts ? "h-88 scale-100" : " h-0 scale-0"
-          }transition-all duration-200 ease-linear `}
+            expandedPosts
+              ? "opacity-1 border-t-[2px] border-black h-[100%] max-h-72 translate-y-0 z-0 "
+              : "opacity-0 h-0 -z-10"
+          } ease-in-out duration-200`}
         >
           <div
             className={`${
-              expandedPosts ? "h-88 scale-100" : " h-0 scale-0"
-            } ease-in transition-all duration-200 mt-2 border-[2px] rounded-xl p-2 border-black`}
+              expandedPosts ? "" : " h-0 scale-0"
+            }  mt-2 rounded-xl`}
           >
-            <form
+
+
+            <div
+              className={`${
+                expandedPosts ? "scale-100 max-h-64" : "scale-0"
+              } overflow-y-scroll feedPostCommentSection`}
+            >
+              {commentState?.map((comment, commentIndex) => (
+                <div
+                  key={commentIndex}
+                  className="flex justify-between mt-1 border-gray-700 pb-2 border-b-[1px]"
+                >
+                  <p className="dark:text-white transition-all duration-500 ease-in-out text-black self-end max-w-[70%]">
+                    {comment.body}
+                  </p>
+                  {/* <p>{formatDate(comment.createdAt)}</p> */}
+{/* MAKE LINK TO THE PROFILE OF THE USER */}
+                  <a className="font-sm dark:text-white transition-all duration-500 ease-in-out text-black cursor-pointer self-end text-md">
+                    -{comment.username}
+                  </a>
+                </div>
+              ))}
+              <form
               className={`${
                 expandedPosts ? "scale-100" : "scale-0"
-              } ease-in transition-all duration-200 border-black pb-2 border-b-[2px]`}
+              } ease-in transition-all mt-2 duration-200 border-black pb-2 border-b-[2px]`}
             >
               <div className="flex">
                 <textarea
@@ -297,27 +321,6 @@ function SinglePost(post: {
                 </button>
               </div>
             </form>
-
-            <div
-              className={`${
-                expandedPosts ? "scale-100 max-h-64" : "scale-0"
-              } overflow-y-scroll feedPostCommentSection`}
-            >
-              {commentState?.map((comment, commentIndex) => (
-                <div
-                  key={commentIndex}
-                  className="flex justify-between border-gray-700 pb-2 border-b-[1px]"
-                >
-                  <p className="dark:text-white transition-all duration-500 ease-in-out text-black self-end max-w-[70%]">
-                    {comment.body}
-                  </p>
-                  <p>{formatDate(comment.createdAt)}</p>
-{/* MAKE LINK TO THE PROFILE OF THE USER */}
-                  <a className="dark:text-white transition-all duration-500 ease-in-out text-black cursor-pointer self-end text-lg">
-                    -{comment.username}
-                  </a>
-                </div>
-              ))}
             </div>
           </div>
         </div>
