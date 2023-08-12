@@ -193,6 +193,7 @@ const resolvers = {
     },
     removeFollower: async (parent, { userId, followerId }, context) => {
       try {
+        console.log(userId);
         const follower = await User.findByIdAndUpdate(
           followerId,
           {

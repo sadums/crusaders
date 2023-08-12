@@ -1,10 +1,71 @@
 "use client";
 import "../../(styles)/profile.css";
-import { useState } from "react";
-import EditProfile from "./editProfile";
+import { FOLLOW_USER, UNFOLLOW_USER } from "../../GraphQL/mutations";
 import Auth from "../../(utils)/auth";
+import { useMutation } from "@apollo/client";
+import { useState } from "react";
 
 function ProfileUser({ userData, isUserProfile }: any) {
+  const [followButtonHide, setFollowButtonHide] = useState(
+    "px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-mainBlue hover:bg-mainDarkBlue duration-300"
+  );
+  const [unfollowButtonHide, setUnfollowButtonHide] = useState(
+    "px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-mainBlue hover:bg-mainDarkBlue duration-300 hidden"
+  );
+  const mainUserId = Auth.getProfile().data._id;
+  const [followUser, { data: followData }] = useMutation(FOLLOW_USER);
+  console.log(UNFOLLOW_USER);
+  const [unfollowUser, { data: unfollowData }] = useMutation(UNFOLLOW_USER);
+  const [profileFollowerCount, setProfileFollowerCount] = useState(userData.followers.length);
+
+  const followHandler = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      if (Auth.loggedIn()) {
+        const response = await followUser({
+          variables: {
+            userId: userData._id,
+            followerId: mainUserId,
+          },
+        });
+        setProfileFollowerCount(profileFollowerCount + 1);
+        setFollowButtonHide(
+          "px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-mainBlue hover:bg-mainDarkBlue duration-300 hidden"
+        );
+        setUnfollowButtonHide(
+          "px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-mainBlue hover:bg-mainDarkBlue duration-300"
+        );
+      } else {
+        alert("Sign in to follow someone");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const unfollowHandler = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      if (Auth.loggedIn()) {
+        const response = await unfollowUser({
+          variables: {
+            userId: userData._id,
+            followerId: mainUserId,
+          },
+        });
+        setProfileFollowerCount(profileFollowerCount - 1);
+        setFollowButtonHide(
+          "px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-mainBlue hover:bg-mainDarkBlue duration-300"
+        );
+        setUnfollowButtonHide(
+          "px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-mainBlue bg-white hover:bg-mainDarkBlue duration-300 hidden"
+        );
+      } else {
+        alert("Somethign went wrong, please reload");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
     <>
       <div className=" dark:bg-darkModeDarkGray bg-white shadow-2xl mt-20 pb-4 rounded-md p-2 pt-2 pl-4">
@@ -16,9 +77,17 @@ function ProfileUser({ userData, isUserProfile }: any) {
         </h1>
         {!isUserProfile && (
           <div className="relative flex items-start space-x-4 mt-2 border-b-[1px] border-gray-700 dark:border-gray-500 pb-2">
-            {/* ADD THE REAL FUCTIONALIY OF THESE ASK SAM ABOUT IT */}
-            <button className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-mainBlue hover:bg-mainDarkBlue duration-300 ">
+            <button
+              className={followButtonHide}
+              onClick={(event) => followHandler(event)}
+            >
               Follow
+            </button>
+            <button
+              className={unfollowButtonHide}
+              onClick={(event) => unfollowHandler(event)}
+            >
+              Unfollow
             </button>
             <button
               type="button"
@@ -35,7 +104,7 @@ function ProfileUser({ userData, isUserProfile }: any) {
           <div>
             <span className="flex mt-2">
               <h2 className="mr-1 text-lg text-black dark:text-white">
-                {userData.followers.length}
+                {profileFollowerCount}
               </h2>
               <a className="text-lg text-black dark:text-white">Followers</a>
             </span>

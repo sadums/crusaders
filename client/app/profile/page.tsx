@@ -80,7 +80,7 @@ export default function Profile() {
 
           <div className="grid grid-cols-12 gap-4">
             <div className="col-span-3">
-              {userData && <ProfileUser userData={userData} />}
+              {userData && <ProfileUser userData={userData} isUserProfile={true}/>}
             </div>
 
             <div className="col-span-6 gap-3 h-[75vh] z-60">
