@@ -4,9 +4,7 @@ import { useState } from "react";
 import EditProfile from "./editProfile";
 import Auth from "../../(utils)/auth";
 
-function ProfileUser({ userData }: any) {
-
-
+function ProfileUser({ userData, isUserProfile }: any) {
   return (
     <>
       <div className=" dark:bg-darkModeDarkGray bg-white shadow-2xl mt-20 pb-4 rounded-md p-2 pt-2 pl-4">
@@ -16,18 +14,20 @@ function ProfileUser({ userData }: any) {
         <h1 className="text-gray-700 dark:text-gray-500 text-lg -mt-1">
           @{userData ? userData.username : ""}
         </h1>
-        <div className="relative flex items-start space-x-4 mt-2 border-b-[1px] border-gray-700 dark:border-gray-500 pb-2">
-          {/* ADD THE REAL FUCTIONALIY OF THESE ASK SAM ABOUT IT */}
-          <button className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-mainBlue hover:bg-mainDarkBlue duration-300 ">
-            Follow
-          </button>
-          <button
-            type="button"
-            className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-mainBlue hover:bg-mainDarkBlue duration-300"
-          >
-            <span className="text-white">Message</span>
-          </button>
-        </div>
+        {!isUserProfile && (
+          <div className="relative flex items-start space-x-4 mt-2 border-b-[1px] border-gray-700 dark:border-gray-500 pb-2">
+            {/* ADD THE REAL FUCTIONALIY OF THESE ASK SAM ABOUT IT */}
+            <button className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-mainBlue hover:bg-mainDarkBlue duration-300 ">
+              Follow
+            </button>
+            <button
+              type="button"
+              className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-mainBlue hover:bg-mainDarkBlue duration-300"
+            >
+              <span className="text-white">Message</span>
+            </button>
+          </div>
+        )}
         <p className="text-md text-black dark:text-white mt-4 border-b-[1px] border-gray-700 dark:border-gray-500 pb-2">
           {userData.bio}
         </p>
