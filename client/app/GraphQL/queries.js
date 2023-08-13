@@ -33,7 +33,6 @@ import { gql } from "@apollo/client";
 //   }
 // `;
 
-
 export const GET_USER_CHATS = gql`
   query Query($userId: ID!) {
     getUserChats(userId: $userId) {
@@ -231,6 +230,12 @@ export const GET_ALL_FOLLOWERS = gql`
       username
       pfp
     }
+  }
+`;
+
+export const CHECK_FOR_FOLLOWER = gql`
+  query Query($userId: ID!, $followerId: ID!) {
+    checkForFollower(userId: $userId, followerId: $followerId)
   }
 `;
 
