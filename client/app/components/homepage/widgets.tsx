@@ -31,7 +31,7 @@ function Widgets({ displayPosts }: WidgetsProps) {
       <div className="homepageInfoMainDiv">
         <div className="max-w-sm mt-3 w-[50%]">
           <div className="grid grid-cols-2 gap-3">
-            <div className="h-32 flex flex-col justify-center border-0 dark:shadow-notificationShadowPink dark:bg-coolGray bg-white border-black shadow-xl dark:border-customPurple rounded-xl p-2">
+            {/* <div className="h-32 flex flex-col justify-center border-0 dark:shadow-notificationShadowPink dark:bg-coolGray bg-white border-black shadow-xl dark:border-customPurple rounded-xl p-2">
               <h3 className="text-black font-semibold text-center dark:text-white">
                 Go Pro!
               </h3>
@@ -41,7 +41,7 @@ function Widgets({ displayPosts }: WidgetsProps) {
               <button className="ml-2 mr-2 px-4 py-2 mt-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 hover:scale-105">
                 Sign up
               </button>
-            </div>
+            </div> */}
             {userByIdData && (
               <div className="h-32 border-0 dark:shadow-notificationShadowPink dark:bg-coolGray bg-white border-black shadow-xl dark:border-customPurple rounded-xl p-2">
                 <h3 className="text-black text-center font-semibold dark:text-white">
@@ -104,7 +104,7 @@ function Widgets({ displayPosts }: WidgetsProps) {
               </div>
             )}
 
-            <div className="h-32 border-0 dark:shadow-notificationShadowPink dark:bg-coolGray bg-white border-black shadow-xl dark:border-customPurple rounded-xl p-2">
+            {/* <div className="h-32 border-0 dark:shadow-notificationShadowPink dark:bg-coolGray bg-white border-black shadow-xl dark:border-customPurple rounded-xl p-2">
               <h3 className="text-black font-semibold dark:text-white text-center">
                 Messages
               </h3>
@@ -159,7 +159,7 @@ function Widgets({ displayPosts }: WidgetsProps) {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         {getFollowerData && (
