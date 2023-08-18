@@ -48,3 +48,9 @@ html {
 .profilePostsDiv::-webkit-scrollbar {
   display: none;
 }
+
+@media (max-width: 640px) {
+  body {
+    border-width: 0px 0px 0px 0px;
+  }
+} 

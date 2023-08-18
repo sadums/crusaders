@@ -36,13 +36,13 @@ const HomeController: React.FC = () => {
 
   return (
     // Original Background bg-gradient-to-tr from-lightestWhite via-slate-300 to-lightestWhite
-    <div className="homePageMainDiv bg-gradient-to-tr from-mediumWhite via-mediumWhite to-mediumWhite dark:from-black dark:to-black ml-20">
+    <div className="homePageMainDiv dark:bg-black bg-mediumWhite ml-0 sm:ml-20">
       <div className="grid grid-cols-6 gap-4">
-        <div className="col-span-1 bg-mainDarkPurple border-customPurpleDark border-r-[2px] dark:border-0 dark:bg-mainPurple">
+        <div className="sm:block hidden bg-mainDarkPurple border-customPurpleDark border-r-[2px] lg:col-span-1 sm:col-span-0 dark:border-0 dark:bg-mainPurple">
           <div className="bg-darkestWhite  dark:bg-darkModeDarkestGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
         </div>
-        <div className="col-span-3 pl-40">
-          <div className="homePageFeedMainDiv bg- pl-2 pr-2 border-customPurpleDark dark:border-customPurple">
+        <div className="sm:col-span-3 col-span-6 sm:pl-40 pl-0">
+          <div className="homePageFeedMainDiv sm:pl-2 sm:pr-2 pr-1 pl-1 border-customPurpleDark dark:border-customPurple">
             <div className="feedPostsTop"></div>
             {displayPosts
               ? displayPosts.map((post: any, index: Key | null | undefined) => (

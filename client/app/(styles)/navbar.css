@@ -28,6 +28,12 @@
     } */
 }
 
+@media (max-width: 640px) {
+    .sidebarIcon {
+        @apply mt-0 dark:bg-transparent bg-transparent
+    }
+}
+
 .sidebarIconInfo {
     border-radius: 10px;
 }

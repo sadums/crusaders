@@ -24,7 +24,7 @@ const SidebarIcon: FC<SidebarIconProps> = ({ text, href, pathD, onClick }) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-7 h-7"
+          className={`sm:w-7 sm:h-7 h-8 w-8 ${href === "#settings" ? "h-6 w-6" : "h-7"}`}
         >
           <path
             strokeLinecap="round"

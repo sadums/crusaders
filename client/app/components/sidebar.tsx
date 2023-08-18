@@ -82,8 +82,10 @@ const Sidebar = ({}) => {
   const handleSidebarChange = (page: any) => setShowSidebar(page);
 
   return (
+    // MAIN DESKTOP NAVBAR
+
     <>
-      <div className="bg-gradient-to-t  from-mainPurple to-mainDarkPurple dark:from-mainDarkPurple dark:to-mainPurple h-[100vh] fixed top-0 left-0 w-20 shadow-lg z-50">
+      <div className="sm:block hidden bg-gradient-to-t  from-mainPurple to-mainDarkPurple dark:from-mainDarkPurple dark:to-mainPurple sm:h-[100vh] fixed sm:top-0 sm:left-0 sm:w-20 sm:shadow-lg z-50">
         <div className="container mx-auto z-50">
           <div className="grid grid-cols-1 gap-4">
             <h5 className="text-sm text-center mt-2">Crusaders</h5>
@@ -152,9 +154,9 @@ const Sidebar = ({}) => {
                   </svg>
                 </a>
                 <span className="sidebarIconInfo flex group-hover:scale-100">
-                      <span>Light</span>
-                      <span className="ml-1">Mode</span>
-                    </span>
+                  <span>Light</span>
+                  <span className="ml-1">Mode</span>
+                </span>
               </li>
               <SidebarIcon
                 text="Home"
@@ -185,7 +187,6 @@ const Sidebar = ({}) => {
               /> */}
               {Auth.loggedIn() ? (
                 <>
-
                   {/* <SidebarIcon
                     text="Notifications"
                     href="#"
@@ -249,6 +250,99 @@ const Sidebar = ({}) => {
           </div>
         </div>
       </div>
+
+      {/* MOBILE NAVBAR */}
+
+      {/* Top secondary nav */}
+      <div className="sm:hidden flex rounded- bg-gradient-to-r items-center  from-mainPurple to-mainDarkPurple dark:from-mainDarkPurple dark:to-mainPurple h-16 fixed top-[0px] left-0 w-full z-50">
+        <div className="flex w-full justify-between">
+          <div className="flex left-0 items-center">
+            <img
+              className="h-12 w-12 rounded-full p-1"
+              src="/horseOnlyLogo.png"
+              alt="Your Company"
+            ></img>
+            <h1>Crusaders</h1>
+          </div>
+          <div className="flex items-center">
+            <SidebarIcon
+              text="Inbox"
+              href="/messages"
+              onClick={() => console.log("Messages")}
+              pathD="M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H6.911a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661z"
+            />
+            <SidebarIcon
+              text="Notifications"
+              href="#"
+              onClick={() => {
+                handleSidebarChange("Notifications");
+                setSidebarOpacity(!sidebarOpacity);
+              }}
+              pathD="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
+            />
+            <SidebarIcon
+              text="Settings"
+              href="#settings"
+              pathD="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
+              onClick={() => console.log("settings")}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Primary nav */}
+      <div className="sm:hidden pr-5 pl-5 flex items-center rounded- bg-gradient-to-r  from-mainPurple to-mainDarkPurple dark:from-mainDarkPurple dark:to-mainPurple h-16 fixed bottom-[-1px] left-0 w-full z-50">
+        <div className="flex justify-around w-full">
+          <SidebarIcon
+            text="Home"
+            href="/"
+            onClick={() => console.log("Home")}
+            pathD="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+          />
+          <SidebarIcon
+            text="Search"
+            href="#"
+            onClick={() => {
+              handleSidebarChange("Search");
+              setSidebarOpacity(!sidebarOpacity);
+            }}
+            pathD="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+          />
+
+          {/* Temp button, link up create a post */}
+
+          <li className="flex items-center dark:bg-mainPurple bg-mainDarkPurple space-x-2 sidebarIcon group">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-10 h-10"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
+            </svg>
+          </li>
+
+          <SidebarIcon
+            text="Explore"
+            href="/explore"
+            onClick={() => console.log("Explore")}
+            pathD="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5l-3.9 19.5m-2.1-19.5l-3.9 19.5"
+          />
+          <SidebarIcon
+            text="Profile"
+            href="/profile"
+            onClick={() => console.log("Profile")}
+            pathD="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+          />
+        </div>
+      </div>
+
       {isSignUpModalOpen && (
         <SignUpModal setIsSignUpModalOpen={setIsSignUpModalOpen} />
       )}
