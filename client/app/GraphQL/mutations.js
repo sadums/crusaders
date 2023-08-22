@@ -217,8 +217,8 @@ export const LIKE_POST = gql`
 //   }
 // `;
 export const CREATE_MESSAGE = gql`
-  mutation Mutation($userId: ID!, $chatId: ID!, $body: String!) {
-    createMessage(userId: $userId, chatId: $chatId, body: $body) {
+  mutation Mutation($username: String!, $chatId: ID!, $body: String!) {
+    createMessage(username: $username, chatId: $chatId, body: $body) {
       _id
     }
   }

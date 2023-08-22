@@ -48,7 +48,7 @@ export const GET_USER_CHATS = gql`
           lastName
         }
         messages {
-          userId
+          username
           createdAt
           body
           _id

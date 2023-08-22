@@ -442,7 +442,7 @@ const resolvers = {
       }
       return chat;
     },
-    createMessage: async (parent, { chatId, userId, body }, context) => {
+    createMessage: async (parent, { chatId, username, body }, context) => {
       try {
         const updatedChat = await Chat.findByIdAndUpdate(
           chatId,
@@ -450,7 +450,7 @@ const resolvers = {
             $addToSet: {
               messages: {
                 body: body,
-                userId: userId,
+                username: username,
               },
             },
           },
@@ -459,7 +459,7 @@ const resolvers = {
         pubsub.publish(`NEW_MESSAGE`, {
           messages: {
             body: body,
-            userId: userId,
+            username: username
           },
         });
         return updatedChat;
@@ -478,8 +478,10 @@ const resolvers = {
             path: "members"
           });
           for(let i = 0; i < chat.members.length; i++){
-            console.log(chat.members[i]._id == variables.userId);
-            if(chat.members[i]._id == variables.userId) return true;
+            
+            console.log(chat.members[i].username, variables.username);
+            console.log(chat.members[i].username == variables.username);
+            if(chat.members[i].username == variables.username) return true;
           }
           return false;
         }

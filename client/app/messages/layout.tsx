@@ -2,7 +2,6 @@ import "../(styles)/messages.css";
 import "../(styles)/homepage.css";
 import Searchbar from "../components/searchbar";
 import FriendsList from "./messagesComponents/friendsList";
-import ChatBox from "./messagesComponents/chatBox";
 
 export const dynamic = "auto",
   dynamicParams = true,
@@ -37,7 +36,6 @@ export default function Messages({ children }: { children: React.ReactNode }) {
           </div>
         </div>
         {children}
-        <div className="col-span-2"></div>
       </div>
     </div>
   );

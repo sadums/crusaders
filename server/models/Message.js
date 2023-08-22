@@ -3,9 +3,8 @@ const { Schema } = require("mongoose");
 const messageSchema = new Schema(
   {
     // user who sent the message
-    userId: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
+    username: {
+      type: Schema.Types.String,
       required: true,
     },
     body: {

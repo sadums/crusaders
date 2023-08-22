@@ -97,11 +97,11 @@ const typeDefs = gql`
     addFollower(userId: ID!, followerId: ID!): User
     removeFollower(userId: ID!, followerId: ID!): User
     createChat(members: [ID]): Chat
-    createMessage(userId: ID!, chatId: ID!, body: String!): Chat
+    createMessage(username: String!, chatId: ID!, body: String!): Chat
   }
 
   type Subscription {
-    messages(chatId: ID!, userId: ID!): Message
+    messages(chatId: ID!, username: String!): Message
   }
 
   input updatePostInput {

@@ -48,7 +48,7 @@ function ProfileUser({ userData, isUserProfile }: any) {
         const response = await unfollowUser({
           variables: {
             userId: userData._id,
-            followerId: mainUserId,
+            followerId: Auth.getProfile().data._id,
           },
         });
         setProfileFollowerCount(profileFollowerCount - 1);

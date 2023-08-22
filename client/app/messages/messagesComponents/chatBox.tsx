@@ -2,7 +2,27 @@
 import { useEffect, useState } from "react";
 import Conversations from "./conversation";
 
-export default function ChatBox() {
+
+interface Convo {
+  username: string;
+  body: string;
+  date: string;
+}
+
+export default function ChatBox({
+  user,
+  convo,
+  date,
+}: {
+  user: {
+    firstName: string,
+    lastName: string,
+    username: string,
+    pfp: string
+  } | undefined;
+  convo: Convo[];
+  date: string;
+}) {
   const [textBox, setTextBox] = useState(false);
   const [showTextarea, setShowTextarea] = useState(false);
 
@@ -21,12 +41,7 @@ export default function ChatBox() {
   return (
     <div className="col-span-5 border-mainDarkPurple dark:border-mainPurple border-l-2 border-r-2 h-[97vh]">
       <div className="relative w-full flex flex-col ">
-        <Conversations user={{
-          firstName: "",
-          lastName: "",
-          username: "",
-          pfp: ""
-        }} convo={[]} date={""}/>
+        <Conversations user={user} convo={convo} date={date}/>
         <div
           className={`${
             textBox ? "hidden" : "block"

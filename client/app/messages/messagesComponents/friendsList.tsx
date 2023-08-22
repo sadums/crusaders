@@ -2,7 +2,7 @@
 
 import FriendListItem from "@/app/components/friendListItem";
 import Auth from "@/app/(utils)/auth";
-import { GET_CHAT_BY_ID, GET_USER_CHATS } from "@/app/GraphQL/queries";
+import { GET_USER_CHATS } from "@/app/GraphQL/queries";
 import { useQuery } from "@apollo/client";
 
 export default function FriendsList() {
@@ -18,6 +18,9 @@ export default function FriendsList() {
       userId: userId,
     },
   });
+  console.log(GET_USER_CHATS);
+  console.log(data);
+  console.log(error);
 
   const chats: any[] = [];
 

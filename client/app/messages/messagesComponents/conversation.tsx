@@ -5,8 +5,8 @@ import NobodyChat from "./nobodyTextComponent";
 import ChatHeader from "./chatHeader";
 
 interface Convo {
-  speaker: boolean;
-  message: string;
+  username: string;
+  body: string;
   date: string;
 }
 
@@ -51,7 +51,7 @@ function Conversations({
             lastname={user.lastName}
           />
           <div className="w-[100%] p-2 overflow-y-scroll friendListMessages pt-20 pb-32 h-[97vh]">
-            <NobodyChat firstInfoText={""} secondInfoText={""}/>
+            <NobodyChat firstInfoText={"hey"} secondInfoText={"you get no hoes"}/>
           </div>
         </>
       );
@@ -68,14 +68,14 @@ function Conversations({
 
           <div className="w-[100%] p-2 overflow-y-scroll friendListMessages pt-20 pb-40 h-[97vh]">
             {convo.map((text, index) => {
-              if (text.speaker === true) {
+              if (text.username === true) {
                 return (
-                  <YourText date={text.date} text={text.message} key={index} />
+                  <YourText date={text.date} text={text.body} key={index} />
                 );
               }
-              if (text.speaker === false) {
+              if (text.username === false) {
                 return (
-                  <TheirText date={text.date} text={text.message} key={index} />
+                  <TheirText date={text.date} text={text.body} key={index} />
                 );
               }
             })}
