@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, SetStateAction } from "react";
 import "../../(styles)/homepage.css";
-
+import FollowButton from "./followButton";
 import { CHECK_FOR_FOLLOWER } from "../../GraphQL/queries";
 import {
   ADD_COMMENT_TO_POST,
@@ -38,13 +38,14 @@ function SinglePost(post: {
     createdAt: string;
   };
 }) {
-  const { data: followerData } = useQuery(CHECK_FOR_FOLLOWER, {
-    variables: {
-      userId: Auth.getProfile().data._id,
-      followerId: post.post.user._id,
-    },
-  });
-  console.log(followerData);
+  // const { loading: followerLoading, data: followerData } = useQuery(CHECK_FOR_FOLLOWER, {
+  //   variables: {
+  //     userId: Auth.getProfile().data._id,
+  //     followerId: post.post.user._id,
+  //   },
+  // });
+  // console.log(followerLoading, followerData)
+  const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const [likePost, { loading: likeLoading, error: likeError, data: likeData }] =
     useMutation(LIKE_POST);
   const [unlikePost, { data: unlikeData }] = useMutation(UNLIKE_POST);
@@ -61,8 +62,6 @@ function SinglePost(post: {
   const [showLikeModalState, setShowLikeModalState] = useState(false);
   const [activePostId, setActivePostId] = useState<string>("");
   const [showModalState, setShowModalState] = useState(false);
-  const [isFollowing, setIsFollowing] = useState<boolean>(followData);
-
   const showCommentsFn = () => {
     setExpandedPosts((prev) => !prev);
   };
@@ -137,12 +136,13 @@ function SinglePost(post: {
     event.preventDefault();
     try {
       if (Auth.loggedIn()) {
-        await followUser({
+        const response = await followUser({
           variables: {
             userId: post.post.user._id,
             followerId: Auth.getProfile().data._id,
           },
         });
+        console.log(response);
         setIsFollowing(true);
       } else {
         alert("Sign in to follow someone");
@@ -240,16 +240,7 @@ function SinglePost(post: {
               </div>
             </Link>
           </div>
-          {!isFollowing && (
-            <div className="my-auto">
-              <button
-                className=" font-semibold  text-neonBlue p-[1px] pl-2 pr-2 rounded-md"
-                onClick={(e) => followHandler(e)}
-              >
-                Follow
-              </button>
-            </div>
-          )}
+            {/* <FollowButton isFollowing={isFollowing} followerLoading={followerLoading} followerData={followerData} followHandler={followHandler}/> */}
         </div>
 
         <div className="mt-4">
