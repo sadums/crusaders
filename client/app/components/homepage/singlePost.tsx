@@ -174,9 +174,9 @@ function SinglePost(post: {
   }, []);
 
   return (
-    <div>
-      <div className="mt-4 p-3 border-[1px] rounded-lg border-black dark:border-0 shadow-2xl bg-white dark:bg-coolGray">
-        <div className="flex justify-between border-gray-700 pb-2 border-b-[1px]">
+    <div className="border-b-[1px] border-t-[1px] border-gray-700">
+      <div className="sm:mt-4 mt-1 p-3 border-[1px] sm:rounded-lg border-black dark:border-0 shadow-2xl sm:bg-white sm:dark:bg-coolGray">
+        <div className="flex justify-between sm:border-gray-700 pb-2 sm:border-b-[1px]">
           <div className="flex">
             <Link href={`/profile/${post.post.user._id}`}>
               <img
@@ -213,7 +213,7 @@ function SinglePost(post: {
           </div>
         )}
 
-        <div className="mt-4 border-gray-700 pb-2 border-b-[1px]">
+        <div className="mt-4 sm:border-gray-700 pb-2 sm:border-b-[1px]">
           <img
             onClick={postClickHandler}
             className="postContentImg w-[90%] border-[2px] border-black rounded-xl"
