@@ -339,11 +339,6 @@ export const GET_USER_BY_ID = gql`
 export const GET_USER_FOLLOWERS = gql`
   query GetUserById($userId: ID!) {
     getUserById(userId: $userId) {
-      _id
-      username
-      firstName
-      lastName
-      pfp
       followers {
         _id
       }
