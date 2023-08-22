@@ -214,7 +214,7 @@ function SinglePost(post: {
 
   return (
     <div>
-      <div className="sm:mt-4 mt-1 p-3 border-[1px] sm:rounded-lg border-black dark:border-0 shadow-2xl bg-white dark:bg-coolGray">
+      <div className="sm:mt-4 mt-1 p-3 border-[1px] sm:rounded-lg border-black dark:border-0 shadow-2xl sm:bg-white sm:dark:bg-coolGray">
         <div className="flex justify-between border-gray-700 pb-2 border-b-[1px]">
           <div className="flex">
             <Link href={`/profile/${post.post.user._id}`}>

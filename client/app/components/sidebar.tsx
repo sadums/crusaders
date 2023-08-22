@@ -254,7 +254,7 @@ const Sidebar = ({}) => {
       {/* MOBILE NAVBAR */}
 
       {/* Top secondary nav */}
-      <div className="sm:hidden flex rounded- bg-gradient-to-r items-center  from-mainPurple to-mainDarkPurple dark:from-mainDarkPurple dark:to-mainPurple h-16 fixed top-[0px] left-0 w-full z-50">
+      <div className="mobileSecondaryNav sm:hidden flex rounded- bg-darkModeDarkGray items-center h-16 fixed top-[0px] left-0 w-full z-50">
         <div className="flex w-full justify-between">
           <div className="flex left-0 items-center">
             <img
@@ -291,7 +291,7 @@ const Sidebar = ({}) => {
       </div>
 
       {/* Primary nav */}
-      <div className="sm:hidden pr-5 pl-5 flex items-center rounded- bg-gradient-to-r  from-mainPurple to-mainDarkPurple dark:from-mainDarkPurple dark:to-mainPurple h-16 fixed bottom-[-1px] left-0 w-full z-50">
+      <div className="sm:hidden pr-5 pl-5 flex items-center rounded- bg-darkModeDarkGray h-20 pb-4 fixed bottom-[-1px] left-0 w-full z-50">
         <div className="flex justify-around w-full">
           <SidebarIcon
             text="Home"
@@ -311,7 +311,7 @@ const Sidebar = ({}) => {
 
           {/* Temp button, link up create a post */}
 
-          <li className="flex items-center dark:bg-mainPurple bg-mainDarkPurple space-x-2 sidebarIcon group">
+          <li className="flex items-center relative bottom-[24px] space-x-2 sidebarIcon group">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

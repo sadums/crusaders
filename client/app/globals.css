@@ -49,6 +49,10 @@ html {
   display: none;
 }
 
+/* .mobileSecondaryNav {
+    background: linear-gradient(180deg, rgba(79,70,229, 0.9) 60%, rgba(19, 25, 34, 0.8) 100%);  
+} */
+
 @media (max-width: 640px) {
   body {
     border-width: 0px 0px 0px 0px;
