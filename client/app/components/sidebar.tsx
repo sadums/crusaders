@@ -12,7 +12,7 @@ import SidebarIconMobile from "./sidebar/sidebarIconMobile";
 import { render } from "react-dom";
 import Auth from "../(utils)/auth";
 import Link from "next/link";
-import MobileSettings from "./mobile/mobileSettings";
+import MobileMenu from "./mobile/mobileMenu";
 
 const Sidebar = ({}) => {
   const [isSignInModalOpen, setIsSignInModalOpen] = useState<boolean>(false);
@@ -302,7 +302,7 @@ const Sidebar = ({}) => {
       {/* Mobile Settings  */}
 
       <div
-        className={`sm:hidden block fixed inset-0 z-40 bg-black bg-opacity-100 transition-max-height duration-200 ease-in-out ${
+        className={`sm:hidden block fixed inset-0 z-40 bg-darkModeDarkGray dark:bg-black bg-opacity-100 transition-max-height duration-200 ease-in-out ${
           mobileSettings
             ? "w-100 opacity-1 translate-x-0"
             : "w-0 opacity-0 translate-x-[-100%] transition-max-height duration-200 ease-in-out"
@@ -336,7 +336,7 @@ const Sidebar = ({}) => {
           <h1 className="ml-2 text-xl">Info Center</h1>
         </div>
 
-        <MobileSettings />
+        <MobileMenu/>
       </div>
 
       {/* Primary nav */}
