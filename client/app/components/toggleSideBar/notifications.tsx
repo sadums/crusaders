@@ -55,13 +55,13 @@ function Notifications({ sidebarOpacity }: toggle) {
 
   return (
     <div
-      className={`bottom-0 p-3 top-32 left-20 w-72 text-white fixed z-10 ease-in-out duration-300 ${
+      className={`sm:bottom-0 p-3 sm:top-32 sm:left-20 sm:w-72 w-full text-white fixed z-40 sm:z-10 ease-in-out duration-300 ${
         sidebarOpacity
           ? "w-0 opacity-0 translate-x-[-350px] "
           : "w-100 opacity-1 translate-x-0"
       }`}
     >
-      <h4 className="dark:text-white text-lg text-black font-semibold border-customPurpleDark border-b-2">
+      <h4 className="hidden sm:block dark:text-white text-lg text-black font-semibold border-customPurpleDark border-b-2">
         Notifications
       </h4>
       <div>
@@ -70,7 +70,7 @@ function Notifications({ sidebarOpacity }: toggle) {
             return (
               <div
                 key={index}
-                className=" shadow-xl bg-white rounded-xl dark:bg-darkModeDarkGray  dark:shadow-notificationShadowPink ring-blue-700 p-1 mt-3"
+                className=" sm:shadow-xl border-b-[1px] border-t-[1px] dark:border-gray-700 sm:bg-white sm:rounded-xl sm:dark:bg-darkModeDarkGray  sm:dark:shadow-notificationShadowPink ring-blue-700 p-1 sm:mt-3"
               >
                 <div className="flex justify-between">
                   {" "}
@@ -120,7 +120,7 @@ function Notifications({ sidebarOpacity }: toggle) {
             return (
               <div
                 key={index}
-                className=" shadow-xl bg-white rounded-xl dark:shadow-notificationShadowPink dark:bg-coolGray p-1 mt-3"
+                className=" sm:shadow-xl border-b-[1px] border-t-[1px] dark:border-gray-700 sm:bg-white sm:rounded-xl sm:dark:bg-darkModeDarkGray  sm:dark:shadow-notificationShadowPink ring-blue-700 p-1 sm:mt-3"
               >
                 <div className="flex justify-between">
                   {" "}

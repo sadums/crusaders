@@ -1,18 +1,22 @@
-import React, { FC } from 'react';
+import React, { FC } from "react";
 import Link from "next/link";
 
 interface SidebarIconProps {
-    text: string;
-    pathD: string;
-    href: string;
-    onClick: () => void;
+  text: string;
+  pathD: string;
+  href: string;
+  onClick: () => void;
 }
 
-
 //MAYBE ADD BACK IN THE GEAR THING HERE FOR THE SETTINGS
-const SidebarIcon: FC<SidebarIconProps> = ({ text, href, pathD, onClick }) => {
+const SidebarIconMobile: FC<SidebarIconProps> = ({
+  text,
+  href,
+  pathD,
+  onClick,
+}) => {
   return (
-    <li className="flex items-center space-x-2 sm:sidebarIcon group">
+    <li className="flex ml-2 items-center space-x-2 sm:sidebarIcon group">
       <Link
         href={href}
         onClick={onClick}
@@ -24,13 +28,9 @@ const SidebarIcon: FC<SidebarIconProps> = ({ text, href, pathD, onClick }) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className={`sm:w-7 sm:h-7 h-8 w-8 ${href === "#settings" ? "h-6 w-6" : "h-7"}`}
+          className={`h-7 w-7`}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d={pathD}
-          />
+          <path strokeLinecap="round" strokeLinejoin="round" d={pathD} />
         </svg>
       </Link>
       <span className="sm:block hidden sidebarIconInfo group-hover:scale-100">
@@ -38,6 +38,6 @@ const SidebarIcon: FC<SidebarIconProps> = ({ text, href, pathD, onClick }) => {
       </span>
     </li>
   );
-}
+};
 
-export default SidebarIcon;
+export default SidebarIconMobile;

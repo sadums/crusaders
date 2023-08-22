@@ -42,7 +42,7 @@ const HomeController: React.FC = () => {
           <div className="bg-darkestWhite  dark:bg-darkModeDarkestGray h-[100%] p-2 pt-20 secondaryMenuMainDiv"></div>
         </div>
         <div className="sm:col-span-3 col-span-6 sm:pl-40 pl-0">
-          <div className="homePageFeedMainDiv sm:pl-2 sm:pr-2 pr-1 pl-1 border-customPurpleDark dark:border-customPurple">
+          <div className="homePageFeedMainDiv pt-16 sm:pt-0 sm:pl-2 sm:pr-2 pr-1 pl-1 border-customPurpleDark dark:border-customPurple">
             <div className="feedPostsTop"></div>
             {displayPosts
               ? displayPosts.map((post: any, index: Key | null | undefined) => (

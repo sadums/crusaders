@@ -36,18 +36,18 @@ function Likes({ sidebarOpacity }: toggle) {
   return (
     <>
       <div
-        className={`bottom-0 p-3 top-32 left-20 w-72 text-white fixed z-10 ease-in-out duration-500 ${
+        className={`bottom-0 p-3 top-0 sm:top-32 sm:left-20 sm:w-72 text-white sm:fixed sm:z-10 ease-in-out duration-500 ${
           sidebarOpacity
             ? "w-0 opacity-0 translate-x-[-350px] "
             : "w-100 opacity-1 translate-x-0"
         }`}
       >
-        <h1 className="dark:text-white text-lg text-black font-semibold border-customPurpleDark border-b-2">
+        <h1 className="hidden sm:block dark:text-white text-lg text-black font-semibold border-customPurpleDark border-b-2">
           Your Liked Posts:
         </h1>
         {userByIdData && (
           <div
-            className="grid grid-cols-2 gap-3 scroll mt-3 homepageLikedPosts"
+            className="grid sm:grid-cols-2 grid-cols-3 gap-1 sm:gap-3 scroll mt-3 homepageLikedPosts"
             style={{
               maxHeight: "100%",
               overflowY: "scroll",
