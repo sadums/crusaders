@@ -33,7 +33,6 @@ import { gql } from "@apollo/client";
 //   }
 // `;
 
-
 export const GET_USER_CHATS = gql`
   query Query($userId: ID!) {
     getUserChats(userId: $userId) {
@@ -234,6 +233,8 @@ export const GET_ALL_FOLLOWERS = gql`
   }
 `;
 
+
+
 //MAYBE DELETE
 export const GET_LOGGED_IN_USER = gql`
   query GetLoggedInUser {
@@ -323,6 +324,21 @@ export const GET_USER_BY_ID = gql`
           preview
         }
       }
+      followers {
+        _id
+      }
+      following {
+        _id
+      }
+    }
+  }
+`;
+
+
+//MAYBE DONT NEED
+export const GET_USER_FOLLOWERS = gql`
+  query GetUserById($userId: ID!) {
+    getUserById(userId: $userId) {
       followers {
         _id
       }

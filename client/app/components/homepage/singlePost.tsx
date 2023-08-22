@@ -1,21 +1,20 @@
 "use client";
 import { useState, useEffect, SetStateAction } from "react";
 import "../../(styles)/homepage.css";
+import FollowButton from "./followButton";
 import {
   ADD_COMMENT_TO_POST,
   LIKE_POST,
   UNLIKE_POST,
-  FOLLOW_USER,
-  UNFOLLOW_USER,
 } from "../../GraphQL/mutations";
 import { useMutation } from "@apollo/client";
 import Auth from "../../(utils)/auth";
 import LikeFollowerModal from "../likeFollowerFollowingModal";
 import PostModal from "../postModal";
 import Link from "next/link";
+import { data } from "autoprefixer";
 
 
-// IS FOLLOWING BUTTON ISN"T WORKING ASK SAM
 function SinglePost(post: {
   post: {
     _id: SetStateAction<string>;
@@ -27,9 +26,6 @@ function SinglePost(post: {
       firstName: any;
       lastName: any;
       username: any;
-      followers: {
-        _id: string;
-      };
     };
     body: any;
     hashtags: any[];
@@ -37,13 +33,9 @@ function SinglePost(post: {
     createdAt: string;
   };
 }) {
-  console.log(post);
-
   const [likePost, { loading: likeLoading, error: likeError, data: likeData }] =
     useMutation(LIKE_POST);
   const [unlikePost, { data: unlikeData }] = useMutation(UNLIKE_POST);
-  const [followUser, { data: followData }] = useMutation(FOLLOW_USER);
-  const [unfollowUser, { data: unfollowData }] = useMutation(UNFOLLOW_USER);
   const [
     addComment,
     { data: commentData, loading: commentLoading, error: commentError },
@@ -56,8 +48,6 @@ function SinglePost(post: {
   const [showLikeModalState, setShowLikeModalState] = useState(false);
   const [activePostId, setActivePostId] = useState<string>("");
   const [showModalState, setShowModalState] = useState(false);
-  const [isFollowing, setIsFollowing] = useState<boolean>(true);
-
   const showCommentsFn = () => {
     setExpandedPosts((prev) => !prev);
   };
@@ -128,24 +118,6 @@ function SinglePost(post: {
       console.error(err);
     }
   };
-  const followHandler = async (event: React.FormEvent) => {
-    event.preventDefault();
-    try {
-      if (Auth.loggedIn()) {
-        const target = event.target as HTMLFormElement;
-        const response = await followUser({
-          variables: {
-            userId: post.post.user._id,
-            followerId: Auth.getProfile().data._id,
-          },
-        });
-      } else {
-        alert("Sign in to follow someone");
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
   const postCommentHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
@@ -181,29 +153,18 @@ function SinglePost(post: {
   const setTheState = async () => {
     try {
       setCommentState(post.post.comments);
-      console.log(post.post.likes);
+      // console.log(post.post.likes);
       if (Auth.loggedIn()) {
         const isLiked = post.post.likes.some(
           (like: { user: { _id: any } }) =>
             like.user._id === Auth.getProfile().data._id
         );
-        console.log(isLiked);
+        // console.log(isLiked);
         setIsPostLikedState(isLiked);
       } else {
         setIsPostLikedState(false);
       }
       setLikeArrayState(post.post.likes);
-      if (Auth.loggedIn()) {
-        const userId = Auth.getProfile().data._id;
-        const tempIsFollowing =
-          post.post.user._id === userId || post.post.likes.includes(userId);
-        if (tempIsFollowing) {
-          setIsFollowing(true);
-        } else {
-          setIsFollowing(false);
-        }
-      } else {
-      }
     } catch (err) {
       console.error(err);
     }
@@ -223,8 +184,8 @@ function SinglePost(post: {
                 src={post.post.user.pfp}
                 alt="Your Company"
               ></img>
-              </Link>
-              <Link href={`/profile/${post.post.user._id}`}>
+            </Link>
+            <Link href={`/profile/${post.post.user._id}`}>
               <div>
                 <h2 className="text-md text-black font-semibold dark:text-white ml-1">
                   {`${post.post.user.firstName} ${post.post.user.lastName}`}
@@ -233,18 +194,9 @@ function SinglePost(post: {
                   @{post.post.user.username}
                 </div>
               </div>
-              </Link>
+            </Link>
           </div>
-          {!isFollowing && (
-            <div className="my-auto">
-              <button
-                className=" font-semibold  text-neonBlue p-[1px] pl-2 pr-2 rounded-md"
-                onClick={(e) => followHandler(e)}
-              >
-                Follow
-              </button>
-            </div>
-          )}
+            <FollowButton userId={post.post.user._id}/>
         </div>
 
         <div className="mt-4">
@@ -281,8 +233,6 @@ function SinglePost(post: {
               expandedPosts ? "" : " h-0 scale-0"
             }  mt-2 rounded-xl`}
           >
-
-
             <div
               className={`${
                 expandedPosts ? "scale-100 max-h-64" : "scale-0"
@@ -297,30 +247,30 @@ function SinglePost(post: {
                     {comment.body}
                   </p>
                   {/* <p>{formatDate(comment.createdAt)}</p> */}
-{/* MAKE LINK TO THE PROFILE OF THE USER */}
+                  {/* MAKE LINK TO THE PROFILE OF THE USER */}
                   <a className="font-sm dark:text-white transition-all duration-500 ease-in-out text-black cursor-pointer self-end text-md">
                     -{comment.username}
                   </a>
                 </div>
               ))}
               <form
-              className={`${
-                expandedPosts ? "scale-100" : "scale-0"
-              } ease-in transition-all mt-2 duration-200 border-black pb-2 border-b-[2px]`}
-            >
-              <div className="flex">
-                <textarea
-                  placeholder="Leave a comment, (200 characters max)"
-                  className="bg-transparent border-solid border-customPurple text-black dark:text-white border-[1px] outline-none w-[75%] h-16 max-h-16"
-                ></textarea>
-                <button
-                  className="ml-2 mr-2 px-4 py-2 mt-2 border border-customPurple rounded-md h-10 self-end shadow-sm text-sm font-medium text-black dark:text-white bg-transparent hover:bg-indigo-700 transition duration-300 hover:scale-105"
-                  onClick={(event) => postCommentHandler(event)}
-                >
-                  Comment
-                </button>
-              </div>
-            </form>
+                className={`${
+                  expandedPosts ? "scale-100" : "scale-0"
+                } ease-in transition-all mt-2 duration-200 border-black pb-2 border-b-[2px]`}
+              >
+                <div className="flex">
+                  <textarea
+                    placeholder="Leave a comment, (200 characters max)"
+                    className="bg-transparent border-solid border-customPurple text-black dark:text-white border-[1px] outline-none w-[75%] h-16 max-h-16"
+                  ></textarea>
+                  <button
+                    className="ml-2 mr-2 px-4 py-2 mt-2 border border-customPurple rounded-md h-10 self-end shadow-sm text-sm font-medium text-black dark:text-white bg-transparent hover:bg-indigo-700 transition duration-300 hover:scale-105"
+                    onClick={(event) => postCommentHandler(event)}
+                  >
+                    Comment
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
