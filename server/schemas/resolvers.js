@@ -116,6 +116,18 @@ const resolvers = {
         throw new Error("Error fetching the post.");
       }
     },
+    checkForFollower: async (parent, { userId, followerId }, context) => {
+      try {
+        const user = await User.findById(userId);
+        for(let i = 0; i < user.followers.length; i++){
+          console.log(user.followers[i]);
+          if(user.followers[i] == followerId) return true;
+        }
+        return false
+      } catch (err) {
+        console.error(err);
+      }
+    },
   },
   Mutation: {
     createUser: async (parent, { input }, context) => {
@@ -193,6 +205,7 @@ const resolvers = {
     },
     removeFollower: async (parent, { userId, followerId }, context) => {
       try {
+        console.log(userId);
         const follower = await User.findByIdAndUpdate(
           followerId,
           {

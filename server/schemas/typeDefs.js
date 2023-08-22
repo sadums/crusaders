@@ -80,6 +80,7 @@ const typeDefs = gql`
     getChatById(chatId: ID!): Chat
     getUserChatsByUsername(username: String!): User
     getUserChats(userId: ID!): User
+    checkForFollower(userId: ID!, followerId: ID!): Boolean
   }
 
   type Mutation {
