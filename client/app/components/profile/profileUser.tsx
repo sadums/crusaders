@@ -12,7 +12,6 @@ function ProfileUser({ userData, isUserProfile }: any) {
   const [unfollowButtonHide, setUnfollowButtonHide] = useState(
     "px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-mainBlue hover:bg-mainDarkBlue duration-300 hidden"
   );
-  const mainUserId = Auth.getProfile().data._id;
   const [followUser, { data: followData }] = useMutation(FOLLOW_USER);
   console.log(UNFOLLOW_USER);
   const [unfollowUser, { data: unfollowData }] = useMutation(UNFOLLOW_USER);
@@ -25,7 +24,7 @@ function ProfileUser({ userData, isUserProfile }: any) {
         const response = await followUser({
           variables: {
             userId: userData._id,
-            followerId: mainUserId,
+            followerId: Auth.getProfile().data._id,
           },
         });
         setProfileFollowerCount(profileFollowerCount + 1);

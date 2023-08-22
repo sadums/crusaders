@@ -29,13 +29,18 @@ export default function OtherProfile({
   console.log(params);
   const id = params.id;
   let isUserProfile;
-  if (Auth.loggedIn()) {
-    if (Auth.getProfile().data._id === params.id) {
-      isUserProfile = true;
-    } else {
-      isUserProfile = false;
+  let userId;
+  try{
+    if (Auth.loggedIn()) {
+      userId = Auth.getProfile().data._id
+      if (userId === params.id) {
+        isUserProfile = true;
+      } else {
+        isUserProfile = false;
+      }
     }
-  }
+  }catch(e){}
+
   const [editModal, toggleEditModal] = useState(true);
   const [userData, setUserData] = useState<UserData | undefined>();
 
@@ -80,7 +85,7 @@ export default function OtherProfile({
                     Comments
                   </button>
                 </div>
-                {Auth.loggedIn() && isUserProfile &&(
+                {userId && isUserProfile &&(
                   <button
                     onClick={() => toggleEditModal(!editModal)}
                     className="text-mainPurple font-semibold text-md dark:text-mainPurple mr-4"
