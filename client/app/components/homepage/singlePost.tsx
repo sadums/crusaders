@@ -2,7 +2,6 @@
 import { useState, useEffect, SetStateAction } from "react";
 import "../../(styles)/homepage.css";
 import FollowButton from "./followButton";
-import { CHECK_FOR_FOLLOWER } from "../../GraphQL/queries";
 import {
   ADD_COMMENT_TO_POST,
   LIKE_POST,
@@ -44,6 +43,8 @@ function SinglePost(post: {
   //     followerId: post.post.user._id,
   //   },
   // });
+
+
   // console.log(followerLoading, followerData)
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const [likePost, { loading: likeLoading, error: likeError, data: likeData }] =

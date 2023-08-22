@@ -233,11 +233,7 @@ export const GET_ALL_FOLLOWERS = gql`
   }
 `;
 
-export const CHECK_FOR_FOLLOWER = gql`
-  query Query($userId: ID!, $followerId: ID!) {
-    checkForFollower(userId: $userId, followerId: $followerId)
-  }
-`;
+
 
 //MAYBE DELETE
 export const GET_LOGGED_IN_USER = gql`
@@ -328,6 +324,26 @@ export const GET_USER_BY_ID = gql`
           preview
         }
       }
+      followers {
+        _id
+      }
+      following {
+        _id
+      }
+    }
+  }
+`;
+
+
+//MAYBE DONT NEED
+export const GET_USER_FOLLOWERS = gql`
+  query GetUserById($userId: ID!) {
+    getUserById(userId: $userId) {
+      _id
+      username
+      firstName
+      lastName
+      pfp
       followers {
         _id
       }
