@@ -12,6 +12,7 @@ import { GET_USER_BY_ID, GET_POST } from "../GraphQL/queries";
 import { useMutation, useLazyQuery, useQuery } from "@apollo/client";
 import Auth from "../(utils)/auth";
 import Link from "next/link";
+import FollowButton from "./homepage/followButton";
 
 interface ModalProps {
   postId: string;
@@ -233,7 +234,7 @@ const PostModal: React.FC<ModalProps> = ({ postId, handleClose }) => {
                     </a>
                   </div>
                 </div>
-
+                <FollowButton userId={postData.getPost.user._id}/>
                 <button
                   onClick={handleClose}
                   className="ml-auto bg-transparent border-0 dark:text-white text-black"

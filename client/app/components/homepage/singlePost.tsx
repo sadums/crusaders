@@ -2,21 +2,19 @@
 import { useState, useEffect, SetStateAction } from "react";
 import "../../(styles)/homepage.css";
 import FollowButton from "./followButton";
-import { CHECK_FOR_FOLLOWER } from "../../GraphQL/queries";
 import {
   ADD_COMMENT_TO_POST,
   LIKE_POST,
   UNLIKE_POST,
-  FOLLOW_USER,
 } from "../../GraphQL/mutations";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import Auth from "../../(utils)/auth";
 import LikeFollowerModal from "../likeFollowerFollowingModal";
 import PostModal from "../postModal";
 import Link from "next/link";
 import { data } from "autoprefixer";
 
-// IS FOLLOWING BUTTON ISN"T WORKING ASK SAM
+
 function SinglePost(post: {
   post: {
     _id: SetStateAction<string>;
@@ -28,9 +26,6 @@ function SinglePost(post: {
       firstName: any;
       lastName: any;
       username: any;
-      followers: {
-        _id: string;
-      };
     };
     body: any;
     hashtags: any[];
@@ -38,18 +33,9 @@ function SinglePost(post: {
     createdAt: string;
   };
 }) {
-  // const { loading: followerLoading, data: followerData } = useQuery(CHECK_FOR_FOLLOWER, {
-  //   variables: {
-  //     userId: Auth.getProfile().data._id,
-  //     followerId: post.post.user._id,
-  //   },
-  // });
-  // console.log(followerLoading, followerData)
-  const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const [likePost, { loading: likeLoading, error: likeError, data: likeData }] =
     useMutation(LIKE_POST);
   const [unlikePost, { data: unlikeData }] = useMutation(UNLIKE_POST);
-  const [followUser, { data: followData }] = useMutation(FOLLOW_USER);
   const [
     addComment,
     { data: commentData, loading: commentLoading, error: commentError },
@@ -132,25 +118,6 @@ function SinglePost(post: {
       console.error(err);
     }
   };
-  const followHandler = async (event: React.FormEvent) => {
-    event.preventDefault();
-    try {
-      if (Auth.loggedIn()) {
-        const response = await followUser({
-          variables: {
-            userId: post.post.user._id,
-            followerId: Auth.getProfile().data._id,
-          },
-        });
-        console.log(response);
-        setIsFollowing(true);
-      } else {
-        alert("Sign in to follow someone");
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
   const postCommentHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
@@ -186,29 +153,18 @@ function SinglePost(post: {
   const setTheState = async () => {
     try {
       setCommentState(post.post.comments);
-      console.log(post.post.likes);
+      // console.log(post.post.likes);
       if (Auth.loggedIn()) {
         const isLiked = post.post.likes.some(
           (like: { user: { _id: any } }) =>
             like.user._id === Auth.getProfile().data._id
         );
-        console.log(isLiked);
+        // console.log(isLiked);
         setIsPostLikedState(isLiked);
       } else {
         setIsPostLikedState(false);
       }
       setLikeArrayState(post.post.likes);
-      if (Auth.loggedIn()) {
-        const userId = Auth.getProfile().data._id;
-        const tempIsFollowing =
-          post.post.user._id === userId || post.post.likes.includes(userId);
-        if (tempIsFollowing) {
-          setIsFollowing(true);
-        } else {
-          setIsFollowing(false);
-        }
-      } else {
-      }
     } catch (err) {
       console.error(err);
     }
@@ -240,7 +196,7 @@ function SinglePost(post: {
               </div>
             </Link>
           </div>
-            {/* <FollowButton isFollowing={isFollowing} followerLoading={followerLoading} followerData={followerData} followHandler={followHandler}/> */}
+            <FollowButton userId={post.post.user._id}/>
         </div>
 
         <div className="mt-4">

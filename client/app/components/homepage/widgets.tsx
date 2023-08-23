@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/client";
 import { GET_ALL_FOLLOWERS, GET_USER_BY_ID } from "../../GraphQL/queries";
 import { useEffect } from "react";
 import Link from "next/link";
+import FollowButton from "./followButton";
 
 type WidgetsProps = {
   displayPosts: any[] | null; // assuming displayPosts is either an array or null
@@ -48,7 +49,7 @@ function Widgets({ displayPosts }: WidgetsProps) {
                   Like Counter
                 </h3>
                 <h3 className=" text-gray-500 text-center text-sm">
-                  Your Post's Likes
+                  How many posts you liked
                 </h3>
                 <div className="flex justify-around items-center mt-0">
                   <svg
@@ -73,7 +74,7 @@ function Widgets({ displayPosts }: WidgetsProps) {
               </div>
             )}
 
-            {displayPosts && (
+            {userByIdData && (
               <div className="h-32 border-0 dark:shadow-notificationShadowPink dark:bg-coolGray bg-white border-black shadow-xl dark:border-customPurple rounded-xl p-2">
                 <h3 className="text-black font-semibold dark:text-white text-center">
                   Posts Counter
@@ -98,7 +99,7 @@ function Widgets({ displayPosts }: WidgetsProps) {
                   </svg>
 
                   <h1 className="text-black text-[54px] dark:text-white">
-                    {displayPosts.length}
+                    {userByIdData.getUserById.posts.length}
                   </h1>
                 </div>
               </div>
@@ -165,7 +166,7 @@ function Widgets({ displayPosts }: WidgetsProps) {
         {getFollowerData && (
           <div className="max-w-sm mt-3 border-0 dark:shadow-notificationShadowPink dark:bg-coolGray bg-white border-black shadow-xl dark:border-customPurple rounded-xl p-2 w-[50%]">
             <h3 className="text-black font-semibold dark:text-white">
-              Who To Follow
+              Users
             </h3>
             {getFollowerData.getAllUsers.map((user: any, index: any) => {
               return (
@@ -190,6 +191,7 @@ function Widgets({ displayPosts }: WidgetsProps) {
                       </Link>
                     </div>
                   </div>
+                  <FollowButton userId={user._id}/>
                 </div>
               );
             })}
