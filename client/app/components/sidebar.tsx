@@ -333,7 +333,7 @@ const Sidebar = ({}) => {
               d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
             />
           </svg>
-          <h1 className="ml-2 text-xl">Info Center</h1>
+          <h1 className="ml-2 font-semibold text-xl">Info Center</h1>
         </div>
 
         <MobileMenu/>

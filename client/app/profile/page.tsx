@@ -204,8 +204,8 @@ export default function Profile() {
           </div>
         </div>
       </div>
-      <div className="block sm:hidden">
-        {/* <div
+
+      {/* <div
           className={`${
             editModal ? "opacity-0 z-[100]" : "opacity-1 z-[100]"
           } fixed inset-0 z-[100] ease-in-out duration-200 bg-slate-600`}
@@ -219,13 +219,39 @@ export default function Profile() {
             />
           )}
         </div> */}
-        <div
-          className={`sm:hidden block fixed bottom-0 w-full h-72 z-40 bg-darkModeDarkGray transition-max-height duration-200 ease-in-out${
-            editModal
-              ? "translate-x-0 w-100 opacity-100"
-              : "translate-x-[-100%] w-0 opacity-0"
-          }`}
-        ></div>
+      <div
+        className={`sm:hidden block fixed bottom-0 w-full mb-[78px] h-[91.5%] z-50 dark:bg-black bg-mediumWhite transition-max-height duration-200 ease-in-out${
+          editModal
+            ? "w-0 opacity-0 translate-x-[-100%] transition-max-height duration-200 ease-in-out"
+            : "w-100 opacity-1 translate-x-0"
+        }`}
+      >
+        <div className="flex pr-5 pl-5 pt-[18px] h-16 dark:bg-black bg-darkModeDarkGray text-white dark:text-white">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="white"
+            className="w-7 h-7 "
+            onClick={() => toggleEditModal(!editModal)}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+            />
+          </svg>
+          <h1 className="text-xl font-semibold ml-2 text-white">Edit Profile</h1>
+        </div>
+        {data && (
+          <EditProfile
+            userInfo={data.getUserById}
+            setUserData={setUserData}
+            toggleEditModal={toggleEditModal}
+            editModal={editModal}
+          />
+        )}
       </div>
     </>
   );
