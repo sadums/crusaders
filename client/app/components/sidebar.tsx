@@ -273,8 +273,8 @@ const Sidebar = ({}) => {
                 text="Search"
                 href="#"
                 onClick={() => {
-                  handleSidebarChange("Search");
-                  setSidebarOpacity(!sidebarOpacity);
+                  // handleSidebarChange("Search");
+                  // setSidebarOpacity(!sidebarOpacity);
                 }}
                 pathD="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
               />
@@ -350,23 +350,6 @@ const Sidebar = ({}) => {
           />
 
           {/* Temp button, link up create a post */}
-
-          {/* <li className="flex items-center relative bottom-[20px] space-x-2 rounded-full justify-center w-16 h-16 dark:bg-mainPurple bg-mainDarkPurple">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-10 h-10 shadow-2xl"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 4.5v15m7.5-7.5h-15"
-              />
-            </svg>
-          </li> */}
 
           <SidebarIcon
             text="Explore"
