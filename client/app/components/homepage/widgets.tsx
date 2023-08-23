@@ -191,7 +191,7 @@ function Widgets({ displayPosts }: WidgetsProps) {
                       </Link>
                     </div>
                   </div>
-                  <FollowButton userId={user._id}/>
+                  <FollowButton userId={user._id} getFollow={() => console.log("getFollow")}/>
                 </div>
               );
             })}

@@ -196,7 +196,7 @@ function SinglePost(post: {
               </div>
             </Link>
           </div>
-            <FollowButton userId={post.post.user._id}/>
+            <FollowButton userId={post.post.user._id} getFollow={() => console.log("getFollow")}/>
         </div>
 
         <div className="mt-4">

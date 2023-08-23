@@ -234,7 +234,7 @@ const PostModal: React.FC<ModalProps> = ({ postId, handleClose }) => {
                     </a>
                   </div>
                 </div>
-                <FollowButton userId={postData.getPost.user._id}/>
+                <FollowButton userId={postData.getPost.user._id} getFollow={() => console.log("getFollow")}/>
                 <button
                   onClick={handleClose}
                   className="ml-auto bg-transparent border-0 dark:text-white text-black"
