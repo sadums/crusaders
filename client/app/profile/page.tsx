@@ -185,7 +185,7 @@ export default function Profile() {
           <div
             className={`${
               postColumn ? "grid-cols-3" : "grid-cols-1"
-            } grid p-2 pt-0 gap-1 h-[500px] pb-36 overflow-y-scroll profilePostsDiv`}
+            } grid p-2 pt-0 gap-1 h-[450px] pb-36 overflow-y-scroll profilePostsDiv`}
           >
             {data && data.getUserById && (
               <>
