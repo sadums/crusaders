@@ -91,7 +91,7 @@ function Search({ sidebarOpacity }: toggle) {
 
   return (
     <div
-      className={`top-32 left-4 w-72  fixed h-full z-10 ease-in-out duration-300 toggleSidebarMainDiv ${
+      className={`top-32 left-4 w-72 hidden sm:block fixed h-full z-10 ease-in-out duration-300 toggleSidebarMainDiv ${
         sidebarOpacity
           ? "w-0 opacity-0 translate-x-0 "
           : "w-100 opacity-1 translate-x-20"

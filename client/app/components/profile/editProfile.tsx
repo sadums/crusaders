@@ -60,10 +60,10 @@ const EditProfile: FC<EditProfileProps> = ({ setUserData, userInfo, toggleEditMo
   };
 
   return (
-    <div className="flex items-center justify-center mt-16 pt-2 ">
-      <form className="bg-white dark:bg-darkModeDarkGray rounded-lg w-full shadow-xl p-2 mx-auto">
+    <div className="flex items-center justify-center mt-4 pt-2">
+      <form className="sm:bg-white sm:dark:bg-darkModeDarkGray sm:rounded-lg w-full sm:shadow-xl p-2 mx-auto">
         <div className="mb-4">
-          <h1 className="text-sm font-semibold text-neonBlue">Username</h1>
+          <h1 className="text-sm text-black dark:text-white font-semibold sm:text-neonBlue">Username</h1>
           <input
             type="text"
             id="username"
@@ -74,7 +74,7 @@ const EditProfile: FC<EditProfileProps> = ({ setUserData, userInfo, toggleEditMo
         </div>
         <div className="mb-4 flex">
           <div className="mr-2">
-            <label className="text-sm font-semibold text-neonBlue">
+            <label className="text-sm text-black dark:text-white font-semibold sm:text-neonBlue">
               Firstname
             </label>
 
@@ -87,7 +87,7 @@ const EditProfile: FC<EditProfileProps> = ({ setUserData, userInfo, toggleEditMo
           </div>
 
           <div>
-            <label className="text-sm font-semibold text-neonBlue">
+            <label className="text-sm text-black dark:text-white font-semibold sm:text-neonBlue">
               Lastname
             </label>
 
@@ -100,7 +100,7 @@ const EditProfile: FC<EditProfileProps> = ({ setUserData, userInfo, toggleEditMo
           </div>
         </div>
         <div className="mb-4">
-          <label htmlFor="bio" className="text-sm font-semibold text-neonBlue">
+          <label htmlFor="bio" className="text-sm text-black dark:text-white font-semibold sm:text-neonBlue">
             Biography
           </label>
           <input
@@ -112,7 +112,7 @@ const EditProfile: FC<EditProfileProps> = ({ setUserData, userInfo, toggleEditMo
           />
         </div>
         <div className="mb-4 pb-1 flex-col border-neonBlue border-t-0 border-r-0 border-l-0 border-b-2 outline-none w-[100%]">
-          <h1 className="mb-1 text-sm font-semibold text-neonBlue">
+          <h1 className="mb-1 text-sm text-black dark:text-white font-semibold sm:text-neonBlue">
             Profile Picture
           </h1>
           <PictureUploader

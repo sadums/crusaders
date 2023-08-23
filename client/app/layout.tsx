@@ -24,6 +24,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
           href="https://fonts.googleapis.com/css2?family=Manrope&family=Wallpoet&display=swap"
           rel="stylesheet"
         ></link>
+        <meta name="apple-mobile-web-app-capable" content="yes"></meta>
       </head>
       <body className="border-coolGray">
         <BodyContent>{children}</BodyContent>
