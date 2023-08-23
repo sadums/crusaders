@@ -8,13 +8,16 @@ import Likes from "./toggleSideBar/likes";
 import SignInModal from "./signin";
 import SignUpModal from "./signup";
 import SidebarIcon from "./sidebar/sidebarIcons";
+import SidebarIconMobile from "./sidebar/sidebarIconMobile";
 import { render } from "react-dom";
 import Auth from "../(utils)/auth";
 import Link from "next/link";
+import MobileMenu from "./mobile/mobileMenu";
 
 const Sidebar = ({}) => {
   const [isSignInModalOpen, setIsSignInModalOpen] = useState<boolean>(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState<boolean>(false);
+  const [mobileSettings, toggleMobileSettings] = useState<boolean>(false);
 
   const signUpButtonHandler = () => {
     console.log("SIGN UP");
@@ -82,8 +85,10 @@ const Sidebar = ({}) => {
   const handleSidebarChange = (page: any) => setShowSidebar(page);
 
   return (
+    // MAIN DESKTOP NAVBAR
+
     <>
-      <div className="bg-gradient-to-t  from-mainPurple to-mainDarkPurple dark:from-mainDarkPurple dark:to-mainPurple h-[100vh] fixed top-0 left-0 w-20 shadow-lg z-50">
+      <div className="sm:block hidden bg-gradient-to-t  from-mainPurple to-mainDarkPurple dark:from-mainDarkPurple dark:to-mainPurple sm:h-[100vh] fixed sm:top-0 sm:left-0 sm:w-20 sm:shadow-lg z-50">
         <div className="container mx-auto z-50">
           <div className="grid grid-cols-1 gap-4">
             <h5 className="text-sm text-center mt-2">Crusaders</h5>
@@ -152,9 +157,9 @@ const Sidebar = ({}) => {
                   </svg>
                 </a>
                 <span className="sidebarIconInfo flex group-hover:scale-100">
-                      <span>Light</span>
-                      <span className="ml-1">Mode</span>
-                    </span>
+                  <span>Light</span>
+                  <span className="ml-1">Mode</span>
+                </span>
               </li>
               <SidebarIcon
                 text="Home"
@@ -185,7 +190,6 @@ const Sidebar = ({}) => {
               /> */}
               {Auth.loggedIn() ? (
                 <>
-
                   {/* <SidebarIcon
                     text="Notifications"
                     href="#"
@@ -249,6 +253,142 @@ const Sidebar = ({}) => {
           </div>
         </div>
       </div>
+
+      {/* MOBILE NAVBAR */}
+
+      {/* Top secondary nav */}
+      <div className="mobileSecondaryNav pl-5 pr-5 sm:hidden rounded- bg-opacity-95 bg-darkModeDarkGray items-center min-h-16 pt-3 pb-1 fixed top-[0px] left-0 w-full z-30">
+        <div className="flex w-full justify-between">
+          <div className="flex left-0 items-center">
+            <img
+              className="h-12 w-12 rounded-full p-1"
+              src="/horseOnlyLogo.png"
+              alt="Your Company"
+            ></img>
+            <h1 className="text-2xl">Crusaders</h1>
+          </div>
+          <div className="flex items-center">
+            <div className={`${mobileSettings ? "hidden" : "block"}`}>
+              <SidebarIconMobile
+                text="Search"
+                href="#"
+                onClick={() => {
+                  handleSidebarChange("Search");
+                  setSidebarOpacity(!sidebarOpacity);
+                }}
+                pathD="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+              />
+            </div>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1}
+              stroke="currentColor"
+              className="w-8 h-8 ml-2"
+              onClick={() => toggleMobileSettings(!mobileSettings)}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Settings  */}
+
+      <div
+        className={`sm:hidden block fixed inset-0 z-40 bg-darkModeDarkGray dark:bg-black bg-opacity-100 transition-max-height duration-200 ease-in-out ${
+          mobileSettings
+            ? "w-100 opacity-1 translate-x-0"
+            : "w-0 opacity-0 translate-x-[-100%] transition-max-height duration-200 ease-in-out"
+        }`}
+      >
+        {/* <div className="flex left-0 items-center">
+            <img
+              className="h-12 w-12 rounded-full p-1"
+              src="/horseOnlyLogo.png"
+              alt="Your Company"
+            ></img>
+            <h1 className="text-2xl">Crusaders</h1>
+          </div> */}
+
+        <div className="flex pr-5 pl-5 h-16 items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-7 h-7"
+            onClick={() => toggleMobileSettings(!mobileSettings)}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+            />
+          </svg>
+          <h1 className="ml-2 text-xl">Info Center</h1>
+        </div>
+
+        <MobileMenu/>
+      </div>
+
+      {/* Primary nav */}
+      <div className="sm:hidden flex pr-7 pl-7 items-center rounded- bg-darkModeDarkGray bg-opacity-95 h-20 pb-4 fixed bottom-[-1px] left-0 w-full z-30">
+        <div className="flex justify-between w-full">
+          <SidebarIcon
+            text="Home"
+            href="/"
+            onClick={() => console.log("Home")}
+            pathD="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+          />
+
+          {/* Temp button, link up create a post */}
+
+          {/* <li className="flex items-center relative bottom-[20px] space-x-2 rounded-full justify-center w-16 h-16 dark:bg-mainPurple bg-mainDarkPurple">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-10 h-10 shadow-2xl"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
+            </svg>
+          </li> */}
+
+          <SidebarIcon
+            text="Explore"
+            href="/explore"
+            onClick={() => console.log("Explore")}
+            pathD="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5l-3.9 19.5m-2.1-19.5l-3.9 19.5"
+          />
+          <SidebarIcon
+            text="Inbox"
+            href="/messages"
+            onClick={() => console.log("Messages")}
+            pathD="M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H6.911a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661z"
+          />
+          <SidebarIcon
+            text="Profile"
+            href="/profile"
+            onClick={() => console.log("Profile")}
+            pathD="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+          />
+        </div>
+      </div>
+
       {isSignUpModalOpen && (
         <SignUpModal setIsSignUpModalOpen={setIsSignUpModalOpen} />
       )}

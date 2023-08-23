@@ -71,6 +71,7 @@ module.exports = {
         notificationShadowBlue: '0 10px 10px -12px rgba(26, 222, 205, 0.6)',
         notificationShadowPink: '0 10px 10px -10px rgba(131, 125, 236, 0.5)'
       }
+      
     },
   },
   plugins: [],
